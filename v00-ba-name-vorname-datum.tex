@@ -1,0 +1,100 @@
+% =============================================================================
+% HAUPTDOKUMENT (main.tex)
+% =============================================================================
+
+\documentclass[11pt, a4paper, headsepline, numbers=noenddot]{scrartcl}
+
+% --- EINSTELLUNGEN LADEN ---
+\input{01_Einstellungen/praeambel.tex}
+\input{01_Einstellungen/befehle.tex}
+\input{01_Einstellungen/layout.tex}
+
+\setcounter{tocdepth}{3}
+
+% --- GLOSSAR-EINTRÄGE LADEN ---
+\loadglsentries{01_Einstellungen/glossar.tex}
+
+% --- LITERATURQUELLE ANGEBEN ---
+\addbibresource{bibliographie.bib}
+
+% -----------------------------------------------------------------------------
+% DOKUMENTENBEGINN
+% -----------------------------------------------------------------------------
+
+\begin{document}
+
+% ============================================================================
+% DECKBLATT (ohne Nummer)
+% ============================================================================
+\pagenumbering{gobble}
+\input{02_Inhalt/01_Vorspann/00_deckblatt.tex}
+\leereSeite
+
+% ============================================================================
+% VORSPANN (römische Zählung)
+% Reihenfolge gemäß Vorgabe:
+%   Eigenständigkeitserklärung + Sperrvermerk
+%   Danksagung
+%   Abstract
+%   (Leere Seite)
+%   Inhalts-/Verzeichnisse
+% ============================================================================
+\pagenumbering{Roman}
+
+% --- EIGENSTÄNDIGKEITSERKLÄRUNG + SPERRVERMERK ---
+\input{02_Inhalt/01_Vorspann/01_eigenstaendigkeitserklaerung.tex}
+\clearpage
+
+% --- DANKSAGUNG ---
+\input{02_Inhalt/01_Vorspann/02_danksagung.tex}
+\clearpage
+
+% --- ABSTRACT ---
+\input{02_Inhalt/01_Vorspann/03_abstract.tex}
+
+% --- LEERE SEITE ---
+\newpage
+
+% --- VERZEICHNISSE (Inhaltsverzeichnis, Abbildungen, Tabellen, Glossar, ...) ---
+\input{02_Inhalt/01_Vorspann/04_verzeichnisse.tex}
+
+% --- LEERE SEITE ---
+\leereSeite
+
+% ============================================================================
+% HAUPTTEIL (arabische Zählung ab 1)
+% ============================================================================
+\pagenumbering{arabic}
+
+\include{02_Inhalt/02_Hauptteil/01_einleitung}
+\include{02_Inhalt/02_Hauptteil/02_theorieteil}
+\include{02_Inhalt/02_Hauptteil/03_methodenteil}
+\include{02_Inhalt/02_Hauptteil/04_ergebnisteil}
+\include{02_Inhalt/02_Hauptteil/05_diskussion_fazit}
+\include{02_Inhalt/02_Hauptteil/06_ausblick}
+
+% Optional: Trennseite vor Anhang/Nachspann
+\leereSeite
+
+% ===========================================================================
+% ANHANG (Nummeriert mit A, B...)
+% ===========================================================================
+
+% --- LITERATURVERZEICHNIS ---
+\clearpage
+\thispagestyle{empty}
+\addtocontents{toc}{\protect\contentsline{section}{\protect\numberline{}Literaturverzeichnis}{}{} }
+\section*{Literaturverzeichnis}
+\printbibliography[heading=none]
+
+
+\clearpage
+\appendix
+\renewcommand{\thesection}{\Alph{section}} % A, B, C ...
+\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
+
+% Anhang einbinden (erzeugt z.B. "A Anhang")
+\input{02_Inhalt/03_Nachspann/anhang.tex}
+
+
+\end{document}

@@ -1,0 +1,93 @@
+% =============================================================================
+% DECKBLATT (00_deckblatt.tex)
+% -----------------------------------------------------------------------------
+% =============================================================================
+
+\begin{titlepage}
+    % Geometrie für die Titelseite
+    \newgeometry{left=2.0cm, right=2.0cm, top=2cm, bottom=2cm}
+
+    % Sicherheitshalber die Farbe definieren, falls layout.tex hier nicht greift
+    \providecolor{JanssenDarkBlue}{HTML}{001F5F}
+
+    % --- KOPFBEREICH: BLAUER BALKEN MIT LOGOS ---
+    % Wir setzen den Abstand der Box zum Inhalt auf 0, damit die Maße stimmen
+    \setlength{\fboxsep}{0pt}
+    
+    \noindent
+    \makebox[\textwidth][c]{%
+        \colorbox{JanssenDarkBlue}{%
+            % Die Minipage nimmt nun die gesamte Papierbreite ein
+            \begin{minipage}[c][2.0cm][c]{\paperwidth}%
+                \hspace{2.0cm}% Abstand links (entspricht Seitenrand)
+                %
+                % --- LINKES LOGO (HSEL Weiß) ---
+                \includegraphics[height=1.5cm, valign=c]{03_Ressourcen/logo/hsel-logo-removebg-preview.png}%
+                %
+                \hfill% Schiebt den Rest nach rechts
+                %
+                % --- RECHTES LOGO (Janssen ohne Text) ---
+                \includegraphics[height=2.5cm, valign=c]{03_Ressourcen/logo/logo-rolf_janssen-mit_text.pdf}%
+                %
+                \hspace{2.0cm}% Abstand rechts (entspricht Seitenrand)
+            \end{minipage}%
+        }%
+    }
+
+    % --- HAUPTTEIL ---
+    \begin{center}
+        \vspace{2.5cm}
+
+        % ART DER ARBEIT
+        \scshape\huge \praktikumstitel
+
+        \vspace{0.5cm}
+
+        % STUDIENGANG
+        \normalfont\large im \studiengang
+
+        \vspace{1cm}
+        % Linie
+        \hrule height 1pt
+        \vspace{0.5cm}
+
+        % TITEL DER ARBEIT
+        \huge \bfseries \versuchstitel
+
+        \vspace{0.5cm}
+        % Linie
+        \hrule height 1pt
+        \vspace{1.5cm}
+
+        % AUTOR
+        \normalfont \large
+        Vorgelegt von:\\
+        \vspace{0.2cm}
+        \textbf{\vornameStudEins\ \nachnameStudEins}\\
+        Matrikelnummer: \matrikelnummerStudEins
+
+        \vspace{1.5cm}
+
+        % UNTERNEHMEN
+        Durchgeführt bei:\\
+        \vspace{0.3cm}
+        \textbf{Rolf Janssen Elektrotechnische Werke GmbH}\\
+        Emsstraße 4\\
+        26603 Aurich
+    \end{center}
+
+    \vfill
+
+    % --- FUSSZEILE: PRÜFER UND DATUM ---
+    \begin{center}
+        \normalsize
+        \begin{tabular}{rl}
+            \textbf{Erstprüfer:}  & \betreuerEins \\
+            \textbf{Zweitprüfer:} & \betreuerZwei \\[1ex]
+            \textbf{Abgabedatum:} & Aurich, den \today
+        \end{tabular}
+    \end{center}
+
+    % Geometrie wiederherstellen
+    \restoregeometry
+\end{titlepage}
