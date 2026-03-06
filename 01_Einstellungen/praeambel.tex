@@ -1,7 +1,5 @@
 % =============================================================================
 % PRÄAMBEL (praeambel.tex)
-% -----------------------------------------------------------------------------
-% Lädt alle Pakete und globalen Einstellungen.
 % =============================================================================
 
 % --- GRUNDEINSTELLUNGEN ---
@@ -11,35 +9,35 @@
 \usepackage{graphicx}
 \usepackage{csquotes}
 \usepackage{datatool}
-\usepackage{subcaption}
-% --- LITERATURVERZEICHNIS (BIBLATEX) ---
-\usepackage[backend=biber, style=ieee]{biblatex}
-\usepackage{xurl}
+
 % --- MATHEMATIK ---
 \usepackage{amsmath, amssymb, amsthm, latexsym, derivative}
 
 % --- GRAFIKEN & DIAGRAMME ---
 \usepackage{epsfig, tikz, subcaption, caption, eso-pic}
-\usepackage[export]{adjustbox} % WICHTIG: 'export' für valign=c
+\usepackage[export]{adjustbox} 
 \usepackage[section]{placeins}
 \usepackage[european]{circuitikz}
+
+% --- SI-EINHEITEN ---
 \usepackage{siunitx}
 \sisetup{locale = DE}
+\DeclareSIUnit{\euro}{\text{\euro}}
 
-%\usepackage{filecontents}
 % --- TABELLEN ---
-\usepackage[table]{xcolor} % table-Option für colortbl-Kompatibilität
+\usepackage[table]{xcolor} 
 \usepackage{booktabs, multirow, colortbl}
 \usepackage{tabularx}
 \usepackage{makecell}
 
+% --- LITERATURVERZEICHNIS (BIBLATEX) ---
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{xurl}
+
 % --- SONSTIGE PAKETE ---
 \usepackage{enumitem}
 \usepackage{makeidx}
-% \makeindex % Vorerst auskommentiert
-\usepackage{totpages} % Robustes Paket für Gesamtseitenzahl
-\usepackage[acronym, nonumberlist, toc, section]{glossaries}
-\makeglossaries
+\usepackage{totpages}
 \usepackage{chngcntr}
 \usepackage[normalem]{ulem}
 \usepackage{calc}
@@ -50,35 +48,38 @@
 \usepackage[most]{tcolorbox}
 \usepackage[framemethod=TikZ]{mdframed}
 \usepackage{etoolbox}
-\usepackage[colorlinks=true, linkcolor=blue, citecolor=green, urlcolor=magenta, hidelinks]{hyperref} % Besser als letztes laden
 \usepackage{eurosym}
-
-\sisetup{locale = DE}
 \usepackage{verbatim}
-\usepackage{glossaries}
+
+% --- HYPERREF (sollte fast immer als letztes geladen werden) ---
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=green, urlcolor=magenta, hidelinks]{hyperref}
+
+% --- GLOSSAR-KONFIGURATION ---
+% Wichtig:symbols-Typ definieren
+\usepackage[toc, acronym, symbols, nonumberlist, section]{glossaries}
+
+
+% Eigenen Stil definieren
 \newglossarystyle{mynonbold}{
   \setglossarystyle{list}
   \renewcommand*{\glossentryname}[1]{\glsentryname{##1}}
 }
 
+\makeglossaries
+
 % --- LAYOUT-DATEI LADEN ---
 % (Wird in der Haupt-Datei geladen)
 
-% --- EINSTELLUNG FÜR KOMA-SKRIPT (entfernt Punkte im InIV) ---
+% --- EINSTELLUNG FÜR KOMA-SKRIPT ---
 \KOMAoptions{numbers=noenddot}
 
-
-% --- BENUTZERDEFINIERTE EINSTELLUNGEN ---
+% --- ABSTÄNDE ---
 \setlength{\parindent}{0em}
 \setlength{\parskip}{0.5em}
 
-% --- DEINE FLOAT-UMGEBUNGEN ---
+% --- FLOAT-UMGEBUNGEN ---
 \DeclareFloatingEnvironment[listname={Diagrammverzeichnis}, name=Diagramm, fileext=lod, placement=htp]{diagram}
 \DeclareFloatingEnvironment[listname={Oszillogrammverzeichnis}, name=Oszillogramm, fileext=loo, placement=htp]{oszillo}
-
-
-\DeclareSIUnit{\euro}{\text{\euro}}
-
 
 % --- ZÄHLER-EINSTELLUNGEN ---
 \counterwithin{figure}{section}
@@ -86,32 +87,25 @@
 \counterwithin{oszillo}{section}
 \counterwithin{diagram}{section}
 
-% --- DEINE BOX-DEFINITIONEN ---
+% --- BOX-DEFINITIONEN ---
 \newmdenv[linecolor=red, linewidth=1pt, frametitle=Hinweis, frametitlebackgroundcolor=red, frametitlefont=\color{white}\bfseries, frametitlerule=true, backgroundcolor=white, roundcorner=2pt]{hinweisbox}
 \newmdenv[linecolor=gray, linewidth=1pt, frametitle=Aufgabe, frametitlebackgroundcolor=white, frametitlefont=\color{black}\bfseries, frametitlerule=true, backgroundcolor=white, roundcorner=2pt]{aufgabenbox}
+
 \newcounter{rechnungbox}[section]
-\renewcommand{\therechnungbox}{\arabic{rechnungbox}}
-\newtcolorbox{rechnungbox}[1][]{colframe=darkgray, colback=white, coltitle=white, colbacktitle=gray, title={Rechnung \therechnungbox}, fonttitle=\bfseries, boxed title style={size=small},
-    boxrule=1pt, sharp corners=south, before upper=\stepcounter{rechnungbox}, #1}
+\renewcommand{\therechnungbox}{\thesection.\arabic{rechnungbox}}
+\newtcolorbox{rechnungbox}[1][]{colframe=darkgray, colback=white, coltitle=white, colbacktitle=gray, title={Rechnung \therechnungbox}, fonttitle=\bfseries, boxed title style={size=small}, boxrule=1pt, sharp corners=south, before upper=\stepcounter{rechnungbox}, #1}
 
-% --- DEINE TOGGLES ---
-\newtoggle{showtoc}
-\newtoggle{showtables}
-\newtoggle{showfigures}
-\newtoggle{showoszillos}
-\newtoggle{showdiagrams}
-\toggletrue{showtoc}
-\toggletrue{showtables}
-\toggletrue{showfigures}
-\togglefalse{showoszillos}
-\toggletrue{showdiagrams}
+% --- TOGGLES ---
+\newtoggle{showtoc} \toggletrue{showtoc}
+\newtoggle{showtables} \toggletrue{showtables}
+\newtoggle{showfigures} \toggletrue{showfigures}
+\newtoggle{showoszillos} \togglefalse{showoszillos}
+\newtoggle{showdiagrams} \toggletrue{showdiagrams}
 
-% --- Globale Schriftart für den Haupttext aktivieren ---
+% --- SCHRIFTART AKTIVIEREN ---
 \AtBeginDocument{\haupttextSchrift}
 
-
-
-% Definition von \subsubsubsection
+% --- SUBSSUBSECTION DEFINITION ---
 \makeatletter
 \newcommand{\subsubsubsection}{\@startsection{paragraph}{4}{\z@}%
     {-3.25ex \@plus -1ex \@minus -.2ex}%
@@ -119,12 +113,9 @@
     {\normalfont\normalsize\bfseries}}
 \makeatother
 
-% Sorgt dafür, dass die vierte Ebene nummeriert wird (secnumdepth)
-% und im Inhaltsverzeichnis erscheint (tocdepth)
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
-
-
+% --- MATH COMMANDS ---
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
 \newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}

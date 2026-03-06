@@ -10,29 +10,30 @@
     % Sicherheitshalber die Farbe definieren, falls layout.tex hier nicht greift
     \providecolor{JanssenDarkBlue}{HTML}{001F5F}
 
-    % --- KOPFBEREICH: BLAUER BALKEN MIT LOGOS ---
-    % Wir setzen den Abstand der Box zum Inhalt auf 0, damit die Maße stimmen
+    % --- KOPFBEREICH: BLAUES BAND MIT DIAGONALER WEI\SZ{}ER FL\AE{}CHE ---
+    % Wir zeichnen mit TikZ ein blaues Rechteck als Hintergrund und legen
+    % eine wei\SZ{}e Polygonfl\AE{}che dar\UE{}ber, deren Diagonale von rechts unten
+    % nach links oben verläuft. Das Jade-Logo liegt auf der weißen Region.
     \setlength{\fboxsep}{0pt}
     
     \noindent
-    \makebox[\textwidth][c]{%
-        \colorbox{JanssenDarkBlue}{%
-            % Die Minipage nimmt nun die gesamte Papierbreite ein
-            \begin{minipage}[c][2.0cm][c]{\paperwidth}%
-                \hspace{2.0cm}% Abstand links (entspricht Seitenrand)
-                %
-                % --- LINKES LOGO (HSEL Weiß) ---
-                \includegraphics[height=1.5cm, valign=c]{03_Ressourcen/logo/hsel-logo-removebg-preview.png}%
-                %
-                \hfill% Schiebt den Rest nach rechts
-                %
-                % --- RECHTES LOGO (Janssen ohne Text) ---
-                \includegraphics[height=2.5cm, valign=c]{03_Ressourcen/logo/logo-rolf_janssen-mit_text.pdf}%
-                %
-                \hspace{2.0cm}% Abstand rechts (entspricht Seitenrand)
-            \end{minipage}%
-        }%
-    }
+    \begin{tikzpicture}[remember picture, overlay]
+        % blauer Hintergrund
+        \fill[JanssenDarkBlue] (current page.north west) ++(0,-0.5cm) rectangle ++(\paperwidth,-2cm);
+        % weißer Block als 'Unterbrechung' – Parallelogramm schmäler
+        % Basis 4cm statt 5cm (1cm weg Richtung rechts)
+        \fill[white]
+            (current page.north west) ++(2cm,-0.5cm) % unten links
+            -- ++(4cm,0)                           % unten rechts (1cm kürzer)
+            -- ++(-1cm,-2cm)                       % oben rechts verschoben nach links
+            -- ++(-4cm,0)                         % oben links
+            -- cycle;
+        % Logos
+        \node[anchor=west] at ($(current page.north west)+(2cm,-1.5cm)$) {\includegraphics[height=1.5cm]{03_Ressourcen/logo/jadehs-logo.png}};
+        \node[anchor=east] at ($(current page.north east)+(-2cm,-1.5cm)$) {\includegraphics[height=2.5cm]{03_Ressourcen/logo/logo-rolf_janssen-mit_text.pdf}};
+    \end{tikzpicture}
+    % Ende des Kopfbereichs
+    \vspace{2cm}
 
     % --- HAUPTTEIL ---
     \begin{center}
@@ -43,6 +44,11 @@
 
         \vspace{0.5cm}
 
+        % FACHBEREICH
+        \normalfont\large \fachbereich
+
+        \vspace{0.3cm}
+
         % STUDIENGANG
         \normalfont\large im \studiengang
 
@@ -52,7 +58,7 @@
         \vspace{0.5cm}
 
         % TITEL DER ARBEIT
-        \huge \bfseries \versuchstitel
+        \LARGE \bfseries \versuchstitel
 
         \vspace{0.5cm}
         % Linie
@@ -83,7 +89,7 @@
         \normalsize
         \begin{tabular}{rl}
             \textbf{Erstprüfer:}  & \betreuerEins \\
-            \textbf{Zweitprüfer:} & \betreuerZwei \\[1ex]
+            \textbf{Zweitprüfer:} & \betreuerZwei \\[2ex]
             \textbf{Abgabedatum:} & Aurich, den \today
         \end{tabular}
     \end{center}
