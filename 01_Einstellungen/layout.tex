@@ -2,17 +2,16 @@
 % LAYOUT-EINSTELLUNGEN (layout.tex)
 % =============================================================================
 
-% --- SEITENRÄNDER UND GRÖSSE DER KOPF-/FUSSZEILE ---
 \usepackage[
     a4paper,
     left=25mm,
     right=25mm,
-    top=25mm,
+    top=30mm,       % Erhöht von 25mm auf 30mm, um Platz für die Verschiebung zu schaffen
     bottom=25mm,
     headheight=2cm,
+    headsep=5mm,    % Dieser Wert schiebt den Text unter der Kopfzeile weiter weg
     footskip=15mm
 ]{geometry}
-
 % --- KOPF- UND FUSSZEILE (scrlayer-scrpage) ---
 \usepackage{scrlayer-scrpage}
 \KOMAoptions{headsepline=0.4pt, footsepline=0.4pt} % Korrekte Aktivierung der Linien
