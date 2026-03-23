@@ -33,9 +33,11 @@
     \vlinie\quad\parbox{8cm}{\centering \versuchstitel}\quad\vlinie%
 }
 
-% Rechts: Name
+% Rechts: Name (leicht nach rechts verschoben)
+\newlength{\kopfzeileNameVerschiebung}
+\setlength{\kopfzeileNameVerschiebung}{0.3mm}
 \ohead{%
-    \normalfont\normalsize\autorenname%
+    \normalfont\normalsize\autorenname\hspace*{-\kopfzeileNameVerschiebung}%
 }
 
 % Fußzeile befüllen
