@@ -1,13 +1,156 @@
 % --- ABKÜRZUNGEN (Acronyms) ---
 \newacronym{ac}{AC}{Wechselstrom}
 \newacronym{dc}{DC}{Gleichstrom}
+\newacronym{sps}{SPS}{Speicherprogrammierbare Steuerung}
+\newacronym{din}{DIN}{Deutsches Institut für Normung}
+\newacronym{en}{EN}{Europäische Norm}
+\newacronym{et200sp}{ET200 SP}{Dezentrales Peripheriesystem (Siemens SIMATIC SPS)}
+\newacronym{igbt}{IGBT}{Insulated-Gate Bipolar Transistor (Leistungshalbleiter)}
+\newacronym{mcc}{MCC}{Motor Control Center (Niederspannungs-Schaltanlage in Einschubtechnik)}
+\newacronym{pid}{PID}{Proportional-Integral-Derivative (Regelalgorithmus)}
+\newacronym{pwm}{PWM}{Pulsweitenmodulation}
+\newacronym{thd}{THD}{Total Harmonic Distortion (Oberschwingungsgehalt)}
+\newacronym{tncs}{TN-C-S}{Terra Neutral Combined Separate}
+\newacronym{vde}{VDE}{Verband der Elektrotechnik Elektronik Informationstechnik e.\,V.}
 
 
 % --- FORMELZEICHEN (Symbols) ---
+\newglossaryentry{sym:I}{
+    type=symbols,
+    name={$I$},
+    description={Stromstärke [A]},
+    sort={I}
+}
+
+\newglossaryentry{sym:R}{
+    type=symbols,
+    name={$R$},
+    description={elektrischer Widerstand [$\Omega$]},
+    sort={R}
+}
 
 \newglossaryentry{sym:In}{
     type=symbols,
-    name={$I_{n}$},
-    description={Bemessungsstrom (Nennstrom)},
+    name={$I_n$},
+    description={Bemessungsbetriebsstrom [A]},
     sort={In}
+}
+
+\newglossaryentry{sym:Iist}{
+    type=symbols,
+    name={$I_{ist}(t)$},
+    description={Ist-Strom zum Zeitpunkt $t$ [A]},
+    sort={Iist}
+}
+
+\newglossaryentry{sym:Icc}{
+    type=symbols,
+    name={$I_{cc}$},
+    description={Bedingter Bemessungskurzschlussstrom [kA]},
+    sort={Icc}
+}
+
+\newglossaryentry{sym:Icw}{
+    type=symbols,
+    name={$I_{cw}$},
+    description={Bemessungskurzzeitstromfestigkeit ( 1\,s) [kA]},
+    sort={Icw}
+}
+
+\newglossaryentry{sym:Ull}{
+    type=symbols,
+    name={$U_{L-L}$},
+    description={, Außenleiterspannung (Verkettete Spannung) [V]},
+    sort={Ull}
+}
+
+\newglossaryentry{sym:Pv}{
+    type=symbols,
+    name={$P_v$},
+    description={Elektrische Verlustleistung [W / kW]},
+    sort={Pv}
+}
+
+\newglossaryentry{sym:S}{
+    type=symbols,
+    name={$S$},
+    description={Scheinleistung [VA / kVA]},
+    sort={S}
+}
+
+\newglossaryentry{sym:RPhase}{
+    type=symbols,
+    name={$R_{Phase}$},
+    description={Ohmscher Widerstand einer Phase [$\Omega$]},
+    sort={RPhase}
+}
+
+\newglossaryentry{sym:R20}{
+    type=symbols,
+    name={$R_{20}$},
+    description={Kaltwiderstand bei Referenztemperatur [$\Omega$]},
+    sort={R20}
+}
+
+\newglossaryentry{sym:vartheta}{
+    type=symbols,
+    name={$\vartheta$},
+    description={Celsius-Temperatur [$^\circ\mathrm{C}$]},
+    sort={vartheta}
+}
+
+\newglossaryentry{sym:T}{
+    type=symbols,
+    name={$T$},
+    description={Absolute Temperatur [K]},
+    sort={T}
+}
+
+\newglossaryentry{sym:DeltaT}{
+    type=symbols,
+    name={$\Delta \vartheta$ bzw. $\Delta T$},
+    description={Temperaturdifferenz oder Übertemperatur, Differenz zwischen Bauteil und Raumluft [K]},
+    sort={DeltaT}
+}
+
+\newglossaryentry{sym:alpha}{
+    type=symbols,
+    name={$\alpha$},
+    description={Temperaturkoeffizient [K$^{-1}$]},
+    sort={alpha}
+}
+
+\newglossaryentry{sym:cosphi}{
+    type=symbols,
+    name={$\cos \varphi$},
+    description={Leistungsfaktor},
+    sort={cosphi}
+}
+
+\newglossaryentry{sym:et}{
+    type=symbols,
+    name={$e(t)$},
+    description={Regeldifferenz [A]},
+    sort={et}
+}
+
+\newglossaryentry{sym:ut}{
+    type=symbols,
+    name={$u(t)$},
+    description={Stellgröße [V / \%]},
+    sort={ut}
+}
+
+\newglossaryentry{sym:Kp}{
+    type=symbols,
+    name={$K_p$},
+    description={Proportionalbeiwert},
+    sort={Kp}
+}
+
+\newglossaryentry{sym:N1N2}{
+    type=symbols,
+    name={$N_1 / N_2$},
+    description={Windungszahlen, Verhältnis von Primär- zu Sekundärwicklung (Trafo) },
+    sort={N1N2}
 }

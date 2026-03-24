@@ -31,7 +31,16 @@
     "02_Inhalt/02_Hauptteil/04_ergebnisteil.aux": true,
     "02_Inhalt/02_Hauptteil/03_methodenteil.aux": true,
     "02_Inhalt/02_Hauptteil/02_theorieteil.aux": true,
-    "02_Inhalt/02_Hauptteil/01_einleitung.aux": true
+    "02_Inhalt/02_Hauptteil/01_einleitung.aux": true,
+    "02_Inhalt/02_Hauptteil/03_ist-zustand.aux": true,
+    "02_Inhalt/02_Hauptteil/08_ausblick.aux": true,
+    "02_Inhalt/02_Hauptteil/07_fazit.aux": true,
+    "02_Inhalt/02_Hauptteil/06_wirtschaftliche und betriebliche Betrachtung.aux": true,
+    "02_Inhalt/02_Hauptteil/05_detaillierte ausarbeitung.aux": true,
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung und evaluierung.aux": true,
+    "v00-ba-Schwitters-Alexandername-.bbl-SAVE-ERROR": true,
+    "v00-ba-Schwitters-Alexandername-.synctex(busy)": true,
+    "v00-ba-Schwitters-Alexandername-.loo": true
   },
   "hide-files.files": [
     "v00-ba-Schwitters-Alexandername-.sls",
@@ -60,7 +69,16 @@
     "02_Inhalt/02_Hauptteil/04_ergebnisteil.aux",
     "02_Inhalt/02_Hauptteil/03_methodenteil.aux",
     "02_Inhalt/02_Hauptteil/02_theorieteil.aux",
-    "02_Inhalt/02_Hauptteil/01_einleitung.aux"
+    "02_Inhalt/02_Hauptteil/01_einleitung.aux",
+    "02_Inhalt/02_Hauptteil/03_ist-zustand.aux",
+    "02_Inhalt/02_Hauptteil/08_ausblick.aux",
+    "02_Inhalt/02_Hauptteil/07_fazit.aux",
+    "02_Inhalt/02_Hauptteil/06_wirtschaftliche und betriebliche Betrachtung.aux",
+    "02_Inhalt/02_Hauptteil/05_detaillierte ausarbeitung.aux",
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung und evaluierung.aux",
+    "v00-ba-Schwitters-Alexandername-.bbl-SAVE-ERROR",
+    "v00-ba-Schwitters-Alexandername-.synctex(busy)",
+    "v00-ba-Schwitters-Alexandername-.loo"
   ],
   "cloudlatex.enabled": true,
 

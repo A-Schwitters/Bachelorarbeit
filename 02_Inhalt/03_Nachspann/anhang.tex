@@ -11,17 +11,236 @@
 % Ab hier beginnt die Nummerierung mit A (durch \appendix in der main.tex)
 
 
-\section{Messergebnisse}
-\label{chap:anhang_content}
+% -----------------------------------------------------------------------------
+% EIGENSTÄNDIGKEITSERKLÄRUNG
+% -----------------------------------------------------------------------------
+\section{Erklärung zur Eigenständigkeit und zur Verwendung von KI-Systemen}
+\label{chap:anhang_eigenständigkeitserklärung}
 
 
+Ich erkläre hiermit, dass ich die vorliegende Bachelorarbeit
+selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel verwendet habe. Alle Stellen der Arbeit, die im Wortlaut oder im wesentlichen Inhalt anderen Werken entnommen wurden, sind unter Angabe der Quelle als Entlehnung kenntlich gemacht.
 
+In Übereinstimmung mit den Richtlinien der Jade Hochschule zur Nutzung generativer KI-Systeme erkläre ich zudem:
+Zur sprachlichen Überarbeitung, stilistischen Optimierung sowie zur Strukturierung einzelner Textpassagen wurde KI-gestützte Software eingesetzt. Die inhaltliche Erarbeitung, die fachliche Modellbildung sowie die Verantwortung für sämtliche Ergebnisse und Aussagen liegen vollständig und ausschließlich bei mir.
+
+Die vorliegende Arbeit wurde weder vollständig noch in Teilen, weder in gleicher noch in ähnlicher Form, im Rahmen einer anderen Prüfung eingereicht oder zur Erlangung eines akademischen Grades verwendet.
+
+Mir ist bekannt, dass Verstöße gegen diese Erklärung als Täuschungsversuch gewertet werden, zum Nichtbestehen der Prüfungsleistung führen und strafrechtlich verfolgt werden können.
+
+\vspace{1.0cm}
+
+\noindent
+\makebox[5cm][l]{\includegraphics[height=0.5cm]{03_Ressourcen/logo/datum.pdf}} \hspace{4cm} \makebox[5cm][c]{\includegraphics[width=6cm]{03_Ressourcen/logo/unterschrift.pdf}}
+
+\noindent\makebox[5cm][l]{Ort, Datum} \hspace{4cm} \makebox[5cm][r]{Unterschrift}
+\hrule
+
+\textcolor{red}{\textbf{Achtung! evtl. durch Dok. der Hochschule ersetzen.}}
 
 
 \clearpage
 
+\section{Prüfprotokolle}
+\label{chap:anhang_pruefprotokolle}
 
+\clearpage
+
+\section{Datenblätter und Kennlinien}
+\label{chap:anhang_datenblaetter}
+
+\clearpage
 
 \section{SPS-Programmierung (Step7)}
 \label{chap:anhang_programm}
 
+\clearpage
+
+\section{Schaltpläne des neuen Prüfstandaufbaus}
+\label{chap:anhang_schaltplaene}
+
+% -----------------------------------------------------------------------------
+% Korrigierte Tabelle (ohne Multirow-Chaos)
+% -----------------------------------------------------------------------------
+\noindent
+\textbf{DIN EN IEC 61439-2 (VDE 0660-600-2):2021-10} \newline
+\textbf{EN IEC 61439-2:2021}
+
+\vspace{1em}
+
+\begin{table}[H]
+    \centering
+    \caption{Formen der inneren Unterteilung (gemäß DIN EN IEC 61439-2)}
+    \vspace{0.5em}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}X l @{}}
+        \toprule
+        \textbf{Hauptmerkmal} & \textbf{Weitere Merkmale} & \textbf{Form} \\
+        \midrule
+
+        % Form 1
+        Keine innere Unterteilung & & Form 1 \\
+        \midrule
+
+        % Form 2
+        Unterteilung zwischen Sammelschienen und allen Funktionseinheiten. 
+        & Anschlüsse für von außen herangeführte Leiter \textbf{nicht} von den Sammelschienen unterteilt. & Form 2a \\
+        \cmidrule{2-3}
+        & Anschlüsse für von außen herangeführte Leiter von den Sammelschienen unterteilt. & Form 2b \\
+        \midrule
+
+        % Form 3
+        \begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+            \item Unterteilung Sammelschienen / Funktionseinheiten
+            \item Unterteilung Funktionseinheiten untereinander
+            \item Unterteilung Anschlüsse von Funktionseinheiten
+        \end{itemize}
+        & Anschlüsse für von außen herangeführte Leiter \textbf{nicht} von den Sammelschienen unterteilt. & Form 3a \\
+        \cmidrule{2-3}
+        & Anschlüsse sowie diese Leiter von den Sammelschienen unterteilt. & Form 3b \\
+        \midrule
+
+        % Form 4
+        \begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+            \item Wie Form 3, jedoch zusätzlich:
+            \item Unterteilung der Anschlüsse einer Funktionseinheit von allen anderen
+            \item Unterteilung der herangeführten Leiter von Sammelschienen
+        \end{itemize}
+        & Anschlüsse im gleichen Abteil wie die zugeordnete Funktionseinheit. & Form 4a \\
+        \cmidrule{2-3}
+        & Anschlüsse in einem gesonderten, eigenen Abteil (durch Umhüllung geschützt). & Form 4b \\
+        \bottomrule
+        \multicolumn{3}{@{}l@{}}{\small Beispiele siehe \textcolor{blue}{Anhang BB}.} \\
+    \end{tabularx}
+\end{table}
+
+% -----------------------------------------------------------------------------
+% Auskommentieren 
+% -----------------------------------------------------------------------------
+\begin{comment}
+Da kann was stehen
+\end{comment}
+
+
+% -----------------------------------------------------------------------------
+% Aus Symbol Verzeichnis Zitiren
+% -----------------------------------------------------------------------------
+
+\gls{sym:In}
+
+% -----------------------------------------------------------------------------
+% Aus Buch Zitiren
+% -----------------------------------------------------------------------------
+
+\noindent
+hallo hallo ich bin Alex und finde Fußball sehr Spannend~\cite[S.3]{book-Einmaleins_Stromwandler-Redur}
+
+
+% -----------------------------------------------------------------------------
+% Die Formel für die Verlustleistung
+% -----------------------------------------------------------------------------
+
+\noindent
+Die Verlustleistung $P$ an den Kontaktstellen berechnet sich wie folgt:
+
+\begin{equation}
+    P = I^2 \cdot R
+    \label{eq:verlustleistung}
+\end{equation}
+
+
+
+
+% -----------------------------------------------------------------------------
+% Beispiel Hardware: Der Stelltrafo (Mittlere Größe)
+% -----------------------------------------------------------------------------
+\noindent
+Als Stellglied für die automatisierte Stromregelung wird ein motorbetriebener Dreiphasen-Stelltransformator eingesetzt. Abbildung \ref{fig:stelltrafo} zeigt das verwendete Modell.
+
+\einfuegenBildKlein{03_Ressourcen/pic/stelltrafo.jpg}{Motorbetriebener Dreiphasen-Stelltransformator zur Regelung des Prüfstroms}{fig:stelltrafo}
+
+\noindent
+Über die Motoransteuerung kann der Trafo die Ausgangsspannung und somit den Laststrom $I$ stufenlos nachregeln, um den temperaturabhängigen Widerstand $R$ der MCC-Felder zu kompensieren.
+
+
+
+% -----------------------------------------------------------------------------
+% Beispiel: Tabelle mit Multirow (Zeilen verbinden)
+% -----------------------------------------------------------------------------
+\begin{table}[H]
+    \centering
+    \caption{Parameter der Erwärmungsprüfung nach DIN EN IEC 61439}
+    \vspace{0.5em}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{l c c c}
+        \toprule
+        \textbf{Prüfling (Einschub)} & \textbf{Prüfstrom} & \textbf{Dauer} & \textbf{Umgebungstemperatur} \\
+        \midrule
+        Kompaktabzweig 250 & 250 A & 4 h & \multirow{3}{*}{22,5 °C} \\
+        Kompaktabzweig 400 & 400 A & 6 h & \\
+        Leistungsschalter 630 & 630 A & 8 h & \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:pruefparameter}
+\end{table}
+
+\noindent
+Wie in Tabelle \ref{tab:pruefparameter} zu sehen ist, bleibt die Umgebungstemperatur während der gesamten Testreihen konstant.
+
+
+% -----------------------------------------------------------------------------
+% Beispiel: Diagramm einfügen (landet im Diagrammverzeichnis)
+% -----------------------------------------------------------------------------
+\begin{diagram}[H]
+    \centering
+    % Pfad an deine Ordnerstruktur angepasst:
+    \includegraphics[width=0.85\textwidth]{03_Ressourcen/pic/temperaturverlauf.png}
+    \caption{Widerstandsverlauf bei Temperaturänderung}
+    \label{diag:temperatur_widerstand}
+\end{diagram}
+
+\noindent
+Das Diagramm \ref{diag:temperatur_widerstand} veranschaulicht den thermischen Drift. Die Kurve flacht ab, sobald das thermische Gleichgewicht erreicht ist.
+
+
+% -----------------------------------------------------------------------------
+% Beispiel: Mehrzeilige Formeln sauber untereinander ausrichten
+% -----------------------------------------------------------------------------
+\noindent
+Der temperaturabhängige Widerstand und die daraus resultierende Verlustleistung berechnen sich wie folgt:
+
+\begin{align}
+    R(T) &= R_{20} \cdot (1 + \alpha \cdot \Delta T) \label{eq:widerstand_temp} \\
+    P_v  &= I^2 \cdot R(T) \label{eq:verlustleistung_neu}
+\end{align}
+
+\noindent
+Gleichung \ref{eq:widerstand_temp} zeigt die Zunahme des Widerstands basierend auf dem Temperaturbeiwert $\alpha$ für Kupfer. Eingesetzt in Gleichung \ref{eq:verlustleistung_neu} wird deutlich, warum die Verlustleistung $P_v$ bei konstanter Spannung sinken würde.
+
+% -----------------------------------------------------------------------------
+% Beispiel: Zwei Bilder nebeneinander (Vorher / Nachher oder Modell / Realität)
+% -----------------------------------------------------------------------------
+\begin{figure}[H]
+    \centering
+    % Linkes Bild
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/stelltrafo.jpg}
+        \caption{Stelltrafo}
+        \label{fig:sub_stelltrafo}
+    \end{subfigure}
+    \hfill % Schiebt die Bilder auseinander
+    % Rechtes Bild
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/temperaturverlauf.png}
+        \caption{Temperaturverlauf}
+        \label{fig:sub_temperaturverlauf}
+    \end{subfigure}
+    
+    \caption{Widerstand und Kennlinie temperaturabhängige Widerstände}
+    \label{fig:thermischer_drift}
+\end{figure}
+
+\noindent
+Abbildung \ref{fig:thermischer_drift} zeigt links den Stelltrafo (\ref{fig:sub_stelltrafo}) und rechts den Widerstandsverlauf bei Temperaturänderung. (\ref{fig:sub_temperaturverlauf}) 

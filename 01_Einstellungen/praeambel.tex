@@ -3,6 +3,7 @@
 % =============================================================================
 
 % --- GRUNDEINSTELLUNGEN ---
+\PassOptionsToPackage{lang-warn=false}{datatool-base}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
@@ -100,7 +101,7 @@
 \newtoggle{showtables} \toggletrue{showtables}
 \newtoggle{showfigures} \toggletrue{showfigures}
 \newtoggle{showoszillos} \togglefalse{showoszillos}
-\newtoggle{showdiagrams} \togglefalse{showdiagrams}
+\newtoggle{showdiagrams} \toggletrue{showdiagrams}
 
 % --- SCHRIFTART AKTIVIEREN ---
 \AtBeginDocument{\haupttextSchrift}
