@@ -4,4 +4,14 @@
 \section{Ausblick}
 \label{chap:ausblick}
 
-%Ausblick auf zukünftige Optimierungspotenziale
+Mit der theoretischen Validierung und steuerungstechnischen Konzeption der hybriden R-L-Regelung ist das fundamentale Fundament für die Modernisierung des Prüfstandes gelegt. Für die anstehende praktische Umsetzung und den zukünftigen Anlagenbetrieb ergeben sich folgende weiterführende Handlungsfelder:
+
+\begin{enumerate}
+    \item \textbf{Prototyping und Regler-Tuning:} Im nächsten Schritt ist der physische Aufbau eines einzelnen 630\,A-Prüfmoduls (Typ 3er) als Prototyp zu realisieren. Hierbei gilt es, das theoretisch erarbeitete Gain-Scheduling (die arbeitspunktabhängige Anpassung der Reglerverstärkung $K_p$) im realen TIA-Portal-Projekt empirisch nachzuweisen und die Filterzeitkonstanten des PT1-Glieds feinzujustieren.
+    
+    \item \textbf{Anlagenskalierung auf den Vollausbau:} Nach erfolgreicher Validierung des Prototyps muss das System auf die vom Lastenheft geforderten zwölf parallelen Abgänge skaliert werden. Hierbei ist insbesondere die Netzrückwirkung auf den zentralen Stelltransformator (Ruhstrat) bei simultanen Regelvorgängen mehrerer Module zu untersuchen und steuerungstechnisch zu entkoppeln.
+    
+    \item \textbf{Digitale Integration (SCADA / MES):} Um das Potenzial der ET200 SP voll auszuschöpfen, sollte die SPS perspektivisch über Profinet an ein übergeordnetes Leitsystem (SCADA) oder ein Manufacturing Execution System (MES) angebunden werden. Dies ermöglicht die vollautomatische Generierung von manipulationssicheren Prüfprotokollen (PDF-Exports) direkt aus den aufgezeichneten Prozessdaten, was den Zertifizierungsprozess für die Bauartnachweise nach DIN EN 61439 weiter digitalisiert und beschleunigt.
+    
+    \item \textbf{Predictive Maintenance:} Langfristig könnten die von der Siemens-Steuerung erfassten Antriebsdaten (z.\,B. Schleppfehler des Schrittmotors, Temperatur der Drosselwicklung) genutzt werden, um Algorithmen zur vorausschauenden Wartung zu trainieren. Dies würde ungeplante Ausfälle des Prüfstandes proaktiv verhindern.
+\end{enumerate}

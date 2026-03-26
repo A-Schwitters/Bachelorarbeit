@@ -4,52 +4,165 @@
 \section{Theoretische Grundlagen und Stand der Technik}
 \label{chap:theorieteil}
 
+Dieses Kapitel legt das theoretische und normative Fundament für die vorliegende Bachelorarbeit. Um die Notwendigkeit und Funktionsweise des zu entwickelnden Automatisierungskonzeptes zu verstehen, wird zunächst der Aufbau der zu prüfenden Niederspannungsschaltanlagen (MCC) erläutert. Darauf aufbauend werden die strengen normativen Vorgaben der Erwärmungsprüfung nach DIN EN 61439 betrachtet. Abschließend werden die relevanten elektrotechnischen Phänomene, insbesondere der temperaturabhängige Widerstand, sowie die Grundlagen der messtechnischen Erfassung beleuchtet, die für die Auslegung der Regelstrecke maßgeblich sind.
+
 \subsection{Niederspannungsschaltgerätekombinationen (MCC-Anlagen)}
 \label{sec:niederspannungsschaltgeraetekombinationen}
 
+Niederspannungsschaltgerätekombinationen (NSK) bilden den zentralen Knotenpunkt für die Verteilung elektrischer Energie und die Steuerung von Verbrauchern in industriellen Netzen. Eine spezielle, hochgradig modularisierte Bauform dieser Anlagen ist das sogenannte Motor Control Center (MCC). Die Rolf Janssen GmbH fertigt diese Anlagen, um eine sichere, kompakte und wartungsfreundliche Energieverteilung für komplexe Anwendungen zu gewährleisten.
 
-\subsubsection{Aufbau und funktionsweise}
+\subsubsection{Aufbau und Funktionsweise}
 \label{sec:aufbau-und-funktionsweise}
-hallo
+
+Das Grundprinzip eines Motor Control Centers beruht auf einer strikten räumlichen und funktionalen Trennung (beispielsweise nach innerer Unterteilung Form 3b oder 4b). Die Anlage wird über ein zentrales Einspeisefeld mit elektrischer Energie versorgt. Von dort aus wird der Strom über ein horizontales Hauptsammelschienensystem auf die einzelnen Schaltschränke (Felder) verteilt.
+
+
+
+In jedem dieser Felder verläuft ein vertikales Verteilschienensystem. An dieses vertikale System werden die eigentlichen Abgangseinheiten, die MCC-Module, angeschlossen. Diese Module beinhalten die spezifische Schalt- und Schutztechnik (wie Leistungsschalter, Schütze oder Frequenzumrichter) für den jeweiligen Verbraucher. Der große Vorteil dieses Aufbaus ist die Einschub- oder Steckttechnik: Defekte oder zu wartende Module können bei laufendem Betrieb der restlichen Anlage schnell und sicher ausgetauscht werden. Genau diese Modularität bringt jedoch thermische Herausforderungen mit sich, die im Rahmen der Erwärmungsprüfung untersucht werden müssen.
 
 \subsubsection{Relevante Komponenten und Stecktechnik}
 \label{sec:relevante-komponenten-und-stecktechnik}
-hallo
+
+Der kritischste Faktor bei der Übertragung von Strömen bis zu 630 A sind nicht die massiven Kupferschienen selbst, sondern die Übergangswiderstände an den Verbindungsstellen. Bei MCC-Anlagen in Einschubtechnik erfolgt die Kontaktierung der Module an das vertikale Verteilschienensystem in der Regel über spezielle Steckklammern (auch Tulpenkontakte genannt).
+
+
+
+Diese Steckkontakte sind aus thermischer Sicht die sensibelsten Komponenten (Hotspots) der gesamten Anlage. Selbst minimale Fertigungstoleranzen, Oxidation oder nachlassende Federkraft der Klammern führen zu einer Erhöhung des Übergangswiderstandes. Fließt nun der hohe Bemessungsstrom über diese Kontaktstellen, entsteht gemäß dem ohmschen Gesetz eine Verlustleistung in Form von Wärme.
+
+Die exakte thermische Belastbarkeit dieser Stecktechnik und der angrenzenden Leiter ist der primäre Grund, weshalb die Erwärmungsprüfung nach Norm so engmaschig überwacht werden muss. Die Automatisierung des Prüfstandes zielt darauf ab, exakt diese kritischen Komponenten über Stunden hinweg mit einem absolut konstanten Bemessungsstrom zu belasten, ohne dass Schwankungen im Prüfnetz die thermischen Messergebnisse an den Kontakten verfälschen.
 
 \subsection{Normativer Hintergrund (DIN EN 61439-1/-2)}
 \label{sec:normativer-hintergrund}
-hallo 
+
+Die Projektierung, Konstruktion und Prüfung von Niederspannungsschaltgerätekombinationen unterliegt im Europäischen Wirtschaftsraum strengen normativen Vorgaben. Die zentrale Normenreihe hierfür ist die DIN EN 61439. Teil 1 (DIN EN 61439-1) definiert die allgemeinen Festlegungen, während sich Teil 2 (DIN EN 61439-2) spezifisch auf Energie-Schaltgerätekombinationen bezieht, zu denen auch die Motor Control Center (MCC) der Rolf Janssen GmbH zählen.
+
+Bevor eine Schaltanlage in Verkehr gebracht werden darf, fordert die Norm einen sogenannten Bauartnachweis. Dieser Nachweis bestätigt, dass die Konstruktion und die verwendeten Materialien den definierten Anforderungen an Sicherheit und Leistungsfähigkeit entsprechen.
 
 \subsubsection{Bauartnachweis durch Prüfung (Fokus: Erwärmungsprüfung)}
 \label{sec:bauartnachweis-durch-pruefung}
-hallo
 
-\subsubsection{Prüfparameter und Abbruchkriterien (Toleranzband +5 Prozent, 1 K/h-Kriterium)}
+Ein essenzieller Bestandteil des Bauartnachweises ist der Nachweis der Erwärmung (Kapitel 10.10 der DIN EN 61439-1). Ziel dieser Prüfung ist es, sicherzustellen, dass die Anlage bei Dauerbelastung mit ihrem Bemessungsstrom die maximal zulässigen Grenzübertemperaturen der verbauten Komponenten nicht überschreitet.
+
+Dies ist von entscheidender Bedeutung, da übermäßige Erwärmung die Isolation der Leiter beschädigt, die Lebensdauer von Betriebsmitteln drastisch verkürzt und im schlimmsten Fall zu einem Brand führen kann. Besonders kritisch sind hierbei die in Kapitel 2.1.2 beschriebenen Steckkontakte der MCC-Module, da sich hier die Verlustleistung konzentriert.
+
+Für den Prüfstand der Rolf Janssen GmbH bedeutet dies in der Praxis: Die Anlage (der Prüfling) muss unter realitätsnahen Bedingungen mit den spezifischen Bemessungsströmen der jeweiligen Abgänge belastet werden. Da die zu prüfenden MCC-Module Bemessungsströme von bis zu 630 A aufweisen, stellt diese Erwärmungsprüfung höchste Anforderungen an die Leistungsfähigkeit und Stabilität der Prüfstromquelle.
+
+\subsubsection{Prüfparameter und Abbruchkriterien (Toleranzband +5~\%, 1 K/h-Kriterium)}
 \label{sec:pruefparameter-und-abbruchkriterien}
-hallo
+
+Die DIN EN 61439-1 definiert sehr präzise Parameter, wie die Erwärmungsprüfung durchzuführen und wann sie als abgeschlossen zu betrachten ist. Genau diese normativen Vorgaben bilden die essenziellen Anforderungen für die zu entwickelnde Automatisierungslösung:
+
+1. Das Toleranzband des Prüfstroms (+5~\%):\\
+Die Norm fordert, dass der eingespeiste Prüfstrom während der gesamten Dauer der Prüfung nahezu konstant gehalten werden muss. Es ist zulässig, dass der Strom leicht über dem Nennwert liegt, um Worst-Case-Szenarien abzudecken, jedoch darf er nicht abfallen. In der Praxis der Prüfstandsautomatisierung bedeutet dies, dass die Regelung den Strom strikt innerhalb eines Toleranzbandes von 0~\% bis maximal +5~\% des jeweiligen Bemessungsstroms halten muss. Sinkt der Strom unter den Nennwert, ist die Prüfung streng genommen ungültig. Dies unterstreicht die Notwendigkeit einer hochpräzisen, kontinuierlichen Nachregelung, um den thermischen Drift (siehe Kap. 2.3) auszugleichen.
+
+2. Das thermische Stabilitätskriterium (1 K/h-Kriterium):\\
+Die Erwärmungsprüfung ist kein Test über eine fest definierte Zeitspanne, sondern ein Test bis zum Erreichen des thermischen Gleichgewichts. Die Norm definiert dieses Gleichgewicht durch das sogenannte 1 K/h-Kriterium. Die Prüfung läuft so lange, bis die Temperatur an allen relevanten Messstellen (Sensoren an Kupferschienen, Steckkontakten und Gehäuseteilen) um nicht mehr als 1 Kelvin pro Stunde (1 K/h) ansteigt.
 
 
 
-\subsection{Elektrotechnische und thermodynamische Grundlagen }
+Mathematisch lässt sich dieses Abbruchkriterium als Grenzwert der zeitlichen Ableitung der gemessenen Temperaturänderung ($\Delta\vartheta$) beschreiben:
+\begin{equation}
+    \frac{d(\Delta\vartheta)}{dt} \leq 1\,\frac{\text{K}}{\text{h}}
+    \label{eq:abbruchkriterium}
+\end{equation}
+
+In der Realität von Hochstromprüfungen kann es mehrere Stunden dauern, bis dieses Gleichgewicht bei großen Anlagen erreicht ist. Die geplante Automatisierung mit der Siemens ET200 SP muss daher nicht nur präzise regeln, sondern auch über lange Zeiträume absolut stabil arbeiten und darf die Umgebungstemperaturmessung nicht durch eigene Abwärme (z. B. durch glühende Lastwiderstände) verfälschen.
+
+\subsection{Elektrotechnische und thermodynamische Grundlagen}
 \label{sec:elektrotechnische-und-thermodynamische-grundlagen}
-hallo 
+
+Um das Kernproblem des aktuellen Prüfstandes – den stetigen Abfall des Prüfstroms – physikalisch fundiert zu betrachten, müssen die zugrundeliegenden elektrotechnischen Gesetzmäßigkeiten analysiert werden. Nur durch das Verständnis der thermodynamischen Effekte innerhalb der Anlage und der Lastwiderstände lässt sich eine geeignete Regelstrecke für die Automatisierung auslegen. 
 
 \subsubsection{Temperaturabhängigkeit elektrischer Leiter und thermischer Drift}
 \label{sec:temperaturabhaengigkeit-elektrischer-leiter-und-thermischer-drift}
-hallo
+
+Alle im Hochstrompfad des Prüfstandes verbauten metallischen Leiter, insbesondere die massiven Kupferschienen der MCC-Anlage sowie die externen Lastwiderstände aus Edelstahl, weisen ein Kaltleiterverhalten auf. Das grundlegende Prinzip eines Kaltleiters (PTC) lässt sich anhand seiner charakteristischen Kennlinie verdeutlichen.
+
+\einfuegenBildKlein{03_Ressourcen/pic/PTC.png}{Charakteristische Kennlinie eines PTC-Thermistors}{fig:PTC}
+
+Wie im Diagramm zu erkennen ist, besitzt die Kurve einen definierten Arbeitspunkt, der durch die kritische Temperatur $T_c$ (Schalttemperatur oder Bezugstemperatur) und den zugehörigen Schaltwiderstand $R_s$ markiert wird. Ab diesem Punkt ($T_c$, $R_s$) steigt der Widerstand des Materials extrem steil an. 
+
+Wichtig ist hierbei die materialtechnische Unterscheidung für den Prüfstand: Im Gegensatz zu keramischen PTC-Bauteilen aus der Elektronik, die genau diesen dargestellten extremen Knick am Arbeitspunkt aufweisen, verhält sich der Widerstandsanstieg bei reinen Metallen und Legierungen wie Kupfer oder Edelstahl über weite Bereiche nahezu linear. Das zugrundeliegende physikalische Problem – die massive Widerstandserhöhung bei Erwärmung – ist für den Prüfstand jedoch dasselbe. Dieser lineare physikalische Zusammenhang für die am Prüfstand verwendeten Metalle lässt sich durch die folgende Gleichung beschreiben:
+
+\begin{equation}
+    R(\vartheta) = R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right]
+    \label{eq:ptc_widerstand}
+\end{equation}
+
+Dabei ist $R_{20}$ der Kaltwiderstand bei einer Referenztemperatur von 20\,$^\circ$C, $\alpha$ der materialspezifische Temperaturkoeffizient (für Kupfer und Edelstahl unterschiedlich) und $\vartheta$ die aktuelle Leitertemperatur in $^\circ$C. 
+
+Da die Erwärmungsprüfung über mehrere Stunden unter maximaler Belastung durchgeführt wird, erhitzen sich insbesondere die externen Edelstahl-Widerstände massiv. Gemäß dem ohmschen Gesetz verhält sich der fließende Strom $I$ umgekehrt proportional zum Widerstand. Setzt man die Temperaturabhängigkeit in das ohmschen Gesetz ein und geht von einer zunächst konstanten Speisespannung $U$ aus, ergibt sich für den Stromfluss:
+
+\begin{equation}
+    I(\vartheta) = \frac{U}{R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right]}
+    \label{eq:thermischer_drift}
+\end{equation}
+
+Dieser mathematische Ausdruck beweist das in der betrieblichen Praxis beobachtete Phänomen des thermischen Drifts. Wenn die Temperatur $\vartheta$ im Nenner steigt, wird der Gesamtwert des Bruchs kleiner – der Prüfstrom fällt unweigerlich ab. Um den Strom auf dem geforderten Bemessungswert (von z.\,B. 630\,A) zu halten, muss die anliegende Spannung $U$ kontinuierlich proportional erhöht werden. Genau diese Nachführung ist die Kernaufgabe der zu entwickelnden Automatisierungslösung.
 
 \subsubsection{Übertragungswiderstände an Kontaktstellen}
 \label{sec:uebertragungswiderstaende-an-kontaktstellen}
-hallo
+
+Neben den eigentlichen Leitern spielen die Kontaktübergänge eine entscheidende Rolle für die thermodynamische Betrachtung. Wie in der Systemarchitektur beschrieben, werden die MCC-Module über Steckklammern mit dem vertikalen Verteilschienensystem verbunden. An diesen mechanischen Kontaktstellen entsteht ein lokaler Übertragungswiderstand $R_K$.
+
+Fließt ein Strom über diesen Übergangswiderstand, entsteht eine thermische Verlustleistung $P_v$, die quadratisch vom Prüfstrom $I$ abhängt:
+\begin{equation}
+    P_v = 3 \cdot I^2 \cdot R_K
+    \label{eq:verlustleistung}
+\end{equation}
+
+(Hinweis: Der Faktor 3 ergibt sich aus dem dreiphasigen Drehstromsystem unter der Annahme einer symmetrischen, rein ohmschen Belastung).
+
+Die an diesen Hotspots umgesetzte thermische Verlustleistung wird in Form von Wärmeenergie an das Material und die Umgebung abgeführt, was zu einem lokalen Temperaturanstieg führt. In der normativen Thermodynamik der Erwärmungsprüfung wird dieser Anstieg als Grenzübertemperatur $\Delta\vartheta$ bezeichnet. Sie berechnet sich aus der Differenz zwischen der absolut gemessenen Temperatur am Kontakt ($\vartheta_{\text{Messpunkt}}$) und der aktuellen Umgebungstemperatur ($\vartheta_{\text{Umgebung}}$):
+\begin{equation}
+    \Delta\vartheta = \vartheta_{\text{Messpunkt}} - \vartheta_{\text{Umgebung}}
+    \label{eq:uebertemperatur}
+\end{equation}
+
+Genau diese ermittelte Übertemperatur $\Delta\vartheta$ ist die entscheidende thermodynamische Messgröße der gesamten Anlage. Die zu entwickelnde SPS-Regelung muss diesen Wert kontinuierlich aus den Sensordaten berechnen, um das in Kapitel 2.2 definierte normative Abbruchkriterium der zeitlichen Temperaturänderung von maximal 1 K/h sicher auszuwerten und die Prüfung normgerecht zu protokollieren.
 
 \subsection{Sensorik und Messwerterfassung}
 \label{sec:sensorik-und-messwerterfassung}
-hallo 
 
-\subsubsection{Temperaturerfassung (Thermoelemente)}
+Um das elektrotechnische System des Prüfstandes in einen geschlossenen, automatisierten Regelkreis zu überführen, benötigt die Siemens ET200 SP Steuerung kontinuierliche und hochpräzise Ist-Werte. Diese setzen sich primär aus den thermischen Messdaten für die Überwachung des 1\,K/h-Kriteriums sowie den elektrischen Messdaten zur Konstanthaltung des Prüfstroms zusammen. 
+
+\subsubsection{Temperaturerfassung (Thermoelemente Typ K und Messumformer)}
 \label{sec:temperaturerfassung}
-hallo
 
-\subsubsection{Präzise Strom- und Spannungsmessung}
-\label{sec:praezise-strom-und-spannungsmessung}
-hallo
+Die Erfassung der Temperaturen an den thermisch kritischen Hotspots der Schaltanlage erfolgt in der Praxis über Thermoelemente des Typs K. Diese Sensoren nutzen den thermoelektrischen Seebeck-Effekt, bei dem an der Verbindungsstelle zweier unterschiedlicher metallischer Leiter eine temperaturabhängige Spannung entsteht. 
+
+Da diese Thermospannung lediglich im Millivolt-Bereich liegt und im industriellen Umfeld eines Hochstromprüfstandes extrem störanfällig gegenüber elektromagnetischen Feldern ist, werden die Signale nicht direkt in die Steuerung geführt. Stattdessen kommen nachgeschaltete Messumformer (Transmitter) zum Einsatz. Diese wandeln das schwache Sensorsignal in ein robustes, normiertes Analogsignal um. Erst dieses störungssichere Standardsignal wird von den analogen Eingabebaugruppen (AI) der ET200 SP eingelesen und steuerungstechnisch weiterverarbeitet.
+
+\subsubsection{Strommessung und PID-Regelung des Stelltransformators}
+\label{sec:strommessung-und-pid-regelung}
+
+Neben der Temperatur ist der elektrische Stromfluss die entscheidende Regelgröße (Ist-Wert) für die Steuerung. Da primäre Hochströme von beispielsweise 2000\,A nicht direkt in eine Baugruppe der Steuerung geführt werden können, kommen induktive Messstromwandler zum Einsatz. Diese Bauteile transformieren den primären Hochstrom in ein für die Messtechnik handhabbares Sekundärsignal. Üblich sind hierbei genormte analoge Einheitssignale wie $0-10\,\text{V}$ oder $4-20\,\text{mA}$, die über Standard-Analogeingangskarten (AI) der ET200 SP eingelesen werden. Das $4-20\,\text{mA}$-Signal bietet dabei den entscheidenden industriellen Vorteil der Drahtbruchsicherheit (Live-Zero), was für die Ausfallsicherheit des zu entwickelnden Prüfstandes von großer Bedeutung ist.
+
+Dieser verzögerungsfrei gemessene Strom-Istwert bildet die elementare Eingangsgröße für den in der ET200 SP implementierten PID-Regler. Hierbei ist für das physikalische und steuerungstechnische Gesamtverständnis der Anlage eine wichtige Differenzierung essenziell: Der PID-Regler wirkt ausschließlich auf den zentralen motorisierten Stelltransformator (Stelltrafo) und regelt somit den \textit{Gesamteinspeisestrom}, der über das Einspeisefeld (Leistungsschalterfeld) in die Anlage geführt wird. 
+
+Dieser Gesamtstrom teilt sich innerhalb der Schaltanlage auf. Ein typisches Prüfszenario umfasst beispielsweise zwölf MCC-Module unterschiedlicher Leistungsklassen, wie in Tabelle \ref{tab:mcc_bestueckung} exemplarisch dargestellt. 
+
+\begin{table}[htbp]
+    \centering
+    \caption{Beispielhafte Bestückung eines MCC-Prüfaufbaus}
+    \label{tab:mcc_bestueckung}
+    \begin{tabular}{lcc}
+        \hline
+        \textbf{Modultyp / Baugröße} & \textbf{Anzahl} & \textbf{Bemessungsstrom pro Modul} \\
+        \hline
+        Typ A & 6 & 32\,A \\
+        Typ B & 3 & 63\,A \\
+        Typ 1/H & 1 & 250\,A \\
+        Typ 2er & 1 & 400\,A \\
+        Typ 3er & 1 & 630\,A \\
+        \hline
+        \textbf{Summe der Abgänge} & \textbf{12} & \textbf{1661\,A} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+In der Summe ziehen diese Abgänge im dargestellten Beispiel einen Teilstrom von 1661\,A. Die Differenz zum eingespeisten Gesamtstrom (z.\,B. 2000\,A) wird am Ende der Hauptsammelschiene (HSS) über eine Kurzschlussbrücke geführt, um das System zu schließen und die Hauptsammelschiene normgerecht zu belasten.
+
+Der in Kapitel 2.3.1 mathematisch hergeleitete thermische Drift findet in der Praxis primär durch die massive Erwärmung der externen Lastwiderstände an den einzelnen Modul-Abgängen statt. Da sich diese Widerstände abhängig von ihrer Belastung unterschiedlich stark erhitzen, verändern sich auch die individuellen Teilströme der Module über die mehrstündige Prüfdauer signifikant. 
+
+Genau hier liegt die technische Grenze der reinen Einspeise-Regelung: Während der PID-Regler der ET200 SP den Gesamtstrom am Stelltrafo vollautomatisch konstant hält, führt der thermische Drift in den Lastwiderständen dazu, dass die Ströme in den einzelnen Abgängen abfallen. Diese müssen folglich während der Prüfung weiterhin von Hand an den jeweiligen Lastwiderständen nachgeregelt werden, um jedes einzelne MCC-Modul strikt im normativ geforderten Toleranzband von +5\,\% zu halten.

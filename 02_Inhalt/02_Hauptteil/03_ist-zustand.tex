@@ -2,30 +2,112 @@
 
 
 \section{Analyse des Ist-Zustandes und Systemanforderungen}
-\label{chap:ist-zustand}
+\label{chap:ist_zustand}
 
-\subsection{Aufbau des Erwärmungsprüfstandes}
-\label{sec:aufbau-des-erwaermungspruefstandes}
-hallo 
+Um eine fundierte und zielgerichtete Automatisierungslösung für den Erwärmungsprüfstand der Rolf Janssen GmbH zu entwickeln, muss zunächst der bestehende Prüfprozess detailliert analysiert werden. In diesem Kapitel wird der physikalische Aufbau des aktuellen Prüfstandes beschrieben. Darauf aufbauend erfolgt eine Schwachstellenanalyse, die aufzeigt, warum das bisherige Verfahren nicht nur zeit- und personalintensiv, sondern auch normativ riskant ist. Abschließend werden aus diesen Erkenntnissen die verbindlichen Systemanforderungen (Pflichtenheft) für das neu zu entwickelnde Automatisierungskonzept abgeleitet.
 
-\subsection{Schwachstellenanalyse}
+\subsection{Aufbau und Funktionsweise des aktuellen Prüfstandes}
+\label{sec:aufbau_ist_zustand}
+
+Der aktuelle Erwärmungsprüfstand für Niederspannungsschaltgerätekombinationen ist darauf ausgelegt, reale Betriebsbedingungen für den Bauartnachweis nach DIN EN 61439 zu simulieren. Die Anlage wird von einer zentralen Prüfstromquelle gespeist. Kernstück dieser Einspeisung ist ein motorisierter Dreiphasen-Säulenstelltransformator (Fabrikat Ruhstrat), der die primäre Netzspannung stufenlos regelt und über nachgeschaltete Hochstromtransformatoren die benötigten Prüfströme bereitstellt.
+
+Die Dimensionierung dieses Prüfstandes ist für extreme Hochstromanwendungen ausgelegt: Der Transformator kann Dauerströme von bis zu 5000\,A und im Spitzenlastbereich sogar bis zu 6000\,A liefern. Da der Prüfstrom über den Stelltrafo proportional zur Ausgangsspannung geregelt wird, ist die anliegende Leiterspannung ($U_{L-L}$) im Niederspannungsbereich nicht konstant, sondern veränderlich. Reale Messreihen am Prüfstand verdeutlichen diese Charakteristik: Bei einem eingespeisten Gesamtstrom von 1000\,A beträgt die Spannung 2,462\,V, bei 1500\,A liegt sie bei 3,704\,V und bei Hochstromprüfungen mit 3200\,A steigt $U_{L-L}$ auf 7,447\,V an.
+
+Dieser vom Transformator generierte Gesamtstrom wird über massive Kupferschienen direkt in das Einspeisefeld (Leistungsschalterfeld) der zu prüfenden Schaltanlage geführt. Von dort verteilt sich der Strom  horizontal über die  HSS und vertikalüber das Verteilschienensystem auf die einzelnen Abgänge (z.\,B. auf die MCC-Module). 
+
+Um die realen Verbraucher zu simulieren, werden an die Abgänge der MCC-Module konventionelle, passive Lastwiderstände angeschlossen. Bei einem typischen Prüfaufbau mit bis zu zwölf gleichzeitig belasteten Abgangseinheiten bedeutet dies, dass zwölf separate Lastwiderstands-Pfade aufgebaut und verkabelt werden müssen. 
+
+Die Steuerung und Überwachung der Anlage erfolgt grundlegend bereits über ein Siemens ET200 SP Automatisierungssystem. Dieses erfasst über Messstromwandler und Netzanalysatoren die fließenden Ströme und regelt über einen PID-Regler den Stelltransformator. Wie in Kapitel 2.4 dargelegt, beschränkt sich diese automatische Regelung bisher jedoch ausschließlich auf den Gesamteinspeisestrom der Anlage.
+
+\subsection{Schwachstellenanalyse und normative Risiken}
 \label{sec:schwachstellenanalyse}
-hallo 
 
-\subsubsection{Manueller Regelaufwand und Fehlerquellen}
-\label{sec:manueller-regelaufwand-und-fehlerquellen}
-hallo 
+Aus dem in Kapitel 2.3 hergeleiteten thermischen Verhalten der Lastwiderstände in Kombination mit der reinen Einspeise-Regelung ergibt sich in der betrieblichen Prüfpraxis eine gravierende Schwachstelle: die ungleiche, unkontrollierte Stromaufteilung und die daraus resultierende Notwendigkeit permanenter manueller Eingriffe. Diese Problematik lässt sich in drei wesentliche Kernaspekte unterteilen, die den dringenden Optimierungsbedarf des Prüfstandes begründen.
 
-\subsection{Ableitung der Systemanforderungen (Pflichtenheft)}
-\label{sec:ableitung-der-systemanforderungen}
-hallo 
+\subsubsection{Verletzung der normativen Vorgaben (DIN EN 61439-1)}
+\label{sec:verletzung_norm}
+Wie in der Masterarbeit von Rothhammer (2016) zur Erwärmungsprüfung bei der Rolf Janssen GmbH detailliert dargelegt, sind die normativen Anforderungen an den Bauartnachweis äußerst strikt. Die DIN EN 61439-1 fordert, dass der Prüfstrom an keinem der Abgänge während der gesamten Dauer der Prüfung unter den Bemessungsstrom abfällt. Zugelassen ist lediglich ein Toleranzband von $0\,\%$ bis $+5\,\%$. Fällt der Strom durch den thermischen Drift der Lastwiderstände unbemerkt ab, wird nicht die volle Verlustleistung im Modul umgesetzt. Das 1\,K/h-Abbruchkriterium würde in diesem Fall fälschlicherweise zu früh erreicht, und die Prüfung wäre im strengen normativen Sinne ungültig.
 
-\subsubsection{Technische Spezifikationen (Strombereiche, Spannung < 5 V)}
-\label{sec:technische-spezifikationen}
-hallo 
+\subsubsection{Gegenseitige Beeinflussung (Domino-Effekt der Regelung)}
+\label{sec:gegenseitige_beeinflussung}
+Aktuell muss das Prüfpersonal dem thermischen Drift manuell entgegenwirken, indem die Lastwiderstände (z.\,B. über Abgriffschellen) nachjustiert werden. Bei einem Aufbau mit zwölf Modulen führt dies zu einem komplexen regelungstechnischen Problem: Verringert der Werker den Widerstand an Modul 1 (um den dortigen Teilstrom wieder zu erhöhen), sinkt der Gesamtwiderstand der Anlage. Der PID-Regler der ET200 SP registriert einen Anstieg des Gesamtstroms und regelt den Ruhstrat-Stelltransformator herunter. Diese Absenkung der Gesamtspannung führt unweigerlich dazu, dass die Ströme in den Modulen 2 bis 12 schlagartig abfallen und dort ebenfalls manuell nachgeregelt werden müssen. Es entsteht ein iterativer, extrem zeit- und personalintensiver Kreislauf.
 
-\subsubsection{Anforderungen an die Automatisierung (SPS-Integration)}
-\label{sec:anforderungen-an-die-automatisierung}
-hallo 
+\subsubsection{Mathematischer Nachweis des thermischen Drifts (Beispielrechnung)}
+\label{sec:mathematischer_nachweis}
+Um die Dimension dieses Problems zu verdeutlichen, wird der thermische Drift beispielhaft für das leistungsstärkste MCC-Modul (Typ 3er) berechnet. Gemäß der internen Aufgabenstellung fließen hier $I_N = 630\,\text{A}$ bei einer umgesetzten Verlustleistung von $P_{v,\max} \approx 5,5\,\text{kW}$ pro Phase. Der anfängliche Kaltwiderstand ($R_{20}$) dieses Lastpfades beträgt ca. $4,6\,\text{m}\Omega$.
 
+Unter Dauerlast erhitzen sich diese massiven Edelstahlwiderstände stark. Nimmt man für den Widerstandsdraht einen Temperaturanstieg von $\Delta\vartheta = 200\,\text{K}$ und einen typischen Temperaturkoeffizienten für Edelstahllegierungen von $\alpha \approx 1,0 \cdot 10^{-3}\,\text{K}^{-1}$ an, ergibt sich für den Warmwiderstand $R_{\text{warm}}$:
+
+\begin{equation}
+    R_{\text{warm}} = R_{20} \cdot (1 + \alpha \cdot \Delta\vartheta)
+\end{equation}
+\begin{equation}
+    R_{\text{warm}} = 4,6\,\text{m}\Omega \cdot (1 + 0,001\,\text{K}^{-1} \cdot 200\,\text{K}) = 4,6\,\text{m}\Omega \cdot 1,2 = 5,52\,\text{m}\Omega
+\end{equation}
+
+Der ohmsche Widerstand steigt somit um $20\,\%$. Geht man für einen kurzen Moment von einer konstanten Einspeisespannung aus, würde der Teilstrom in diesem Modul nach dem ohmschen Gesetz proportional einbrechen:
+
+\begin{equation}
+    I_{\text{neu}} = \frac{I_N}{1,2} = \frac{630\,\text{A}}{1,2} = 525\,\text{A}
+\end{equation}
+
+Ein Abfall von 630\,A auf 525\,A liegt weit außerhalb des $+5\,\%$-Toleranzbandes. Um den Strom bei $R_{\text{warm}} = 5,52\,\text{m}\Omega$ wieder auf 630\,A zu zwingen, muss die Spannung über diesem Zweig massiv erhöht oder der physische Widerstandswert durch umklemmen manuell reduziert werden. Diese Rechnung beweist, dass eine Automatisierung der Einzelabgänge zwingend erforderlich ist, um die Prüfeffizienz zu wahren.
+
+\subsection{Systemanforderungen und technologische Lösungsansätze}
+\label{sec:systemanforderungen}
+
+Aus der vorangegangenen Analyse wird deutlich, dass eine rein manuelle Steuerung den modernen Anforderungen an Präzision und Effizienz nicht mehr gerecht wird. Um die Fehlerrate zu senken und die Rüstzeiten zu optimieren, werden im Folgenden die verbindlichen Anforderungen an das neue System definiert.
+
+\subsubsection{Funktionale Anforderungen (Pflichtenheft)}
+
+Das zu entwickelnde System muss primär die Stabilisierung der Einzelströme an bis zu zwölf Abgängen übernehmen. Dabei sind folgende Kriterien zwingend zu erfüllen:
+
+\begin{itemize}
+    \item \textbf{Automatischer Drift-Ausgleich:} Die Regelung muss den thermisch bedingten Widerstandsanstieg der Lastwiderstände in Echtzeit kompensieren. Ein manuelles Nachjustieren durch den Prüfer darf nicht mehr erforderlich sein.
+    \item \textbf{Einhaltung des Toleranzbandes:} Jeder Abgang muss individuell innerhalb von $0\,\%$ bis $+5\,\%$ des Bemessungsstroms gehalten werden, um die Konformität zur DIN EN 61439-1 sicherzustellen.
+    \item \textbf{SPS-Integration:} Die Ansteuerung muss über die vorhandene Siemens ET200 SP erfolgen. Dabei ist auf eine EMV-gerechte Signalverarbeitung zu achten, da im Prüfstand hohe magnetische Feldstärken auftreten (vgl. Schmidt, 2026).
+    \item \textbf{Normgerechte Stromform:} Nach DIN EN 60947-1 ist ein Leistungsfaktor von $\cos\varphi \approx 1$ anzustreben. Die Sinusform des Stroms darf durch elektronische Stellglieder (z.\,B. Phasenanschnitt) nicht so stark verzerrt werden, dass die thermische Wirkung am Prüfling verfälscht wird.
+\end{itemize}
+
+\subsubsection{Elektrische Spezifikationen der Lastpfade}
+
+Die Dimensionierung der Regelglieder orientiert sich an der maximalen Bestückung eines typischen MCC-Feldes. Die folgende Tabelle verdeutlicht die Bandbreite der Lasten, die das System gleichzeitig beherrschen muss:
+
+\begin{table}[htbp]
+    \centering
+    \caption{Elektrische Anforderungen der Modul-Abgänge (Soll-Werte)}
+    \label{tab:anforderungen_last}
+    \begin{tabular}{lcccc}
+        \hline
+        \textbf{Modultyp} & \textbf{Anzahl} & \textbf{Strom ($I_N$)} & \textbf{Leistung ($P_{v}$)} & \textbf{Widerstand ($R$)} \\
+        \hline
+        Typ 3er & 1 & 630\,A & 5,50\,kW & 4,60\,m$\Omega$ \\
+        Typ 2er & 1 & 400\,A & 3,50\,kW & 7,22\,m$\Omega$ \\
+        Typ 1/H & 1 & 250\,A & 2,20\,kW & 11,50\,m$\Omega$ \\
+        Typ B   & 3 & 63\,A  & 0,55\,kW & 45,83\,m$\Omega$ \\
+        Typ A   & 6 & 32\,A  & 0,28\,kW & 90,22\,m$\Omega$ \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Das System muss somit eine Spreizung vom 32\,A-Kleinstverbraucher bis zum 630\,A-Hochstromabgang abdecken, wobei die Leiterspannung systembedingt unter $10\,\text{V}$ bleibt.
+
+\subsubsection{Vorstellung der technologischen Lösungsansätze}
+\label{sec:vorstellung_loesungsansaetze}
+
+Auf Basis der Anforderungen werden drei technologische Ansätze identifiziert, die theoretisch geeignet sind, den thermischen Drift zu kompensieren:
+
+\begin{itemize}
+    \item \textbf{Konzept A: Hybride Widerstandslast} \\
+    Parallelschaltung aus einem passiven Festwiderstand für die Grundlast und einem kleineren, motorisch angetriebenen Regelwiderstand zur Feinjustierung.
+
+    \item \textbf{Konzept B: Elektronische Lastsimulation} \\
+    Einsatz von Leistungselektronik (z.\,B. IGBTs), um den Stromfluss rein elektrisch über die Zeit (PWM) zu steuern.
+
+    \item \textbf{Konzept C: Induktive Lastsimulation} \\
+    Verwendung von regelbaren Drosseln, um den Strom über die Änderung der Induktivität einzustellen.
+
+    \item \textbf{Konzept D: Hybride ohmsch-induktive Lastsimulation (R-L-Kombination)} \\
+    Kombination eines Festwiderstands für die normgerechte Grundlast mit einer parallel geschalteten Tauchkerndrossel zur verschleißfreien und hitzeneutralen Feinregelung.
+\end{itemize}
 
