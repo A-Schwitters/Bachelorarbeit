@@ -39,7 +39,11 @@
     "v00-ba-Schwitters-Alexandername-.bbl-SAVE-ERROR": true,
     "v00-ba-Schwitters-Alexandername-.synctex(busy)": true,
     "v00-ba-Schwitters-Alexandername-.loo": true,
-    "02_Inhalt/02_Hauptteil/07_fazit.aux": true
+    "02_Inhalt/02_Hauptteil/07_fazit.aux": true,
+    "02_Inhalt/02_Hauptteil/06_wirtschaftliche_und_betriebliche_Betrachtung.aux": true,
+    "02_Inhalt/02_Hauptteil/05_detaillierte_ausarbeitung.aux": true,
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung_und_evaluierung.aux": true,
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung_und _evaluierung.aux": true
   },
   "hide-files.files": [
     "v00-ba-Schwitters-Alexandername-.sls",
@@ -76,7 +80,11 @@
     "v00-ba-Schwitters-Alexandername-.bbl-SAVE-ERROR",
     "v00-ba-Schwitters-Alexandername-.synctex(busy)",
     "v00-ba-Schwitters-Alexandername-.loo",
-    "02_Inhalt/02_Hauptteil/07_fazit.aux"
+    "02_Inhalt/02_Hauptteil/07_fazit.aux",
+    "02_Inhalt/02_Hauptteil/06_wirtschaftliche_und_betriebliche_Betrachtung.aux",
+    "02_Inhalt/02_Hauptteil/05_detaillierte_ausarbeitung.aux",
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung_und_evaluierung.aux",
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung_und _evaluierung.aux"
   ],
   "cloudlatex.enabled": true,
 
