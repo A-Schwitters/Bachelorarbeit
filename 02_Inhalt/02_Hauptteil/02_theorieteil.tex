@@ -1,15 +1,31 @@
+
+% =============================================================================
+% 2 Theoretische Grundlagen und Stand der Technik
+% =============================================================================
 \section{Theoretische Grundlagen und Stand der Technik}
-\label{chap:theorieteil}
+\label{chap:grundlagen}
 
 Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $630\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Sie erfordert nicht nur regelungstechnische Expertise, sondern zwingend ein tiefgreifendes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des zu prüfenden Systems. Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächst wird die spezifische Systemarchitektur der zu prüfenden Niederspannungsschaltgerätekombinationen (Motor Control Center) der Rolf Janssen GmbH detailliert analysiert. Darauf aufbauend werden die strengen juristischen und messtechnischen Vorgaben der Erwärmungsprüfung nach der internationalen Normenreihe DIN EN 61439 systematisch erörtert. Die Kenntnis dieser Grundlagen ist unerlässlich, um die physikalischen Grenzen des aktuellen manuellen Prüfverfahrens zu verstehen und das Lastenheft für das zu entwickelnde Automatisierungskonzept abzuleiten.
 
+% -----------------------------------------------------------------------------
+% 2.1 Systemarchitektur und Topologie der MCC-Schaltanlagen
+% -----------------------------------------------------------------------------
 \subsection{Systemarchitektur und Topologie der MCC-Schaltanlagen}
 \label{sec:mcc_architektur}
 
 Die Rolf Janssen GmbH fertigt und projektiert Niederspannungsschaltgerätekombinationen (NSK), die als zentrale Netzknotenpunkte für die Energieverteilung und die dezentrale Steuerung von motorischen Verbrauchern in hochverfügbaren industriellen und maritimen Anlagen dienen. Eine technologisch besonders anspruchsvolle Bauform dieser Anlagen ist das sogenannte Motor Control Center (MCC). Die Konstruktionsrichtlinien für diese MCC-Anlagen definieren einen hochgradig modularen, störlichtbogensicheren Aufbau, der auf maximale Anlagenverfügbarkeit (MTBF - Mean Time Between Failures) und höchsten Personenschutz bei Bedien- und Wartungsarbeiten ausgelegt ist.
 
+% --- BILD 1: Makro-Topologie (Leistungsschalterfeld) ---
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{03_Ressourcen/pic/Leistungsschalterfeld.png} 
+    \caption{Systemarchitektur im Verbund: Das linke Leistungsschalterfeld speist die horizontale Hauptsammelschiene, von der das benachbarte MCC-Feld abzweigt.}
+    \label{fig:mcc_gesamtanlage}
+\end{figure}
+
+% 2.1.1 Mechanische Kompartimentierung und innere Unterteilung
 \subsubsection{Mechanische Kompartimentierung und innere Unterteilung}
-Das mechanische und elektrische Grundgerüst eines jeden MCC-Feldes basiert auf einer strikten räumlichen Schattierung, der sogenannten Kompartimentierung. In der industriellen Praxis wird diese standardmäßig als innere Unterteilung nach Form 3b oder Form 4b gemäß den Vorgaben des Schaltanlagen-Handbuchs der ABB \cite{ABB_Handbuch} ausgeführt. 
+Das mechanische und elektrische Grundgerüst eines jeden MCC-Feldes basiert auf einer strikten räumlichen Schottung, der sogenannten Kompartimentierung. In der industriellen Praxis wird diese standardmäßig als innere Unterteilung nach Form 3b oder Form 4b gemäß den Vorgaben des Schaltanlagen-Handbuchs der ABB \cite{ABB_Handbuch} ausgeführt.
 
 Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Trennung der massiven, stromführenden Hauptsammelschienen (HSS) von den eigentlichen Betriebsmitteln (den auswechselbaren MCC-Einschubmodulen) sowie eine strikte Isolierung der äußeren Anschlussleiter untereinander. Um dies konstruktiv zu realisieren, gliedert sich der Schaltschrank in drei separate, durch geerdete Stahlbleche gekapselte Funktionsräume:
 \begin{enumerate}
@@ -18,16 +34,42 @@ Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Tr
     \item \textbf{Kabelanschlussraum:} Ein seitlich angeordneter Schacht, der der geordneten Führung und dem sicheren Anschluss der abgehenden Feldverdrahtung zu den industriellen Verbrauchern (z.\,B. Drehstrom-Asynchronmaschinen) dient.
 \end{enumerate}
 
+% --- BILD 2: Mikro-Topologie (Zwei Bilder nebeneinander als BEISPIEL) ---
+\begin{figure}[htbp]
+    \centering
+    % Linkes Bild
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Feld_1.png} 
+        \caption{Frontansicht des MCC-Feldes}
+        \label{fig:sub_mcc_front}
+    \end{subfigure}
+    \hfill
+    % Rechtes Bild
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Kupfer.png} 
+        \caption{Vertikales Verteilschienensystem}
+        \label{fig:sub_mcc_kupfer}
+    \end{subfigure}
+    
+    \caption{Detaillierter Aufbau eines MCC-Feldes. Links: Frontale Bestückung mit Einschubmodulen (\ref{fig:sub_mcc_front}). Rechts: Das vertikale Verteilschienensystem (\ref{fig:sub_mcc_kupfer}).}
+    \label{fig:mcc_details}
+\end{figure}
+
+% 2.1.2 Dimensionierung der Verteilschienensysteme
 \subsubsection{Dimensionierung der Verteilschienensysteme}
-Die vertikale Energieverteilung innerhalb eines einzelnen Schaltschrankfeldes erfolgt über ein massives Verteilschienensystem, welches im Rücken der Anlage verläuft und galvanisch an die Hauptsammelschiene angekoppelt ist. Um die enormen Leistungsdichten moderner industrieller Abnehmer sicher abdecken zu können, weisen diese Verteilschienen erhebliche Materialquerschnitte auf. Je nach Ausbaustufe und Feldtyp (beispielsweise bei sogenannten Mischfeldern, die eine Kombination aus MCC-Modulen und SASIL-Schaltersicherungsleisten beinhalten) bestehen die Systeme aus bis zu drei parallelen, massiven Kupferflachschienen pro Phase (L1, L2, L3). 
+Die vertikale Energieverteilung innerhalb eines einzelnen Schaltschrankfeldes erfolgt über ein massives Verteilschienensystem, welches im Rücken der Anlage verläuft und galvanisch an die Hauptsammelschiene angekoppelt ist. Um die enormen Leistungsdichten moderner industrieller Abnehmer sicher abdecken zu können, weisen diese Verteilschienen erhebliche Materialquerschnitte auf. Je nach Ausbaustufe und Feldtyp (beispielsweise bei sogenannten Mischfeldern, die eine Kombination aus MCC-Modulen und SASIL-Schaltersicherungsleisten beinhalten) bestehen die Systeme aus bis zu drei parallelen, massiven Kupferflachschienen pro Phase (L1, L2, L3).
 
 Typische Querschnitte betragen $30 \times 10\,\text{mm}$ pro Einzelschiene. Bei einer dreifachen, parallelisierten Ausführung ergibt sich somit ein effektiver geometrischer Gesamtquerschnitt von $900\,\text{mm}^2$ blankem Elektrolytkupfer pro Außenleiter. Dieses Leitersystem erlaubt unter Einhaltung der normativen thermischen Grenzwerte (bis zu einer Schutzart von IP4X) einen kontinuierlichen Bemessungsstrom von bis zu $1.400\,\text{A}$ pro Schaltschrankfeld.
 
+% 2.1.3 Elektrodynamische Kurzschlussfestigkeit
 \subsubsection{Elektrodynamische Kurzschlussfestigkeit}
-Neben der reinen Stromtragfähigkeit, welche die thermische Belastbarkeit im Nennbetrieb definiert, ist die mechanische Kurzschlussfestigkeit dieses Schienensystems von elementarer anlagentechnischer und sicherheitsrelevanter Bedeutung. Im Falle eines satten Kurzschlusses (z.\,B. eines dreipoligen Klemmenkurzschlusses) treten gigantische elektrodynamische Kräfte (Lorentzkräfte) zwischen den Phasenleitern auf. Wie Kasikci \cite{Kasikci_Planung} in seinen Ausführungen zur Planung von Elektroanlagen herleitet, verhalten sich diese abstoßenden oder anziehenden Kräfte proportional zum Quadrat des fließenden Stoßkurzschlussstroms. 
+Neben der reinen Stromtragfähigkeit, welche die thermische Belastbarkeit im Nennbetrieb definiert, ist die mechanische Kurzschlussfestigkeit dieses Schienensystems von elementarer anlagentechnischer und sicherheitsrelevanter Bedeutung. Im Falle eines satten Kurzschlusses (z.\,B. eines dreipoligen Klemmenkurzschlusses) treten gigantische elektrodynamische Kräfte (Lorentzkräfte) zwischen den Phasenleitern auf. Wie Kasikci \cite{Kasikci_Planung} in seinen Ausführungen zur Planung von Elektroanlagen herleitet, verhalten sich diese abstoßenden oder anziehenden Kräfte proportional zum Quadrat des fließenden Stoßkurzschlussstroms.
 
 Das Verteilschienensystem der Rolf Janssen GmbH ist konstruktiv derart massiv dimensioniert und mit isolierenden, glasfaserverstärkten Kunststoffschottungen (Stützern) abgestützt, dass es diesen Kräften widersteht. Es hält einem Bemessungskurzzeitstrom ($I_{cw}$ für die Dauer von $1\,\text{s}$) von $65\,\text{kA}$ sowie einem asymmetrischen Stoßkurzschlussstrom ($I_{pk}$) von $143\,\text{kA}$ mechanisch unbeschadet stand, ohne dass es zu einer plastischen Deformation der Kupferschienen kommt, welche die Isolationsabstände unterschreiten würde.
 
+% 2.1.4 Adaptertechnik und Shutter-Sicherheitsmechanismen
 \subsubsection{Adaptertechnik und Shutter-Sicherheitsmechanismen}
 Die elektrische Leistungsanbindung der flexibel auswechselbaren MCC-Einschubmodule an das dauerhaft unter Spannung stehende Verteilschienensystem erfolgt über ein proprietäres, hochspezialisiertes Adaptersystem. Dieses System ist das funktionale Herzstück der MCC-Anlage, da es den schnellen Austausch von defekten oder zu wartenden Modulen (sogenanntes Hot-Swapping) ohne Betriebsstillstand der Gesamtanlage ermöglicht. Dies ist in prozesskritischen Industrien (wie der chemischen Industrie oder auf Schiffen) eine unabdingbare Anforderung.
 
@@ -35,44 +77,299 @@ Ein wesentliches Sicherheitsmerkmal beim Ziehen eines solchen Moduls ist der int
 
 Die eigentliche elektrische Kontaktierung bei vollständig eingeschobenem Modul erfolgt über kraftschlüssige Tulpenkontakte (gefederte Steckklammern), die die Verteilschiene zangenartig umschließen. Während Module kleinerer Leistungsklassen (bis zu $80\,\text{A}$, Baugröße 1/H) im Adaptergehäuse intern noch mit flexiblen hochstromfähigen Aderleitungen (Leiterklasse 5) verkabelt werden können, erfordern Hochstromanwendungen zwingend eine massive Bauweise. Das in dieser Arbeit für die Automatisierung primär betrachtete $630\,\text{A}$-Modul (Baugröße 3er) wird daher mit massiven, halogenfrei isolierten Kupferprofilen ausgeführt, um den Leiterquerschnitt zu maximieren und die entstehende Verlustleistung effektiv an die Umgebungsluft abzuführen. Genau an diesen gesteckten Tulpenkontakten entsteht im Prüfbetrieb die mit Abstand größte thermische Belastung der gesamten Schaltanlage, was sie zum kritischen Prüfobjekt der Erwärmungsprüfung macht.
 
+% -----------------------------------------------------------------------------
+% 2.2 Der normative Rahmen der Erwärmungsprüfung (DIN EN 61439)
+% -----------------------------------------------------------------------------
 \subsection{Der normative Rahmen der Erwärmungsprüfung (DIN EN 61439)}
-\label{sec:normativer_hintergrund}
+\label{sec:normen_61439}
 
-Die Konstruktion, Dimensionierung und die finale Qualitätssicherung von Niederspannungsschaltgerätekombinationen unterliegt im Europäischen Wirtschaftsraum den strikten, verbindlichen Vorgaben der Normenreihe DIN EN 61439 \cite{ABB_Handbuch}. Diese Norm hat die vormals gültige EN 60439 abgelöst und die Anforderungen an den Sicherheitsnachweis von Schaltanlagen massiv verschärft. Bevor eine Schaltanlage das Herstellerwerk verlassen und mit einem gültigen CE-Kennzeichen in Verkehr gebracht werden darf, fordert die Norm zwingend einen umfassenden, dokumentierten Bauartnachweis. 
+Die Konstruktion, Dimensionierung und die finale Qualitätssicherung von Niederspannungsschaltgerätekombinationen unterliegt im Europäischen Wirtschaftsraum den strikten, verbindlichen Vorgaben der Normenreihe DIN EN 61439 \cite{ABB_Handbuch}. Diese Norm hat die vormals gültige EN 60439 abgelöst und die Anforderungen an den Sicherheitsnachweis von Schaltanlagen massiv verschärft. Bevor eine Schaltanlage das Herstellerwerk verlassen und mit einem gültigen CE-Kennzeichen in Verkehr gebracht werden darf, fordert die Norm zwingend einen umfassenden, dokumentierten Bauartnachweis.
 
 Der technologisch kritischste, kosten- und zeitintensivste Bestandteil dieses Bauartnachweises ist die Erwärmungsprüfung (Temperaturerwärmungsnachweis) nach Kapitel 10.10 der DIN EN 61439-1.
 
+% 2.2.1 Isolierstoffdegradation und zulässige Grenzübertemperaturen
 \subsubsection{Isolierstoffdegradation und zulässige Grenzübertemperaturen}
-Das fundamentale Ziel dieser Prüfung ist der messtechnische und empirische Nachweis, dass die projektierte Schaltanlage bei maximaler, ununterbrochener Dauerbelastung (dem Worst-Case-Szenario) die materialspezifisch zulässigen Grenzübertemperaturen an absolut keinem verbauten Bauteil überschreitet. 
+Das fundamentale Ziel dieser Prüfung ist der messtechnische und empirische Nachweis, dass die projektierte Schaltanlage bei maximaler, ununterbrochener Dauerbelastung (dem Worst-Case-Szenario) die materialspezifisch zulässigen Grenzübertemperaturen an absolut keinem verbauten Bauteil überschreitet.
 
 Der chemische und physikalische Hintergrund dieser extrem strengen Vorgabe liegt in der Degradation (der irreversiblen thermischen Alterung) von polymeren Isolierstoffen. Nach der Arrhenius-Gleichung der Reaktionskinetik, welche in der Elektrotechnik häufig durch die vereinfachte Montsinger-Regel ausgedrückt wird, halbiert sich die statistische Lebensdauer von Isolationsmaterialien bei einer kontinuierlichen Temperaturüberschreitung von jeweils $8\,\text{K}$ bis $10\,\text{K}$. Eine unzulässige, während der Typprüfung unentdeckte Erwärmung führt im späteren industriellen Dauerbetrieb unweigerlich zur Versprödung der Kunststoffe, zum thermischen Durchschlag der Isolation, zur Begünstigung von Kriechströmen und stellt somit eine hochgradig akute Brandgefahr dar.
 
-Die Norm DIN EN 61439 definiert daher äußerst strikte und nach Bauteilgruppen präzise differenzierte thermische Grenzwerte. Blanke Kupferschienen dürfen beispielsweise weitaus höhere Maximaltemperaturen erreichen, da Kupfer bei diesen Temperaturen noch nicht schmilzt, während berührbare Gehäuseteile aus lackiertem Stahlblech oder Bedienelemente aus Kunststoff (Schalter, Taster) sehr niedrigen Grenzwerten unterliegen, um Verbrennungen des Bedienpersonals zu verhindern. 
+Die Norm DIN EN 61439 definiert daher äußerst strikte und nach Bauteilgruppen präzise differenzierte thermische Grenzwerte. Blanke Kupferschienen dürfen beispielsweise weitaus höhere Maximaltemperaturen erreichen, da Kupfer bei diesen Temperaturen noch nicht schmilzt, während berührbare Gehäuseteile aus lackiertem Stahlblech oder Bedienelemente aus Kunststoff (Schalter, Taster) sehr niedrigen Grenzwerten unterliegen, um Verbrennungen des Bedienpersonals zu verhindern.
 
 Für das Prüffeld der Rolf Janssen GmbH bedeutet dies in der Praxis, dass der Prüfling (die MCC-Anlage) exakt mit den projektierten Nenn-Bemessungsströmen der jeweiligen Abgänge über externe Lastwiderstände belastet werden muss. Bei den massiven $630\,\text{A}$-Modulen der Baugröße 3er stellt dies extreme physikalische Anforderungen an die thermische Belastbarkeit der Anlage sowie an die Stabilität und Regelgüte der einspeisenden Prüfstromquelle.
 
-\subsubsection{Das thermische Stabilitätskriterium ($1\,\text{K/h}$)}
+% 2.2.2 Das thermische Stabilitätskriterium (1 K/h)
+\subsubsection{Das thermische Stabilitätskriterium (1 K/h)}
 Die DIN EN 61439-1 definiert zwei elementare normative Restriktionen für die Durchführung der Erwärmungsprüfung. Diese Restriktionen fließen direkt und unverändert als Hauptkriterien in das Lastenheft für die in Kapitel 4 zu entwickelnde SPS-Automatisierung ein.
 
-Die erste Restriktion betrifft das Abbruchkriterium der Prüfung. Eine normative Erwärmungsprüfung wird explizit nicht nach einer fest definierten, willkürlichen Zeitspanne (wie beispielsweise 2 oder 4 Stunden) beendet, sondern erst, wenn sich ein echtes thermodynamisches Gleichgewicht (ein stationärer Beharrungszustand) im gesamten Prüfling eingestellt hat. 
+Die erste Restriktion betrifft das Abbruchkriterium der Prüfung. Eine normative Erwärmungsprüfung wird explizit nicht nach einer fest definierten, willkürlichen Zeitspanne (wie beispielsweise 2 oder 4 Stunden) beendet, sondern erst, wenn sich ein echtes thermodynamisches Gleichgewicht (ein stationärer Beharrungszustand) im gesamten Prüfling eingestellt hat.
 
 Die Norm definiert diesen stationären Zustand als messtechnisch erreicht, wenn die Temperatur an keiner der zahlreichen im Prüfling verbauten Messstellen (typischerweise applizierte Thermoelemente des Typs K) um mehr als $1\,\text{K}$ pro Stunde ansteigt. Mathematisch ausgedrückt muss der Grenzwert der zeitlichen Ableitung der gemessenen lokalen Übertemperatur $\Delta\vartheta$ folgende Bedingung kontinuierlich und flächendeckend über die gesamte Schaltanlage erfüllen:
 \begin{equation}
-    \frac{d(\Delta\vartheta)}{dt} \leq 1\,\frac{\text{K}}{\text{h}}
-    \label{eq:abbruchkriterium}
+    \frac{d(\Delta\vartheta)}{dt} \le 1\,\frac{\text{K}}{\text{h}}
 \end{equation}
 Aufgrund der immensen thermischen Masse (der absoluten Wärmekapazität $C_{th}$) der massiven Kupferschienen und der schweren Stahlblechgehäuse verläuft dieser Aufheizprozess nach den Gesetzen der Thermodynamik streng asymptotisch. Er nimmt in der betrieblichen Praxis der Rolf Janssen GmbH für große Anlagenverbünde oft acht bis zwölf Stunden ununterbrochener Prüfzeit in Anspruch.
 
-\subsubsection{Das asymmetrische Toleranzband des Prüfstroms ($+5\,\%$)}
-Die zweite, und aus Sicht der industriellen Automatisierungstechnik weitaus anspruchsvollere Restriktion betrifft die Konstanz der elektrischen Energieeinspeisung. Während der gesamten acht- bis zwölfstündigen Prüfdauer muss der eingespeiste Prüfstrom zwingend konstant auf seinem definierten Bemessungswert gehalten werden. 
+% 2.2.3 Das asymmetrische Toleranzband des Prüfstroms (+5 %)
+\subsubsection{Das asymmetrische Toleranzband des Prüfstroms (+5 \%)}
+Die zweite, und aus Sicht der industriellen Automatisierungstechnik weitaus anspruchsvollere Restriktion betrifft die Konstanz der elektrischen Energieeinspeisung. Während der gesamten acht- bis zwölfstündigen Prüfdauer muss der eingespeiste Prüfstrom zwingend konstant auf seinem definierten Bemessungswert gehalten werden.
 
 Die DIN EN 61439 fordert hierbei eine Nachführung (Regelung), die den Prüfstrom strikt innerhalb eines asymmetrischen, extrem engen Toleranzbandes von $0\,\%$ bis maximal $+5\,\%$ des Nennstroms führt. Für das in dieser Arbeit zentrale $630\,\text{A}$-Modul bedeutet dies ein absolutes, physikalisch nicht verhandelbares Toleranzband zwischen exakt $630,0\,\text{A}$ und maximal $661,5\,\text{A}$.
-
 Diese Vorgabe hat weitreichende Konsequenzen:
 \begin{itemize}
-    \item \textbf{Unterschreitung ($< 100\,\%$):} Fällt der Strom auch nur kurzzeitig (beispielsweise durch Spannungsschwankungen im versorgenden Mittelspannungsnetz oder durch den thermischen Drift der Lastwiderstände) unter $630\,\text{A}$, ist die Simulation der thermischen Maximalbelastung physikalisch unterbrochen. Das normativ geforderte Worst-Case-Szenario ist somit formal verletzt. Die gesamte, bis dahin vielleicht schon zehn Stunden dauernde Prüfung ist juristisch ungültig, muss sofort abgebrochen und nach dem Abkühlen der Anlage komplett neu gestartet werden. Dies verursacht enorme Personalkosten und verzögert die Auslieferung der Anlage.
-    \item \textbf{Überschreitung ($> 105\,\%$):} Steigt der Strom auf über $661,5\,\text{A}$ an, droht eine künstliche, überproportionale Überhitzung der Anlage, da die Verlustleistung quadratisch mit dem Strom steigt ($P_v \sim I^2$). In diesem Fall würde der Prüfling an den Steckklammern unverschuldet zu heiß werden und den Bauartnachweis fälschlicherweise nicht bestehen, obwohl er für den reellen Nennbetrieb von $630\,\text{A}$ völlig korrekt und sicher konstruiert wurde.
+    \item \textbf{Unterschreitung (< 100 \%):} Fällt der Strom auch nur kurzzeitig (beispielsweise durch Spannungsschwankungen im versorgenden Mittelspannungsnetz oder durch den thermischen Drift der Lastwiderstände) unter $630\,\text{A}$, ist die Simulation der thermischen Maximalbelastung physikalisch unterbrochen. Das normativ geforderte Worst-Case-Szenario ist somit formal verletzt. Die gesamte, bis dahin vielleicht schon zehn Stunden dauernde Prüfung ist juristisch ungültig, muss sofort abgebrochen und nach dem Abkühlen der Anlage komplett neu gestartet werden. Dies verursacht enorme Personalkosten und verzögert die Auslieferung der Anlage.
+    \item \textbf{Überschreitung (> 105 \%):} Steigt der Strom auf über $661,5\,\text{A}$ an, droht eine künstliche, überproportionale Überhitzung der Anlage, da die Verlustleistung quadratisch mit dem Strom steigt ($P_v \sim I^2$). In diesem Fall würde der Prüfling an den Steckklammern unverschuldet zu heiß werden und den Bauartnachweis fälschlicherweise nicht bestehen, obwohl er für den reellen Nennbetrieb von $630\,\text{A}$ völlig korrekt und sicher konstruiert wurde.
 \end{itemize}
+
+% -----------------------------------------------------------------------------
+% 2.3 Thermodynamik der Strombahn und das Drift-Phänomen
+% -----------------------------------------------------------------------------
+\subsection{Thermodynamik der Strombahn und das Drift-Phänomen}
+\label{sec:thermodynamik_drift}
+
+Um das fundamentale regelungstechnische Problem des Prüfstandes – den kontinuierlichen, stetigen Abfall des Prüfstroms während der Erwärmungsprüfung – zu beherrschen, müssen die thermodynamischen Vorgänge innerhalb der Schaltanlage auf mikroskopischer und makroskopischer Ebene analysiert werden. Nach Griesinger \cite{Griesinger_Waermemanagement} basiert die gesamte Erwärmung von stromdurchflossenen Leitern auf der irreversiblen Umwandlung elektrischer Energie in thermische Energie, welche anschließend über komplexe thermische Netzwerke an die Umgebung abgeführt werden muss.
+
+% 2.3.1 Wärmequellen, Elektronengas und Kaltleiterverhalten (PTC)
+\subsubsection{Wärmequellen, Elektronengas und Kaltleiterverhalten (PTC)}
+Die dominierende primäre Wärmequelle in der betrachteten elektrotechnischen Schaltanlage ist die Stromwärmeverlustleistung (Joulesche Wärme) $P_V$. Auf atomarer Ebene entsteht diese Wärme durch inelastische Stöße der im elektrischen Feld beschleunigten Leitungselektronen (das sogenannte Elektronengas) mit den ionisierten Rumpfatomen des Metallgitters. 
+
+Alle im Hochstrompfad verbauten Leiter, wie die massiven Kupferverteilschienen, die Adapter-Verkabelungen sowie die externen Edelstahl-Lastwiderstände des Prüfstandes, besitzen ein stark ausgeprägtes Kaltleiterverhalten (Positive Temperature Coefficient, PTC). Mit zunehmender thermischer Energie schwingen die Gitteratome stärker um ihre Ruhelage. Dies verringert die mittlere freie Weglänge der Elektronen und erhöht die Wahrscheinlichkeit von Streuprozessen. Makroskopisch betrachtet bedeutet dies, dass der ohmsche elektrische Widerstand $R$ mit zunehmender Temperatur $\vartheta$ ansteigt. 
+
+Für die eingesetzten Metalle und Legierungen lässt sich dieser physikalische Zusammenhang über weite Temperaturbereiche (bis nahe an den Schmelzpunkt) durch eine lineare Funktion über den Temperaturkoeffizienten $\alpha$ exakt annähern:
+\begin{equation}
+    R(\vartheta) = R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right]
+    \label{eq:ptc_widerstand}
+\end{equation}
+Hierbei ist $R_{20}$ der Kaltwiderstand bei einer normierten Referenztemperatur von $20\,^\circ\text{C}$ und $\vartheta$ die aktuelle Leitertemperatur. Der Temperaturkoeffizient $\alpha$ ist eine rein materialspezifische Konstante. Für reines Elektrolytkupfer (E-Cu) beträgt $\alpha_{Cu} \approx 3,9 \cdot 10^{-3}\,\text{K}^{-1}$, für hochlegierte Edelstähle (wie 1.4310) liegt er deutlich niedriger bei $\alpha_{Fe} \approx 1,0 \cdot 10^{-3}\,\text{K}^{-1}$. 
+
+Erhitzen sich die frei stehenden Edelstahl-Lastwiderstände des Prüfstandes während der Dauerprüfung durch die eingeprägte Wirkleistung auf mehrere hundert Grad Celsius, steigt ihre elektrische Impedanz trotz des geringeren $\alpha$-Wertes aufgrund der massiven Temperaturdifferenz $\Delta\vartheta$ signifikant an. 
+Bei der Annahme einer zunächst konstanten effektiven Speisespannung $U$ am Prüfmodul führt dies nach dem Ohmschen Gesetz zwangsläufig zu einem abfallenden Prüfstrom $I$:
+\begin{equation}
+    I(\vartheta) = \frac{U}{R(\vartheta)} = \frac{U}{R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right]}
+    \label{eq:thermischer_drift}
+\end{equation}
+Diese Gleichung liefert den streng mathematischen Beweis für den in der Praxis gefürchteten \textit{thermischen Drift}. Da der Prüfstrom $I(\vartheta)$ eine indirekt proportionale Funktion der zeitlich veränderlichen Temperatur ist, fällt er ohne einen aktiven steuerungstechnischen Eingriff unweigerlich aus dem $+5\,\%$-Toleranzband.
+
+% 2.3.2 Wärmetransportmechanismen nach Griesinger
+\subsubsection{Wärmetransportmechanismen nach Griesinger}
+Damit die stark beanspruchten Leiter unter der gewaltigen Verlustleistung (teilweise über $2.000\,\text{W}$ reine Abwärme pro Prüfabgang) nicht ihren Schmelzpunkt erreichen und die Schaltanlage zerstören, muss sich ein thermodynamisches Gleichgewicht zwischen der erzeugten elektrischen Wärmeleistung und der an die Umgebung abgeführten Wärmeleistung einstellen. Nach Griesinger \cite{Griesinger_Waermemanagement} dominieren in Schaltschränken und an Hochlastwiderständen drei wesentliche Wärmetransportmechanismen, die das Systemverhalten prägen:
+
+\paragraph{1. Wärmeleitung (Konduktion) nach Fourier}
+Innerhalb der festen Körper (den Kupferschienen selbst) breitet sich die Wärme durch Leitung aus. Nach dem empirischen Fourier-Gesetz ist die Wärmestromdichte $\vec{q}$ proportional zum negativen Temperaturgradienten $\nabla \vartheta$:
+\begin{equation}
+    \vec{q} = -\lambda \cdot \nabla \vartheta
+\end{equation}
+Die materialspezifische Wärmeleitfähigkeit $\lambda$ von Kupfer ist mit ca. $400\,\text{W}/(\text{m}\cdot\text{K})$ extrem hoch. Dies bedeutet, dass lokale Hitzepunkte (Hotspots an den Kontakten) ihre Wärme sehr schnell in die restliche Kupferschiene ableiten können, was zu einer vergleichsweise homogenen Temperaturverteilung entlang der Schiene führt.
+
+\paragraph{2. Freie Konvektion (Natürliche Wärmemitführung)}
+An der Grenzfläche zwischen dem festen Leiter und der umgebenden Luft wird die Wärme konvektiv abgeführt. Die Luftschichten in unmittelbarer Nähe zu den stark erhitzten Kupferschienen erwärmen sich. Durch die resultierende Dichteabnahme erfährt die heiße Luft einen statischen Auftrieb und steigt vertikal auf (Kamineffekt), während kühlere, dichtere Umgebungsluft von unten nachströmt. Der konvektiv abgeführte Wärmestrom $\dot{Q}_K$ berechnet sich nach dem Newtonschen Abkühlungsgesetz zu:
+\begin{equation}
+    \dot{Q}_K = \alpha_K \cdot A \cdot (\vartheta_{Oberflaeche} - \vartheta_{Umgebung})
+\end{equation}
+Der konvektive Wärmeübergangskoeffizient $\alpha_K$ ist keine Materialkonstante, sondern hängt von Strömungseigenschaften ab, die in der Thermodynamik über dimensionslose Kennzahlen (Nusselt-Zahl $\text{Nu}$, Prandtl-Zahl $\text{Pr}$ und Grashof-Zahl $\text{Gr}$) ermittelt werden. $A$ ist die geometrisch wirksame Oberfläche.
+
+\paragraph{3. Elektromagnetische Wärmestrahlung (Stefan-Boltzmann-Gesetz)}
+Bei hochbelasteten externen Edelstahl-Lastwiderständen, die im Prüfbetrieb Oberflächentemperaturen von bis zu $600\,^\circ\text{C}$ erreichen können, wird die thermische Emission elektromagnetischer Strahlung (Infrarotstrahlung) zum absolut dominierenden Kühlmechanismus. Die abgestrahlte Leistung $\dot{Q}_S$ skaliert nach dem Stefan-Boltzmann-Gesetz mit der vierten Potenz der absoluten Temperatur $T$ (angegeben in Kelvin):
+\begin{equation}
+    \dot{Q}_S = \varepsilon \cdot \sigma \cdot A \cdot \left( T_{Oberflaeche}^4 - T_{Umgebung}^4 \right)
+\end{equation}
+Dabei ist $\varepsilon$ der dimensionslose Emissionsgrad ($0 \le \varepsilon \le 1$) und $\sigma$ die universelle Stefan-Boltzmann-Konstante ($5,67 \cdot 10^{-8}\,\text{W}/(\text{m}^2\text{K}^4)$). 
+
+Diese fundamentalen physikalischen Gesetze der Wärmeabfuhr belegen mathematisch, warum die ohmschen Lastwiderstände des Prüfstandes konstruktiv zwingend als stark gefaltete Drahtgitter oder Mäanderbänder ausgeführt werden müssen: Nur durch eine drastische, künstliche Maximierung der Oberfläche $A$ können sowohl Konvektion als auch Strahlung voll ausgeschöpft werden, um die thermische Beharrungstemperatur unterhalb der Zundergrenze des verwendeten Stahls zu stabilisieren.
+
+% 2.3.3 Transientes Erwärmungsverhalten (Cauer-Modell)
+\subsubsection{Transientes Erwärmungsverhalten (Cauer-Modell)}
+Der zeitliche Verlauf des Temperaturanstiegs bis zum Erreichen dieses Beharrungszustands verläuft nicht linear, sondern nach einer e-Funktion. Dies lässt sich analog zur Elektrotechnik über ein RC-Ersatzschaltbild (Cauer-Netzwerk) modellieren. Die eingespeiste elektrische Verlustleistung $P_v$ teilt sich in einen Anteil, der die thermische Masse (Wärmekapazität $C_{th}$) des Leiters aufheizt, und einen Anteil, der über den thermischen Widerstand $R_{th}$ (gebildet aus Konvektion und Strahlung) an die Umgebung abgeführt wird.
+
+Die Lösung der resultierenden Differentialgleichung erster Ordnung liefert den zeitlichen Temperaturverlauf $\vartheta(t)$:
+\begin{equation}
+    \vartheta(t) = \vartheta_{Umg} + P_v \cdot R_{th} \cdot \left( 1 - e^{-\frac{t}{\tau_{th}}} \right)
+\end{equation}
+Die thermische Zeitkonstante $\tau_{th} = R_{th} \cdot C_{th}$ liegt aufgrund der enormen Massen der MCC-Anlage (hohes $C_{th}$) im Bereich von mehreren Stunden. Dieser Umstand ist für die später in Kapitel 5 auszulegende PID-Regelung von entscheidender Bedeutung: Die Regelstrecke ist extrem träge (PT1-Verhalten mit großer Zeitkonstante), was hochfrequente Reglereingriffe überflüssig, eine präzise Langzeitstabilität des I-Anteils jedoch zwingend erforderlich macht.
+
+% -----------------------------------------------------------------------------
+% 2.4 Mikroskopische Kontaktphysik der Einschubtechnik
+% -----------------------------------------------------------------------------
+\subsection{Mikroskopische Kontaktphysik der Einschubtechnik}
+\label{sec:mikro_kontaktphysik}
+
+Während sich die massiven, durchgehenden Kupferschienen nach den oben beschriebenen Gesetzen relativ homogen erwärmen, stellen die lösbaren mechanischen Kontaktübergänge eine gravierende thermische Schwachstelle dar. Insbesondere die massiven Steckklammern (Tulpenkontakte), welche die MCC-Module mit den Verteilschienen verbinden, sind die kritischsten Hotspots der Anlage. Die komplexen elektrischen und thermischen Vorgänge an diesen Schnittstellen entziehen sich der makroskopischen Betrachtung und müssen durch die klassische Kontaktstromtheorie exakt beschrieben werden.
+
+% 2.4.1 Makroskopische vs. Mikroskopische Berührung (a-Spots)
+\subsubsection{Makroskopische vs. Mikroskopische Berührung (a-Spots)}
+Wie Eduard Vinaricky in seinem Standardwerk zu elektrischen Kontakten \cite{Vinaricky_Kontakte} detailliert herleitet, ist die makroskopische (scheinbare) Kontaktfläche $A_s$ zweier aufeinandergepresster metallischer Festkörper irrelevant für den eigentlichen Stromübergang. Selbst bei unter dem Mikroskop augenscheinlich perfekt planen, stark angepressten und versilberten Kupferschienen findet die tatsächliche physikalische Berührung ausschließlich an wenigen, extrem winzigen Erhebungen (den verbleibenden plastisch verformten Rauheitsspitzen) statt. Diese mikroskopischen Berührungspunkte, die die tragende Fläche $A_t$ bilden, werden in der Fachliteratur nach Holm als \textit{a-Spots} bezeichnet.
+
+% 2.4.2 Der Engewiderstand nach der Holm'schen Theorie
+\subsubsection{Der Engewiderstand nach der Holm'schen Theorie}
+Da die a-Spots oft nur Bruchteile eines Quadratmillimeters groß sind, werden die elektrischen Stromlinien im Leitermaterial physikalisch gezwungen, sich durch diese extrem winzigen Querschnitte zu zwängen. Diese brachiale lokale Einschnürung (Konstriktion) der Stromdichte verursacht einen massiven physikalischen Widerstand, den sogenannten \textbf{Engewiderstand} $R_E$. Für einen idealisierten, kreisförmigen a-Spot mit dem Radius $a$ in einem Leitermaterial mit dem spezifischen elektrischen Widerstand $\rho$ gilt nach der Holm'schen Theorie näherungsweise:
+\begin{equation}
+    R_E = \frac{\rho}{2a}
+\end{equation}
+Sind, wie in der Realität üblich, mehrere ($n$) a-Spots parallel am Stromübergang beteiligt, addieren sich deren Leitwerte, was den resultierenden Gesamt-Engewiderstand reduziert. Dennoch bleibt der Engewiderstand die primäre Ursache für die punktuelle Erhitzung von Steckverbindungen unter Last.
+
+% 2.4.3 Fremdschichten, Tunneleffekt und der Fritting-Effekt
+\subsubsection{Fremdschichten, Tunneleffekt und der Fritting-Effekt}
+Neben dem rein geometrisch bedingten Engewiderstand unterliegen die metallischen Kontaktwerkstoffe an der Umgebungsluft ständigen chemischen und atmosphärischen Reaktionen. Unedle Metalle wie Kupfer, aber auch Kontaktwerkstoffe wie Zinn oder Silber, sind stets mit hauchdünnen Oxid- ($Cu_2O$), Sulfid- ($Ag_2S$) oder organischen Adsorptionsschichten überzogen. 
+
+Diese anorganischen Schichten sind Isolatoren und bilden den sogenannten \textbf{Fremdschichtwiderstand} $R_F$. Bei sehr dünnen Fremdschichten im Nanometerbereich können die Leitungselektronen die Isolationsbarriere noch durch den quantenmechanischen \textit{Tunneleffekt} überwinden. Bei dickeren Schichten muss die Schicht mechanisch (durch hohen Anpressdruck und Reibung beim Stecken des Moduls) oder elektrisch durchschlagen werden. Die Summe aus Engewiderstand und Fremdschichtwiderstand bildet den makroskopisch messbaren Gesamtkontaktwiderstand $R_K$ der MCC-Steckklammer.
+
+Fließt nun der gewaltige Bemessungsstrom von $630\,\text{A}$ über diesen mikroskopischen Gesamtwiderstand $R_K$, konzentriert sich die gesamte umgesetzte elektrische Verlustleistung auf ein unvorstellbar minimales Volumen exakt in der Grenzschicht der Tulpenklammer:
+\begin{equation}
+    P_{v,Kontakt} = 3 \cdot I^2 \cdot R_K
+\end{equation}
+
+Überschreitet der lokale Spannungsabfall an diesem winzigen Kontaktpunkt einen eng definierten, materialspezifischen Schwellwert (die sogenannte \textit{Fritting-Spannung}, welche typischerweise im Bereich von weniger als einem Volt liegt), kommt es zum elektrischen Durchschlag der isolierenden Oxidschichten. Dieser Vorgang wird nach Vinaricky als \textit{A-Fritting} bezeichnet. Die a-Spots schmelzen durch die gigantische lokale Energiedichte ($> 1.000\,^\circ\text{C}$ auf mikroskopischer Ebene) schlagartig auf und bilden flüssige Mikroschweißbrücken (B-Fritting) zwischen der festen Verteilschiene und der Steckklammer des Moduls.
+
+Dieses physikalische Phänomen ist das stärkste K.-o.-Kriterium gegen die Verwendung von klassischen, elektromechanischen Stellwiderständen zur Automatisierung des Prüfstandes: Würde man versuchen, den Prüfstrom von $630\,\text{A}$ über einen unter Volllast stehenden, motorisch verfahrbaren Schleifwiderstand auszuregeln, würden diese winzigen Schweißbrücken beim linearen Verfahren des Schleifkontakts permanent gewaltsam aufgerissen werden. Dieser ständige mechanische Abriss (verbunden mit Mikrolichtbögen) führt zu extremer Kontakterosion, Materialabbrand und Verschleiß. Der Regler würde sich durch die thermomechanische Belastung innerhalb kürzester Zeit selbst zerstören. Dies liefert den unwiderlegbaren physikalischen Beweis, warum für die Lastsimulation in dieser Arbeit zwingend ein völlig berührungs- und verschleißfreies Regelungskonzept (die induktive Reluktanz-Drossel) entwickelt werden muss.
+
+% -----------------------------------------------------------------------------
+% 2.5 Elektrodynamische Effekte und Frequenzabhängigkeit (Skineffekt)
+% -----------------------------------------------------------------------------
+\subsection{Elektrodynamische Effekte und Frequenzabhängigkeit (Skineffekt)}
+\label{sec:elektrodynamik}
+
+Da die Erwärmungsprüfung zur korrekten Nachbildung des europäischen Verbundnetzes zwingend mit sinusförmigem $50\,\text{Hz}$ Wechselstrom durchgeführt werden muss, darf der Leiterquerschnitt der Kupferschienen bei Strömen von $630\,\text{A}$ nicht mehr als ideal homogen stromdurchflossen betrachtet werden. Die Auswirkungen veränderlicher Magnetfelder auf den Ladungsträgertransport sind nach Küpfmüller \cite{Kuepfmueller_TET} von essenzieller Bedeutung für die spätere Konzeptbewertung.
+
+% 2.5.1 Stromverdrängung und Wirbelstrombildung
+\subsubsection{Stromverdrängung und Wirbelstrombildung}
+Das vom Wechselstrom im Leiter selbst erzeugte, zeitlich pulsierende magnetische Wechselflussfeld durchdringt den Leiterquerschnitt vollständig. Nach dem Faradayschen Induktionsgesetz induziert dieses Magnetfeld in dem massiven Leitermaterial kreisförmige Wirbelströme. Nach der Lenzschen Regel sind diese induzierten Wirbelströme stets so gerichtet, dass sie ihrer Ursache – also dem primären Wechselstromfluss – entgegenwirken. 
+
+Die physikalische Konsequenz dieser Überlagerung ist eine Abschwächung der primären Stromdichte im absoluten Zentrum des Leiters, während sich die induzierten Ströme in den äußeren Randbereichen des Leiters konstruktiv mit dem Primärstrom addieren. Dieser als Skineffekt (Haut-Effekt) bekannte elektrodynamische Mechanismus drängt die Stromdichte massiv an die äußere Oberfläche des Leiters, weshalb das Zentrum des Leiters quasi stromlos wird.
+
+% 2.5.2 Berechnung der Eindringtiefe für Kupferschienen
+\subsubsection{Berechnung der Eindringtiefe für Kupferschienen}
+Das Maß für diese Verdrängung ist die sogenannte Eindringtiefe $\delta$. Sie definiert die Tiefe, gemessen von der Leiteroberfläche, bei der die Stromdichte exponentiell auf den Wert $1/e$ (ca. $36,8\,\%$) ihres Oberflächenwertes abgefallen ist. Nach Küpfmüller berechnet sich diese wie folgt:
+\begin{equation}
+    \delta = \sqrt{\frac{2}{\omega \cdot \mu \cdot \kappa}}
+\end{equation}
+wobei $\omega = 2\pi f$ die Kreisfrequenz des Wechselstroms, $\mu = \mu_0 \cdot \mu_r$ die absolute magnetische Permeabilität des Leitermaterials (für Kupfer gilt $\mu_r \approx 1$) und $\kappa$ die spezifische elektrische Leitfähigkeit ist. 
+
+Setzt man die Materialkonstanten für elektrolytisches Kupfer ($\kappa \approx 58 \cdot 10^6\,\text{A}/(\text{V}\cdot\text{m})$) bei der geforderten Netzfrequenz von $f = 50\,\text{Hz}$ ein, ergibt sich eine Eindringtiefe von etwa $\delta \approx 9,4\,\text{mm}$. 
+Dies ist ein höchst praxisrelevantes Ergebnis: Es bedeutet, dass die massiven, $10\,\text{mm}$ dicken Verteilschienen der Rolf Janssen MCC-Anlagen in ihrem geometrischen Zentrum bereits signifikant weniger Strom führen als an ihrer Oberfläche. Der effektive Leiterquerschnitt ist reduziert. Folglich ist der effektive Wechselstromwiderstand $R_{AC}$ der Schienen messbar höher als ihr reiner Gleichstromwiderstand $R_{DC}$, was unweigerlich zu einer erhöhten, aber normativ einkalkulierten thermischen Verlustleistung führt.
+
+% 2.5.3 Ausschlusskriterium für Pulsweitenmodulation (PWM)
+\subsubsection{Ausschlusskriterium für Pulsweitenmodulation (PWM)}
+Diese fundamentale elektrodynamische Gesetzmäßigkeit liefert ein absolutes K.-o.-Kriterium für den Einsatz von moderner Leistungselektronik (wie beispielsweise IGBT-Frequenzumrichtern oder Wechselstromstellern) zur vollautomatischen Stromregelung am Prüfstand. 
+
+Werden Leistungshalbleiter zur gezielten Pulsweitenmodulation (PWM) der Prüfspannung eingesetzt, takten diese den Strom zwangsläufig mit harten Flanken ($du/dt$) und Schaltfrequenzen im hohen Kilohertz-Bereich, beispielsweise mit $f_s = 5\,\text{kHz}$. Setzt man diese hochfrequente Schaltfrequenz in die Küpfmüller-Gleichung der Eindringtiefe ein, reduziert sich $\delta$ auf einen dramatischen Wert von lediglich $\approx 0,9\,\text{mm}$. 
+
+Der Prüfstrom würde bei Verwendung eines Halbleiterstellers fast ausschließlich an der mikroskopisch dünnen äußeren "Haut" der $10\,\text{mm}$ dicken Verteilschienen fließen. Der effektive Leiterquerschnitt würde derart drastisch sinken, dass der Wechselstromwiderstand $R_{AC}$ der gesamten Schaltanlage extrem ansteigen würde. Die daraus resultierenden massiven harmonischen Oberschwingungen (Total Harmonic Distortion, THD) würden zu einer rapiden, extremen und absolut normwidrigen Überhitzung der massiven Kupferschienen des Prüflings führen. Eine realitätsnahe, dem echten Netzbetrieb entsprechende Erwärmungsprüfung nach DIN EN 61439 ist unter Verwendung von konventioneller, taktender Leistungselektronik daher physikalisch unmöglich und führt zum unweigerlichen Versagen des Bauartnachweises.
+
+
+
+
+
+
+\begin{comment}
+
+\section{Theoretische Grundlagen und Stand der Technik}
+\label{chap:grundlagen}
+
+Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $630\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Sie erfordert nicht nur regelungstechnische Expertise, sondern zwingend ein tiefgreifendes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des zu prüfenden Systems. 
+
+Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächst wird die spezifische Systemarchitektur der Niederspannungsschaltgerätekombinationen (Motor Control Center) der Rolf Janssen GmbH detailliert analysiert. Darauf aufbauend wird das thermische Verhalten stromdurchflossener Leiter beschrieben. Abschließend werden die strengen normativen Vorgaben der Erwärmungsprüfung nach DIN EN 61439 erörtert. Die Kenntnis dieser Grundlagen ist unerlässlich, um die physikalischen Grenzen des aktuellen manuellen Prüfverfahrens zu verstehen und das Lastenheft für das zu entwickelnde Automatisierungskonzept abzuleiten.
+
+\subsection{Systemarchitektur und Topologie der MCC-Schaltanlagen}
+\label{sec:mcc_architektur}
+
+Die Rolf Janssen GmbH fertigt und projektiert Niederspannungsschaltgerätekombinationen (NSK), die als zentrale Netzknotenpunkte für die Energieverteilung und die dezentrale Steuerung von motorischen Verbrauchern dienen. Eine technologisch besonders anspruchsvolle Bauform dieser Anlagen ist das sogenannte Motor Control Center (MCC). 
+
+\subsubsection{Makro-Topologie und Anlagenverbund}
+In der industriellen Praxis werden NSK hochgradig modular aus verschiedenen Feldtypen zusammengesetzt. Abbildung \ref{fig:mcc_gesamtanlage} zeigt den typischen Aufbau eines solchen Verbundes, bestehend aus einem Einspeisefeld und einem angrenzenden MCC.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Bilder/mcc_einspeisung_front.png} % <-- Dateiname anpassen!
+    \caption{Systemarchitektur im Verbund: Das linke Leistungsschalterfeld speist die horizontale Hauptsammelschiene, von der das benachbarte MCC-Feld abzweigt.}
+    \label{fig:mcc_gesamtanlage}
+\end{figure}
+
+Elektrisch betrachtet fungiert das Leistungsschalterfeld als zentraler Einspeisepunkt. Von diesem Knotenpunkt aus wird der primäre Gesamtstrom über ein horizontales Hauptsammelschienensystem (HSS) in die benachbarten Felder transportiert.
+
+\subsubsection{Mikro-Topologie und mechanische Kompartimentierung}
+Zweigt der Strom von der HSS in ein MCC-Feld ab, ändert sich die Topologie. Das mechanische und elektrische Grundgerüst basiert hier auf einer strikten räumlichen Schottung, der sogenannten Kompartimentierung. In der Praxis wird diese standardmäßig als innere Unterteilung nach Form 3b oder Form 4b gemäß den Vorgaben des Schaltanlagen-Handbuchs der ABB \cite{ABB_Handbuch} ausgeführt.
+
+Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Trennung der massiven Hauptsammelschienen von den eigentlichen Betriebsmitteln (den auswechselbaren MCC-Einschubmodulen). Der Schaltschrank gliedert sich in drei separate, durch geerdete Stahlbleche gekapselte Funktionsräume:
+\begin{enumerate}
+    \item \textbf{Sammelschienenraum:} Beherbergt das horizontale Hauptsammelschienensystem sowie das vertikale Verteilschienensystem.
+    \item \textbf{Geräteraum:} Der frontal zugängliche Bereich, in dem die modular aufgebauten MCC-Einschübe platziert werden.
+    \item \textbf{Kabelanschlussraum:} Ein seitlich angeordneter Schacht für die abgehende Feldverdrahtung zu den Verbrauchern.
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Bilder/mcc_front.png} % <-- Dateiname anpassen!
+        \caption*{a) Frontansicht des MCC-Feldes}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Bilder/mcc_feld_verteilschienen.png} % <-- Dateiname anpassen!
+        \caption*{b) Vertikales Verteilschienensystem (Rückseite)}
+    \end{minipage}
+    \caption{Detaillierter Aufbau eines MCC-Feldes. Links: Frontale Bestückung mit Einschubmodulen. Rechts: Das vertikale Verteilschienensystem (L1, L2, L3, N, PE).}
+    \label{fig:mcc_details}
+\end{figure}
+
+\subsubsection{Dimensionierung und elektrodynamische Kurzschlussfestigkeit}
+Die vertikale Energieverteilung erfolgt über ein massives Verteilschienensystem (siehe Abbildung \ref{fig:mcc_details} b). Je nach Ausbaustufe bestehen diese Systeme aus bis zu drei parallelen, massiven Kupferflachschienen pro Phase (L1, L2, L3). Typische Querschnitte betragen $30 \times 10\,\text{mm}$ pro Einzelschiene, was bei dreifacher Ausführung einen effektiven Gesamtquerschnitt von $900\,\text{mm}^2$ blankem Elektrolytkupfer pro Außenleiter ergibt. Dies erlaubt einen kontinuierlichen Bemessungsstrom von bis zu $1.400\,\text{A}$ pro Feld.
+
+Neben der Stromtragfähigkeit ist die mechanische Kurzschlussfestigkeit von elementarer Bedeutung. Im Falle eines satten Kurzschlusses treten gigantische elektrodynamische Kräfte auf. Wie Kasikci \cite{Kasikci_Planung} herleitet, verhalten sich diese Lorentzkräfte proportional zum Quadrat des fließenden Stoßkurzschlussstroms. Das System ist konstruktiv derart massiv abgestützt, dass es einem Bemessungskurzzeitstrom ($I_{cw}$, $1\,\text{s}$) von $65\,\text{kA}$ sowie einem asymmetrischen Stoßkurzschlussstrom ($I_{pk}$) von $143\,\text{kA}$ mechanisch unbeschadet standhält.
+
+\subsubsection{Adaptertechnik und Shutter-Sicherheitsmechanismen}
+Die Leistungsanbindung der flexibel auswechselbaren MCC-Einschubmodule an das Verteilschienensystem erfolgt über ein proprietäres Adaptersystem. Dieses ermöglicht den schnellen Austausch von Modulen unter Spannung (Hot-Swapping). 
+
+Ein wesentliches Sicherheitsmerkmal ist der integrierte Shutter-Mechanismus. Wird ein Modul entnommen, verfährt ein Hebel automatisch Isolierstoff-Verschlussstreifen (Shutter) vor die blanken Verteilschienen, wodurch der Geräteraum sofort nach Schutzart IP20 berührungssicher abgeschottet wird.
+
+Die eigentliche Kontaktierung erfolgt über kraftschlüssige Tulpenkontakte (gefederte Steckklammern), die die Verteilschiene zangenartig umschließen. Hochstromanwendungen, wie das in dieser Arbeit primär betrachtete $630\,\text{A}$-Modul (Baugröße 3er), werden mit massiven Kupferprofilen ausgeführt. Genau an diesen Steckkontakten entsteht im Prüfbetrieb die größte thermische Belastung.
+
+\subsection{Thermodynamisches Verhalten stromdurchflossener Leiter}
+\label{sec:thermodynamik}
+
+Die Erwärmungsprüfung dient dem Nachweis, dass die entstehende Verlustwärme sicher abgeführt werden kann. 
+
+\subsubsection{Joule-Verlustleistung und ohmsche Erwärmung}
+Fließt ein Effektivstrom $I$ durch einen Leiter mit dem Widerstand $R$, wird nach Marenbach \cite{Marenbach_Energietechnik} elektrische Leistung in Joule-Verlustleistung $P_v$ umgewandelt:
+\begin{equation}
+    P_v = I^2 \cdot R
+\end{equation}
+Aufgrund der quadratischen Proportionalität ($I^2$) führen in der Hochstromtechnik selbst marginale Stromabweichungen zu einer massiven Zunahme der dissipierten Wärmemenge im MCC-Modul.
+
+\subsubsection{Temperaturabhängigkeit des spezifischen Widerstands (PTC-Effekt)}
+\label{sec:ptc_effekt}
+Metalle wie Kupfer oder hochlegierter Edelstahl (Lastwiderstände des Prüfstands) sind Kaltleiter mit einem positiven Temperaturkoeffizienten (PTC). Mit steigender Temperatur $\vartheta$ nimmt ihr ohmscher Widerstand linear zu:
+\begin{equation}
+    R(\vartheta) = R_{20} \cdot [1 + \alpha \cdot (\vartheta - 20\,^{\circ}\text{C})]
+    \label{eq:ptc_widerstand}
+\end{equation}
+Dieser PTC-Effekt bildet das regelungstechnische Kernproblem der Prüfstandsautomatisierung: Erhitzen sich die externen Edelstahl-Lastwiderstände stundenlang, steigt ihr Widerstand massiv an. Bei konstanter Klemmenspannung führt dies physikalisch zwingend zu einem Absinken des Prüfstroms.
+
+\subsection{Der normative Rahmen der Erwärmungsprüfung (DIN EN 61439)}
+\label{sec:normen_61439}
+
+Die Qualitätssicherung von NSK unterliegt im Europäischen Wirtschaftsraum den strikten Vorgaben der Normenreihe DIN EN 61439. Der technologisch kritischste Bestandteil des Bauartnachweises ist die Erwärmungsprüfung nach Kapitel 10.10.
+
+\subsubsection{Isolierstoffdegradation und Grenzübertemperaturen}
+Ziel der Prüfung ist der Nachweis, dass die Anlage bei ununterbrochener Dauerbelastung (Worst-Case) die materialspezifischen Grenzübertemperaturen nicht überschreitet. Der chemische Hintergrund liegt in der Degradation von Isolierstoffen. Nach der Arrhenius-Gleichung (bzw. Montsinger-Regel) halbiert sich die Lebensdauer von Isolationsmaterialien bei einer kontinuierlichen Temperaturüberschreitung von $8\,\text{K}$ bis $10\,\text{K}$. Eine unzulässige Erwärmung führt unweigerlich zur Versprödung, zu Kriechströmen und zu akuter Brandgefahr.
+
+\subsubsection{Das thermische Stabilitätskriterium (1 K/h)}
+Eine Erwärmungsprüfung wird nicht nach einer fest definierten Zeit beendet, sondern erst, wenn sich ein echter stationärer Beharrungszustand eingestellt hat. Die Norm definiert diesen als erreicht, wenn die Temperatur an keiner Messstelle um mehr als $1\,\text{K}$ pro Stunde ansteigt:
+\begin{equation}
+    \frac{d(\Delta\vartheta)}{dt} \le 1\,\frac{\text{K}}{\text{h}}
+\end{equation}
+Aufgrund der immensen thermischen Masse der Kupferschienen nimmt dieser Aufheizprozess oft acht bis zwölf Stunden in Anspruch.
+
+\subsubsection{Das asymmetrische Toleranzband des Prüfstroms (+5 \%)}
+Während der gesamten Prüfdauer muss der Prüfstrom streng nachgeführt werden. Die DIN EN 61439 fordert ein extrem enges, asymmetrisches Toleranzband von $0\,\%$ bis maximal $+5\,\%$ des Nennstroms. Für das $630\,\text{A}$-Modul bedeutet dies einen strikten Korridor zwischen $630,0\,\text{A}$ und $661,5\,\text{A}$.
+\begin{itemize}
+    \item \textbf{Unterschreitung (< 100 \%):} Fällt der Strom ab, ist das Worst-Case-Szenario unterbrochen. Die gesamte, oftmals stundenlange Prüfung wird juristisch ungültig und muss neu gestartet werden.
+    \item \textbf{Überschreitung (> 105 \%):} Steigt der Strom zu hoch, droht durch den $I^2$-Zusammenhang eine überproportionale Überhitzung. Der Prüfling würde den Bauartnachweis fälschlicherweise nicht bestehen.
+\end{itemize}
+
+\subsection{Physik der elektrischen Kontakte und Verschleiß}
+\label{sec:kontaktphysik}
+Für die in Kapitel 4 durchzuführende Evaluierung möglicher Stellglieder zur Stromregelung muss die Kontaktphysik berücksichtigt werden. Wie Vinaricky \cite{Vinaricky_Kontakte} belegt, fließen Ströme an mechanischen Schnittstellen (z.\,B. bei Schleifwiderständen) ausschließlich über mikroskopische Berührungspunkte, die sogenannten a-Spots. Bei Strömen von $630\,\text{A}$ unter Bewegung führt die Stromlinieneinschnürung an diesen Punkten unweigerlich zum Aufschmelzen der Kontaktbrücken (Fritting) und zur Zerstörung des Leiters durch Kontakterosion. Mechanische Regler sind für diese Stromstärken im Dauerbetrieb daher physikalisch ungeeignet.
 
 \subsection{Thermodynamik der Strombahn und das Drift-Phänomen}
 \label{sec:thermodynamik}
@@ -189,6 +486,9 @@ Diese fundamentale elektrodynamische Gesetzmäßigkeit liefert ein absolutes K.-
 Werden Leistungshalbleiter zur gezielten Pulsweitenmodulation (PWM) der Prüfspannung eingesetzt, takten diese den Strom zwangsläufig mit harten Flanken ($du/dt$) und Schaltfrequenzen im hohen Kilohertz-Bereich, beispielsweise mit $f_s = 5\,\text{kHz}$. Setzt man diese hochfrequente Schaltfrequenz in die Küpfmüller-Gleichung der Eindringtiefe ein, reduziert sich $\delta$ auf einen dramatischen Wert von lediglich $\approx 0,9\,\text{mm}$. 
 
 Der Prüfstrom würde bei Verwendung eines Halbleiterstellers fast ausschließlich an der mikroskopisch dünnen äußeren "Haut" der $10\,\text{mm}$ dicken Verteilschienen fließen. Der effektive Leiterquerschnitt würde derart drastisch sinken, dass der Wechselstromwiderstand $R_{AC}$ der gesamten Schaltanlage extrem ansteigen würde. Die daraus resultierenden massiven harmonischen Oberschwingungen (Total Harmonic Distortion, THD) würden zu einer rapiden, extremen und absolut normwidrigen Überhitzung der massiven Kupferschienen des Prüflings führen. Eine realitätsnahe, dem echten Netzbetrieb entsprechende Erwärmungsprüfung nach DIN EN 61439 ist unter Verwendung von konventioneller, taktender Leistungselektronik daher physikalisch unmöglich und führt zum unweigerlichen Versagen des Bauartnachweises.
+\end{comment}
+
+
 
 
 

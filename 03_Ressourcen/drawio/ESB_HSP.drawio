@@ -43,7 +43,7 @@
             <mxPoint x="570" y="150" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4AZqMu4Gj7c4PJnf42G0-29" connectable="0" parent="__K2gok7Vb0EK2n6M0Vw-38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;?? x ? mm&amp;nbsp;&lt;/div&gt;" vertex="1">
+        <mxCell id="4AZqMu4Gj7c4PJnf42G0-29" connectable="0" parent="__K2gok7Vb0EK2n6M0Vw-38" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;5 x 120 x 10 mm&amp;nbsp;&lt;/div&gt;" vertex="1">
           <mxGeometry relative="1" x="-0.7829" y="-1" as="geometry">
             <mxPoint x="6" y="-21" as="offset" />
           </mxGeometry>
@@ -328,7 +328,7 @@
             <mxPoint x="730" y="135" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4AZqMu4Gj7c4PJnf42G0-69" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;?? x ? mm&amp;nbsp;&lt;/div&gt;" vertex="1">
+        <mxCell id="4AZqMu4Gj7c4PJnf42G0-69" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;4 x 80 x 10 mm&amp;nbsp;&lt;/div&gt;" vertex="1">
           <mxGeometry x="660" y="130" as="geometry" />
         </mxCell>
         <mxCell id="4AZqMu4Gj7c4PJnf42G0-71" edge="1" parent="1" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;html=1;rounded=0;endArrow=none;endFill=0;" value="">
@@ -352,7 +352,7 @@
             <mxPoint x="460" y="135" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="4AZqMu4Gj7c4PJnf42G0-74" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;?? x ? mm&amp;nbsp;&lt;/div&gt;" vertex="1">
+        <mxCell id="4AZqMu4Gj7c4PJnf42G0-74" connectable="0" parent="1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="Kupferschine&lt;div&gt;2 x 80 x 10 mm&amp;nbsp;&lt;/div&gt;" vertex="1">
           <mxGeometry x="750" y="105" as="geometry">
             <mxPoint x="24" y="23" as="offset" />
           </mxGeometry>
