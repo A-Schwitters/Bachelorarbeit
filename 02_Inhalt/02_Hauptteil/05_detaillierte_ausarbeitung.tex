@@ -1,7 +1,5 @@
-% KAPITEL 5: Detaillierte Ausarbeitung (05_detaillierte_ausarbeitung.tex)
-
 % =============================================================================
-% 5 Detaillierte Ausarbeitung des gewählten Konzepts
+% 5 Detaillierte Ausarbeitung des gewählten Konzepts (05_detaillierte_ausarbeitung.tex)
 % =============================================================================
 \section{Detaillierte Ausarbeitung des gewählten Konzepts}
 \label{chap:ausarbeitung}
@@ -15,8 +13,9 @@ Basierend auf der Evaluierung in Kapitel 4 wird im Folgenden die hybride ohmsch-
 \label{sec:hardware_konzeption}
 
 Die hybride R-L-Kombination erfordert eine exakte mechanische und elektrische Abstimmung zwischen dem ungesteuerten Festwiderstand und der regelbaren Tauchkerndrossel. Die Dimensionierung muss gewährleisten, dass das System auch bei einer achtstündigen Prüfdauer unter Volllast thermisch und magnetisch stabil bleibt.
-
+% -----------------------------------------------------------------------------
 % 5.1.1 Auslegung des ohmschen Hauptpfades
+
 \subsubsection{Auslegung des ohmschen Hauptpfades und thermodynamische Modellierung}
 \label{sec:auslegung_widerstand}
 
@@ -33,12 +32,13 @@ Die Erwärmung folgt der homogenen Wärmeleitungsgleichung, welche die zugeführ
     \vartheta(t) = \vartheta_{Umg} + \frac{P_v}{A_{eff} \cdot \alpha_w} \cdot \left( 1 - e^{-\frac{t}{\tau_{th}}} \right)
 \end{equation}
 Die thermische Zeitkonstante $\tau_{th} = (m \cdot c_p) / (A_{eff} \cdot \alpha_w)$ ist für die Regelungstechnik von enormem Vorteil. Durch die massive Bauweise des Edelstahlgitters (große Masse $m$ und spezifische Wärmekapazität $c_p$) liegt $\tau_{th}$ im Bereich von mehreren Minuten. Dies führt zu einem stark geglätteten, asymptotischen Temperaturanstieg. Kurzzeitige Netzschwankungen am Haupttransformator wirken sich dadurch nicht unmittelbar auf den Widerstandswert aus, was der ET200 SP ausreichend Zeit für ausgleichende Stellbewegungen an der Drossel gewährt.
-
+% -----------------------------------------------------------------------------
 % 5.1.2 Magnetkreisberechnung
 \subsubsection{Magnetkreisberechnung und Sättigungsprävention der Tauchkerndrossel}
 \label{sec:auslegung_drossel}
 
 Die parallel geschaltete Tauchkerndrossel kompensiert den thermischen Widerstandsanstieg durch die Aufnahme eines steuerbaren Blindstroms $I_L$. In der komplexen Wechselstromrechnung wird der Gesamtstrom $I_{ges}$ durch die vektorielle Addition von Wirk- und Blindstrom gebildet. Da der Wirkstrom auf der reellen Achse und der Blindstrom der Induktivität um $-90^\circ$ phasenverschoben auf der imaginären Achse liegt, ergibt sich der Betrag zu:
+
 \begin{equation}
     I_{ges} = \sqrt{I_R^2 + I_L^2}
 \end{equation}
@@ -55,7 +55,7 @@ Die resultierende stufenlose Induktivität in Abhängigkeit der Kernposition $\d
 \begin{equation}
     L(x) = \frac{N^2}{R_{m,ges}} \approx \frac{N^2 \cdot \mu_0 \cdot A_{\delta}}{\delta(x)}
 \end{equation}
-
+% -----------------------------------------------------------------------------
 % 5.1.3 Mechanische Dimensionierung
 \subsubsection{Mechanische Dimensionierung des Spindeltriebs und Motormoments}
 \label{sec:mechanik_spindel}
@@ -78,11 +78,11 @@ Setzt man für $F_G \approx 147\,\text{N}$ an und geht von einer maximalen magne
 \label{sec:automatisierung_et200sp}
 
 Die Überführung dieser elektromechanischen Hardware in einen vollautomatisierten Prüfprozess erfolgt über das dezentrale Peripheriesystem Siemens ET200 SP. Dieses fungiert als intelligente Schnittstelle zwischen dem Starkstrom-Prüffeld und der Software-Regelebene.
-
+% -----------------------------------------------------------------------------
 \subsubsection{Elektromagnetisch verträgliche Signalverarbeitung (4-20 mA)}
 In direkter Umgebung der Hauptstromschienen des Prüfstandes treten bei Dauertests bis zu $3.200\,\text{A}$ auf. Diese massiven Wechselströme erzeugen nach dem Gesetz von Biot-Savart starke magnetische Streufelder, die in ungeschirmte Signalleitungen nach dem Induktionsgesetz transiente Störspannungen einkoppeln. 
 Um die Messgenauigkeit des Prüfstroms sicherzustellen, wird das Ausgangssignal der induktiven Hochstromwandler nicht als klassisches $0-10\,\text{V}$ Spannungssignal an die Steuerung übergeben. Stattdessen wird ein Messumformer eingesetzt, der den Strom-Istwert in ein analoges $4-20\,\text{mA}$ Signal konvertiert. Der elementare physikalische Vorteil dieser Stromschleife liegt im extrem niedrigen Innenwiderstand der Auswerteschaltung, wodurch kapazitiv oder induktiv eingekoppelte Störspannungen quasi kurzgeschlossen werden und das Nutzsignal nicht überlagern (Bürdenunabhängigkeit).
-
+% -----------------------------------------------------------------------------
 \subsubsection{Signalfluss und analoge Messwertverarbeitung}
 Die Digitalisierung erfolgt über ein Analogeingabemodul der ET200 SP mit einer Auflösung von 16 Bit. Die Quantisierungsstufe $q$ für den Messbereich $I_{max} = 800\,\text{A}$ beträgt:
 \begin{equation}
@@ -97,18 +97,18 @@ Diese hohe physikalische Auflösung ist zwingend erforderlich, um das enge Norm-
 \label{sec:software_regelung}
 
 Die größte Herausforderung der Regelstrecke ist die zuvor nachgewiesene vektorielle Nichtlinearität ($L \sim 1/\delta$) der R-L-Kombination.
-
+% -----------------------------------------------------------------------------
 \subsubsection{Diskrete Signalverarbeitung (PT1-Filter)}
 Das TIA Portal verarbeitet die Sensorsignale zeitdiskret. Um unruhige Stellbewegungen des Tauchkerns durch Wandlerrauschen zu verhindern, wird ein digitales Verzögerungsglied 1. Ordnung (PT1-Filter) als rekursive Differenzengleichung in SCL implementiert:
 \begin{equation}
     y[k] = \alpha \cdot x[k] + (1 - \alpha) \cdot y[k-1] \quad \text{mit} \quad \alpha = \frac{T_a}{T_a + T_f}
 \end{equation}
 Mit einer Filterzeitkonstante von $T_f = 500\,\text{ms}$ wird hochfrequentes Rauschen zuverlässig gedämpft, ohne die thermische Dynamik des Prüfstandes zu beschneiden.
-
+% -----------------------------------------------------------------------------
 \subsubsection{PID-Regler-Parametrierung und Anti-Windup}
 Für die Ausregelung des thermischen Drifts wird die Anweisung \texttt{PID\_Compact} in einem deterministischen Weckalarm (OB30, $100\,\text{ms}$ Zyklus) aufgerufen. Aufgrund der enormen thermischen Trägheit des Systems wird der Regler als reiner PI-Regler konfiguriert ($T_d = 0$). 
 Da die Verfahrwege des Tauchkerns mechanisch limitiert sind, ist ein Integrator-Windup-Schutz essenziell. Kann der Soll-Strom temporär nicht erreicht werden, friert die \texttt{PID\_Compact} Anweisung den I-Anteil ein, sobald die Stellgrößenbegrenzung ($0\,\%$ oder $100\,\%$) erreicht ist. Dies verhindert ein massives Überschießen bei der Rückkehr in den normalen Regelbereich.
-
+% -----------------------------------------------------------------------------
 \subsubsection{Linearisierung der Regelstrecke (Gain Scheduling)}
 Da die Induktivitätsänderung bei einem großen Luftspalt deutlich geringer ausfällt als bei einem kleinen Luftspalt, variiert die Streckenverstärkung $K_S$ des Systems signifikant. Um dennoch eine konstante und stabile Reglerdynamik zu gewährleisten, wird eine arbeitspunktabhängige Adaption der Reglerverstärkung $K_p$ (Gain Scheduling) implementiert. Der $K_p$-Wert wird dynamisch über eine stückweise lineare Interpolationstabelle in Abhängigkeit der aktuellen Kernposition $x$ skaliert.
 
@@ -119,200 +119,14 @@ Da die Induktivitätsänderung bei einem großen Luftspalt deutlich geringer aus
 \label{sec:sicherheitskonzept}
 
 Der unbeaufsichtigte Dauerbetrieb von Erwärmungsprüfungen über bis zu 12 Stunden erfordert ein redundantes Sicherheitskonzept zum Schutz der Anlage und des Prüfpersonals.
-
+% -----------------------------------------------------------------------------
 \subsubsection{Signalüberwachung und Sensorik (NAMUR NE 43)}
 Gemäß der Industrie-Empfehlung NAMUR NE 43 wertet die ET200 SP den Signalpegel des Analogsignals kontinuierlich aus. Fällt der Strommesswert unter $3,6\,\text{mA}$, wird eine Drahtbruchstörung sicher erkannt. Die State Machine der SPS wechselt unmittelbar in den Zustand \textit{Sicherer Halt}. Dies verhindert zuverlässig, dass der Regler bei einem Drahtbruch fälschlicherweise $0\,\text{A}$ misst und den Kern unkontrolliert zur vermeintlichen Stromerhöhung verfährt, was in der Realität zu zerstörerischen Stromspitzen im Modul führen würde.
-
+% -----------------------------------------------------------------------------
 \subsubsection{Mechanischer und thermischer Eigenschutz}
 Neben den softwareseitigen Begrenzungen (Soft-Limits im TIA Portal) ist der maximale lineare Stellweg der Tauchkerndrossel hardwareseitig mit elektromechanischen Endschaltern (Öffner-Prinzip) abgesichert. Ein Überfahren dieser Positionen führt zu einem sofortigen Stop des Schrittmotors (STO - Safe Torque Off).
 Zusätzlich werden der Edelstahl-Festwiderstand und die Kupferwicklung der Drossel durch applizierte PT100-Sensoren thermisch überwacht. Übersteigt die Spule den thermischen Grenzwert der Isolierstoffklasse, schaltet die Steuerung das vorgeschaltete Hauptschütz des Prüfabgangs verzögerungsfrei ab.
 
 
 
-
-
-
-
-
-
-
-
-
-\begin{comment}   
-\section{Detaillierte Ausarbeitung des gewählten Konzepts}
-\label{chap:ausarbeitung}
-
-Basierend auf der Evaluierung in Kapitel 4 wird im Folgenden die hybride ohmsch-induktive Lastsimulation (Konzept D) detailliert ausgearbeitet. Die Auslegung erfolgt exemplarisch für das anspruchsvollste Prüfmodul (Typ 3er, 630\,A Dreiphasen-Wechselstrom). Ziel dieses Kapitels ist die physikalisch-mathematische Dimensionierung der Hardwarekomponenten sowie die Überführung des theoretischen Konstrukts in eine reale Automatisierungsarchitektur mittels Siemens ET200 SP.
-
-\subsection{Hardware-Konzeption und Dimensionierung}
-\label{sec:hardware_konzeption}
-
-Die hybride R-L-Kombination erfordert eine exakte mechanische und elektrische Abstimmung zwischen dem ungesteuerten Festwiderstand und der regelbaren Tauchkerndrossel. Die Dimensionierung muss gewährleisten, dass das System auch bei einer achtstündigen Prüfdauer unter Volllast thermisch und magnetisch stabil bleibt.
-
-\subsubsection{Auslegung des ohmschen Hauptpfades und thermodynamische Modellierung}
-\label{sec:auslegung_widerstand}
-
-Der Festwiderstand hat die Aufgabe, den dominierenden Wirkstromanteil ($I_R \approx 500\,\text{A}$) zu führen, um den normativ geforderten Leistungsfaktor ($\cos\varphi \approx 1$) für den Bauartnachweis zu sichern. Als Widerstandsmaterial wird eine hochlegierte Chrom-Nickel-Stahllegierung (Werkstoffnummer 1.4310, X10CrNi18-8) spezifiziert. Diese Legierung zeichnet sich durch eine hohe Zunderbeständigkeit bis zu $800\,^\circ\text{C}$ und einen moderaten spezifischen elektrischen Widerstand aus.
-
-Die abzuführende thermische Verlustleistung $P_v$ im Widerstand bei Nennstrom berechnet sich nach dem Joule'schen Gesetz. Bei einem Kaltwiderstand von $R_{20} = 8,1\,\text{m}\Omega$ ergibt sich:
-$$P_v = I_R^2 \cdot R_{20} \approx (500\,\text{A})^2 \cdot 8,1\,\text{m}\Omega = 2.025\,\text{W}$$
-Da in einem dreiphasigen System über $6\,\text{kW}$ Abwärme pro Modul entstehen, ist das thermische Management von zentraler Bedeutung. Das transiente Erwärmungsverhalten des Festwiderstands wird maßgeblich durch seine Bauform bestimmt. Um die wirksame Kühloberfläche $A_{eff}$ zu maximieren, wird das Widerstandsmaterial nicht als kompakter Block, sondern als gefaltetes Mäander-Gitter ausgeführt. Diese Geometrie begünstigt den konvektiven Wärmeübergang (Kamineffekt), da die erwärmte Luft ungehindert vertikal aufsteigen kann und kühlere Umgebungsluft von unten nachzieht.
-
-Die Erwärmung folgt der homogenen Wärmeleitungsgleichung, welche die zugeführte elektrische Energie der gespeicherten und der abgeführten Wärmeenergie gleichsetzt:
-$$\vartheta(t) = \vartheta_{Umg} + \frac{P_v}{A_{eff} \cdot \alpha_w} \cdot \left( 1 - e^{-\frac{t}{\tau_{th}}} \right)$$
-Die thermische Zeitkonstante $\tau_{th} = (m \cdot c_p) / (A_{eff} \cdot \alpha_w)$ ist für die Regelungstechnik von enormem Vorteil. Durch die massive Bauweise des Edelstahlgitters (große Masse $m$ und spezifische Wärmekapazität $c_p$) liegt $\tau_{th}$ im Bereich von mehreren Minuten. Dies führt zu einem stark geglätteten, asymptotischen Temperaturanstieg. Kurzzeitige Netzschwankungen am Haupttransformator wirken sich dadurch nicht unmittelbar auf den Widerstandswert aus, was der ET200 SP ausreichend Zeit für ausgleichende Stellbewegungen an der Drossel gewährt.
-
-\subsubsection{Magnetkreisberechnung und Sättigungsprävention der Tauchkerndrossel}
-\label{sec:auslegung_drossel}
-
-Die parallel geschaltete Tauchkerndrossel kompensiert den thermischen Widerstandsanstieg durch die Aufnahme eines steuerbaren Blindstroms $I_L$. In der komplexen Wechselstromrechnung wird der Gesamtstrom $I_{ges}$ durch die vektorielle Addition von Wirk- und Blindstrom gebildet. Da der Wirkstrom auf der reellen Achse und der Blindstrom der Induktivität um $-90^\circ$ phasenverschoben auf der imaginären Achse liegt, ergibt sich der Betrag zu:
-$$I_{ges} = \sqrt{I_R^2 + I_L^2}$$
-Sinkt der Wirkstrom durch die Eigenerwärmung des Stahlgitters auf beispielsweise $440\,\text{A}$ ab, muss die Steuerung die Drossel so verfahren, dass ein Blindstrom von $I_{L,max} = \sqrt{630^2 - 440^2} \approx 451\,\text{A}$ fließt, um den Prüfstrom exakt bei 630\,A zu halten.
-
-Die größte physikalische Herausforderung bei Hochstromdrosseln ist die Vermeidung der magnetischen Sättigung. Die Magnetisierungskennlinie (B-H-Kurve) von kornorientiertem Elektroblech verläuft nur bis zu einer magnetischen Flussdichte von $B_{sat} \approx 1,5\,\text{T}$ linear. Wird dieser Punkt überschritten, bricht die Induktivität zusammen, was zu einer massiven, nicht-sinusförmigen Stromspitze (Verzerrungsblindleistung) führen würde. 
-Nach dem Durchflutungsgesetz setzt sich der magnetische Gesamtwiderstand $R_{m,ges}$ der Tauchkerndrossel aus dem Eisenweg und dem verstellbaren Luftspalt $\delta(x)$ zusammen:
-$$R_{m,ges} = \frac{l_{Fe}}{\mu_0 \cdot \mu_r \cdot A_{Fe}} + \frac{\delta(x)}{\mu_0 \cdot A_{\delta}}$$
-Da die relative Permeabilität des Elektroblechs ($\mu_r \gg 1000$) extrem hoch ist, stellt der Eisenkern für den magnetischen Fluss fast keinen Widerstand dar. Der Gesamtwiderstand wird nahezu vollständig durch den Luftspalt $\delta(x)$ dominiert. Dies führt zur Scherung der Magnetisierungskennlinie, wodurch die Drossel selbst bei den geforderten Spitzenströmen von über $450\,\text{A}$ im linearen Bereich betrieben werden kann. Die resultierende Induktivität in Abhängigkeit der Kernposition $x$ lautet näherungsweise:
-$$L(x) = \frac{N^2}{R_{m,ges}} \approx \frac{N^2 \cdot \mu_0 \cdot A_{\delta}}{\delta(x)}$$
-
-\subsubsection{Mechanische Dimensionierung des Spindeltriebs und Motormoments}
-\label{sec:mechanik_spindel}
-
-Um den massiven Eisenkern (geschätzte Masse $m_{Kern} \approx 15\,\text{kg}$) zur Induktivitätsänderung stufenlos und präzise in die Kupferspule einzutauchen, wird ein linearer Spindeltrieb verwendet, der von einem Schrittmotor angetrieben wird. Der Antrieb muss dabei zwei elementare Kräfte überwinden: Die Gewichtskraft des Kerns ($F_G = m_{Kern} \cdot g$) sowie die Reluktanzkraft ($F_{mag}$), mit welcher das Magnetfeld der stromdurchflossenen Spule den Kern in ihr Inneres zieht.
-
-Für die spielfreie Positionierung wird eine Trapezgewindespindel der Nenngröße Tr 16x4 (Flankendurchmesser $d_2 = 14\,\text{mm}$, Steigung $P = 4\,\text{mm}$) spezifiziert. Die Selbsthemmung des Trapezgewindes ist ein entscheidendes Sicherheitsmerkmal: Fällt die Steuerspannung des Motors aus, verhindert die Gewindereibung, dass der schwere Kern durch die Schwerkraft unkontrolliert in die Spule stürzt und einen maximalen Stromsprung auslöst.
-Das erforderliche Antriebsmoment $M_A$ des Schrittmotors zur Aufwärtsbewegung (gegen die Last) berechnet sich unter Berücksichtigung des Steigungswinkels $\alpha$ und des Reibungswinkels $\rho'$ im Gewinde:
-$$M_A = (F_G + F_{mag}) \cdot \frac{d_2}{2} \cdot \tan(\alpha + \rho')$$
-Setzt man für $F_G \approx 147\,\text{N}$ an und geht von einer maximalen magnetischen Zugkraft von $300\,\text{N}$ aus, resultiert eine axiale Gesamtkraft von rund $450\,\text{N}$. Selbst unter diesen Extrembedingungen reicht ein industrieller Schrittmotor der Baugröße NEMA 23 oder NEMA 34 mit einem Haltemoment von $2\,\text{bis}\,4\,\text{Nm}$ aus, um den Kern präzise im Sub-Millimeter-Bereich zu verfahren.
-
-\subsection{Automatisierungskonzept mit Siemens ET200 SP}
-\label{sec:automatisierung_et200sp}
-
-Die Überführung dieser elektromechanischen Hardware in einen vollautomatisierten Prüfprozess erfolgt über das dezentrale Peripheriesystem Siemens ET200 SP. Dieses fungiert als intelligente Schnittstelle zwischen dem Starkstrom-Prüffeld und der Software-Regelebene.
-
-\subsubsection{Elektromagnetisch verträgliche Signalverarbeitung (4-20 mA)}
-In direkter Umgebung der Hauptstromschienen des Prüfstandes treten bei Dauertests bis zu $3200\,\text{A}$ auf. Diese massiven Wechselströme erzeugen nach dem Gesetz von Biot-Savart starke magnetische Streufelder, die in ungeschirmte Signalleitungen nach dem Induktionsgesetz transiente Störspannungen einkoppeln. 
-Um die Messgenauigkeit des Prüfstroms sicherzustellen, wird das Ausgangssignal der induktiven Hochstromwandler nicht als klassisches $0-10\,\text{V}$ Spannungssignal an die Steuerung übergeben. Stattdessen wird ein Messumformer eingesetzt, der den Strom-Istwert in ein analoges $4-20\,\text{mA}$ Signal konvertiert. Der elementare physikalische Vorteil dieser Stromschleife liegt im extrem niedrigen Innenwiderstand der Auswerteschaltung, wodurch kapazitiv oder induktiv eingekoppelte Störspannungen quasi kurzgeschlossen werden und das Nutzsignal nicht überlagern.
-
-\subsubsection{Signalfluss und analoge Messwertverarbeitung}
-Der Ist-Strom $I_{ist}$ wird über induktive Stromwandler erfasst. Um die EMV-Störfestigkeit in der Umgebung der Hochstromschienen zu maximieren, wird das Sekundärsignal in eine $4-20\,\text{mA}$ Stromschleife konvertiert (Bürdenunabhängigkeit).
-Die Digitalisierung erfolgt über ein Analogeingabemodul der ET200 SP mit einer Auflösung von 16 Bit. Die Quantisierungsstufe $q$ für den Messbereich $I_{max} = 800\,\text{A}$ beträgt:
-\begin{equation}
-    q = \frac{800\,\text{A}}{2^{16}} \approx 12,2\,\text{mA}
-\end{equation}
-Diese hohe physikalische Auflösung ist zwingend erforderlich, um das enge Norm-Toleranzband der DIN EN 61439 ($0\,\%$ bis $+5\,\%$ von 630\,A) steuerungstechnisch überhaupt abbilden zu können.
-
-
-\subsection{Softwarearchitektur und Regelungstechnik}
-\label{sec:software_regelung}
-
-Die größte Herausforderung der Regelstrecke ist die zuvor nachgewiesene vektorielle Nichtlinearität ($L \sim 1/\delta$) der R-L-Kombination.
-
-\subsubsection{Diskrete Signalverarbeitung (PT1-Filter)}
-Das TIA Portal verarbeitet die Sensorsignale zeitdiskret. Um unruhige Stellbewegungen des Tauchkerns durch Wandlerrauschen zu verhindern, wird ein digitales Verzögerungsglied 1. Ordnung (PT1-Filter) als rekursive Differenzengleichung in SCL implementiert:
-\begin{equation}
-    y[k] = \alpha \cdot x[k] + (1 - \alpha) \cdot y[k-1] \quad \text{mit} \quad \alpha = \frac{T_a}{T_a + T_f}
-\end{equation}
-Mit einer Filterzeitkonstante von $T_f = 500\,\text{ms}$ wird hochfrequentes Rauschen zuverlässig gedämpft, ohne die thermische Dynamik des Prüfstandes zu beschneiden.
-
-\subsubsection{PID-Regler-Parametrierung und Anti-Windup}
-Für die Ausregelung des thermischen Drifts wird die Anweisung \texttt{PID\_Compact} in einem deterministischen Weckalarm (OB30, $100\,\text{ms}$ Zyklus) aufgerufen. Aufgrund der thermischen Trägheit wird das System als reiner PI-Regler konfiguriert ($T_d = 0$). 
-Da die Verfahrwege des Tauchkerns mechanisch limitiert sind, ist ein Integrator-Windup-Schutz essenziell. Kann der Soll-Strom nicht erreicht werden, friert die \texttt{PID\_Compact} Anweisung den I-Anteil ein, sobald die Stellgrößenbegrenzung ($0\,\%$ oder $100\,\%$) erreicht ist, um ein Überschießen zu verhindern.
-
-\subsubsection{Linearisierung der Regelstrecke (Gain Scheduling)}
-Da die Induktivitätsänderung am Rand der Spule geringer ist als in der Mitte, variiert die Streckenverstärkung $K_S$. Um eine konstante Reglerdynamik zu gewährleisten, wird eine arbeitspunktabhängige Adaption der Reglerverstärkung $K_p$ (Gain Scheduling) implementiert. Der $K_p$-Wert wird dynamisch über eine stückweise lineare Interpolationstabelle in Abhängigkeit der aktuellen Kernposition $x$ skaliert.
-
-
-\subsection{Sicherheits- und Überwachungskonzept}
-\label{sec:sicherheitskonzept}
-
-Der unbeaufsichtigte Dauerbetrieb von Erwärmungsprüfungen erfordert ein robustes Sicherheitskonzept zum Schutz der Anlage und des Personals.
-
-\subsubsection{Signalüberwachung und Sensorik (NAMUR NE 43)}
-Gemäß der Industrie-Empfehlung NAMUR NE 43 wertet die ET200 SP den Signalpegel des Analogsignals kontinuierlich aus. Fällt der Strom unter $3,6\,\text{mA}$, wird eine Drahtbruchstörung erkannt. Die State Machine wechselt unmittelbar in den Zustand \textit{Sicherer Halt}. Dies verhindert, dass der Regler bei einem Drahtbruch fälschlicherweise $0\,\text{A}$ misst und den Kern unkontrolliert verfährt, was zu zerstörerischen Stromspitzen führen würde.
-
-\subsubsection{Mechanischer und thermischer Eigenschutz}
-Neben den softwareseitigen Begrenzungen (Soft-Limits) ist der lineare Stellweg der Tauchkerndrossel mit elektromechanischen Hardware-Endschaltern (Öffner-Prinzip) abgesichert. Ein Überfahren führt zu einem sofortigen hardwareseitigen Stop des Schrittmotors (STO - Safe Torque Off).
-Zusätzlich werden der Festwiderstand und die Kupferwicklung durch PT100-Sensoren thermisch überwacht. Übersteigt die Kupferwicklung den Grenzwert der Isolierstoffklasse, schaltet die SPS das vorgeschaltete Hauptschütz des Moduls verzögerungsfrei ab.
-
-
-
-
-
-
-
-\begin{comment}
-\section{Detaillierte Ausarbeitung des gewählten Konzepts}
-\label{chap:detaillierte-ausarbeitung}
-
-section{Detaillierte Ausarbeitung des gewählten Konzepts}
-\label{chap:ausarbeitung}
-
-Basierend auf der Nutzwertanalyse und der Entscheidung für die hybride ohmsch-induktive Lastsimulation (Konzept D) wird in diesem Kapitel die detaillierte technische Umsetzung beschrieben. Dies umfasst die physikalische Dimensionierung der Leistungskomponenten, die informationstechnische Anbindung über das Siemens ET200 SP System sowie die Auslegung der Software- und Sicherheitsarchitektur.
-
-\subsection{Hardware-Konzeption und Dimensionierung}
-\label{sec:hardware_konzeption}
-
-Die hybride R-L-Kombination erfordert eine exakte Abstimmung zwischen dem ungesteuerten Festwiderstand (Wirkleistungspfad) und der regelbaren Tauchkerndrossel (Blindleistungspfad). 
-
-\subsubsection{Auslegung der Leistungskomponenten für 630\,A}
-Der Edelstahl-Gitterwiderstand wird so dimensioniert, dass er bei Prüfbeginn (Kaltzustand) einen Strom von ca. $500\,\text{A}$ führt. Die Tauchkerndrossel muss den verbleibenden Differenzstrom als Blindstrom $I_L$ aufbringen, um den Gesamtvektor auf $I_{ges} = 630\,\text{A}$ zu summieren ($I_{ges} = \sqrt{I_R^2 + I_L^2}$).
-Die mechanische Verstellung des Eisenkerns zur Modulation der Induktivität $L(x)$ erfolgt über einen Schrittmotor mit spielfreiem Spindeltrieb. Dies ermöglicht eine hochpräzise und verschleißfreie Positionierung im Sub-Millimeter-Bereich.
-
-\subsection{Automatisierungskonzept mit Siemens ET200 SP}
-\label{sec:automatisierungskonzept}
-
-Die Steuerungsebene erfordert eine zeitkritische und hochauflösende Erfassung des Prüfstroms sowie eine nahtlose Aktor-Anbindung.
-
-\subsubsection{Signalfluss und analoge Messwertverarbeitung}
-Der Ist-Strom $I_{ist}$ wird über induktive Stromwandler erfasst. Um die EMV-Störfestigkeit in der Umgebung der Hochstromschienen (Magnetfelder bis zu 3200\,A im Hauptsammler) zu maximieren, wird das Sekundärsignal in eine $4-20\,\text{mA}$ Stromschleife konvertiert (Bürdenunabhängigkeit).
-Die Digitalisierung erfolgt über ein Analogeingabemodul der ET200 SP mit einer Auflösung von 16 Bit. Die Quantisierungsstufe $q$ für den Messbereich $I_{max} = 800\,\text{A}$ beträgt:
-\begin{equation}
-    q = \frac{800\,\text{A}}{2^{16}} \approx 12,2\,\text{mA}
-\end{equation}
-Diese hohe physikalische Auflösung ist zwingend erforderlich, um das enge Norm-Toleranzband der DIN EN 61439 ($0\,\%$ bis $+5\,\%$ von 630\,A) steuerungstechnisch überhaupt abbilden zu können.
-
-\subsection{Softwarearchitektur und Regelungstechnik}
-\label{sec:software_regelung}
-
-Die größte Herausforderung der Regelstrecke ist die vektorielle Nichtlinearität der R-L-Kombination.
-
-\subsubsection{Diskrete Signalverarbeitung (PT1-Filter)}
-Das TIA Portal verarbeitet die Sensorsignale zeitdiskret. Um unruhige Stellbewegungen des Tauchkerns durch Wandlerrauschen zu verhindern, wird ein digitales Verzögerungsglied 1. Ordnung (PT1-Filter) als rekursive Differenzengleichung in SCL implementiert:
-\begin{equation}
-    y[k] = \alpha \cdot x[k] + (1 - \alpha) \cdot y[k-1]
-\end{equation}
-Mit einer Filterzeitkonstante von $T_f = 500\,\text{ms}$ wird hochfrequentes Rauschen zuverlässig gedämpft, ohne die sehr langsame thermische Dynamik des Prüfstandes ($T_{therm} \gg 300\,\text{s}$) zu beschneiden.
-
-\subsubsection{PID-Regler-Parametrierung und Anti-Windup}
-Für die Ausregelung des thermischen Drifts wird die Anweisung \texttt{PID\_Compact} in einem deterministischen Weckalarm (OB30, $100\,\text{ms}$ Zyklus) aufgerufen. Aufgrund der thermischen Trägheit wird das System als reiner PI-Regler konfiguriert. 
-Da die Verfahrwege des Tauchkerns mechanisch limitiert sind, ist ein Integrator-Windup-Schutz essenziell. Kann der Soll-Strom bei Spannungsschwankungen nicht erreicht werden, friert die \texttt{PID\_Compact} Anweisung den I-Anteil ein, sobald die Stellgrößenbegrenzung ($0\,\%$ oder $100\,\%$) erreicht ist, um ein Überschießen bei Netzrückkehr zu verhindern.
-
-
-\subsection{Sicherheits- und Überwachungskonzept}
-\label{sec:sicherheitskonzept}
-
-Der teilweise unbeaufsichtigte Dauerbetrieb von Erwärmungsprüfungen erfordert ein robustes, mehrstufiges Sicherheitskonzept. Dieses muss die Anlage vor thermischer und mechanischer Zerstörung schützen, fehlerhafte Messungen verhindern und die Personensicherheit nach Maschinenrichtlinie gewährleisten.
-
-\subsubsection{Signalüberwachung und Sensorik (NAMUR NE 43)}
-Durch die Verwendung von $4-20\,\text{mA}$-Stromschleifen für die Strom-Istwert-Erfassung ist eine hardwarenahe Drahtbruchüberwachung inhärent gegeben. Gemäß der Industrie-Empfehlung NAMUR NE 43 wertet das Analogeingabemodul der ET200 SP den Signalpegel kontinuierlich aus:
-\begin{itemize}
-    \item $I_{signal} < 3,6\,\text{mA}$: Kritische Störung (Drahtbruch oder Kurzschluss gegen Masse).
-    \item $3,8\,\text{mA} \le I_{signal} \le 20,5\,\text{mA}$: Normaler, valider Messbereich.
-    \item $I_{signal} > 21,0\,\text{mA}$: Kritische Störung (Kurzschluss oder Sensorüberlast).
-\end{itemize}
-Tritt ein Signalfehler auf, geht die \texttt{PID\_Compact}-Anweisung in den Störmodus. Die State Machine der SPS wechselt unmittelbar in den Zustand \textit{Sicherer Halt}. Dies ist essenziell, da ein Drahtbruch dem Regler einen Strom von $0\,\text{A}$ vortäuschen würde, was zu einem unkontrollierten Ausfahren des Tauchkerns und damit zu einer massiven, zerstörerischen Stromspitze im Prüfling führen würde.
-
-\subsubsection{Mechanischer und thermischer Eigenschutz}
-Das 630\,A-Prüfmodul vereint hohe elektrische und mechanische Energien. Der Eigenschutz der R-L-Kombination wird durch folgende Maßnahmen realisiert:
-
-\paragraph{Endlagenüberwachung des Spindeltriebs}
-Neben den softwareseitigen Begrenzungen der Achsparametrierung (Soft-Limits) ist der lineare Stellweg der Tauchkerndrossel mit elektromechanischen Hardware-Endschaltern (Öffner-Prinzip / NC-Kontakte) abgesichert. Ein Überfahren der Arbeitsbereiche führt zu einem sofortigen hardwareseitigen Stop des Schrittmotors (z.\,B. via STO - Safe Torque Off am Umrichter), bevor es zu mechanischen Verspannungen oder einer Zerstörung des Spindeltriebs kommt.
-
-\paragraph{Thermische Überwachung (PT100)}
-Der Edelstahl-Festwiderstand und die Kupferwicklung der Tauchkerndrossel werden durch PT100-Sensoren thermisch überwacht. Da die Verlustleistung im Festwiderstand bei Nennlast beträchtlich ist ($> 2\,\text{kW}$), droht bei einem Ausfall der Raumklimatisierung ein thermischer Runaway. Übersteigt die Kupferwicklung der Drossel den Grenzwert der Isolierstoffklasse (z.\,B. $155\,^\circ\text{C}$ für Klasse F), schaltet die SPS das vorgeschaltete Hauptschütz des Moduls verzögerungsfrei ab.
-
-\subsubsection{Integration der Maschinensicherheit (F-Peripherie)}
-Für die übergeordnete Anlagensicherheit (Not-Halt-Taster, Türzuhaltungen des Prüffeldes) wird das ET200 SP System um fehlersichere Baugruppen (F-DI, F-DQ) ergänzt. Im Not-Halt-Fall wird nicht nur die Steuerspannung der Schrittmotoren sicherheitsgerichtet abgeschaltet, sondern auch die Niederspannungs-Haupteinspeisung des Prüfstandes redundant getrennt. Da die hybride Prüfanordnung (Konzept D) rein induktiv-ohmsch ist und keine großen kapazitiven Energiespeicher enthält, ist unmittelbar nach dem Abschalten keine gefährliche Restspannung im Prüfling vorhanden.
-\end{comment}
 

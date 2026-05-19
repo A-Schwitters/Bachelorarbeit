@@ -1,10 +1,16 @@
+% =============================================================================
 % KAPITEL 1: Einleitung (01_einleitung.tex)
+% =============================================================================
 
+% -----------------------------------------------------------------------------
+% 1 Einleitung
+% -----------------------------------------------------------------------------
 \section{Einleitung}
 \label{chap:einleitung}
 
 Das vorliegende erste Kapitel führt in die grundlegende Thematik dieser Bachelorarbeit ein. Zunächst wird die betriebliche Motivation zur Optimierung des Erwärmungsprüfstandes bei der Rolf Janssen GmbH erläutert. Darauf aufbauend wird die aktuelle Problemstellung des manuellen Prüfverfahrens und des physikalischen Phänomens des „thermischen Drifts“ dargelegt. Aus dieser Analyse leitet sich im Anschluss die konkrete Zielsetzung für die Automatisierung der Anlage ab, bevor das Kapitel mit einer klaren Abgrenzung der Aufgabenstellung schließt.
-
+% -----------------------------------------------------------------------------
+% 1.1 Motivation
 \subsection{Motivation}
 \label{sec:motivation}
 
@@ -15,7 +21,8 @@ Um diese Sicherheit zu gewährleisten, fordert der Gesetzgeber strenge normative
 Für die Durchführung dieser essenziellen Tests betreibt die Rolf Janssen GmbH einen hauseigenen Erwärmungsprüfstand. Da eine solche normgerechte Prüfung oft über mehrere Stunden andauert, bis sich ein thermisches Gleichgewicht in der Anlage eingestellt hat, bindet der Prüfprozess in seiner aktuellen Form erhebliche personelle Ressourcen. Die ständige Überwachung und Nachjustierung der Prüfparameter ist nicht nur monoton, sondern blockiert auch wertvolle Arbeitszeit der Fachkräfte.
 
 Die Motivation für diese Bachelorarbeit entspringt daher dem direkten betrieblichen Bedarf, diesen wichtigen, aber zeitintensiven Qualitätssicherungsprozess zu modernisieren. Durch eine gezielte Automatisierung des Erwärmungsprüfstandes soll nicht nur die Effizienz und Reproduzierbarkeit der Prüfungen gesteigert, sondern auch eine zukunftssichere und normkonforme Basis für kommende Anlagengenerationen geschaffen werden.
-
+% -----------------------------------------------------------------------------
+% 1.2 Problemstellung
 \subsection{Problemstellung}
 \label{sec:problemstellung}
 
@@ -34,7 +41,8 @@ Das Ergebnis ist ein andauernder, iterativer Prozess des manuellen Ausbalanciere
 
 \textcolor{red}{\textbf{Achtung!  Foto von  Edelstahl-Widerständen}}
 
-
+% -----------------------------------------------------------------------------
+% 1.3 Zielsetzung
 \subsection{Zielsetzung}
 \label{sec:zielsetzung}
 
@@ -48,12 +56,13 @@ Die zu entwickelnde Lösung muss folgende technische und normative Hauptziele zw
 
     Dauerlaststabilität: Das System muss den physikalischen Widerstandsanstieg so lange zuverlässig kompensieren, bis sich ein thermisches Gleichgewicht in der Anlage eingestellt hat und das normative Abbruchkriterium von maximal 1 K/h Temperaturänderung an allen relevanten Messstellen sicher erreicht ist.
 
-    Skalierbarkeit und Entkopplung: Die automatisierte Regelung muss in der Lage sein, die teils immensen Stromunterschiede der Module (von kleinen 32-A-Abgängen bis hin zu 630-A-Hochstrommodulen) zu handhaben und die gegenseitige Beeinflussung der Prüfkreise steuerungstechnisch auszuregeln.
+    Skalierbarkeit und Entkopplung: Die automatisierte Regelung muss in der Lage sein, die teils immensen Stromunterschiede der Module (von kleinen 32 A Abgängen bis hin zu 630 A Hochstrommodulen) zu handhaben und die gegenseitige Beeinflussung der Prüfkreise steuerungstechnisch auszuregeln.
 
 Um dieses Ziel fundiert zu erreichen, sollen im Rahmen dieser Arbeit zunächst verschiedene theoretische Lösungsansätze zur Stromregelung erarbeitet werden.
 
 Mittels einer systematischen Nutzwertanalyse wird daraus die technisch und wirtschaftlich sinnvollste Variante für die Rolf Janssen GmbH ermittelt. Das finale Siegerkonzept wird anschließend hinsichtlich seiner elektrotechnischen Hardware-Dimensionierung, der Sensorik sowie der softwaretechnischen Integration detailliert ausgearbeitet.
-
+% -----------------------------------------------------------------------------
+% 1.4 Abgrenzung der Aufgabenstellung
 \subsection{Abgrenzung der Aufgabenstellung}
 \label{sec:abgrenzung der aufgabenstellung}
 Um den Rahmen dieser Bachelorarbeit klar zu definieren und den Fokus auf die Automatisierungstechnik zu richten, werden im Folgenden die Grenzen der Aufgabenstellung explizit abgesteckt.
@@ -66,4 +75,4 @@ Daraus ergeben sich folgende konkrete Abgrenzungen:
 
     Fokus auf Konzept und Architektur: Die Arbeit umfasst die methodische Lösungsfindung, die Auswahl geeigneter Hardware-Komponenten (Aktoren, Sensorik) sowie die Ausarbeitung der Softwarearchitektur für die Siemens ET200 SP Steuerung. [Optional ergänzen, falls zutreffend: Der vollständige physische Aufbau und die finale Inbetriebnahme aller 12 Prüfkreise im realen Betrieb sind aufgrund des zeitlichen Rahmens der Bachelorarbeit nicht gefordert, sondern es wird zunächst ein prototypischer Regelkreis / ein fundiertes Gesamtkonzept erarbeitet.]
 
-    Keine tiefgehende Werkstoffprüfung: Zwar wird das Kaltleiterverhalten der Edelstahl-Lastwiderstände und der Kupferkontakte als physikalische Ursache für den thermischen Drift behandelt, eine detaillierte metallurgische Analyse oder die Entwicklung neuer Legierungen für die Widerstände ist jedoch ausgeschlossen.
+Keine tiefgehende Werkstoffprüfung: Zwar wird das Kaltleiterverhalten der Edelstahl-Last\-widerstände und der Kupferkontakte als physikalische Ursache für den thermischen Drift behandelt, eine detaillierte metallurgische Analyse oder die Entwicklung neuer Legierungen für die Widerstände ist jedoch ausgeschlossen.

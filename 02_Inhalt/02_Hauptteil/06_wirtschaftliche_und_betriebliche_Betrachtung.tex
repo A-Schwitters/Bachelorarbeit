@@ -1,32 +1,42 @@
+% =============================================================================
 % KAPITEL 6: Wirtschaftliche und betriebliche Betrachtung (06_wirtschaftliche-und-betriebliche-betrachtung.tex)
+% =============================================================================
 
 \section{Wirtschaftliche und betriebliche Betrachtung}
 \label{chap:wirtschaftlichkeit}
 
 Die technische Machbarkeit der hybriden R-L-Regelung (Konzept D) wurde in den vorangegangenen Kapiteln detailliert nachgewiesen. Um die ganzheitliche Eignung für das Prüffeld des Unternehmens zu bewerten, wird in diesem Kapitel eine Gegenüberstellung von Investitionsaufwand und betrieblichem Nutzen vorgenommen. Der Fokus liegt auf der Amortisation und der normativen Qualitätssicherung.
-
+% -----------------------------------------------------------------------------
+% 6.1 Aufwands- und Kosten-Nutzen-Analyse
+% -----------------------------------------------------------------------------
 \subsection{Aufwands- und Kosten-Nutzen-Analyse}
 \label{sec:kosten_nutzen}
 
 Der wirtschaftliche Mehrwert der Automatisierung ergibt sich primär aus der drastischen Reduktion der unproduktiven Personalbindungszeiten (Opportunitätskosten) während der langwierigen Erwärmungsprüfungen.
-
+% -----------------------------------------------------------------------------
+% 6.1.1
 \subsubsection{Status Quo: Manuelle Prüfdurchführung}
 Im bisherigen Prozess wird der Prüfstrom über den zentralen Stelltransformator manuell nachgeregelt. Da Erwärmungsprüfungen nach DIN EN 61439-1 erst als abgeschlossen gelten, wenn sich die Temperaturen stabilisiert haben (Temperaturänderung $\le 1\,\text{K/h}$), dauern diese Tests in der Regel zwischen $6$ und $12$ Stunden. Während dieser gesamten Zeitspanne muss hochqualifiziertes Prüfpersonal den Strom kontinuierlich überwachen und manuell korrigieren, um das enge Toleranzband ($0\,\%$ bis $+5\,\%$) nicht zu verletzen. Diese Zeit steht für andere wertschöpfende Tätigkeiten (z.\,B. Prüfvorbereitung, Auswertung, Dokumentation) nicht zur Verfügung.
-
+% -----------------------------------------------------------------------------
+% 6.1.2
 \subsubsection{Wirtschaftlichkeit der Automatisierung (ROI)}
 Die Implementierung von Konzept D erfordert initiale Investitionskosten (CAPEX - Capital Expenditure). Diese setzen sich aus der Siemens ET200 SP Hardware, den Stromwandlern, den Schrittmotoren sowie der mechanischen Fertigung der Tauchkerndrosseln zusammen.
 
 Dem gegenüber stehen massive Einsparungen bei den Betriebskosten (OPEX - Operational Expenditure). Nach dem Starten der automatisierten Erwärmungsprüfung über das TIA-Portal-HMI regelt die SPS den thermischen Drift völlig autark aus. 
 Geht man von einem durchschnittlichen internen Stundensatz für Prüftechniker von $70\,\text{€/h}$ und einer Prüfdauer von $8\,\text{h}$ aus, verursacht eine einzige manuelle Prüfung reine Betreuungskosten von ca. $560\,\text{€}$. Da die ET200 SP-Lösung diesen Betreuungsaufwand auf wenige Minuten (Rüst- und Startzeit) reduziert, amortisiert sich die Hardware-Investition für ein 630\,A-Prüfmodul bereits nach wenigen Dutzend Prüfläufen. Der Return on Investment (ROI) wird typischerweise innerhalb des ersten Betriebsjahres erreicht.
-
+% -----------------------------------------------------------------------------
+% 6.2 Steigerung der Prozesssicherheit und Reproduzierbarkeit
+% -----------------------------------------------------------------------------
 \subsection{Steigerung der Prozesssicherheit und Reproduzierbarkeit}
 \label{sec:prozesssicherheit}
 
 Neben den rein monetären Aspekten bietet die Automatisierung entscheidende qualitative Vorteile für die Zertifizierung der Niederspannungs-Schaltgerätekombinationen.
-
+% -----------------------------------------------------------------------------
+% 6.2.1
 \subsubsection{Eliminierung des Human-Factors}
 Bei manueller Regelung ist die Einhaltung des Toleranzbandes von der Konzentration und Reaktionszeit des Bedieners abhängig. Kurzzeitige Unterschreitungen des Nennstroms (z.\,B. durch thermisches Wegdriften des Widerstands bei kurzer Abwesenheit des Prüfers) können die gesamte Messreihe invalidieren, da der Prüfling nicht der normativ geforderten Dauerbelastung ausgesetzt war. Die Implementierung des PI-Reglers im $100\,\text{ms}$-Takt der ET200 SP eliminiert diesen \textit{Human Factor} vollständig. Der Strom wird permanent und ausfallfrei an der oberen Grenze des Toleranzbandes geführt, was den maximalen thermischen Stress (Worst-Case-Szenario) für den Bauartnachweis absichert.
-
+% -----------------------------------------------------------------------------
+% 6.2.2
 \subsubsection{Lückenlose Dokumentation und Audit-Sicherheit}
 Ein weiterer zentraler betrieblicher Nutzen ist die durchgehende Datenerfassung (Data Logging). Die ET200 SP ermöglicht es, den Verlauf des Prüfstroms, die Stellwerte der Tauchkerndrossel und die erfassten Temperaturen hochauflösend und zeitsynchron aufzuzeichnen. Diese manipulationssicheren digitalen Rohdaten dienen als direkter Nachweis für Zertifizierungsstellen (z.\,B. TÜV, VDE) bei Audits. Es kann jederzeit zweifelsfrei belegt werden, dass die Stromtoleranzen während der gesamten $8$-stündigen Prüfung nach DIN EN 61439 strikt eingehalten wurden. Die Reproduzierbarkeit der Testergebnisse wird dadurch auf ein Level gehoben, das mit manueller Bedienung physikalisch nicht erreichbar ist.
 

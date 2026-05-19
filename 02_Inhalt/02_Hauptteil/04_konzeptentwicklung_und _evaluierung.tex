@@ -1,32 +1,39 @@
-% KAPITEL 4: Konzeptentwicklung und Evaluierung (04_konzeptentwicklung-und-evaluierung.tex)
-
+% =============================================================================
+% 4 Konzeptentwicklung und Evaluierung (04_konzeptentwicklung-und-evaluierung.tex)
+% =============================================================================
 \section{Konzeptentwicklung und Evaluierung}
 \label{chap:konzeptentwicklung}
 
 In diesem Kapitel werden die theoretischen Grundlagen der Lösungsansätze mathematisch seziert. Ziel ist es, durch eine tiefgreifende Modellierung die physikalische Machbarkeit unter den extremen Rahmenbedingungen (Hochstrom bei Niederspannung) zu belegen und eine objektive Entscheidung herbeizuführen.
-
+% -----------------------------------------------------------------------------
+% 4.1 Methodik der Konzeptfindung
+% -----------------------------------------------------------------------------
 \subsection{Methodik der Konzeptfindung}
 \label{sec:methodik}
 
 Die zentrale Herausforderung ist die Konstanthaltung des Stroms $I$ bei einer temperaturbedingten Widerstandszunahme $\Delta R(\vartheta)$. Aus dem Ohmschen Gesetz folgt, dass entweder der Gesamtwiderstand des Pfades aktiv gesenkt oder die treibende Spannung lokal erhöht werden muss.
 Die Konzeptfindung erfolgt methodisch durch die mathematisch-physikalische Untersuchung der potenziellen Wirkprinzipien. Im Anschluss werden die Konzepte anhand definierter Kriterien in einer Nutzwertanalyse bewertet, um die Vorzugslösung zu ermitteln.
-
+% -----------------------------------------------------------------------------
+% 4.2 Vorstellung und physikalische Analyse der Lösungsansätze
+% -----------------------------------------------------------------------------
 \subsection{Vorstellung und physikalische Analyse der Lösungsansätze}
 \label{sec:vorstellung_loesungsansaetze}
 
 Im Folgenden werden die vier identifizierten Konzepte einer tiefgreifenden physikalischen, thermodynamischen und regelungstechnischen Analyse unterzogen, um ihre Eignung für das Niederspannungs-Hochstrom-Regime zu evaluieren.
+% -----------------------------------------------------------------------------
+% 4.2.1 Konzept A: Motorisch geregelter ohmscher Widerstand 
 
 \subsubsection{Konzept A: Motorisch geregelter ohmscher Widerstand}
 
 Die hybride mechanische Lösung nutzt das Prinzip der Stromteilung nach der ersten Kirchhoffschen Regel. Die Lastrennung in einen passiven Hauptpfad und einen aktiven Regelpfad minimiert die Belastung der Stellorgane.
-
+% -----------------------------------------------------------------------------
 \paragraph{Stromdynamik und thermischer Drift}
 Der Gesamtleitwert $G_{ges}$ der Parallelschaltung lautet:
 \begin{equation}
     G_{ges}(\vartheta, l) = G_{fix}(\vartheta) + G_{var}(l) = \frac{1}{R_{fix,20} \cdot (1 + \alpha_{Fe} \Delta\vartheta)} + \frac{1}{\rho \cdot \frac{l}{A}} \stackrel{!}{=} \text{const.}
 \end{equation}
 Bei einem Nennstrom von 630\,A und einem Temperaturhub von $\Delta\vartheta = 200\,\text{K}$ sinkt der Teilstrom im Hauptpfad um ca. 88,3\,A. Die Auslegung des variablen Pfades auf $I_{var,max} = 150\,\text{A}$ liefert einen Sicherheitsfaktor von $k \approx 1,7$.
-
+% -----------------------------------------------------------------------------
 \paragraph{Mikroskopische Kontaktphysik und Fritting}
 Der entscheidende physikalische Vorteil der 150\,A-Auslegung zeigt sich im Engewiderstand $R_e$ der Schleifkontakte. Nach der \textit{Holm'schen Kontaktstromtheorie} fließt der Strom mikroskopisch nur über wenige metallische Berührungsflächen (a-Spots). Der Kontaktwiderstand $R_K$ berechnet sich aus dem spezifischen Widerstand $\rho$ und dem effektiven Kontaktradius $a$:
 \begin{equation}
@@ -37,53 +44,54 @@ Die lokale Kontakttemperatur $\vartheta_K$ (Übertemperatur im Berührungspunkt)
     \vartheta_K = \vartheta_{Umgebung} + \frac{U_K^2}{8 \cdot \lambda \cdot \rho}
 \end{equation}
 Müsste der Schleifkontakt die vollen 630\,A regeln, würde $\vartheta_K$ die Schmelztemperatur des Materials übersteigen. Es käme zum lokalen Verschweißen und mikroskopischen Abreißen unter Last (Fritting-Verschleiß). Durch die Reduktion auf max. 150\,A im Regelzweig bleibt das System thermisch stabil im Bereich der elastischen Verformung des Kontaktmaterials.
-
+% -----------------------------------------------------------------------------
 \paragraph{Regelungsdynamik}
 Das System wird als PT1-T1-Glied modelliert. Die thermische Zeitkonstante des Gitterwiderstands ($\tau_{th} \gg 300\,\text{s}$) dominiert die mechanische Hochlaufzeit des Stellmotors ($\tau_{act} \approx 1\,\text{s}$). Das Bodediagramm der offenen Kette zeigt daher einen extrem niedrigen Phasenschnittpunkt, was eine hochrobuste, schwingungsfreie PI-Regelung durch die ET200 SP ermöglicht.
 
-
+% -----------------------------------------------------------------------------
+% Konzept B: Induktive Regelung (Tauchkerndrossel)
 \subsubsection{Konzept B: Induktive Regelung (Tauchkerndrossel)}
 
 Die Regelung erfolgt verschleißfrei über die Modulation des induktiven Blindwiderstands $X_L = \omega L$.
-
+% -----------------------------------------------------------------------------
 \paragraph{Magnetkreisberechnung und Sättigung}
 Um einen Strom von 630\,A induktiv zu regeln, muss die Sättigung des Eisenkerns zwingend vermieden werden. Der Scheitelwert des Stroms beträgt $I_{peak} = 630\,\text{A} \cdot \sqrt{2} \approx 891\,\text{A}$. Der magnetische Widerstand $R_m$ des Kreises muss durch einen großen Luftspalt $\delta$ dominiert werden, um die B-H-Kurve zu scheren:
 \begin{equation}
     L = \frac{N^2}{R_{m,Fe} + R_{m,Luft}} \approx \frac{N^2 \cdot \mu_0 \cdot A_{Fe}}{\delta}
 \end{equation}
 Um $891\,\text{A}$ ohne Sättigung ($B_{max} < 1,6\,\text{T}$) zu führen, nimmt der benötigte Eisenquerschnitt $A_{Fe}$ enorme Dimensionen an, was zu einem Komponentengewicht von $> 30\,\text{kg}$ pro Phase führt.
-
+% -----------------------------------------------------------------------------
 \paragraph{Komplexe Leistungsbilanz und Normverletzung}
 Die komplexe Scheinleistung $\underline{S}$ verdeutlicht das Kernproblem dieses Konzepts:
 \begin{equation}
     \underline{S} = P + jQ = U \cdot I \cdot \cos\varphi + j \cdot U \cdot I \cdot \sin\varphi
 \end{equation}
 Eine Erhöhung der Induktivität zur Stromreduzierung vergrößert ausschließlich den Blindleistungsanteil $Q$. Da die Joulesche Erwärmung des Prüflings jedoch alleinig vom Wirkstrom $I_P = I \cdot \cos\varphi$ abhängt, verschlechtert sich der thermische Wirkungsgrad des Aufbaus massiv. Das normativ geforderte $\cos\varphi \approx 1$ für Standard-Erwärmungsprüfungen (DIN EN 61439) wird drastisch unterschritten, was den Bauartnachweis invalidiert.
-
-
+% -----------------------------------------------------------------------------
+% Konzept C: Leistungselektronische Regelung (PWM)
 \subsubsection{Konzept C: Leistungselektronische Regelung (PWM)}
 
 Die Stromzeitfläche wird durch hochfrequentes Schalten von IGBTs ($f_{sw} \approx 2-5\,\text{kHz}$) im Phasenanschnitt oder per PWM moduliert.
-
+% -----------------------------------------------------------------------------
 \paragraph{Thermische Impedanz und Cauer-Modell}
 Die statischen Leitverluste ($P_{cond} = U_{CE,sat} \cdot I_{avg}$) und die dynamischen Schaltverluste ($P_{sw} = (E_{on} + E_{off} + E_{rec}) \cdot f_{sw}$) erzeugen im 630\,A-Pfad Abwärmen von über 1\,kW pro Modul. Die Sperrschichttemperatur $T_j$ berechnet sich dynamisch über die transiente thermische Impedanz $Z_{th(j-c)}$ (Cauer-Ketten-Modell):
 \begin{equation}
     T_j(t) = T_{case} + \int_{0}^{t} P_{loss}(\tau) \cdot Z_{th(j-c)}(t-\tau) \, d\tau
 \end{equation}
 Bei 12 parallelen Abgängen kumulieren die Verluste im Schaltschrank auf über $11\,\text{kW}$. Ohne forcierte Flüssigkeitskühlung ist die Zerstörung der Halbleiter unvermeidbar.
-
+% -----------------------------------------------------------------------------
 \paragraph{Skineffekt, THD und EMV-Störspektrum}
 Die steilen $di/dt$-Schaltflanken der IGBTs generieren ein breites Spektrum an Oberschwingungen. Der hohe Klirrfaktor ($THD_I$) führt aufgrund des Frequenzganges des spezifischen Widerstands (Skineffekt und Proximity-Effekt in den Kupferschienen) zu künstlich erhöhten Wirbelstromverlusten im Prüfling:
 \begin{equation}
     R_{AC}(f) = R_{DC} \cdot \left(1 + \frac{x^4}{3} \right) \quad \text{mit} \quad x \sim \sqrt{f}
 \end{equation}
 Die thermische Prüfung wird dadurch systematisch nach oben verfälscht. Zudem induzieren die steilen Magnetfeldänderungen nach dem Induktionsgesetz ($u_{ind} = - M \cdot di/dt$) transiente Störspannungen in die benachbarten Messwandler, was das 5\,\%-Toleranzband der ET200 SP gefährdet (vgl. Schmidt, 2026).
-
-
+% -----------------------------------------------------------------------------
+% Konzept D: Hybride ohmsch-induktive Lastsimulation (R-L-Kombination)
 \subsubsection{Konzept D: Hybride ohmsch-induktive Lastsimulation (R-L-Kombination)}
 
 Um die physikalischen Limitierungen der Einzelkonzepte zu überwinden, wird eine Parallelschaltung aus einem ungesteuerten Hochleistungs-Festwiderstand und einer tauchkerngeregelten Drossel synthetisiert.
-
+% -----------------------------------------------------------------------------
 \paragraph{Komplexe Admittanz-Regelung}
 Das System wird in der komplexen Wechselstromrechnung über die Admittanz $\underline{Y}$ modelliert:
 \begin{equation}
@@ -93,14 +101,16 @@ Der Gesamtstrom $I_{ges}$ am Messwandler entspricht dem Betrag der komplexen Gr�
 \begin{equation}
     I_{ges} = U \cdot |\underline{Y}_{ges}| = U \cdot \sqrt{\left(\frac{1}{R_{fix}(\vartheta)}\right)^2 + \left(\frac{1}{\omega L(x)}\right)^2}
 \end{equation}
-
+% -----------------------------------------------------------------------------
 \paragraph{Vektorielle Kompensationsdynamik}
 Die Steuerung kompensiert den thermischen Leitwertsverlust $dG/dt < 0$ des Widerstands durch eine Reduktion der Induktivität (Erhöhung der Suszeptanz $dB/dt > 0$). Da die Stellvariable (Tauchkernposition $x$) rein die Blindleistung moduliert, fällt im Regelkreis $P_{loss,reg} \approx 0\,\text{W}$ an. 
-
+% -----------------------------------------------------------------------------
 \paragraph{Normativer Maskierungseffekt}
 Da der Festwiderstand so dimensioniert ist, dass er den dominierenden Anteil des Stroms (z.\,B. $I_R = 500\,\text{A}$) als reinen Wirkstrom führt, wird der induktive Regelstrom ($I_L \le 380\,\text{A}$) im Zeigerdiagramm geometrisch maskiert. Der resultierende Phasenwinkel $\varphi$ weicht nur minimal von den realen Impedanzen eines typischen Hochstromaufbaus ab. Das Konzept D erfüllt somit die normativen Anforderungen an den Erwärmungsnachweis, eliminiert die Halbleiterhitze vollständig und vermeidet den Fritting-Verschleiß mechanischer Schleifkontakte.
 
-
+% -----------------------------------------------------------------------------
+% 4.3 Bewertungskriterien und Gewichtung
+% -----------------------------------------------------------------------------
 \subsection{Bewertungskriterien und Gewichtung}
 \label{sec:bewertungskriterien}
 
@@ -112,7 +122,9 @@ Zur objektiven Evaluierung werden fünf Kriterien definiert und gewichtet (1 = u
     \item \textbf{Thermische Belastung (Gew. 3):} Zusätzliche Wärmeentwicklung im Prüfstand.
     \item \textbf{EMV-Stabilität (Gew. 4):} Störsicherheit der ET200 SP Sensorik gegenüber Fremdfeldern.
 \end{itemize}
-
+% -----------------------------------------------------------------------------
+% 4.4 Nutzwertanalyse der Lösungskonzepte
+% -----------------------------------------------------------------------------
 \subsection{Nutzwertanalyse der Lösungskonzepte}
 \label{sec:nutzwertanalyse}
 
@@ -137,7 +149,9 @@ Die Konzepte erhalten Punkte von 1 (schlecht) bis 10 (sehr gut). Die Gesamtpunkt
         \hline
     \end{tabular}
 \end{table}
-
+% -----------------------------------------------------------------------------
+% 4.5 Konzeptentscheidung
+% -----------------------------------------------------------------------------
 \subsection{Konzeptentscheidung}
 \label{sec:entscheidung}
 
