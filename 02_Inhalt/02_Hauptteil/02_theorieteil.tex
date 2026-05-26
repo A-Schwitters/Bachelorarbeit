@@ -4,7 +4,7 @@
 \section{Theoretische Grundlagen und Stand der Technik}
 \label{chap:grundlagen}
 
-Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $630\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Die parallele und präzise Regelung der Prüfströme an insgesamt 12 einzeln steuerbaren Prüfausgängen erfordert nicht nur tiefgreifende regelungstechnische Expertise, sondern zwingend ein fundiertes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des Prüfsystems. 
+Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $6000\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Die parallele und präzise Regelung der Prüfströme an insgesamt 12 einzeln steuerbaren Prüfausgängen erfordert nicht nur tiefgreifende regelungstechnische Expertise, sondern zwingend ein fundiertes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des Prüfsystems. 
 
 Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächst wird die spezifische Systemarchitektur der zu prüfenden Niederspannungsschaltgerätekombinationen (Motor Control Center) der Rolf Janssen GmbH detailliert analysiert. Darauf aufbauend werden die strengen juristischen und messtechnischen Vorgaben der Erwärmungsprüfung nach der harmonisierten Normenreihe DIN EN 61439 systematisch erörtert. Ein weiterer Schwerpunkt liegt auf der mathematisch-physikalischen Modellierung des thermischen Drift-Verhaltens im Hauptstromkreis, welches die Grundlage für die in MATLAB/Simulink durchgeführte Reglerauslegung bildet. Die Kenntnis dieser Grundlagen ist unerlässlich, um die physikalischen Grenzen des aktuellen manuellen Prüfverfahrens zu verstehen und das Lastenheft für das zu entwickelnde automatisierte Mehrkanalsystem abzuleiten.
 
@@ -16,7 +16,7 @@ Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächs
 
 Die Rolf Janssen GmbH fertigt und projektiert Niederspannungsschaltgerätekombinationen \\(NSK), die als zentrale Netzknotenpunkte für die Energieverteilung und die dezentrale Steuerung von motorischen Verbrauchern in hochverfügbaren industriellen und maritimen Anlagen dienen. Eine technologisch besonders anspruchsvolle Bauform dieser Anlagen ist das sogenannte Motor Control Center (MCC). Die Konstruktionsrichtlinien für diese MCC-Anlagen definieren einen hochgradig modularisierten, störlichtbogensicheren Aufbau, der auf maximale Anlagenverfügbarkeit (MTBF) und höchsten Personenschutz bei Bedien- und Wartungsarbeiten ausgelegt ist.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{03_Ressourcen/pic/Leistungsschalterfeld.png} 
     \caption{Systemarchitektur im Verbund: Das linke Leistungsschalterfeld speist die horizontale Hauptsammelschiene, von der das benachbarte MCC-Feld abzweigt.}
@@ -25,7 +25,7 @@ Die Rolf Janssen GmbH fertigt und projektiert Niederspannungsschaltgerätekombin
 % -----------------------------------------------------------------------------
 %2.1.1
 \subsubsection{Mechanische Kompartimentierung und innere Unterteilung}
-Das mechanische und elektrische Grundgerüst eines jeden MCC-Feldes basiert auf einer strikten räumlichen Schottung, der sogenannten Kompartimentierung. In der industriellen Praxis wird diese standardmäßig als innere Unterteilung nach Form 3b oder Form 4b gemäß den Vorgaben des Schaltanlagen-Handbuchs der ABB \cite{ABB_Handbuch} ausgeführt.
+Das mechanische und elektrische Grundgerüst eines jeden MCC-Feldes basiert auf einer strikten räumlichen Schottung, der sogenannten Kompartimentierung. In der industriellen Praxis wird diese standardmäßig als innere Unterteilung nach Form 3b gemäß den Vorgaben des Schaltanlagen-Handbuchs der ABB \cite{ABB_Handbuch} ausgeführt.
 
 Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Trennung der massiven, stromführenden Hauptsammelschienen (HSS) von den eigentlichen Betriebsmitteln (den auswechselbaren MCC-Einschubmodulen) sowie eine strikte Isolierung der äußeren Anschlussleiter untereinander. Um dies konstruktiv zu realisieren, gliedert sich der Schaltschrank in drei separate, durch geerdete Stahlbleche gekapselte Funktionsräume:
 \begin{enumerate}
@@ -34,15 +34,24 @@ Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Tr
     \item \textbf{Kabelanschlussraum:} Ein seitlich angeordneter Schacht, der der geordneten Führung und dem sicheren Anschluss der abgehenden Feldverdrahtung zu den industriellen Verbrauchern (z.\,B. Drehstrom-Asynchronmaschinen) dient.
 \end{enumerate}
 
-\begin{figure}[htbp]
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.30\textwidth]{03_Ressourcen/pic/MCC_Feld_1.png}
+    \caption{Frontansicht des MCC-Feldes bestückt mit Einschubmodulen}
+    \label{fig:sub_mcc_front}
+\end{figure}
+\begin{comment}
+\begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Feld_1.png} 
-        \caption{Frontansicht des MCC-Feldes}
+        \caption{Frontansicht des MCC-Feldes bestückt mit Einschubmodulen}
         \label{fig:sub_mcc_front}
     \end{subfigure}
-    \hfill
+
+     \hfill
     \begin{subfigure}[b]{0.48\textwidth}
         \centering
         \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Kupfer.png} 
@@ -52,12 +61,23 @@ Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Tr
     \caption{Detaillierter Aufbau eines MCC-Feldes. Links: Frontale Bestückung mit Einschubmodulen (\ref{fig:sub_mcc_front}). Rechts: Das vertikale Verteilschienensystem (\ref{fig:sub_mcc_kupfer}).}
     \label{fig:mcc_details}
 \end{figure}
+\end{comment}
+
 % -----------------------------------------------------------------------------
 % 2.1.2
 \subsubsection{Dimensionierung der Verteilschienensysteme}
 Die vertikale Energieverteilung innerhalb eines einzelnen Schaltschrankfeldes erfolgt über ein massives Verteilschienensystem, welches im Rücken der Anlage verläuft und galvanisch an die Hauptsammelschiene angekoppelt ist. Um die enormen Leistungsdichten moderner industrieller Abnehmer sicher abdecken zu können, weisen diese Verteilschienen erhebliche Materialquerschnitte auf. Je nach Ausbaustufe und Feldtyp (beispielsweise bei sogenannten Mischfeldern, die eine Kombination aus MCC-Modulen und SASIL-Schaltersicherungsleisten beinhalten) bestehen die Systeme aus bis zu drei parallelen, massiven Kupferflachschienen pro Phase (L1, L2, L3).
 
 Typische Querschnitte betragen $30 \times 10\,\text{mm}$ pro Einzelschiene. Bei einer dreifachen, parallelisierten Ausführung ergibt sich somit ein effektiver geometrischer Gesamtquerschnitt von $900\,\text{mm}^2$ blankem Elektrolytkupfer pro Außenleiter. Dieses Leitersystem erlaubt unter Einhaltung der normativen thermischen Grenzwerte (bis zu einer Schutzart von IP4X) einen kontinuierlichen Bemessungsstrom von bis zu $1.400\,\text{A}$ pro Schaltschrankfeld.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.30\textwidth]{03_Ressourcen/pic/MCC_Kupfer.png}
+     \caption{Vertikales Verteilschienensystem}
+    \label{fig:sub_mcc_kupfer}
+\end{figure}
+    
+
 % -----------------------------------------------------------------------------
 % 2.1.3
 \subsubsection{Elektrodynamische Kurzschlussfestigkeit}
@@ -79,7 +99,7 @@ Die eigentliche elektrische Kontaktierung bei vollständig eingeschobenem Modul 
 \subsection{Der normative Rahmen der Erwärmungsprüfung (DIN EN 61439)}
 \label{sec:normen_61439}
 
-Die Konstruktion, Dimensionierung und die finale Qualitätssicherung von Niederspannungsschaltgerätekombinationen unterliegt im Europäischen Wirtschaftsraum den strikten, verbindlichen Vorgaben der harmonisierten Normenreihe DIN EN 61439 \cite{ABB_Handbuch}. Diese Norm hat die vormals gültige EN 60439 abgelöst und die Anforderungen an den Sicherheitsnachweis von Schaltanlagen massiv verschärft. Wie Janßen in seiner Analyse der MCC-Technik darlegt, entfiel mit diesem Normenwechsel die historische, teils unscharfe Unterscheidung zwischen typgeprüften (TSK) und partiell typgeprüften (PTSK) Anlagen. An ihre Stelle trat das universelle, methodisch strengere Konzept des \textit{Bauartnachweises}.
+Die Konstruktion, Dimensionierung und die finale Qualitätssicherung von Niederspannungsschaltgerätekombinationen unterliegt im Europäischen Wirtschaftsraum den strikten, verbindlichen Vorgaben der harmonisierten Normenreihe DIN EN 61439 \cite{ABB_Handbuch}. Diese Norm hat die vormals gültige EN 60439 abgelöst und die Anforderungen an den Sicherheitsnachweis von Schaltanlagen massiv verschärft. Mit diesem Normenwechsel entfiel die historische, teils unscharfe Unterscheidung zwischen typgeprüften (TSK) und partiell typgeprüften (PTSK) Anlagen. An ihre Stelle trat das universelle, methodisch strengere Konzept des \textit{Bauartnachweises}.
 
 Bevor eine Schaltanlage das Herstellerwerk verlassen und mit einem gültigen CE-Kennzeichen in Verkehr gebracht werden darf, fordert die Norm zwingend diesen umfassenden, dokumentierten Bauartnachweis. Der technologisch kritischste, kosten- und zeitintensivste Bestandteil dieses Nachweises ist die Erwärmungsprüfung (Temperaturerwärmungsnachweis) nach Kapitel 10.10 der DIN EN 61439-1.
 % -----------------------------------------------------------------------------
@@ -91,7 +111,7 @@ Der chemische und physikalische Hintergrund dieser extrem strengen Vorgabe liegt
 
 Die Norm DIN EN 61439 definiert daher äußerst strikte und nach Bauteilgruppen präzise differenzierte thermische Grenzwerte. Blanke Kupferschienen dürfen beispielsweise weitaus höhere Maximaltemperaturen erreichen, da Kupfer bei diesen Temperaturen noch nicht schmilzt, während berührbare Gehäuseteile aus lackiertem Stahlblech oder Bedienelemente aus Kunststoff (Schalter, Taster) sehr niedrigen Grenzwerten unterliegen. 
 
-Um dies zu verifizieren, wird die Schaltanlage, wie auch bei den umfangreichen Erwärmungsprüfungen der Bauart TopDrawPlus durch Rothhammer dokumentiert, im Inneren mit einem dichten Netz aus hochpräzisen Thermoelementen (Typ K) appliziert. Für das Prüffeld der Rolf Janssen GmbH bedeutet dies in der Praxis, dass die massiven $630\,\text{A}$-Module (Baugröße 3er) exakt mit ihren projektierten Nenn-Bemessungsströmen über die externen Lastwiderstände belastet werden müssen. Dies stellt extreme physikalische Anforderungen an die thermische Belastbarkeit der Anlage sowie an die Stabilität und Regelgüte der einspeisenden Prüfstromquelle.
+Um dies zu verifizieren, wird die Schaltanlage im Inneren mit einem dichten Netz aus hochpräzisen Thermoelementen (Typ K) appliziert. Für das Prüffeld der Rolf Janssen GmbH bedeutet dies in der Praxis, dass die massiven $630\,\text{A}$-Module (Baugröße 3er) exakt mit ihren projektierten Nenn-Bemessungsströmen über die externen Lastwiderstände belastet werden müssen. Dies stellt extreme physikalische Anforderungen an die thermische Belastbarkeit der Anlage sowie an die Stabilität und Regelgüte der einspeisenden Prüfstromquelle.
 % -----------------------------------------------------------------------------
 % 2.2.2 Das thermische Stabilitätskriterium (1 K/h)
 \subsubsection{Das thermische Stabilitätskriterium (1 K/h)}
@@ -123,7 +143,7 @@ Wie die vergangenen manuellen Prüfdurchläufe bei der Rolf Janssen GmbH belegen
 \subsection{Thermodynamik der Strombahn und das Drift-Phänomen}
 \label{sec:thermodynamik_drift}
 
-Um das fundamentale regelungstechnische Problem des Prüfstandes – den kontinuierlichen Abfall des Prüfstroms – zu beherrschen, müssen die thermodynamischen Vorgänge analysiert werden. Nach Griesinger \cite{Griesinger_Waermemanagement} basiert die Erwärmung auf der irreversiblen Umwandlung elektrischer Energie in thermische Energie.
+Um das fundamentale regelungstechnische Problem des Prüfstandes, den kontinuierlichen Abfall des Prüfstroms zu beherrschen, müssen die thermodynamischen Vorgänge analysiert werden. Nach Griesinger \cite{Griesinger_Waermemanagement} basiert die Erwärmung auf der irreversiblen Umwandlung elektrischer Energie in thermische Energie.
 % -----------------------------------------------------------------------------
 %2.3.1
 \subsubsection{Wärmequellen, Elektronengas und Kaltleiterverhalten (PTC)}
@@ -173,7 +193,7 @@ Die mathematischen Simulationsergebnisse zeigen eindeutig, dass hochfrequente Re
 \subsection{Mikroskopische Kontaktphysik der Einschubtechnik}
 \label{sec:mikro_kontaktphysik}
 
-Während sich durchgehende Kupferschienen relativ homogen erwärmen, stellen lösbare mechanische Kontaktübergänge eine gravierende Schwachstelle dar. Insbesondere die Tulpenkontakte, welche die MCC-Module mit den Verteilschienen verbinden, bilden kritische Hotspots. Wie die empirischen Temperaturmessreihen aus vergangenen Erwärmungsprüfungen (beispielsweise an den TopDrawPlus-Anlagen durch Rothhammer) belegen, werden exakt an diesen Trennstellen unter Nennlast die höchsten lokalen Übertemperaturen gemessen.
+Während sich durchgehende Kupferschienen relativ homogen erwärmen, stellen lösbare mechanische Kontaktübergänge eine gravierende Schwachstelle dar. Insbesondere die Tulpenkontakte, welche die MCC-Module mit den Verteilschienen verbinden, bilden kritische Hotspots. Wie die empirischen Temperaturmessreihen aus vergangenen Erwärmungsprüfungen belegen, werden exakt an diesen Trennstellen unter Nennlast die höchsten lokalen Übertemperaturen gemessen.
 % -----------------------------------------------------------------------------
 % 2.4.1
 \subsubsection{Makroskopische vs. Mikroskopische Berührung (a-Spots)}
@@ -208,7 +228,7 @@ Da die Erwärmungsprüfung zur korrekten Nachbildung des europäischen Verbundne
 % -----------------------------------------------------------------------------
 % 2.5.1
 \subsubsection{Stromverdrängung und Wirbelstrombildung}
-Das vom Wechselstrom im Leiter erzeugte magnetische Wechselflussfeld induziert im massiven Leitermaterial kreisförmige Wirbelströme. Nach der Lenzschen Regel wirken diese ihrer Ursache – dem primären Wechselstrom – entgegen. Dies führt zu einer signifikanten Abschwächung der Stromdichte im Zentrum des Leiters, während sich die Ströme in den äußeren Randbereichen konstruktiv überlagern. Dieser sogenannte Skineffekt drängt die Ladungsträger an die äußere Oberfläche des Leiters.
+Das vom Wechselstrom im Leiter erzeugte magnetische Wechselflussfeld induziert im massiven Leitermaterial kreisförmige Wirbelströme. Nach der Lenzschen Regel wirken diese ihrer Ursache dem primären Wechselstrom entgegen. Dies führt zu einer signifikanten Abschwächung der Stromdichte im Zentrum des Leiters, während sich die Ströme in den äußeren Randbereichen konstruktiv überlagern. Dieser sogenannte Skineffekt drängt die Ladungsträger an die äußere Oberfläche des Leiters.
 % -----------------------------------------------------------------------------
 % 2.5.2
 \subsubsection{Berechnung der Eindringtiefe für Kupferschienen}
@@ -231,4 +251,4 @@ Das zweite, noch gravierendere Kriterium betrifft die Halbleiterphysik bei extre
 
 Bei einer treibenden Netzspannung von $5\,\text{V}$ wäre ein solcher Spannungsabfall im Stellglied absolut fatal: Einerseits ginge ein massiver prozentualer Anteil (bis zu $40\,\%$) der treibenden Spannung über dem Halbleiter verloren, wodurch der geforderte Prüfstrom an der Anlage gar nicht mehr erreicht werden könnte. Andererseits würde dieser Spannungsabfall bei $630\,\text{A}$ zu extremen thermischen Verlustleistungen (ca. $1\,\text{kW}$ reine Abwärme pro Halbleiter) direkt im Stellglied führen.
 
-Aus diesem Grund wird die kontinuierliche, automatisierte Nachführung der 12 Regelkanäle in der vorliegenden Arbeit zwingend über \textbf{motorbetriebene Stelltransformatoren mit nachgeschaltetem Getriebe} realisiert. Diese elektromechanische Stellmethode besitzt keinen nennenswerten Halbleiter-Spannungsabfall, verändert die Amplitude der reinen $50\,\text{Hz}$-Grundwelle vollkommen oberschwingungsfrei und garantiert so die physikalische Konformität und Effizienz der Erwärmungsprüfung gemäß DIN EN 61439.
+Aus diesem Grund wird die kontinuierliche, automatisierte Nachführung der 12 Regelkanäle in der vorliegenden Arbeit über eine spezifische Transformator-Widerstands-Topologie realisiert. Die Leistungseinspeisung erfolgt dabei über einen Säulentransformator. Parallel zu dem  Edelstahl-Widerstandswagen ist ein zweiter Transformator geschaltet, auf dessen Sekundärseite die eigentliche Regelung durch einen motorisch verfahrbaren Widerstand umgesetzt wird. Da diese elektromechanisch-resistive Stellmethode keine leistungselektronischen Komponenten erfordert, entfällt jeglicher Halbleiter-Spannungsabfall. Die Amplitude der reinen $50\,\text{Hz}$-Grundwelle lässt sich somit vollkommen oberschwingungsfrei skalieren, wodurch die physikalische Konformität und Effizienz der Erwärmungsprüfung gemäß DIN EN 61439 vollumfänglich garantiert werden.

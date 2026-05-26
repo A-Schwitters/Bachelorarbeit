@@ -14,7 +14,7 @@ Das vorliegende erste Kapitel führt in die grundlegende Thematik dieser Bachelo
 \subsection{Motivation}
 \label{sec:motivation}
 
-Die zuverlässige und sichere Verteilung von elektrischer Energie ist das Rückgrat moderner industrieller Produktionsanlagen. In diesem Kontext nehmen Niederspannungsschaltgerätekombinationen, insbesondere in der Ausführung als Motor Control Center (MCC), eine zentrale Rolle ein. Die Rolf Janssen GmbH fertigt derartige komplexe und hochbeanspruchte Schaltanlagen [hier ggf. kurz ergänzen: z.B. für die Schifffahrt, Industrieanlagen, etc.]. Da in diesen Anlagen teils sehr hohe Bemessungsströme von bis zu 630 A fließen, stehen Qualität, Personenschutz und Anlagensicherheit an oberster Stelle.
+Die zuverlässige und sichere Verteilung von elektrischer Energie ist das Rückgrat moderner industrieller Produktionsanlagen. In diesem Kontext nehmen Niederspannungsschaltgerätekombinationen, insbesondere in der Ausführung als Motor Control Center (MCC), eine zentrale Rolle ein. Die Rolf Janssen GmbH fertigt derartige komplexe und hochbeanspruchte Schaltanlagen. Da in diesen Anlagen teils sehr hohe Bemessungsströme von bis zu 630 A fließen, stehen Qualität, Personenschutz und Anlagensicherheit an oberster Stelle.
 
 Um diese Sicherheit zu gewährleisten, fordert der Gesetzgeber strenge normative Nachweise, bevor eine Schaltanlage das Werk verlassen darf. Einer der kritischsten und zeitaufwendigsten Bestandteile des Bauartnachweises nach DIN EN 61439-1/-2 ist die sogenannte Erwärmungsprüfung. Sie stellt sicher, dass die in der Anlage verbauten Komponenten, insbesondere die empfindlichen Steckkontakte und Kupferschienen der MCC-Module, unter maximaler Dauerlast die zulässigen Grenztemperaturen nicht überschreiten.
 
@@ -29,7 +29,7 @@ Die Motivation für diese Bachelorarbeit entspringt daher dem direkten betriebli
 
 Der derzeitige Ablauf der Erwärmungsprüfung am Prüfstand der Rolf Janssen GmbH ist stark von manuellen Eingriffen geprägt. Im aktuellen Ist-Zustand erfolgt die Einspeisung des Prüfstroms zentral in das Hauptfeld der Anlage. Zur Simulation der realen Lastbedingungen im Feld werden die bis zu 12 angeschlossenen Abgangseinheiten (MCC-Module) über statische Lastwiderstände aus Edelstahl belastet.
 
-Die zentrale Problematik dieses Aufbaus resultiert aus dem physikalischen Phänomen des sogenannten „thermischen Drifts“. Werden die geforderten Bemessungsströme – die je nach Modulgröße zwischen 32 A und 630 A liegen können – durch den Aufbau geschickt, erhitzen sich sowohl die zu prüfende Schaltanlage als auch die externen Lastwiderstände über die Zeit massiv.
+Die zentrale Problematik dieses Aufbaus resultiert aus dem physikalischen Phänomen des sogenannten „thermischen Drifts“. Werden die geforderten Bemessungsströme, die je nach Modulgröße zwischen 32 A und 630 A liegen können, durch den Aufbau geschickt, erhitzen sich sowohl die zu prüfende Schaltanlage als auch die externen Lastwiderstände über die Zeit massiv.
 
 Da es sich bei dem Edelstahl der Widerstände um einen Kaltleiter (PTC-Widerstand) handelt, steigt dessen ohmscher Widerstandswert bei Erwärmung kontinuierlich an. Bei gleichbleibender Speisespannung führt dieser physikalische Effekt unweigerlich dazu, dass der fließende Prüfstrom im Laufe der Zeit stetig abfällt.
 
@@ -37,9 +37,9 @@ Gemäß den normativen Vorgaben der DIN EN 61439-1/-2 darf der Prüfstrom jedoch
 
 Erschwerend kommt die hohe Komplexität des Aufbaus hinzu: Da bei der Prüfung bis zu 12 Module gleichzeitig belastet werden, beeinflussen sich die Prüfkreise gegenseitig. Ein manuelles Nachjustieren an einem Abgang führt oftmals zu Spannungs- und Stromschwankungen in der zentralen Einspeisung und somit zu Abweichungen in den benachbarten Modulen.
 
-Das Ergebnis ist ein andauernder, iterativer Prozess des manuellen Ausbalancierens. Dieser Zustand muss über den gesamten, mehrstündigen Prüfzeitraum aufrechterhalten werden, bis das normative Abbruchkriterium – eine Temperaturänderung von maximal 1 K/h an allen relevanten Messstellen – sicher erreicht ist. Diese Vorgehensweise ist für das Fachpersonal mental extrem ermüdend, birgt ein hohes Fehlerpotenzial durch menschliche Unachtsamkeit und ist unter wirtschaftlichen Gesichtspunkten für wiederkehrende Dauerprüfungen höchst ineffizient.
+Das Ergebnis ist ein andauernder, iterativer Prozess des manuellen Ausbalancierens. Dieser Zustand muss über den gesamten, mehrstündigen Prüfzeitraum aufrechterhalten werden, bis das normative Abbruchkriterium, eine Temperaturänderung von maximal 1 K/h an allen relevanten Messstellen, sicher erreicht ist. Diese Vorgehensweise ist für das Fachpersonal mental extrem ermüdend, birgt ein hohes Fehlerpotenzial durch menschliche Unachtsamkeit und ist unter wirtschaftlichen Gesichtspunkten für wiederkehrende Dauerprüfungen höchst ineffizient.
 
-\textcolor{red}{\textbf{Achtung!  Foto von  Edelstahl-Widerständen}}
+\textcolor{red}{\textbf{Achtung!  Foto von  Edelstahl-Widerständen und PTC Kurve}}
 
 % -----------------------------------------------------------------------------
 % 1.3 Zielsetzung
@@ -60,7 +60,10 @@ Die zu entwickelnde Lösung muss folgende technische und normative Hauptziele zw
 
 Um dieses Ziel fundiert zu erreichen, sollen im Rahmen dieser Arbeit zunächst verschiedene theoretische Lösungsansätze zur Stromregelung erarbeitet werden.
 
-Mittels einer systematischen Nutzwertanalyse wird daraus die technisch und wirtschaftlich sinnvollste Variante für die Rolf Janssen GmbH ermittelt. Das finale Siegerkonzept wird anschließend hinsichtlich seiner elektrotechnischen Hardware-Dimensionierung, der Sensorik sowie der softwaretechnischen Integration detailliert ausgearbeitet.
+Mittels einer systematischen Nutzwertanalyse wird daraus die technisch und wirtschaftlich sinnvollste Variante für die Rolf Janssen GmbH ermittelt. 
+\begin{comment}
+Das finale Siegerkonzept wird anschließend hinsichtlich seiner elektrotechnischen Hardware-Dimensionierung, der Sensorik sowie der softwaretechnischen Integration detailliert ausgearbeitet.
+\end{comment}
 % -----------------------------------------------------------------------------
 % 1.4 Abgrenzung der Aufgabenstellung
 \subsection{Abgrenzung der Aufgabenstellung}
