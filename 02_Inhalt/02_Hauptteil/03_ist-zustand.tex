@@ -12,7 +12,7 @@ Um eine fundierte, zielgerichtete und wirtschaftlich rentierliche Automatisierun
 \subsection{Aufbau und Energiewandlung des aktuellen Prüfstandes}
 \label{sec:aufbau_ist_zustand}
 
-Der Erwärmungsprüfstand ist im aktuellen Ist-Zustand als leistungselektronisch kaskadierte \\Hochstrom-Prüfeinrichtung konzipiert. Die primäre Zielsetzung der Anlage ist die Erzeugung stufenlos regelbarer und stationär stabiler Prüfströme von bis zu $5.000\,\text{A}$, um das thermische Verhalten unterschiedlichster Nieder\-spannungs\-schalt\-geräte\-kombinationen unter Volllastbedingungen normgerecht nach DIN EN 61439 zu verifizieren. 
+Der Erwärmungsprüfstand ist im aktuellen Ist-Zustand als leistungselektronisch kaskadierte \\Hochstrom-Prüfeinrichtung konzipiert. Die primäre Zielsetzung der Anlage ist die Erzeugung stufenlos regelbarer und stationär stabiler Prüfströme von bis zu $6.000\,\text{A}$, um das thermische Verhalten unterschiedlichster Nieder\-spannungs\-schalt\-geräte\-kombinationen unter Volllastbedingungen normgerecht nach DIN EN 61439 zu verifizieren. 
 
 Das Spektrum umfasst neben Standard-Einschüben in MCC-Bauform auch hochbelastbare \\SASIL-Systeme sowie reine Leistungsschalterfelder. Die Hardware gliedert sich in die primäre Leistungsstellung, die induktive Filterung samt Hochstromtransformation sowie die physische Kontaktierung.
 % -----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Da der Prüfstrom proportional zur Ausgangsspannung geregelt wird, ist die anlie
 % -----------------------------------------------------------------------------
 % 3.1.3
 \subsubsection{Prüflingskontaktierung und Stromaufteilung}
-Der Übergang zum Prüfling erfolgt über einen massiven Kupferschrank. Innerhalb des angeflanschten MCC-Feldes kommt es nach der Kirchhoffschen Knotenpunktregel zu einer gezielten Stromaufteilung: Ein definierter Teilstrom ($I_{MCC}$) zweigt in die zu prüfenden MCC-Einschübe ab. Der signifikant größere Reststrom ($I_{Rest}$) fließt auf der horizontalen Hauptsammelschiene weiter und wird am Ende über eine dreiphasige Kurzschlussbrücke normgerecht thermisch umgesetzt ("verbraten").
+Der Übergang zum Prüfling erfolgt über einen massiven Kupferschrank, dem sogenannten Anbindefeld, welches es ermöglicht alle anbindungsmöglichkeiten zu erfüllen. Innerhalb des angeflanschten MCC-Feldes kommt es nach der Kirchhoffschen Knotenpunktregel zu einer gezielten Stromaufteilung: Ein definierter Teilstrom ($I_{MCC}$) zweigt in die zu prüfenden MCC-Einschübe ab. Der signifikant größere Reststrom ($I_{Rest}$) fließt auf der horizontalen Hauptsammelschiene weiter und wird am Ende über eine dreiphasige Kurzschlussbrücke normgerecht thermisch umgesetzt ("verbraten").
 
 Um die realen motorischen Verbraucher zu simulieren, werden an die Abgänge der MCC-Module konventionelle, ohmsche Lastwiderstände aus Edelstahl angeschlossen. Bei einem typischen Prüf\-aufbau mit bis zu zwölf gleichzeitig belasteten Abgangseinheiten bedeutet dies, dass zwölf separate Lastwiderstands-Pfade aufgebaut werden müssen. Die Überwachung des \textit{Gesamteinspeisestroms} erfolgt über ein Siemens ET200 SP Automatisierungssystem, welches den Stellmotor des Ruhstrat-Transformators ansteuert.
 
