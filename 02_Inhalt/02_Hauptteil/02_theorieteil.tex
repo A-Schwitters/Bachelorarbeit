@@ -5,7 +5,6 @@
 \label{chap:grundlagen}
 
 Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $6000\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Die parallele und präzise Regelung der Prüfströme an insgesamt 12 einzeln steuerbaren Prüfausgängen erfordert nicht nur tiefgreifende regelungstechnische Expertise, sondern zwingend ein fundiertes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des Prüfsystems. 
-
 Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächst wird die spezifische Systemarchitektur der zu prüfenden Niederspannungsschaltgerätekombinationen (Motor Control Center) der Rolf Janssen GmbH detailliert analysiert. Darauf aufbauend werden die strengen juristischen und messtechnischen Vorgaben der Erwärmungsprüfung nach der harmonisierten Normenreihe DIN EN 61439 systematisch erörtert. Ein weiterer Schwerpunkt liegt auf der mathematisch-physikalischen Modellierung des thermischen Drift-Verhaltens im Hauptstromkreis, welches die Grundlage für die in MATLAB/Simulink durchgeführte Reglerauslegung bildet. Die Kenntnis dieser Grundlagen ist unerlässlich, um die physikalischen Grenzen des aktuellen manuellen Prüfverfahrens zu verstehen und das Lastenheft für das zu entwickelnde automatisierte Mehrkanalsystem abzuleiten.
 
 % -----------------------------------------------------------------------------
@@ -15,12 +14,17 @@ Dieses Kapitel legt das theoretische Fundament der vorliegenden Arbeit. Zunächs
 \label{sec:mcc_architektur}
 
 Die Rolf Janssen GmbH fertigt und projektiert Niederspannungsschaltgerätekombinationen \\(NSK), die als zentrale Netzknotenpunkte für die Energieverteilung und die dezentrale Steuerung von motorischen Verbrauchern in hochverfügbaren industriellen und maritimen Anlagen dienen. Eine technologisch besonders anspruchsvolle Bauform dieser Anlagen ist das sogenannte Motor Control Center (MCC). Die Konstruktionsrichtlinien für diese MCC-Anlagen definieren einen hochgradig modularisierten, störlichtbogensicheren Aufbau, der auf maximale Anlagenverfügbarkeit (MTBF) und höchsten Personenschutz bei Bedien- und Wartungsarbeiten ausgelegt ist.
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{03_Ressourcen/pic/Leistungsschalterfeld.png} 
-    \caption{Systemarchitektur im Verbund: Das linke Leistungsschalterfeld speist die horizontale Hauptsammelschiene, von der das benachbarte MCC-Feld abzweigt.}
-    \label{fig:mcc_gesamtanlage}
+    \includegraphics[width=0.5\textwidth]{03_Ressourcen/pic/MCC-Feld_Einschübe_Kabelanschlussraum.png} 
+    \caption{MCC Einschubmodule und Adapter}
+    \label{fig:mcc_einschubmodule_adapter}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{03_Ressourcen/pic/MCC Feld Blanko.png} 
+    \caption{MCC-Feld bestückt mit Einschubmodulen}
+    \label{fig:mcc_bestückt_Blanko}
 \end{figure}
 % -----------------------------------------------------------------------------
 %2.1.1
@@ -37,32 +41,36 @@ Diese aufwendige Bauweise garantiert eine zwingende physische und elektrische Tr
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.30\textwidth]{03_Ressourcen/pic/MCC_Feld_1.png}
-    \caption{Frontansicht des MCC-Feldes bestückt mit Einschubmodulen}
-    \label{fig:sub_mcc_front}
-\end{figure}
-\begin{comment}
-\begin{figure}[H]
-    \centering
-    \begin{subfigure}[b]{0.48\textwidth}
+    % Linkes Bild
+    \begin{subfigure}[b]{0.3\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Feld_1.png} 
-        \caption{Frontansicht des MCC-Feldes bestückt mit Einschubmodulen}
-        \label{fig:sub_mcc_front}
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/Kupfer_MCC.png}
+        \caption{Sammelschienenraum}
+        \label{fig:sub_sammelschienenraum}
     \end{subfigure}
-
-     \hfill
-    \begin{subfigure}[b]{0.48\textwidth}
+    \hfill % Schiebt die Bilder auseinander
+    % Rechtes Bild
+    \begin{subfigure}[b]{0.305\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{03_Ressourcen/pic/MCC_Kupfer.png} 
-        \caption{Vertikales Verteilschienensystem}
-        \label{fig:sub_mcc_kupfer}
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/MCC_Geräteraum.png}
+        \caption{Geräteraum}
+        \label{fig:sub_Geräteraum}
     \end{subfigure}
-    \caption{Detaillierter Aufbau eines MCC-Feldes. Links: Frontale Bestückung mit Einschubmodulen (\ref{fig:sub_mcc_front}). Rechts: Das vertikale Verteilschienensystem (\ref{fig:sub_mcc_kupfer}).}
-    \label{fig:mcc_details}
+    \hfill % Schiebt die Bilder auseinander
+    % Rechtes Bild
+    \begin{subfigure}[b]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/MCC_Kabelanschlussraum.png}
+        \caption{Kabelanschlussraum}
+        \label{fig:sub_kabelanschlussraum}
+    \end{subfigure}
+    
+    \caption{innerer Unterteilung des MCC-Feldes}
+    \label{fig:Unterteilung_MCC}
 \end{figure}
-\end{comment}
 
+\noindent
+Abbildung \ref{fig:Unterteilung_MCC} zeigt links den Sammelschienenraum (\ref{fig:sub_sammelschienenraum}) und rechts den Geräteraum (\ref{fig:sub_Geräteraum}). Der Kabelanschlussraum (\ref{fig:sub_kabelanschlussraum}) ist in der Mitte dargestellt.
 % -----------------------------------------------------------------------------
 % 2.1.2
 \subsubsection{Dimensionierung der Verteilschienensysteme}
@@ -70,9 +78,49 @@ Die vertikale Energieverteilung innerhalb eines einzelnen Schaltschrankfeldes er
 
 Typische Querschnitte betragen $30 \times 10\,\text{mm}$ pro Einzelschiene. Bei einer dreifachen, parallelisierten Ausführung ergibt sich somit ein effektiver geometrischer Gesamtquerschnitt von $900\,\text{mm}^2$ blankem Elektrolytkupfer pro Außenleiter. Dieses Leitersystem erlaubt unter Einhaltung der normativen thermischen Grenzwerte (bis zu einer Schutzart von IP4X) einen kontinuierlichen Bemessungsstrom von bis zu $1.400\,\text{A}$ pro Schaltschrankfeld.
 
+\begin{table}[H]
+   \centering
+   \caption{Auswahlmöglichkeiten Verteilschienen}
+   \label{tab:Auswahlmöglichkeiten Verteilschienen} 
+    % Erhöht den Zeilenabstand für den "luftigen" Look wie in der CAD-Zeichnung
+    \renewcommand{\arraystretch}{1} 
+    % Optional: Serifenlose Schriftart für einen technischeren Zeichnungs-Look
+    \sffamily 
+    
+    \begin{tabular}{| p{2.2cm} | p{2.3cm} | p{3.5cm} | p{3.5cm} | p{3.5cm} |}
+        \hline
+        % Zeile 1
+        \multicolumn{2}{|l|}{VERTEILSCHIENE :} & 
+        \multicolumn{3}{c|}{CU :} \\
+        \hline
+        
+        % Zeile 2
+        \multicolumn{2}{|p{4.5cm}|}{L1/L2/L3 \newline (Nennstrom: Bauartn./DIN):} & 
+        1x30x10 \newline (466A/573A) \hfill {\Large $\square$} & 
+        2x30x10 \newline (933A/1060A) \hfill {\Large $\square$} & 
+        3x30x10 \newline (1400A/1480A) \hfill {\Large $\boxtimes$} \\
+        \hline
+        
+        % Zeile 3
+        N : & 
+        OHNE \hfill {\Large $\square$} & 
+        1x30x10 \hfill {\Large $\square$} & 
+        2x30x10 \hfill {\Large $\square$} & 
+        3x30x10 \hfill {\Large $\boxtimes$} \\
+        \hline
+        
+        % Zeile 4
+        \multicolumn{2}{|p{4.5cm}|}{KUPFERSCHIENE IN \newline SEITENWAND FÜR PE :} & 
+        \hfill OHNE \hfill {\Large $\square$} & 
+        1x30x10 \hfill {\Large $\boxtimes$} & 
+        1x50x10 \hfill {\Large $\square$} \\
+        \hline
+    \end{tabular}
+\end{table}
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.30\textwidth]{03_Ressourcen/pic/MCC_Kupfer.png}
+    \includegraphics[width=0.50\textwidth]{03_Ressourcen/pic/Entwurf.png}
      \caption{Vertikales Verteilschienensystem}
     \label{fig:sub_mcc_kupfer}
 \end{figure}
