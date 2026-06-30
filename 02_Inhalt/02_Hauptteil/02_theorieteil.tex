@@ -2,6 +2,364 @@
 % 2 Theoretische Grundlagen und Stand der Technik (02_theorieteil.tex)
 % =============================================================================
 \section{Theoretische Grundlagen und Stand der Technik}
+\label{chap:theorieteil}
+
+Dieses Kapitel beschreibt die technischen und normativen Grundlagen, die für die Optimierung des Erwärmungsprüfstandes relevant sind. Im Mittelpunkt stehen MCC-Einschubmodule als einzelne Abgangseinheiten einer Niederspannungs-Schaltgerätekombination. Zunächst werden der Aufbau der Einschubmodule, die Adaptertechnik sowie deren Einbindung in das MCC-Feld erläutert. Anschließend wird die Erwärmungsprüfung als Bestandteil des Bauartnachweises betrachtet. 
+
+Darauf aufbauend werden die wesentlichen physikalischen Effekte beschrieben, die das Prüfverfahren beeinflussen. Dazu gehören die temperaturabhängige Änderung elektrischer Widerstände, die daraus resultierende Stromänderung bei konstanter Speisespannung sowie die Bedeutung elektrischer Kontaktstellen. Die dargestellten Grundlagen dienen als Basis für die spätere Analyse des bestehenden Prüfstandes und für die Bewertung möglicher Konzepte zur Stromnachführung.
+
+% -----------------------------------------------------------------------------
+% 2.1 MCC-Einschubmodule als Prüfobjekte
+% -----------------------------------------------------------------------------
+\subsection{MCC-Einschubmodule als Prüfobjekte}
+\label{sec:mcc_einschubmodule}
+
+Motor Control Center Felder (MCC-Felder) sind modular aufgebaute Niederspannungs"=Schaltgerätekombinationen. Sie dienen der Verteilung elektrischer Energie auf mehrere Verbraucherabgänge und werden im Rahmen dieser Arbeit als Prüfobjekte nach der Normenreihe DIN EN IEC 61439 betrachtet. Die normativen Anforderungen an den Bauartnachweis und an die Erwärmungsprüfung werden in Abschnitt~\ref{sec:normen_61439} näher erläutert.
+
+Ein wesentliches Merkmal der betrachteten MCC-Bauweise ist die Ausführung der einzelnen Abgänge als Einschubmodule. Jedes Einschubmodul bildet eine eigene Funktionseinheit und enthält je nach Ausführung die erforderlichen Schalt-, Schutz- und Steuergeräte für den jeweiligen Verbraucherabgang. Durch diese modulare Bauweise können einzelne Abgänge getrennt projektiert, geprüft, gewartet oder ausgetauscht werden.
+
+Für die Erwärmungsprüfung sind die Einschubmodule besonders relevant, da sie mit ihrem jeweiligen Bemessungsbetriebsstrom belastet werden. Der Prüfstrom fließt dabei über die internen Strompfade des Moduls sowie über die zugehörigen Steck- und Kontaktstellen. Die dabei entstehenden Verlustleistungen führen zu einer Erwärmung der Bauteile und Kontaktübergänge. Im Rahmen dieser Arbeit werden daher insbesondere die einzelnen MCC-Abgänge betrachtet, da deren Strombelastung für das Prüfverfahren maßgeblich ist.
+
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{03_Ressourcen/pic/MCC-Feld_Einschübe_Kabelanschlussraum.png} 
+    \caption{MCC-Einschubmodule und Adapter}
+    \label{fig:mcc_einschubmodule_adapter}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+% 2.2 Adaptertechnik und elektrische Kontaktierung
+% -----------------------------------------------------------------------------
+\subsection{Adaptertechnik und elektrische Kontaktierung}
+\label{sec:adaptertechnik}
+
+Die elektrische Verbindung zwischen dem Verteilschienensystem des MCC-Feldes und den Einschubmodulen erfolgt über Adapter. Diese Adapter übernehmen sowohl die mechanische Führung des Einschubs als auch die elektrische Kontaktierung der Hauptstrombahnen. Die genaue Ausführung der Adapter hängt vom Bemessungsstrom des jeweiligen Moduls ab.
+
+Bei kleineren Abgängen können innerhalb des Adapters flexible Leiter eingesetzt werden. Bei höheren Bemessungsströmen sind dagegen größere Leiterquerschnitte und massive Kupferverbindungen erforderlich, um die Strombelastbarkeit sicherzustellen und die Verlustleistung zu begrenzen. Die Kontaktierung zum Verteilschienensystem erfolgt über lösbare Steckkontakte. Diese müssen im eingeschobenen Zustand einen ausreichend niedrigen und dauerhaft stabilen Kontaktwiderstand gewährleisten.
+
+Für die Erwärmungsprüfung sind diese Kontaktstellen besonders relevant. Der Prüfstrom fließt nicht nur durch durchgehende Leiter, sondern auch über lösbare Übergänge zwischen Einschubmodul, Adapter und Verteilschiene. Aufgrund endlicher Kontaktwiderstände entstehen dort zusätzliche Verlustleistungen. Diese können lokal zu erhöhten Temperaturen führen und müssen daher im Rahmen der Erwärmungsprüfung berücksichtigt werden.
+
+% -----------------------------------------------------------------------------
+% 2.3 Einbindung der Einschubmodule in das MCC-Feld
+% -----------------------------------------------------------------------------
+\subsection{Einbindung der Einschubmodule in das MCC-Feld}
+\label{sec:mcc_feld}
+
+Die Einschubmodule werden in ein MCC-Feld eingesetzt, das die Energieverteilung, die mechanische Aufnahme der Module sowie den Anschluss der abgehenden Leitungen ermöglicht. Das betrachtete Feld ist funktional in mehrere Bereiche unterteilt. Dazu zählen der Sammelschienenraum, der Geräteraum und der Kabelanschlussraum.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{03_Ressourcen/pic/MCC Feld Blanko.png} 
+    \caption{MCC-Feld bestückt mit Einschubmodulen}
+    \label{fig:mcc_bestueckt_blanko}
+\end{figure}
+
+% -----------------------------------------------------------------------------
+% 2.3.1 Mechanische Unterteilung des MCC-Feldes
+% -----------------------------------------------------------------------------
+\subsubsection{Mechanische Unterteilung des MCC-Feldes}
+\label{sec:mcc_unterteilung}
+
+Der Sammelschienenraum (\ref{fig:sub_sammelschienenraum}) enthält das Haupt- und Verteilschienensystem. Über diese Schienen wird die elektrische Energie innerhalb des Feldes verteilt. Der Geräteraum (\ref{fig:sub_geraeteraum}) nimmt die einzelnen MCC-Einschubmodule auf. Der Kabelanschlussraum (\ref{fig:sub_kabelanschlussraum}) dient dem Anschluss und der Führung der abgehenden Leiter.
+
+Die räumliche Trennung dieser Bereiche erhöht die Übersichtlichkeit des Aufbaus und unterstützt die sichere Führung der Hauptstrombahnen. Für die vorliegende Arbeit ist insbesondere der Strompfad vom Verteilschienensystem über die Adapter bis in die Einschubmodule relevant. An diesen Übergängen entstehen elektrische Kontaktstellen, die während der Erwärmungsprüfung mit dem jeweiligen Prüfstrom belastet werden.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/Kupfer_MCC.png}
+        \caption{Sammelschienenraum}
+        \label{fig:sub_sammelschienenraum}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.305\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/MCC_Geräteraum.png}
+        \caption{Geräteraum}
+        \label{fig:sub_geraeteraum}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.33\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{03_Ressourcen/pic/MCC_Kabelanschlussraum.png}
+        \caption{Kabelanschlussraum}
+        \label{fig:sub_kabelanschlussraum}
+    \end{subfigure}
+    
+    \caption{Funktionsbereiche des MCC-Feldes}
+    \label{fig:unterteilung_mcc}
+\end{figure}
+
+Abbildung \ref{fig:unterteilung_mcc} zeigt die wesentlichen Funktionsbereiche des MCC-Feldes. Dargestellt sind der Sammelschienenraum, der Geräteraum und der Kabelanschlussraum.
+
+% -----------------------------------------------------------------------------
+% 2.3.2 Verteilschienensystem
+% -----------------------------------------------------------------------------
+\subsubsection{Verteilschienensystem}
+\label{sec:verteilschienensystem}
+
+Die vertikale Energieverteilung innerhalb des MCC-Feldes erfolgt über ein Verteilschienensystem. Dieses ist mit dem Hauptsammelschienensystem verbunden und stellt die elektrische Versorgung der einzelnen Einschubmodule bereit. Je nach Ausführung und Bemessungsstrom können mehrere Kupferflachschienen parallel pro Außenleiter verwendet werden.
+
+Im betrachteten Aufbau kommen beispielsweise Kupferflachschienen mit einem Querschnitt von $30 \times 10\,\mathrm{mm}$ zum Einsatz. Bei einer dreifachen parallelen Ausführung ergibt sich ein geometrischer Gesamtquerschnitt von $900\,\mathrm{mm^2}$ pro Außenleiter. Die Auswahl der Schienenquerschnitte beeinflusst sowohl die Stromtragfähigkeit als auch die Erwärmung des Feldes.
+
+\begin{table}[H]
+   \centering
+   \caption{Auswahlmöglichkeiten der Verteilschienen}
+   \label{tab:auswahlmoeglichkeiten_verteilschienen} 
+   
+   % 1. Anpassung: Vertikalen Abstand vergrößern, damit alles Luft zum Atmen hat
+   \renewcommand{\arraystretch}{1.4} 
+   \sffamily 
+   
+   \begin{tabular}{| p{2.2cm} | p{2.3cm} | p{3.0cm} | p{3.0cm} | p{3.2cm} |}
+       \hline
+       \multicolumn{2}{|l|}{VERTEILSCHIENE:} & 
+       \multicolumn{3}{l|}{CU:} \\ % Auf l (linksbündig) geändert, sieht meist ruhiger aus
+       \hline
+       
+       % 2. Anpassung: \raggedright hinzugefügt (hebt Blocksatz auf) und Breite auf 4.9cm korrigiert
+       \multicolumn{2}{|p{4.9cm}|}{\raggedright L1/L2/L3 \newline (Nennstrom: Bauartn./DIN):} & 
+       1x30x10 \newline (466A/573A) \hfill {\Large $\square$} & 
+       2x30x10 \newline (933A/1060A) \hfill {\Large $\square$} & 
+       3x30x10 \newline (1400A/1480A) \hfill {\Large $\boxtimes$} \\
+       \hline
+       
+       N: & 
+       OHNE \hfill {\Large $\square$} & 
+       1x30x10 \hfill {\Large $\square$} & 
+       2x30x10 \hfill {\Large $\square$} & 
+       3x30x10 \hfill {\Large $\boxtimes$} \\
+       \hline
+       
+       % Auch hier \raggedright und 4.9cm eingefügt
+       \multicolumn{2}{|p{4.9cm}|}{\raggedright KUPFERSCHIENE IN \newline SEITENWAND FÜR PE:} & 
+       OHNE \hfill {\Large $\square$} & % \hfill vor dem OHNE entfernt
+       1x30x10 \hfill {\Large $\boxtimes$} & 
+       1x50x10 \hfill {\Large $\square$} \\
+       \hline
+   \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.80\textwidth]{03_Ressourcen/pic/Entwurf.png}
+    \caption{Vertikales Verteilschienensystem}
+    \label{fig:sub_mcc_kupfer}
+\end{figure}
+
+Neben der Dauerstromtragfähigkeit muss das Schienensystem auch für Kurzschlussbeanspruchungen ausgelegt sein. Im Kurzschlussfall treten zwischen den stromdurchflossenen Leitern elektrodynamische Kräfte auf, die mit dem Quadrat des Stromes zunehmen. Diese Zusammenhänge sind bei der allgemeinen Auslegung von Schaltanlagen und Stromschienensystemen zu berücksichtigen \cite{Kasikci_Planung}. Für die vorliegende Arbeit steht jedoch nicht die konstruktive Auslegung des Schienensystems im Vordergrund, sondern dessen Funktion als Teil des zu prüfenden Strompfades.
+
+% -----------------------------------------------------------------------------
+% 2.4 Erwärmungsprüfung nach DIN EN IEC 61439
+% -----------------------------------------------------------------------------
+\subsection{Erwärmungsprüfung nach DIN EN IEC 61439}
+\label{sec:normen_61439}
+
+Niederspannungs-Schaltgerätekombinationen müssen vor dem Einsatz ihre Eignung für den vorgesehenen Betrieb nachweisen. Ein wesentlicher Bestandteil dieses Nachweises ist die Erwärmungsprüfung. Sie dient dazu, die Temperaturentwicklung der Anlage bei Belastung mit den vorgesehenen Strömen zu untersuchen und zu beurteilen, ob die zulässigen Grenzübertemperaturen eingehalten werden.
+
+Die Erwärmungsprüfung ist für die vorliegende Arbeit von zentraler Bedeutung, da der bestehende Prüfstand genau für diese Aufgabe eingesetzt wird. Ziel des Prüfstandes ist es, die einzelnen Abgänge des MCC-Feldes mit definierten Prüfströmen zu belasten und die Temperaturentwicklung an relevanten Messstellen zu erfassen.
+
+% -----------------------------------------------------------------------------
+% 2.4.1 Ziel der Erwärmungsprüfung
+% -----------------------------------------------------------------------------
+\subsubsection{Ziel der Erwärmungsprüfung}
+\label{sec:ziel_erwaermungspruefung}
+
+Während der Erwärmungsprüfung wird der Prüfling über einen längeren Zeitraum mit Strom belastet. Dabei entstehen in Leitern, Kontaktstellen und Betriebsmitteln elektrische Verlustleistungen. Diese Verlustleistungen werden in Wärme umgesetzt und führen zu einer Temperaturerhöhung gegenüber der Umgebungstemperatur.
+
+Das Ziel der Prüfung besteht darin, nachzuweisen, dass die im Betrieb zu erwartenden Ströme nicht zu unzulässigen Temperaturen führen. Besonders relevant sind dabei Kontaktstellen, Anschlussbereiche und Bauteile mit begrenzter thermischer Belastbarkeit. Für die in dieser Arbeit betrachteten MCC-Einschubmodule sind insbesondere die Strompfade über Adapter, Steckkontakte und interne Leiter von Bedeutung.
+
+% -----------------------------------------------------------------------------
+% 2.4.2 Thermischer Beharrungszustand
+% -----------------------------------------------------------------------------
+\subsubsection{Thermischer Beharrungszustand}
+\label{sec:thermischer_beharrungszustand}
+
+Eine Erwärmungsprüfung wird nicht allein durch eine feste Prüfzeit charakterisiert. Entscheidend ist, dass sich ein thermischer Beharrungszustand einstellt. Dieser Zustand ist erreicht, wenn sich die Temperaturen an den betrachteten Messstellen nur noch geringfügig ändern. In der Praxis wird hierfür die zeitliche Änderung der Temperatur bewertet.
+
+Für die spätere Optimierung des Prüfverfahrens ist dieser Punkt wichtig, da die Prüfung über mehrere Stunden laufen kann. Während dieser Zeit muss der Prüfstrom möglichst konstant gehalten werden. Ändert sich der Strom während der Prüfung, ändert sich auch die in den Strompfaden umgesetzte Verlustleistung. Dies kann die Aussagekraft der Erwärmungsprüfung beeinflussen.
+
+% -----------------------------------------------------------------------------
+% 2.4.3 Anforderungen an den Prüfstrom
+% -----------------------------------------------------------------------------
+\subsubsection{Anforderungen an den Prüfstrom}
+\label{sec:anforderungen_pruefstrom}
+
+Die Erwärmungsprüfung setzt voraus, dass der Prüfling mit den vorgesehenen Strömen belastet wird. Für die vorliegende Arbeit ist daher die Konstanz des Prüfstroms eine wesentliche Randbedingung. Wird der Strom während der Prüfung zu stark verändert, verändert sich auch die thermische Beanspruchung des Prüflings.
+
+Die elektrische Verlustleistung in einem ohmschen Strompfad ergibt sich aus
+\begin{equation}
+    P_V = I^2 \cdot R .
+    \label{eq:verlustleistung_ohmsch}
+\end{equation}
+Aus Gleichung \ref{eq:verlustleistung_ohmsch} wird deutlich, dass die Verlustleistung quadratisch vom Strom abhängt. Bereits vergleichsweise geringe Stromabweichungen können daher eine merkliche Änderung der eingebrachten Wärmeleistung verursachen. Daraus ergibt sich die Notwendigkeit, den Prüfstrom während der Erwärmungsprüfung nachzuführen oder auf andere Weise innerhalb des zulässigen Bereiches zu halten.
+
+% -----------------------------------------------------------------------------
+% 2.5 Temperaturabhängigkeit elektrischer Widerstände
+% -----------------------------------------------------------------------------
+\subsection{Temperaturabhängigkeit elektrischer Widerstände}
+\label{sec:temperaturabhaengigkeit_widerstand}
+
+Elektrische Leiter und Widerstände ändern ihren Widerstand in Abhängigkeit von der Temperatur. Bei metallischen Leitern steigt der elektrische Widerstand mit zunehmender Temperatur an. Dieses Verhalten wird als Kaltleiterverhalten oder PTC-Verhalten bezeichnet.
+
+Für viele technische Betrachtungen kann der Zusammenhang zwischen Widerstand und Temperatur in einem begrenzten Temperaturbereich näherungsweise linear beschrieben werden:
+\begin{equation}
+    R(\vartheta) = R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right].
+    \label{eq:ptc_widerstand}
+\end{equation}
+Dabei ist $R_{20}$ der Widerstand bei $20\,^\circ\mathrm{C}$, $\alpha$ der lineare Temperaturkoeffizient und $\vartheta$ die aktuelle Temperatur.
+
+Für den Erwärmungsprüfstand ist dieser Zusammenhang besonders relevant, da die externen Lastwiderstände während der Prüfung ebenfalls erwärmt werden. Steigt ihr Widerstand an, verändert sich bei gleichbleibender Speisespannung der Strom durch den jeweiligen Lastpfad.
+
+% -----------------------------------------------------------------------------
+% 2.5.1 Thermischer Drift des Prüfstroms
+% -----------------------------------------------------------------------------
+\subsubsection{Thermischer Drift des Prüfstroms}
+\label{sec:thermischer_drift}
+
+Wird ein Lastwiderstand mit annähernd konstanter Spannung gespeist, ergibt sich der Strom nach dem Ohmschen Gesetz zu
+\begin{equation}
+    I(\vartheta) = \frac{U}{R(\vartheta)} .
+    \label{eq:strom_temperaturabhaengig}
+\end{equation}
+Setzt man Gleichung \ref{eq:ptc_widerstand} in Gleichung \ref{eq:strom_temperaturabhaengig} ein, ergibt sich
+\begin{equation}
+    I(\vartheta) =
+    \frac{U}
+    {R_{20} \cdot \left[ 1 + \alpha \cdot (\vartheta - 20\,^\circ\mathrm{C}) \right]} .
+    \label{eq:thermischer_drift}
+\end{equation}
+
+Die Gleichung zeigt, dass der Strom bei steigender Temperatur und konstanter Spannung abnimmt. Dieser Effekt wird in der vorliegenden Arbeit als thermischer Drift bezeichnet. Er stellt eine wesentliche Ursache für den Nachregelbedarf im bestehenden Prüfverfahren dar.
+
+% -----------------------------------------------------------------------------
+% 2.5.2 Wärmetransport im Prüfaufbau
+% -----------------------------------------------------------------------------
+\subsubsection{Wärmetransport im Prüfaufbau}
+\label{sec:waermetransport}
+
+Die im Prüfaufbau entstehende Wärme wird über verschiedene Mechanismen an die Umgebung abgeführt. Wesentliche Mechanismen sind Wärmeleitung, Konvektion und Wärmestrahlung \cite{Griesinger_Waermemanagement}. Innerhalb fester Körper erfolgt der Wärmetransport durch Wärmeleitung. An Oberflächen wird Wärme durch Konvektion an die umgebende Luft abgegeben. Bei höheren Oberflächentemperaturen kann zusätzlich die Wärmestrahlung einen merklichen Anteil an der Wärmeabfuhr besitzen.
+
+Für die Lastwiderstände des Prüfstandes ist die Wärmeabfuhr besonders wichtig, da sie über längere Zeit hohe Verlustleistungen aufnehmen müssen. Die Bauform der Widerstände beeinflusst dabei die wirksame Oberfläche und damit die Fähigkeit, Wärme an die Umgebung abzugeben. Eine detaillierte thermische Auslegung der Lastwiderstände ist jedoch nicht Schwerpunkt dieser Arbeit. Entscheidend ist vielmehr, dass die temperaturabhängige Widerstandsänderung als Störgröße im Prüfverfahren berücksichtigt wird.
+
+% -----------------------------------------------------------------------------
+% 2.5.3 Transientes Erwärmungsverhalten
+% -----------------------------------------------------------------------------
+\subsubsection{Transientes Erwärmungsverhalten}
+\label{sec:transientes_erwaermungsverhalten}
+
+Die Erwärmung eines Leiters oder Widerstandes erfolgt nicht sprunghaft, sondern zeitverzögert. Ein vereinfachtes thermisches Ersatzmodell kann durch einen thermischen Widerstand $R_{th}$ und eine thermische Kapazität $C_{th}$ beschrieben werden. Daraus ergibt sich ein Verzögerungsverhalten erster Ordnung.
+
+Für eine konstante Verlustleistung kann der Temperaturverlauf näherungsweise durch
+\begin{equation}
+    \vartheta(t) = \vartheta_{Umg} + P_V \cdot R_{th} \cdot 
+    \left(1 - e^{-\frac{t}{\tau_{th}}}\right)
+    \label{eq:temperaturverlauf_pt1}
+\end{equation}
+beschrieben werden. Die thermische Zeitkonstante ergibt sich zu
+\begin{equation}
+    \tau_{th} = R_{th} \cdot C_{th}.
+    \label{eq:thermische_zeitkonstante}
+\end{equation}
+
+Dieses träge Temperaturverhalten ist für die spätere Regelung und Simulation relevant. Änderungen des Stroms wirken sich unmittelbar auf die elektrische Verlustleistung aus, die Temperatur und damit der Widerstand ändern sich jedoch zeitverzögert. Dadurch entsteht ein dynamisches Verhalten, das bei der Bewertung eines automatisierten Nachführkonzeptes berücksichtigt werden muss.
+
+% -----------------------------------------------------------------------------
+% 2.6 Elektrische Kontaktstellen und Kontaktwiderstände
+% -----------------------------------------------------------------------------
+\subsection{Elektrische Kontaktstellen und Kontaktwiderstände}
+\label{sec:kontaktstellen}
+
+In MCC-Einschubsystemen treten neben den Leiterwiderständen auch Kontaktwiderstände an lösbaren elektrischen Verbindungen auf. Diese entstehen unter anderem an Steckkontakten, Adapterübergängen und Anschlussstellen. Für den Stromübergang ist nicht die gesamte scheinbare Berührungsfläche wirksam. Der tatsächliche Stromübergang erfolgt nur über mikroskopische Berührungsstellen der Kontaktoberflächen \cite{Vinaricky_Kontakte}.
+
+% -----------------------------------------------------------------------------
+% 2.6.1 Engewiderstand
+% -----------------------------------------------------------------------------
+\subsubsection{Engewiderstand}
+\label{sec:engewiderstand}
+
+Aufgrund der Rauheit realer Oberflächen berühren sich zwei Kontaktpartner nur an kleinen Teilflächen. Der Strom muss sich an diesen Stellen lokal einschnüren. Dadurch entsteht ein zusätzlicher Widerstandsanteil, der als Engewiderstand bezeichnet wird. Für einen idealisierten kreisförmigen Kontaktpunkt mit dem Radius $a$ kann der Engewiderstand näherungsweise beschrieben werden durch
+\begin{equation}
+    R_E = \frac{\rho}{2a}.
+    \label{eq:engewiderstand}
+\end{equation}
+Dabei ist $\rho$ der spezifische elektrische Widerstand des Kontaktmaterials.
+
+% -----------------------------------------------------------------------------
+% 2.6.2 Bedeutung für die Erwärmungsprüfung
+% -----------------------------------------------------------------------------
+\subsubsection{Bedeutung für die Erwärmungsprüfung}
+\label{sec:kontakt_bedeutung_erwaermung}
+
+Der Gesamtwiderstand einer Kontaktstelle setzt sich aus verschiedenen Anteilen zusammen. Neben dem Engewiderstand können Fremdschichten, Oxide oder Verschmutzungen den Kontaktwiderstand erhöhen. Die an einer Kontaktstelle umgesetzte Verlustleistung ergibt sich vereinfacht zu
+\begin{equation}
+    P_{V,K} = I^2 \cdot R_K .
+    \label{eq:verlustleistung_kontakt}
+\end{equation}
+Hierbei bezeichnet $R_K$ den Kontaktwiderstand.
+
+Da die Verlustleistung quadratisch vom Strom abhängt, können Kontaktstellen bei hohen Bemessungsströmen zu thermisch kritischen Bereichen werden. Dies erklärt, warum Steckkontakte und Adapterübergänge im Rahmen der Erwärmungsprüfung besondere Beachtung finden. Für die spätere Konzeptbewertung ist außerdem relevant, dass bewegte Kontakte unter Last verschleißbehaftet sein können. Dieser Aspekt wird bei der Bewertung motorisch verstellbarer Widerstände erneut aufgegriffen.
+
+% -----------------------------------------------------------------------------
+% 2.7 Frequenzabhängige Effekte in Stromschienen
+% -----------------------------------------------------------------------------
+\subsection{Frequenzabhängige Effekte in Stromschienen}
+\label{sec:frequenzabhaengige_effekte}
+
+Bei Wechselstrom ist die Stromverteilung in massiven Leitern nicht vollständig homogen. Durch das zeitlich veränderliche Magnetfeld entstehen Wirbelströme, die zu einer Verdrängung der Stromdichte in Richtung der Leiteroberfläche führen. Dieser Effekt wird als Skineffekt bezeichnet \cite{Kuepfmueller_TET}.
+
+% -----------------------------------------------------------------------------
+% 2.7.1 Eindringtiefe
+% -----------------------------------------------------------------------------
+\subsubsection{Eindringtiefe}
+\label{sec:eindringtiefe}
+
+Die Eindringtiefe $\delta$ beschreibt, in welcher Tiefe die Stromdichte auf den Anteil $1/e$ ihres Oberflächenwertes abgefallen ist. Sie kann näherungsweise berechnet werden mit
+\begin{equation}
+    \delta = \sqrt{\frac{2}{\omega \cdot \mu \cdot \kappa}} .
+    \label{eq:eindringtiefe}
+\end{equation}
+Dabei ist $\omega = 2 \pi f$ die Kreisfrequenz, $\mu$ die magnetische Permeabilität und $\kappa$ die elektrische Leitfähigkeit des Materials.
+
+Bei Kupfer und einer Netzfrequenz von $50\,\mathrm{Hz}$ liegt die Eindringtiefe in der Größenordnung der in Schaltanlagen eingesetzten Schienendicken. Dadurch kann der Wechselstromwiderstand geringfügig über dem Gleichstromwiderstand liegen. Für das bestehende Prüfverfahren mit sinusförmigem Netzstrom ist dieser Effekt grundsätzlich zu beachten, steht jedoch nicht im Mittelpunkt der Arbeit.
+
+% -----------------------------------------------------------------------------
+% 2.7.2 Bedeutung für leistungselektronische Konzepte
+% -----------------------------------------------------------------------------
+\subsubsection{Bedeutung für leistungselektronische Konzepte}
+\label{sec:bedeutung_leistungselektronik}
+
+Frequenzabhängige Effekte werden insbesondere dann relevant, wenn der Prüfstrom nicht mehr als sinusförmiger $50\,\mathrm{Hz}$-Strom vorliegt, sondern zusätzliche Oberschwingungsanteile enthält. Dies kann beispielsweise bei leistungselektronischen Stellgliedern auftreten. Höhere Frequenzanteile verringern die Eindringtiefe und können zusätzliche Verluste in Stromschienen und Kontaktstellen verursachen.
+
+Aus diesem Grund müssen leistungselektronische Konzepte für die Stromnachführung hinsichtlich Stromform, Oberschwingungen, elektromagnetischer Verträglichkeit und zusätzlicher Verlustleistung bewertet werden. Eine detaillierte Bewertung erfolgt im späteren Konzeptvergleich. An dieser Stelle wird lediglich die physikalische Grundlage eingeführt, die für diese Bewertung erforderlich ist.    
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+% =============================================================================
+% 2 Theoretische Grundlagen und Stand der Technik (02_theorieteil.tex)
+% =============================================================================
+\section{Theoretische Grundlagen und Stand der Technik}
 \label{chap:grundlagen}
 
 Die Automatisierung eines industriellen Hochstromprüfstandes im Bemessungsstrombereich von bis zu $6000\,\text{A}$ stellt eine hochkomplexe ingenieurtechnische Herausforderung dar. Die parallele und präzise Regelung der Prüfströme an insgesamt 12 einzeln steuerbaren Prüfausgängen erfordert nicht nur tiefgreifende regelungstechnische Expertise, sondern zwingend ein fundiertes Verständnis der elektromechanischen, thermodynamischen und normativen Rahmenbedingungen des Prüfsystems. 
