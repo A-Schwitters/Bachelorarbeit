@@ -1,8 +1,5 @@
 % =============================================================================
-% VERZEICHNISSE (02_verzeichnisse.tex)
-% -----------------------------------------------------------------------------
-% Diese Datei generiert alle Verzeichnisse (Inhalt, Abbildungen etc.)
-% basierend auf den Schaltern (\toggletrue/\togglefalse) in der Präambel.
+% VERZEICHNISSE (04_verzeichnisse.tex)
 % =============================================================================
 
 % Inhaltsverzeichnis
@@ -14,42 +11,55 @@
 
 % Tabellenverzeichnis
 \iftoggle{showtables}{
-    \hypersetup{linkcolor=black}
-    \listoftables
-    \addcontentsline{toc}{section}{Tabellenverzeichnis}
+    \clearpage
+    \phantomsection % Setzt den Link-Anker für Hyperref
+    \addcontentsline{toc}{section}{Tabellenverzeichnis} % Erst ins TOC eintragen...
+    \listoftables % ... dann das Verzeichnis generieren!
     \newpage
 }{}
 
 % Abbildungsverzeichnis
 \iftoggle{showfigures}{
-    \listoffigures
+    \clearpage
+    \phantomsection
     \addcontentsline{toc}{section}{Abbildungsverzeichnis}
+    \listoffigures
     \newpage
 }{}
 
 % Oszillogrammverzeichnis
 \iftoggle{showoszillos}{
-    \listofoszillo
+    \clearpage
+    \phantomsection
     \addcontentsline{toc}{section}{Oszillogrammverzeichnis}
+    \listofoszillo
     \newpage
 }{}
 
 % Diagrammverzeichnis
 \iftoggle{showdiagrams}{
-    \listofdiagram
+    \clearpage
+    \phantomsection
     \addcontentsline{toc}{section}{Diagrammverzeichnis}
+    \listofdiagram
     \newpage
 }{}
 
-% --- NEU: ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS ---
+
+% --- ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS ---
+% (Das glossaries-Paket fügt diese durch die Option 'toc' in der Präambel bereits automatisch richtig ins TOC ein!)
+
+% Alle Glossar-Einträge markieren, damit sie auch ohne direkte Verwendung im Text im Verzeichnis erscheinen.
+\glsaddall
 
 % Abkürzungsverzeichnis ausgeben
 \printglossary[type=\acronymtype, title={Abkürzungsverzeichnis}, toctitle={Abkürzungsverzeichnis}]
+\printnoidxglossary[type=\acronymtype, title={Abkürzungsverzeichnis}, toctitle={Abkürzungsverzeichnis}]
 \newpage
 
 % Formelzeichenverzeichnis ausgeben
 \printglossary[type=main, title={Formelzeichenverzeichnis}, toctitle={Formelzeichenverzeichnis}]
+\printnoidxglossary[type=symbols, title={Formelzeichenverzeichnis}, toctitle={Formelzeichenverzeichnis}]
 \newpage
-
 % Setzt die Linkfarbe für den Haupttext wieder auf Blau
 \hypersetup{linkcolor=blue}

@@ -46,23 +46,36 @@
 % ============================================================================
 \pagenumbering{Roman}
 
-% --- EIGENSTÄNDIGKEITSERKLÄRUNG (als sauberes PDF mit Inhaltsverzeichnis-Eintrag) ---
+
+
+% --- VORSPANN: NUMMERIERUNG KURZ DEAKTIVIEREN ---
+\setcounter{secnumdepth}{0}
+
+% --- SPERRVERMERK ---
 \cleardoublepage
 \includepdf[
     pages=-,
     frame,
     scale=0.8,
+    pagecommand={\thispagestyle{scrheadings}},
+    addtotoc={1, section, 1, Sperrvermerk, sec:sperrvermerk}
+]{03_Ressourcen/pdf/Vertraulichkeitshinweis_Sperrvermerk.pdf}
+
+% --- EIGENSTÄNDIGKEITSERKLÄRUNG ---
+\cleardoublepage
+\includepdf[
+    pages=-,
+    frame,
+    scale=0.8,
+    pagecommand={\thispagestyle{scrheadings}},
     addtotoc={1, section, 1, Eigenständigkeitserklärung und Verwendung von KI, sec:eigenstaendigkeit}
 ]{03_Ressourcen/pdf/Erklärung-Eigenständigkeit-KI.PDF}
 
-% --- SPERRVERMERK (als sauberes PDF mit Inhaltsverzeichnis-Eintrag) ---
-\cleardoublepage
-\includepdf[
-    pages=-,
-    frame,
-    scale=0.8,
-    addtotoc={1, section, 1, Sperrvermerk, sec:sperrvermerk}
-]{03_Ressourcen/pdf/Vertraulichkeitshinweis_Sperrvermerk.pdf}
+% --- HAUPTTEIL: NUMMERIERUNG WIEDER AKTIVIEREN ---
+\setcounter{secnumdepth}{3}
+
+
+
 
 % --- DANKSAGUNG ---
 \input{02_Inhalt/01_Vorspann/02_danksagung.tex}
@@ -103,22 +116,14 @@
 % ===========================================================================
 % ANHANG (Nummeriert mit A, B...)
 % ===========================================================================
+\appendix
+\include{02_Inhalt/03_Nachspann/anhang}
 
 % --- LITERATURVERZEICHNIS ---
 \clearpage
 \thispagestyle{empty}
-\addtocontents{toc}{\protect\contentsline{section}{\protect\numberline{}Literaturverzeichnis}{}{} }
-\section*{Literaturverzeichnis}
-\printbibliography[heading=none]
-
-
-\clearpage
-\appendix
-\renewcommand{\thesection}{\Alph{section}} % A, B, C ...
-\renewcommand{\thesubsection}{\Alph{section}.\arabic{subsection}}
-
-% Anhang einbinden (erzeugt z.B. "A Anhang")
-\input{02_Inhalt/03_Nachspann/anhang.tex}
-
+% Die manuellen Zeilen \addtocontents und \section* habe ich entfernt.
+% Die Option heading=bibintoc macht das automatisch, fehlerfrei und an der exakt richtigen Position!
+\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
 
 \end{document}
