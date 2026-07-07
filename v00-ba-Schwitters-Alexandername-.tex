@@ -46,9 +46,23 @@
 % ============================================================================
 \pagenumbering{Roman}
 
-% --- EIGENSTÄNDIGKEITSERKLÄRUNG + SPERRVERMERK ---
-\input{02_Inhalt/01_Vorspann/01_sperrvermerk_eigenstaendigkeitserklaerung.tex}
-\clearpage
+% --- EIGENSTÄNDIGKEITSERKLÄRUNG (als sauberes PDF mit Inhaltsverzeichnis-Eintrag) ---
+\cleardoublepage
+\includepdf[
+    pages=-,
+    frame,
+    scale=0.8,
+    addtotoc={1, section, 1, Eigenständigkeitserklärung und Verwendung von KI, sec:eigenstaendigkeit}
+]{03_Ressourcen/pdf/Erklärung-Eigenständigkeit-KI.PDF}
+
+% --- SPERRVERMERK (als sauberes PDF mit Inhaltsverzeichnis-Eintrag) ---
+\cleardoublepage
+\includepdf[
+    pages=-,
+    frame,
+    scale=0.8,
+    addtotoc={1, section, 1, Sperrvermerk, sec:sperrvermerk}
+]{03_Ressourcen/pdf/Vertraulichkeitshinweis_Sperrvermerk.pdf}
 
 % --- DANKSAGUNG ---
 \input{02_Inhalt/01_Vorspann/02_danksagung.tex}
@@ -64,7 +78,7 @@
 \input{02_Inhalt/01_Vorspann/04_verzeichnisse.tex}
 
 % --- LEERE SEITE ---
-\leereSeite
+\newpage
 
 % ============================================================================
 % HAUPTTEIL (arabische Zählung ab 1)
@@ -84,7 +98,7 @@
 
 
 % Optional: Trennseite vor Anhang/Nachspann
-\leereSeite
+\newpage
 
 % ===========================================================================
 % ANHANG (Nummeriert mit A, B...)
