@@ -104,24 +104,35 @@
 \include{02_Inhalt/02_Hauptteil/06_wirtschaftliche_und_betriebliche_Betrachtung}
 \include{02_Inhalt/02_Hauptteil/07_fazit}
 \include{02_Inhalt/02_Hauptteil/08_ausblick}
-\include{02_Inhalt/02_Hauptteil/10_Spannungsquelle}
-\include{02_Inhalt/02_Hauptteil/11_Modellierung_thermischer_Widerstand}
+\include{02_Inhalt/02_Hauptteil/10_Modellierung_thermischer_Widerstand}
 
 
 % Optional: Trennseite vor Anhang/Nachspann
 \newpage
 
 % ===========================================================================
-% ANHANG (Nummeriert mit A, B...)
+% ANHANG
 % ===========================================================================
-\appendix
-\include{02_Inhalt/03_Nachspann/anhang}
-
-% --- LITERATURVERZEICHNIS ---
 \clearpage
-\thispagestyle{empty}
-% Die manuellen Zeilen \addtocontents und \section* habe ich entfernt.
-% Die Option heading=bibintoc macht das automatisch, fehlerfrei und an der exakt richtigen Position!
-\printbibliography[heading=bibintoc, title={Literaturverzeichnis}]
+\appendix
+
+% Übergeordnete Überschrift für den Anhang
+\phantomsection
+\addcontentsline{toc}{section}{Anhang}
+\section*{Anhang}
+
+% ===========================================================================
+% LITERATURVERZEICHNIS
+% ===========================================================================
+\clearpage
+\printbibliography[
+    heading=bibintoc,
+    title={Literaturverzeichnis}
+]
+
+% ===========================================================================
+% EIGENTLICHE ANHÄNGE A, B, C, ...
+% ===========================================================================
+\include{02_Inhalt/03_Nachspann/anhang}
 
 \end{document}
