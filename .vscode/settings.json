@@ -47,7 +47,8 @@
     "02_Inhalt/02_Hauptteil/06_wirtschaftliche und betriebliche Betrachtung.aux": true,
     "02_Inhalt/02_Hauptteil/09_Modellierung und Plausibilisierung des thermischen V2A Widerstandes.aux": true,
     "02_Inhalt/02_Hauptteil/09_Modellierung_thermischer_Widerstand.aux": true,
-    "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux": true
+    "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux": true,
+    "02_Inhalt/02_Hauptteil/11_Modellierung_thermischer_Widerstand.aux": true
   },
   "hide-files.files": [
     "v00-ba-Schwitters-Alexandername-.sls",
@@ -92,7 +93,8 @@
     "02_Inhalt/02_Hauptteil/06_wirtschaftliche und betriebliche Betrachtung.aux",
     "02_Inhalt/02_Hauptteil/09_Modellierung und Plausibilisierung des thermischen V2A Widerstandes.aux",
     "02_Inhalt/02_Hauptteil/09_Modellierung_thermischer_Widerstand.aux",
-    "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux"
+    "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux",
+    "02_Inhalt/02_Hauptteil/11_Modellierung_thermischer_Widerstand.aux"
   ],
   "cloudlatex.enabled": true,
 
