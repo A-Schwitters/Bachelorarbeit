@@ -1,0 +1,70 @@
+% =============================================================================
+% VERZEICHNISSE (04_verzeichnisse.tex)
+% =============================================================================
+
+% Alle definierten Einträge in die Verzeichnisse aufnehmen
+\glsaddall
+
+% Inhaltsverzeichnis
+\iftoggle{showtoc}{
+    \hypersetup{linkcolor=black}
+    \tableofcontents
+}{}
+
+% Tabellenverzeichnis
+\iftoggle{showtables}{
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Tabellenverzeichnis}
+    \listoftables
+}{}
+
+% Abbildungsverzeichnis
+\iftoggle{showfigures}{
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Abbildungsverzeichnis}
+    \listoffigures
+}{}
+
+% Oszillogrammverzeichnis
+\iftoggle{showoszillos}{
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Oszillogrammverzeichnis}
+    \listofoszillo
+}{}
+
+% Diagrammverzeichnis
+\iftoggle{showdiagrams}{
+    \clearpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Diagrammverzeichnis}
+    \listofdiagram
+}{}
+
+% =============================================================================
+% ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS
+% =============================================================================
+
+% Abkürzungsverzeichnis
+\clearpage
+\printglossary[
+    type=\acronymtype,
+    title={Abkürzungsverzeichnis},
+    toctitle={Abkürzungsverzeichnis}
+]
+
+% Formelzeichenverzeichnis
+\clearpage
+\printglossary[
+    type=symbols,
+    title={Formelzeichenverzeichnis},
+    toctitle={Formelzeichenverzeichnis}
+]
+
+% Haupttext auf einer neuen Seite beginnen
+\clearpage
+
+% Linkfarbe für den Haupttext zurücksetzen
+\hypersetup{linkcolor=blue}
