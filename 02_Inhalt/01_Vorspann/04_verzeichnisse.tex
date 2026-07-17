@@ -47,19 +47,25 @@
 
 
 % --- ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS ---
-% (Das glossaries-Paket fügt diese durch die Option 'toc' in der Präambel bereits automatisch richtig ins TOC ein!)
 
-% Alle Glossar-Einträge markieren, damit sie auch ohne direkte Verwendung im Text im Verzeichnis erscheinen.
+% Alle definierten Einträge in die Verzeichnisse aufnehmen
 \glsaddall
 
-% Abkürzungsverzeichnis ausgeben
-\printglossary[type=\acronymtype, title={Abkürzungsverzeichnis}, toctitle={Abkürzungsverzeichnis}]
-\printnoidxglossary[type=\acronymtype, title={Abkürzungsverzeichnis}, toctitle={Abkürzungsverzeichnis}]
-\newpage
+% Abkürzungsverzeichnis
+\clearpage
+\printglossary[
+    type=\acronymtype,
+    title={Abkürzungsverzeichnis},
+    toctitle={Abkürzungsverzeichnis}
+]
 
-% Formelzeichenverzeichnis ausgeben
-\printglossary[type=main, title={Formelzeichenverzeichnis}, toctitle={Formelzeichenverzeichnis}]
-\printnoidxglossary[type=symbols, title={Formelzeichenverzeichnis}, toctitle={Formelzeichenverzeichnis}]
-\newpage
-% Setzt die Linkfarbe für den Haupttext wieder auf Blau
+% Formelzeichenverzeichnis
+\clearpage
+\printglossary[
+    type=symbols,
+    title={Formelzeichenverzeichnis},
+    toctitle={Formelzeichenverzeichnis}
+]
+
+\clearpage
 \hypersetup{linkcolor=blue}
