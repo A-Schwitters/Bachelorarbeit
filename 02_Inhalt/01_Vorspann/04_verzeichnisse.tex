@@ -2,20 +2,21 @@
 % VERZEICHNISSE (04_verzeichnisse.tex)
 % =============================================================================
 
+% Alle definierten Einträge in die Verzeichnisse aufnehmen
+\glsaddall
+
 % Inhaltsverzeichnis
 \iftoggle{showtoc}{
     \hypersetup{linkcolor=black}
     \tableofcontents
-    \newpage
 }{}
 
 % Tabellenverzeichnis
 \iftoggle{showtables}{
     \clearpage
-    \phantomsection % Setzt den Link-Anker für Hyperref
-    \addcontentsline{toc}{section}{Tabellenverzeichnis} % Erst ins TOC eintragen...
-    \listoftables % ... dann das Verzeichnis generieren!
-    \newpage
+    \phantomsection
+    \addcontentsline{toc}{section}{Tabellenverzeichnis}
+    \listoftables
 }{}
 
 % Abbildungsverzeichnis
@@ -24,7 +25,6 @@
     \phantomsection
     \addcontentsline{toc}{section}{Abbildungsverzeichnis}
     \listoffigures
-    \newpage
 }{}
 
 % Oszillogrammverzeichnis
@@ -33,7 +33,6 @@
     \phantomsection
     \addcontentsline{toc}{section}{Oszillogrammverzeichnis}
     \listofoszillo
-    \newpage
 }{}
 
 % Diagrammverzeichnis
@@ -42,14 +41,11 @@
     \phantomsection
     \addcontentsline{toc}{section}{Diagrammverzeichnis}
     \listofdiagram
-    \newpage
 }{}
 
-
-% --- ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS ---
-
-% Alle definierten Einträge in die Verzeichnisse aufnehmen
-\glsaddall
+% =============================================================================
+% ABKÜRZUNGS- UND FORMELZEICHENVERZEICHNIS
+% =============================================================================
 
 % Abkürzungsverzeichnis
 \clearpage
@@ -67,5 +63,8 @@
     toctitle={Formelzeichenverzeichnis}
 ]
 
+% Haupttext auf einer neuen Seite beginnen
 \clearpage
+
+% Linkfarbe für den Haupttext zurücksetzen
 \hypersetup{linkcolor=blue}
