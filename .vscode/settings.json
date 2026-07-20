@@ -49,7 +49,8 @@
     "02_Inhalt/02_Hauptteil/09_Modellierung_thermischer_Widerstand.aux": true,
     "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux": true,
     "02_Inhalt/02_Hauptteil/11_Modellierung_thermischer_Widerstand.aux": true,
-    "02_Inhalt/03_Nachspann/anhang.aux": true
+    "02_Inhalt/03_Nachspann/anhang.aux": true,
+    "02_Inhalt/02_Hauptteil/10_Modellierung_thermischer_Widerstand.aux": true
   },
   "hide-files.files": [
     "v00-ba-Schwitters-Alexandername-.sls",
@@ -96,7 +97,8 @@
     "02_Inhalt/02_Hauptteil/09_Modellierung_thermischer_Widerstand.aux",
     "02_Inhalt/02_Hauptteil/10_Spannungsquelle.aux",
     "02_Inhalt/02_Hauptteil/11_Modellierung_thermischer_Widerstand.aux",
-    "02_Inhalt/03_Nachspann/anhang.aux"
+    "02_Inhalt/03_Nachspann/anhang.aux",
+    "02_Inhalt/02_Hauptteil/10_Modellierung_thermischer_Widerstand.aux"
   ],
   "cloudlatex.enabled": true,
 
