@@ -1,0 +1,97 @@
+% =============================================================================
+% 5 Modellbildung
+% =============================================================================
+\section{Modellbildung}
+\label{chap:modellbildung}
+
+% -----------------------------------------------------------------------------
+% 5.1 Zielsetzung, Systemgrenze und Modellannahmen
+% -----------------------------------------------------------------------------
+\subsection{Zielsetzung, Systemgrenze und Modellannahmen}
+\label{sec:zielsetzung_systemgrenze_modellannahmen}
+
+% Inhalt:
+% - Ziel des Modells
+% - betrachtete Ein- und Ausgangsgrößen
+% - Festlegung der Systemgrenze
+% - Reduktion des realen Prüfstands
+% - berücksichtigte Komponenten
+% - vernachlässigte Komponenten
+% - Begründung der Modellvereinfachungen
+
+
+% -----------------------------------------------------------------------------
+% 5.2 Elektrisches Teilmodell
+% -----------------------------------------------------------------------------
+\subsection{Elektrisches Teilmodell}
+\label{sec:elektrisches_teilmodell}
+
+% Inhalt:
+% - Modellierung der dreiphasigen Spannungsquelle
+% - Wahl einer sprungförmigen Anregung
+% - Begründung gegenüber einer linearen Spannungsrampe
+% - Effektivwert und Scheitelwert
+% - elektrischer Strompfad des MCC-Abgangs
+% - V2A-Lastwiderstand
+% - Trafo 2
+% - Stellwiderstand R_Stell
+% - Impedanztransformation
+% - Stromaufteilung
+% - elektrische Verlustleistung
+
+
+% -----------------------------------------------------------------------------
+% 5.3 Thermisches Teilmodell
+% -----------------------------------------------------------------------------
+\subsection{Thermisches Teilmodell}
+\label{sec:thermisches_teilmodell}
+
+% Inhalt:
+% - thermische Systemgrenze des V2A-Widerstands
+% - zugeführter Wärmestrom
+% - gespeicherte Wärme
+% - abgeführter Wärmestrom
+% - thermische Kapazität C_th
+% - thermischer Widerstand R_th
+% - thermisches Ersatzschaltbild
+% - Annahme eines konstanten Wärmeübergangs
+% - Energiebilanz
+% - Differentialgleichung
+% - Laplace-Transformation
+% - Übertragungsfunktion
+% - Zeitkonstante
+% - PT1-Verhalten
+% - stationäres und transientes Temperaturverhalten
+
+
+% -----------------------------------------------------------------------------
+% 5.4 Elektrothermische Kopplung
+% -----------------------------------------------------------------------------
+\subsection{Elektrothermische Kopplung}
+\label{sec:elektrothermische_kopplung}
+
+% Inhalt:
+% - Modulstrom erzeugt elektrische Verlustleistung
+% - Verlustleistung führt zur Erwärmung
+% - Temperatur verändert den V2A-Widerstand
+% - Widerstandsänderung beeinflusst den Modulstrom
+% - geschlossene elektrothermische Wirkungskette
+% - Einbindung des zusätzlichen Stellpfads
+
+
+% -----------------------------------------------------------------------------
+% 5.5 Umsetzung in MATLAB/Simulink und Simulationsparameter
+% -----------------------------------------------------------------------------
+\subsection{Umsetzung in MATLAB/Simulink und Simulationsparameter}
+\label{sec:umsetzung_simulationsparameter}
+
+% Inhalt:
+% - Aufbau des Gesamtmodells
+% - Aufbau und Verbindung der Subsysteme
+% - verwendete Parameter
+% - Anfangsbedingungen
+% - zunächst deaktivierte Regleranteile
+% - Solver
+% - Schrittweite
+% - Simulationsdauer
+% - Begründung der angepassten Simulationszeit

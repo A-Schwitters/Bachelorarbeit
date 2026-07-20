@@ -1,0 +1,636 @@
+% =============================================================================
+% 3 Analyse des bestehenden Erwärmungsprüfstands
+% =============================================================================
+\section{Analyse des bestehenden Erwärmungsprüfstands}
+\label{chap:analyse_pruefstand}
+
+In diesem Kapitel werden der bestehende Aufbau und die gegenwärtige
+Durchführung der Erwärmungsprüfung untersucht. Ziel ist es, die Ursachen
+für die Abweichung der einzelnen Modulströme während einer Prüfung
+herauszuarbeiten und daraus Anforderungen an das zu entwickelnde
+Optimierungskonzept abzuleiten.
+
+Die Betrachtung des Ist-Zustands beschränkt sich auf die bislang
+eingesetzte und betrieblich erprobte Prüfanordnung. Die zukünftig
+vorgesehenen erhöhten Modulströme von \SI{40}{\ampere} und
+\SI{70}{\ampere} sind nicht Bestandteil des bisherigen Prüfzustands.
+Sie werden daher erst bei der Ableitung der Anforderungen in
+Abschnitt~\ref{sec:anforderungen_optimierung} berücksichtigt.
+
+
+% -----------------------------------------------------------------------------
+% 3.1 Aufbau und Funktionsweise
+% -----------------------------------------------------------------------------
+\subsection{Aufbau und Funktionsweise}
+\label{sec:aufbau_funktionsweise_pruefstand}
+
+Der bestehende Erwärmungsprüfstand dient dazu, Niederspannungs-
+Schaltgerätekombinationen und deren Abgangseinheiten mit festgelegten
+Prüfströmen zu belasten. Die Prüfanordnung umfasst im Wesentlichen einen
+motorisch verstellbaren Säulenstelltransformator, einen nachgeschalteten
+Hochstromtransformator, die Hochstromverbindungen, das zu untersuchende
+MCC-Feld, ein Leistungsschalterfeld sowie die zur Einstellung der
+einzelnen Modulströme verwendeten Lastwiderstände.
+
+Abbildung~\ref{fig:energiepfad_pruefstand} zeigt den funktionalen
+Energiepfad des bestehenden Prüfstands. Die Darstellung bildet die
+bislang eingesetzte Konfiguration mit Modulströmen von
+\SI{32}{\ampere}, \SI{63}{\ampere}, \SI{250}{\ampere},
+\SI{400}{\ampere} und \SI{630}{\ampere} ab.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]
+    {03_Ressourcen/drawio/ESB_HSP_alt.drawio.pdf}
+    \caption{Funktionaler Energiepfad des bestehenden Erwärmungsprüfstands
+    mit den bislang erprobten Modulströmen
+    (eigene Darstellung auf Grundlage interner Anlagenunterlagen)}
+    \label{fig:energiepfad_pruefstand}
+\end{figure}
+
+Die Einspeisung erfolgt aus dem Niederspannungsnetz. Der motorisch
+verstellbare Säulenstelltransformator stellt eine einstellbare
+Ausgangsspannung bereit. Hierzu wird die Position des Stromabnehmers
+entlang der Transformatorwicklung verändert. Auf diese Weise kann die
+dem nachgeschalteten Hochstromtransformator zugeführte Spannung
+kontinuierlich angepasst werden
+\parencite{ruhstrat_betriebsanleitung}.
+
+Der nachgeschaltete Hochstromtransformator setzt die vergleichsweise
+hohe Eingangsspannung auf eine niedrige Ausgangsspannung um. Aufgrund
+des Übersetzungsverhältnisses steht auf der Sekundärseite ein
+entsprechend hoher Strom zur Verfügung. Der grundsätzliche Zusammenhang
+zwischen Primär- und Sekundärgrößen wurde bereits in
+Abschnitt~\ref{sec:transformator_impedanztransformation} erläutert.
+
+Der vom Hochstromtransformator bereitgestellte Strom wird über
+Kupferschienen in die Prüfanordnung geführt. Am Abzweig zum MCC-Feld
+teilt sich der Strom auf. Ein Anteil fließt über die Abgangseinheiten
+des MCC-Feldes und die angeschlossenen Lastwiderstände. Der verbleibende
+Anteil fließt weiter über das Leistungsschalterfeld und die
+Kurzschlussbrücke. Nach dem Zusammenführen der Teilströme wird der
+Stromkreis über die Rückleitung zum Hochstromtransformator geschlossen.
+
+Die genaue historische Ausführung und Verschaltung des vorhandenen
+Transformatorsystems konnte anhand der verfügbaren
+Herstellerinformationen nicht in allen Einzelheiten rekonstruiert
+werden. Für die weitere Untersuchung ist jedoch in erster Linie das
+von außen erkennbare Übertragungsverhalten der Anlage entscheidend.
+Die vorhandene Einspeisung wird deshalb im späteren Modell auf ihre
+für das Optimierungskonzept relevanten Ein- und Ausgangsgrößen
+reduziert \parencite{ruhstrat_korrespondenz_2026}.
+
+
+% .............................................................................
+% Bestehende MCC-Konfiguration
+% .............................................................................
+Das untersuchte MCC-Feld besitzt insgesamt zwölf zu belastende
+Abgangseinheiten. Die bisherige Prüfanordnung umfasst sechs Abgänge mit
+jeweils \SI{32}{\ampere}, drei Abgänge mit jeweils
+\SI{63}{\ampere} sowie jeweils einen Abgang mit
+\SI{250}{\ampere}, \SI{400}{\ampere} und \SI{630}{\ampere}.
+Tabelle~\ref{tab:mcc_istkonfiguration} fasst diese bislang erprobte
+Konfiguration zusammen.
+
+\begin{table}[H]
+    \centering
+    \caption{Bislang erprobte Stromaufteilung des MCC-Feldes im Ist-Zustand}
+    \label{tab:mcc_istkonfiguration}
+    \begin{tabular}{lccc}
+        \toprule
+        Modulgruppe &
+        Anzahl &
+        Strom je Abgang &
+        Teilsumme \\
+        \midrule
+        Kleine Abgangseinheiten &
+        6 &
+        \SI{32}{\ampere} &
+        \SI{192}{\ampere} \\
+
+        Mittlere Abgangseinheiten &
+        3 &
+        \SI{63}{\ampere} &
+        \SI{189}{\ampere} \\
+
+        Abgangseinheit &
+        1 &
+        \SI{250}{\ampere} &
+        \SI{250}{\ampere} \\
+
+        Abgangseinheit &
+        1 &
+        \SI{400}{\ampere} &
+        \SI{400}{\ampere} \\
+
+        Abgangseinheit &
+        1 &
+        \SI{630}{\ampere} &
+        \SI{630}{\ampere} \\
+        \midrule
+        Gesamt &
+        12 &
+        -- &
+        \SI{1661}{\ampere} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Damit ergibt sich für den bislang vorgesehenen MCC-Strom:
+
+\begin{equation}
+    I_{\mathrm{MCC,Ist}}
+    =
+    6 \cdot \SI{32}{\ampere}
+    +
+    3 \cdot \SI{63}{\ampere}
+    +
+    \SI{250}{\ampere}
+    +
+    \SI{400}{\ampere}
+    +
+    \SI{630}{\ampere}
+    =
+    \SI{1661}{\ampere}.
+    \label{eq:mcc_strom_ist}
+\end{equation}
+
+Abbildung~\ref{fig:mcc_frontansicht} zeigt schematisch die Frontansicht
+des betrachteten MCC-Feldes. Die Abgangseinheiten sind innerhalb des
+Feldes auf mehrere Einschubebenen verteilt.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.62\textheight]
+    {03_Ressourcen/pic/MCC Feld Blanko.png}
+    \caption{Schematische Frontansicht des betrachteten MCC-Feldes
+    (interne Darstellung der Rolf Janssen Elektrotechnische Werke GmbH)}
+    \label{fig:mcc_frontansicht}
+\end{figure}
+
+
+% .............................................................................
+% Lastwiderstände und Strommessung
+% .............................................................................
+Die einzelnen MCC-Abgänge werden über Lastwiderstände aus
+nichtrostendem Stahl belastet. Die wirksame Länge eines Widerstands
+kann durch das mechanische Versetzen eines Kontaktpunkts verändert
+werden. Hierdurch lässt sich der Widerstand des jeweiligen Lastzweigs
+und damit dessen Strom einstellen.
+
+Für einen einzelnen Abgang \(k\) kann der Zusammenhang zunächst
+vereinfacht durch das ohmsche Gesetz beschrieben werden:
+
+\begin{equation}
+    I_k = \frac{U_k}{R_{\mathrm{ges},k}}.
+    \label{eq:zweigstrom_ist}
+\end{equation}
+
+Der Gesamtwiderstand eines Abgangs setzt sich aus dem einstellbaren
+V2A-Widerstand sowie den Widerständen der Leitungen, Kontakte,
+Verbindungen und des MCC-Moduls zusammen:
+
+\begin{equation}
+    R_{\mathrm{ges},k}
+    =
+    R_{\mathrm{V2A},k}
+    +
+    R_{\mathrm{Leitung},k}
+    +
+    R_{\mathrm{Kontakt},k}
+    +
+    R_{\mathrm{Modul},k}.
+    \label{eq:gesamtwiderstand_abgang}
+\end{equation}
+
+Die Rückführung des übergeordneten Prüfstroms erfolgt über einen
+Strommesswandler. Das Messsignal wird der zentralen Regelung zugeführt,
+welche den Säulenstelltransformator ansteuert. Auf diese Weise kann der
+übergeordnete Gesamtstrom auf einen vorgegebenen Wert geregelt werden.
+
+Die einzelnen Abgangsströme können zusätzlich messtechnisch überwacht
+werden. Für sie steht im bestehenden Aufbau jedoch keine jeweils
+zugeordnete automatische Stellgröße zur Verfügung. Eine Korrektur
+einzelner Modulströme erfolgt daher durch manuelles Verstellen der
+zugehörigen V2A-Widerstände.
+
+
+% -----------------------------------------------------------------------------
+% 3.2 Derzeitige Durchführung der Erwärmungsprüfung
+% -----------------------------------------------------------------------------
+\subsection{Derzeitige Durchführung der Erwärmungsprüfung}
+\label{sec:durchfuehrung_ist}
+
+Vor Beginn einer Erwärmungsprüfung werden die zu untersuchenden
+Abgangseinheiten in das MCC-Feld eingesetzt und mit den vorgesehenen
+Prüfstromkreisen verbunden. Anschließend werden die erforderlichen
+Messstellen für Strom und Temperatur eingerichtet.
+
+Der übergeordnete Prüfstrom wird über die zentrale Anlagenregelung
+eingestellt. Die speicherprogrammierbare Steuerung vergleicht hierzu
+den gemessenen Strom mit dem vorgegebenen Sollwert. Bei einer
+Abweichung wird der motorische Antrieb des Säulenstelltransformators
+angesteuert. Die dadurch veränderte Ausgangsspannung beeinflusst über
+den Hochstromtransformator den Strom der gesamten Prüfanordnung.
+
+Der Gesamtstrom setzt sich aus dem Strom des MCC-Feldes und dem
+weiterfließenden Strom des Leistungsschalterpfads zusammen:
+
+\begin{equation}
+    I_{\mathrm{ges}}
+    =
+    I_{\mathrm{MCC}}
+    +
+    I_{\mathrm{LS}}.
+    \label{eq:gesamtstrom_aufteilung}
+\end{equation}
+
+Für die betrachtete Prüfanordnung mit einem Gesamtstrom von
+\SI{3200}{\ampere} und der bisherigen MCC-Konfiguration nach
+Gleichung~\eqref{eq:mcc_strom_ist} ergibt sich rechnerisch:
+
+\begin{equation}
+    I_{\mathrm{LS,Ist}}
+    =
+    I_{\mathrm{ges,Ist}}
+    -
+    I_{\mathrm{MCC,Ist}}
+    =
+    \SI{3200}{\ampere}
+    -
+    \SI{1661}{\ampere}
+    =
+    \SI{1539}{\ampere}.
+    \label{eq:ls_strom_ist}
+\end{equation}
+
+Die Werte in Gleichung~\eqref{eq:ls_strom_ist} beziehen sich auf den
+betrachteten Prüfpunkt und sind nicht als allgemeingültige feste
+Stromaufteilung des Prüfstands zu verstehen.
+
+Nachdem der Gesamtstrom eingestellt wurde, werden die Ströme der
+einzelnen MCC-Abgänge über die wirksamen Längen der V2A-Widerstände
+angepasst. Hierzu versetzt das Prüfpersonal die Kontaktpunkte der
+Lastwiderstände, bis die vorgesehenen Modulströme von
+\SI{32}{\ampere}, \SI{63}{\ampere}, \SI{250}{\ampere},
+\SI{400}{\ampere} und \SI{630}{\ampere} erreicht sind.
+
+Da sich das thermische Verhalten der Prüfanordnung erst während der
+Prüfung entwickelt, müssen die Einzelströme über den weiteren Verlauf
+regelmäßig kontrolliert werden. Weicht ein Modulstrom von seinem
+Sollwert ab, wird der zugehörige Lastwiderstand erneut manuell
+eingestellt.
+
+Durch die gemeinsame Einspeisung kann sich das Verstellen eines
+Abgangs auch auf die übrigen Ströme auswirken. Nach einer Korrektur
+müssen daher gegebenenfalls mehrere zuvor eingestellte Abgänge erneut
+überprüft und nachgestellt werden.
+
+Die Erwärmungsprüfung wird fortgeführt, bis sich ein thermischer
+Beharrungszustand eingestellt hat beziehungsweise die normativen
+Abbruch- und Bewertungskriterien erreicht sind. Der normativ relevante
+Beharrungszustand wurde in
+Abschnitt~\ref{sec:erwaermungspruefung_norm} erläutert.
+
+
+% -----------------------------------------------------------------------------
+% 3.3 Analyse der bestehenden Problematik
+% -----------------------------------------------------------------------------
+\subsection{Analyse der bestehenden Problematik}
+\label{sec:analyse_problematik}
+
+Die wesentliche Schwachstelle des bestehenden Prüfstands liegt nicht
+in der Bereitstellung des übergeordneten Gesamtstroms, sondern in der
+fehlenden automatischen Nachführung der einzelnen Modulströme.
+
+Während der Erwärmungsprüfung entsteht in den Lastwiderständen
+elektrische Verlustleistung:
+
+\begin{equation}
+    P_{\mathrm{V},k}
+    =
+    I_k^2 \cdot R_{\mathrm{V2A},k}.
+    \label{eq:verlustleistung_v2a_ist}
+\end{equation}
+
+Die Verlustleistung führt zu einer Erwärmung des Widerstandsmaterials.
+Bei einem Werkstoff mit positivem Temperaturkoeffizienten steigt der
+elektrische Widerstand mit zunehmender Temperatur:
+
+\begin{equation}
+    R_{\mathrm{V2A},k}(T)
+    =
+    R_{\mathrm{V2A},20,k}
+    \left[
+        1
+        +
+        \alpha_{\mathrm{el}}
+        \left(
+            T_k-T_{20}
+        \right)
+    \right].
+    \label{eq:v2a_temperaturabhaengigkeit_ist}
+\end{equation}
+
+Bei näherungsweise unveränderter Spannung des betreffenden Zweigs
+führt der steigende Widerstand zu einem sinkenden Strom:
+
+\begin{equation}
+    R_{\mathrm{V2A},k}(T)\uparrow
+    \quad\Rightarrow\quad
+    I_k(T)
+    =
+    \frac{U_k}{R_{\mathrm{ges},k}(T)}
+    \downarrow.
+    \label{eq:thermischer_stromabfall}
+\end{equation}
+
+Dieser Vorgang wird im Folgenden als thermisch bedingter Stromdrift
+bezeichnet. Eine ausführliche mathematische Beschreibung der
+elektrothermischen Zusammenhänge erfolgt in
+Kapitel~\ref{chap:modellbildung}.
+
+
+% .............................................................................
+% Begrenzung der zentralen Regelung
+% .............................................................................
+Die zentrale Regelung erfasst lediglich den übergeordneten Gesamtstrom.
+Der MCC-Strom setzt sich jedoch aus zwölf einzelnen Abgangsströmen
+zusammen:
+
+\begin{equation}
+    I_{\mathrm{MCC}}
+    =
+    \sum_{k=1}^{12} I_k.
+    \label{eq:mcc_strom_summe}
+\end{equation}
+
+Gemeinsam mit dem Leistungsschalterpfad gilt damit:
+
+\begin{equation}
+    I_{\mathrm{ges}}
+    =
+    I_{\mathrm{LS}}
+    +
+    \sum_{k=1}^{12} I_k.
+    \label{eq:gesamtstrom_vollstaendig}
+\end{equation}
+
+Aus einem einzelnen Messwert des Gesamtstroms lässt sich nicht
+eindeutig ableiten, ob alle zwölf Modulströme ihren jeweiligen
+Sollwerten entsprechen. Ein unveränderter Gesamtstrom kann daher trotz
+abweichender Stromaufteilung innerhalb der Prüfanordnung vorliegen.
+
+Sinkt beispielsweise der Strom eines MCC-Abgangs infolge der Erwärmung
+seines Lastwiderstands, kann die zentrale Regelung zwar die
+Ausgangsspannung des Säulenstelltransformators erhöhen. Diese
+Spannungsänderung wirkt jedoch nicht ausschließlich auf den
+betroffenen Abgang, sondern auf die gesamte angeschlossene
+Prüfanordnung. Dadurch können sich auch der Strom im
+Leistungsschalterpfad und die übrigen Modulströme verändern.
+
+
+% .............................................................................
+% Gegenseitige Beeinflussung
+% .............................................................................
+Auch das manuelle Verstellen eines einzelnen V2A-Widerstands verändert
+nicht nur den betreffenden Zweig. Durch die gemeinsame Einspeisung,
+die endlichen Innenimpedanzen der Transformatoren und Leitungen sowie
+die zentrale Gesamtstromregelung sind die Teilstromkreise miteinander
+gekoppelt.
+
+Wird der Widerstand eines Abgangs verringert, steigt zunächst dessen
+Strom. Gleichzeitig kann sich die Belastung der gemeinsamen
+Spannungsquelle verändern. Die zentrale Regelung reagiert auf die
+hierdurch verursachte Änderung des Gesamtstroms, wodurch wiederum die
+Spannungen und Ströme der übrigen Abgänge beeinflusst werden können.
+
+Daraus entsteht ein iterativer Einstellvorgang:
+
+\begin{enumerate}
+    \item Ein abweichender Modulstrom wird erkannt.
+    \item Der zugehörige V2A-Widerstand wird manuell verstellt.
+    \item Die übrigen Modulströme werden erneut kontrolliert.
+    \item Bei weiteren Abweichungen werden zusätzliche Widerstände
+          nachgestellt.
+    \item Der Ablauf wird während der Erwärmungsphase wiederholt.
+\end{enumerate}
+
+Der Prüfablauf ist dadurch mit einem erhöhten personellen Aufwand
+verbunden. Außerdem hängen die erreichte Einstellgenauigkeit und die
+Reproduzierbarkeit der Prüfung teilweise vom Zeitpunkt der Kontrolle
+und vom manuellen Vorgehen des Prüfpersonals ab.
+
+Tabelle~\ref{tab:problemanalyse_ist} fasst die wesentlichen
+Schwachstellen des bestehenden Prüfstands zusammen.
+
+\begin{table}[H]
+    \centering
+    \caption{Zusammenfassung der Schwachstellen des bestehenden Prüfstands}
+    \label{tab:problemanalyse_ist}
+    \begin{tabularx}{\textwidth}{p{0.29\textwidth}X}
+        \toprule
+        Festgestellte Schwachstelle &
+        Auswirkung auf die Erwärmungsprüfung \\
+        \midrule
+
+        Erwärmung der V2A-Widerstände &
+        Der elektrische Widerstand steigt und der zugehörige
+        Modulstrom fällt ohne Nachstellung ab. \\
+
+        Erfassung nur des Gesamtstroms &
+        Die Einhaltung des Gesamtstroms gewährleistet nicht die
+        Einhaltung aller einzelnen Modulströme. \\
+
+        Gemeinsame Spannungsquelle &
+        Änderungen eines Lastzweigs können die übrigen Abgänge und den
+        Leistungsschalterpfad beeinflussen. \\
+
+        Manuelle Einstellung der Lastwiderstände &
+        Wiederholte Eingriffe des Prüfpersonals sind während der
+        Erwärmungsphase erforderlich. \\
+
+        Keine individuellen Stellglieder &
+        Die zentrale Regelung kann nicht gezielt auf die Abweichung
+        eines einzelnen Modulstroms reagieren. \\
+
+        Lange Prüfdauer &
+        Die Stromaufteilung muss über einen langen Zeitraum überwacht
+        und gegebenenfalls wiederholt korrigiert werden. \\
+
+        Begrenzte Reproduzierbarkeit &
+        Zeitpunkt und Umfang der manuellen Nachstellung können das
+        Prüfergebnis beeinflussen. \\
+
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+
+% -----------------------------------------------------------------------------
+% 3.4 Anforderungen an das Optimierungskonzept
+% -----------------------------------------------------------------------------
+\subsection{Anforderungen an das Optimierungskonzept}
+\label{sec:anforderungen_optimierung}
+
+Aus der Analyse des Ist-Zustands werden im Folgenden die Anforderungen
+an das Optimierungskonzept abgeleitet. Das Konzept soll die bestehende
+zentrale Regelung ergänzen und eine gezielte Nachführung der einzelnen
+MCC-Modulströme ermöglichen.
+
+Neben der Kompensation des thermisch bedingten Stromdrifts muss das
+Konzept auch die zukünftig vorgesehene Erhöhung der kleinen
+Modulströme berücksichtigen. Die sechs bislang mit
+\SI{32}{\ampere} betriebenen Abgänge sollen zukünftig mit
+\SI{40}{\ampere} belastet werden. Die drei bislang mit
+\SI{63}{\ampere} betriebenen Abgänge sollen zukünftig einen Prüfstrom
+von \SI{70}{\ampere} führen.
+
+Diese erhöhten Stromwerte stellen eine Zielvorgabe dar. Sie wurden mit
+der bestehenden Prüfanordnung bislang nicht als reguläre
+Prüfkonfiguration erprobt und dürfen daher nicht dem in
+Abschnitt~\ref{sec:aufbau_funktionsweise_pruefstand} beschriebenen
+Ist-Zustand zugerechnet werden.
+
+Für die zukünftige Zielkonfiguration ergibt sich:
+
+\begin{equation}
+    I_{\mathrm{MCC,Ziel}}
+    =
+    6 \cdot \SI{40}{\ampere}
+    +
+    3 \cdot \SI{70}{\ampere}
+    +
+    \SI{250}{\ampere}
+    +
+    \SI{400}{\ampere}
+    +
+    \SI{630}{\ampere}
+    =
+    \SI{1730}{\ampere}.
+    \label{eq:mcc_strom_ziel}
+\end{equation}
+
+Damit steigt die vorgesehene Summe der MCC-Modulströme gegenüber dem
+bisherigen Zustand um:
+
+\begin{equation}
+    \Delta I_{\mathrm{MCC}}
+    =
+    I_{\mathrm{MCC,Ziel}}
+    -
+    I_{\mathrm{MCC,Ist}}
+    =
+    \SI{1730}{\ampere}
+    -
+    \SI{1661}{\ampere}
+    =
+    \SI{69}{\ampere}.
+    \label{eq:mcc_strom_erhoehung}
+\end{equation}
+
+Bei einem weiterhin vorgegebenen Gesamtstrom von
+\SI{3200}{\ampere} verbliebe für den Leistungsschalterpfad rechnerisch:
+
+\begin{equation}
+    I_{\mathrm{LS,Ziel}}
+    =
+    \SI{3200}{\ampere}
+    -
+    \SI{1730}{\ampere}
+    =
+    \SI{1470}{\ampere}.
+    \label{eq:ls_strom_ziel}
+\end{equation}
+
+Gleichung~\eqref{eq:ls_strom_ziel} beschreibt eine rechnerische
+Zielaufteilung. Sie stellt noch keinen experimentell nachgewiesenen
+Betriebszustand dar.
+
+Die aus der Problemanalyse abgeleiteten Anforderungen sind in
+Tabelle~\ref{tab:anforderungen_optimierung} zusammengefasst.
+
+\begin{table}[H]
+    \centering
+    \caption{Anforderungen an das Optimierungskonzept}
+    \label{tab:anforderungen_optimierung}
+    \begin{tabularx}{\textwidth}{p{0.08\textwidth}
+                                 p{0.29\textwidth}
+                                 X}
+        \toprule
+        Nr. &
+        Anforderung &
+        Begründung \\
+        \midrule
+
+        A1 &
+        Individuelle Nachführung der Modulströme &
+        Der thermisch bedingte Stromabfall muss für jeden relevanten
+        Abgang gezielt ausgeglichen werden können. \\
+
+        A2 &
+        Mehrkanalfähigkeit &
+        Das Konzept muss die zwölf Abgangseinheiten des MCC-Feldes
+        berücksichtigen. \\
+
+        A3 &
+        Berücksichtigung der erhöhten Zielströme &
+        Für sechs Abgänge sind zukünftig \SI{40}{\ampere} und für drei
+        Abgänge \SI{70}{\ampere} bereitzustellen. Die Abgänge mit
+        \SI{250}{\ampere}, \SI{400}{\ampere} und
+        \SI{630}{\ampere} bleiben weiterhin Bestandteil der
+        Prüfanordnung. \\
+
+        A4 &
+        Begrenzung der gegenseitigen Beeinflussung &
+        Die Korrektur eines Modulstroms soll möglichst geringe
+        Auswirkungen auf die übrigen Abgänge haben. \\
+
+        A5 &
+        Motorische beziehungsweise automatisierbare Verstellung &
+        Die wiederholte manuelle Verstellung der V2A-Widerstände soll
+        reduziert oder ersetzt werden. \\
+
+        A6 &
+        Ausreichender Stellbereich und Stellreserve &
+        Neben der Erhöhung der kleinen Modulströme muss auch der
+        thermisch verursachte Stromabfall während der Prüfung
+        kompensiert werden können. \\
+
+        A7 &
+        Geeignete Transformation des Stellbereichs &
+        Aufgrund der hohen Modulströme soll die veränderliche
+        Stellgröße in einem gegenüber dem Hauptstrom transformierten
+        Strom- und Spannungsbereich angeordnet werden. \\
+
+        A8 &
+        Dauerbetriebsfähigkeit &
+        Die Komponenten müssen für die lange Dauer einer
+        Erwärmungsprüfung geeignet sein. \\
+
+        A9 &
+        Messbarkeit und Dokumentation &
+        Sollwert, Istwert und Stellgröße der einzelnen Kanäle sollen
+        erfassbar und für die Bewertung der Prüfung dokumentierbar
+        sein. \\
+
+        A10 &
+        Integration in den bestehenden Prüfstand &
+        Die vorhandene zentrale Gesamtstromregelung und der bestehende
+        Hochstrompfad sollen soweit wie möglich weiterverwendet werden. \\
+
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Die Anforderungen zeigen, dass eine alleinige Veränderung der
+zentralen Gesamtstromregelung nicht ausreicht. Erforderlich ist eine
+zusätzliche Stellmöglichkeit, die gezielt auf den Strom eines
+einzelnen MCC-Abgangs wirkt.
+
+Im folgenden Kapitel wird daher ein transformatorgestütztes
+Optimierungskonzept untersucht. Dabei wird jedem zu regelnden
+Lastzweig ein zusätzlicher, über einen zweiten Transformator
+gekoppelter Stellpfad zugeordnet. Die Grundidee, die elektrische
+Verschaltung und die erforderlichen Stellreserven werden in
+Kapitel~\ref{chap:entwicklung_stellkonzept} beschrieben.
