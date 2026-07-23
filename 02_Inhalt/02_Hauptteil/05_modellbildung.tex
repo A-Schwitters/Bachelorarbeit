@@ -1,9 +1,54 @@
 % =============================================================================
-% 5 Modellbildung
+% 5 Modellbildung und Plausibilisierung
 % =============================================================================
 \section{Modellbildung}
 \label{chap:modellbildung}
 
+Zur Untersuchung des in Kapitel~\ref{chap:entwicklung_stellkonzept}
+entwickelten Stellkonzepts wird ein mathematisches Simulationsmodell
+erstellt. Das Modell dient dazu, die grundlegenden elektrischen und
+thermischen Zusammenhänge abzubilden und zu prüfen, ob die Ströme der
+einzelnen MCC-Abgänge durch die Kombination aus Trafo~2 und dem
+motorisch verstellbaren Widerstand \(R_{\mathrm{Stell}}\) grundsätzlich
+nachgeführt werden können. Eine konstruktive Umsetzung des
+Gesamtsystems ist im Rahmen dieser Arbeit nicht vorgesehen.
+
+Der betrachtete Prüfstand stellt ein gekoppeltes
+elektrothermisches Mehrgrößensystem dar. Die gemeinsame
+Versorgungsspannung beeinflusst sämtliche parallel angeschlossenen
+Abgänge, während die einzelnen Stellwiderstände jeweils auf den Strom
+einer Phase eines MCC-Abgangs wirken. Gleichzeitig verändert sich der
+elektrische Widerstand der V2A-Lastwiderstände infolge ihrer Erwärmung.
+Hierdurch entsteht eine Rückwirkung der thermischen Zustandsgröße auf
+das elektrische Verhalten der jeweiligen Lastzweige.
+
+Für eine nachvollziehbare Untersuchung wird das Gesamtsystem daher in
+mehrere Teilmodelle zerlegt. Diese umfassen die Spannungsquelle, den
+elektrischen Ersatzwiderstand des MCC-Abgangs, den Zusatzpfad aus
+Trafo~2 und \(R_{\mathrm{Stell}}\), das thermische Verhalten des
+V2A-Widerstands sowie die vorgesehene Stromregelung. Anschließend
+werden die Teilmodelle zu einem gekoppelten Simulationsmodell
+zusammengeführt.
+
+Das Modell bildet ausschließlich die für die Untersuchung des
+Stellprinzips maßgebenden Effekte ab. Geometrische Einzelheiten,
+hochfrequente Vorgänge, lokale Temperaturverteilungen und nicht
+bestimmbare parasitäre Eigenschaften werden nicht vollständig
+nachgebildet, sofern ihr Einfluss auf die betrachteten Strom- und
+Temperaturverläufe als untergeordnet angenommen werden kann. Die
+hierfür getroffenen Annahmen und Modellreduktionen werden in den
+folgenden Abschnitten offengelegt und begründet.
+
+Da kein vollständig aufgebauter Prototyp des entwickelten Konzepts
+vorliegt, kann keine Validierung anhand von Messwerten des
+Gesamtsystems erfolgen. Stattdessen wird das Modell anhand
+physikalischer Grenzfälle, analytischer Vergleichslösungen und
+erwartbarer Systemreaktionen plausibilisiert. Hierzu werden unter
+anderem unterschiedliche Anfangstemperaturen, der Fall ohne
+elektrische Verlustleistung, das stationäre thermische Verhalten und
+die Reaktion auf eine sprungförmige Anregung untersucht. Die
+Simulationsergebnisse und ihre Bewertung werden anschließend in
+Kapitel~\ref{chap:simulationsergebnisse} dargestellt.
 % -----------------------------------------------------------------------------
 % 5.1 Zielsetzung, Systemgrenze und Modellannahmen
 % -----------------------------------------------------------------------------

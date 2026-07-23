@@ -4,15 +4,25 @@
 \section{Technische und normative Grundlagen}
 \label{chap:technische_grundlagen}
 
-Dieses Kapitel stellt die Grundlagen bereit, die für die Analyse des bestehenden
-Erwärmungsprüfstands, die spätere Entwicklung des transformatorgestützten
-Stellkonzepts sowie dessen Modellierung erforderlich sind. Im Mittelpunkt stehen
-die normativen Randbedingungen der Erwärmungsprüfung, die elektrische und
-thermische Beschreibung der Lastpfade sowie die für die spätere Regelung
-benötigten Zusammenhänge. Eine allgemeine Darstellung von Schaltanlagen oder
-Kontaktwerkstoffen ist nicht Gegenstand dieses Kapitels; entsprechende Aspekte
-werden nur behandelt, soweit sie den untersuchten Prüfstand unmittelbar
-beeinflussen.
+Dieses Kapitel stellt die technischen und normativen Grundlagen bereit,
+die für die Analyse des bestehenden Erwärmungsprüfstands, die Entwicklung
+des transformatorgestützten Stellkonzepts und die anschließende
+Modellbildung erforderlich sind. Hierzu werden zunächst die für die
+Erwärmungsprüfung maßgebenden Anforderungen der Normenreihe
+DIN EN IEC~61439 erläutert. Anschließend werden der grundsätzliche Aufbau
+eines MCC-Feldes, die Entstehung elektrischer Verlustleistung, das
+thermische Verhalten der Lastwiderstände, die für das Stellkonzept
+relevanten Transformatorgleichungen sowie die Grundlagen eines
+geschlossenen Regelkreises behandelt.
+
+Die Darstellung beschränkt sich auf die Zusammenhänge, die für die
+nachfolgenden Kapitel benötigt werden. Die konkrete Ausführung des
+bestehenden Prüfstands, die projektbezogene Belastungskonfiguration und
+die daraus abgeleitete Problemstellung werden in
+Kapitel~\ref{chap:analyse_pruefstand} untersucht. Die vollständige
+Herleitung des elektrothermischen Modells und dessen Umsetzung in der
+Simulation erfolgen in Kapitel~\ref{chap:modellbildung}.
+
 
 % -----------------------------------------------------------------------------
 % 2.1 Erwärmungsprüfung nach DIN EN IEC 61439
@@ -20,69 +30,120 @@ beeinflussen.
 \subsection{Erwärmungsprüfung nach DIN EN IEC 61439}
 \label{sec:erwaermungspruefung_norm}
 
-Die Normenreihe DIN EN IEC~61439 enthält die Anforderungen an
-Niederspannungs-Schaltgerätekombinationen. Teil~1 formuliert die allgemeinen
-Festlegungen, ist jedoch nicht allein anzuwenden. Für die in dieser Arbeit
-betrachteten Energie-Schaltgerätekombinationen werden die Festlegungen durch
-Teil~2 ergänzt beziehungsweise konkretisiert
-\autocite[Abschn.~1]{din_en_61439_1,din_en_61439_2}. Ein MCC-Feld wird damit im
-Zusammenhang beider Normteile betrachtet.
+Die Normenreihe DIN EN IEC~61439 legt die Anforderungen und
+Nachweisverfahren für Niederspannungs-Schaltgerätekombinationen fest.
+DIN EN IEC~61439-1 enthält die allgemeinen Festlegungen, ist jedoch
+nicht allein anzuwenden. Für die in dieser Arbeit betrachteten
+Energie-Schaltgerätekombinationen werden die allgemeinen Anforderungen
+durch DIN EN IEC~61439-2 ergänzt und konkretisiert
+\parencite[jeweils Abschn.~1]{din_en_61439_1,din_en_61439_2}.
+Ein MCC-Feld ist daher im Zusammenhang beider Normteile zu betrachten.
 
-Die Einhaltung der Bauartanforderungen wird durch den Bauartnachweis bestätigt.
-Davon zu unterscheiden ist der Stücknachweis, der an jeder fertiggestellten
-Schaltgerätekombination durchgeführt wird. Die Erwärmung gehört zu den im
-Bauartnachweis zu verifizierenden Merkmalen. DIN EN IEC~61439-1 sieht hierfür
-die Prüfung, die Ableitung von einer nachgewiesenen Referenzkonstruktion oder
-eine Berechnung vor. Für den vorhandenen Prüfstand ist die experimentelle
-Verifikation durch Strombelastung maßgebend
-\autocite[Abschn.~3.9.1, 3.9.2 und 10.10]{din_en_61439_1}.
+Die Norm unterscheidet zwischen dem Bauartnachweis und dem
+Stücknachweis. Der Bauartnachweis dient dem Nachweis, dass die
+Konstruktion einer Schaltgerätekombination die Anforderungen der
+zutreffenden Norm erfüllt. Er kann durch Prüfung, durch Vergleich mit
+einer nachgewiesenen Referenzkonstruktion oder durch Begutachtung
+geführt werden. Der Stücknachweis wird dagegen an jeder
+Schaltgerätekombination während oder nach ihrer Herstellung
+durchgeführt und dient insbesondere dem Erkennen von Werkstoff- und
+Fertigungsfehlern sowie der Überprüfung der ordnungsgemäßen Funktion
+\parencite[Abschn.~3.9.1 und 3.9.2]{din_en_61439_1}.
 
-Ziel der Erwärmungsprüfung ist der Nachweis, dass die bei festgelegter Belastung
-entstehenden Temperaturen beziehungsweise Übertemperaturen die zulässigen
-Grenzen nicht überschreiten. Die Übertemperatur ist die Differenz zwischen der
-Temperatur des betrachteten Punktes und der Umgebungstemperatur:
+Zu den im Rahmen des Bauartnachweises zu verifizierenden Eigenschaften
+gehört die Einhaltung der zulässigen Grenzübertemperaturen. Der
+Nachweis der Erwärmung kann nach DIN EN IEC~61439-1 durch eine Prüfung,
+durch Ableitung von einer nachgewiesenen Referenzkonstruktion oder,
+innerhalb der dafür festgelegten Anwendungsgrenzen, durch ein
+Berechnungsverfahren erfolgen
+\parencite[Abschn.~10.10.1]{din_en_61439_1}.
+Im Rahmen dieser Arbeit steht der experimentelle Nachweis durch
+Strombelastung im Vordergrund.
+
+Ziel der Erwärmungsprüfung ist der Nachweis, dass die bei einer
+festgelegten elektrischen Belastung entstehenden Temperaturen die
+zulässigen Grenzwerte nicht überschreiten. Bewertet wird grundsätzlich
+die Übertemperatur eines betrachteten Messpunktes gegenüber der
+Umgebungstemperatur. Sie ist definiert als
 
 \begin{equation}
-  \Delta\vartheta = \vartheta - \vartheta_\mathrm{U}.
-  \label{eq:uebertemperatur}
+    \Delta\vartheta
+    =
+    \vartheta
+    -
+    \vartheta_{\mathrm{U}},
+    \label{eq:uebertemperatur}
 \end{equation}
 
-Die zulässige Übertemperatur ist kein einheitlicher Wert für die gesamte
-Schaltgerätekombination. Sie hängt unter anderem von der Art des Betriebsmittels,
-dem Werkstoff und der Funktion des betrachteten Messpunktes ab. Deshalb müssen
-Messstellen und Grenzwerte aus der konkreten Nachweisaufgabe abgeleitet werden
-\autocite[Abschn.~9.2 und Tab.~6]{din_en_61439_1}.
+wobei \(\vartheta\) die gemessene Temperatur des betrachteten
+Anlagenteils und \(\vartheta_{\mathrm{U}}\) die zugehörige
+Umgebungstemperatur bezeichnet.
 
-Für die Prüfung einer vollständigen Schaltgerätekombination ist eine
-repräsentative Aufstellung einschließlich der vorgesehenen elektrischen
-Verbindungen herzustellen. Die Stromkreise werden mit den für den Nachweis
-festgelegten Strömen belastet; die Temperaturen sind an den relevanten Stellen
-und die Umgebungstemperatur gleichzeitig zu erfassen. Der thermische
-Beharrungszustand gilt als erreicht, wenn sich die Temperaturänderung an allen
-Messstellen einschließlich der Umgebungstemperatur auf höchstens
-\SI{1}{\kelvin\per\hour} verringert hat
-\autocite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
+Für eine Schaltgerätekombination existiert kein einheitlicher
+Grenzwert, der auf sämtliche Messstellen angewendet werden kann. Die
+zulässige Grenzübertemperatur hängt unter anderem von der Art und
+Funktion des Betriebsmittels, dem verwendeten Werkstoff sowie den
+Anforderungen der eingebauten Geräte ab. Die zu überwachenden
+Messstellen und die jeweils zulässigen Grenzwerte müssen daher aus der
+konkreten Nachweisaufgabe und den Festlegungen der Norm abgeleitet
+werden
+\parencite[Abschn.~9.2 und Tab.~6]{din_en_61439_1}.
 
-Bei der Prüfung durch Strombelastung ist außerdem zwischen dem Mittelwert der
-tatsächlichen Außenleiterströme am Einspeisepunkt und der Abweichung der
-einzelnen Außenleiter zu unterscheiden. Der Mittelwert ist auf
-\SIrange{100}{103}{\percent} des vorgesehenen Prüfstroms einzustellen; jeder
-Außenleiter darf vom Mittelwert um höchstens \SI{5}{\percent} abweichen
-\autocite[Abschn.~10.10.2.3.1]{din_en_61439_1}. Diese Vorgabe ist daher nicht
-gleichbedeutend mit der pauschalen Forderung, jeder beliebige Modulstrom müsse
-zu jedem Zeitpunkt zwischen \SI{100}{\percent} und \SI{105}{\percent} seines
-Bemessungsstroms liegen. Welche Teilströme für den konkreten Nachweis einzustellen
-und zu überwachen sind, ergibt sich aus der gewählten Prüfanordnung und dem
-Nachweisziel.
+Bei einer Erwärmungsprüfung ist die Schaltgerätekombination in einer
+Anordnung zu prüfen, die ihrem bestimmungsgemäßen Gebrauch entspricht.
+Hierzu gehören insbesondere die vorgesehenen Verkleidungen,
+Bodenplatten, äußeren Leiter und elektrischen Verbindungen. Die
+Stromkreise werden mit der vorgesehenen Stromart und Frequenz belastet.
+Die Temperaturen an den relevanten Messstellen und die
+Umgebungstemperatur sind über den zeitlichen Verlauf der Prüfung zu
+erfassen
+\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
 
-Für diese Arbeit folgen daraus drei wesentliche Randbedingungen: Erstens müssen
-die relevanten Ströme über die lange Dauer bis zum thermischen
-Beharrungszustand ausreichend stabil gehalten werden. Zweitens ist neben dem
-übergeordneten Einspeisestrom die Verteilung auf die gleichzeitig belasteten
-Abgänge zu beachten. Drittens muss eine Änderung der Stromeinstellung ohne
-unzulässige Beeinflussung der Temperaturmessung und unter Einhaltung der
-betrieblichen Sicherheitsvorgaben möglich sein.
+Die Prüfung ist so lange fortzuführen, bis die Übertemperaturen einen
+thermischen Beharrungszustand erreicht haben. Dieser gilt in der
+praktischen Bewertung als erreicht, wenn die zeitliche Änderung der
+Temperatur an sämtlichen Messstellen einschließlich der
+Umgebungstemperatur höchstens
 
+\begin{equation}
+    \left|
+        \frac{\mathrm{d}\vartheta}{\mathrm{d}t}
+    \right|
+    \leq
+    \SI{1}{\kelvin\per\hour}
+    \label{eq:beharrungskriterium}
+\end{equation}
+
+beträgt
+\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
+Das Beharrungskriterium ist damit keine vorgegebene Prüfzeit, sondern
+ein aus den gemessenen Temperaturverläufen abgeleitetes
+Abbruchkriterium.
+
+Für die Einstellung der Prüfströme legt DIN EN IEC~61439-1 ebenfalls
+Toleranzen fest. Der Mittelwert der tatsächlichen Außenleiterströme an
+der Einspeisung muss zwischen \SI{100}{\percent} und
+\SI{103}{\percent} des vorgesehenen Prüfstroms liegen. Gleichzeitig
+darf der Strom eines einzelnen Außenleiters höchstens
+\SI{5}{\percent} vom Mittelwert der Außenleiterströme abweichen
+\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
+
+Diese Anforderung ist von der Stromaufteilung innerhalb einer
+Schaltgerätekombination zu unterscheiden. Bei gleichzeitig belasteten
+Abgangseinheiten müssen neben dem übergeordneten Einspeisestrom auch
+die für den jeweiligen Nachweis vorgesehenen Teilströme eingestellt
+und überwacht werden. Welche Stromkreise gleichzeitig zu belasten sind,
+ergibt sich aus der gewählten Prüfanordnung, den festgelegten
+Bemessungswerten und dem Ziel des Bauartnachweises.
+
+Für die weitere Arbeit folgen daraus drei wesentliche Randbedingungen.
+Erstens müssen die vorgesehenen Prüfströme über die Dauer bis zum
+thermischen Beharrungszustand ausreichend stabil gehalten werden.
+Zweitens ist neben dem übergeordneten Gesamtstrom die Stromaufteilung
+auf die gleichzeitig belasteten Abgangseinheiten zu berücksichtigen.
+Drittens darf eine Nachführung der Prüfströme die Temperaturmessung,
+die Prüfanordnung und die Einhaltung der betrieblichen
+Sicherheitsanforderungen nicht unzulässig beeinflussen.
 % -----------------------------------------------------------------------------
 % 2.2 MCC-Feld und zu prüfende Abgangseinheiten
 % -----------------------------------------------------------------------------
@@ -99,13 +160,13 @@ Schutzgeräten sowie in den Anschlussleitungen der einzelnen Abgänge. Die
 Stromaufteilung bestimmt somit, welche Bereiche der Schaltgerätekombination
 thermisch beansprucht werden.
 
-Das im Rahmen dieser Arbeit betrachtete Prüffeld besitzt zwölf gleichzeitig zu
-betrachtende Abgänge. Die vorgesehene Konfiguration ist in
-Tabelle~\ref{tab:pruefkonfiguration_mcc} zusammengefasst. Die Summe der
-vorgegebenen Abgangsströme beträgt rechnerisch \SI{1730}{\ampere}. Die Werte
-beschreiben die projektbezogene Prüfanordnung und sind nicht als allgemeine
-Bemessung eines MCC-Feldes zu verstehen
-\autocite{rj_mcc_pruefkonfiguration_2026}.
+Das im Rahmen dieser Arbeit betrachtete Prüffeld besitzt zwölf
+gleichzeitig zu belastende Abgänge. Die vorgesehene Konfiguration ist
+in Tabelle~\ref{tab:mcc_pruefkonfiguration} zusammengefasst. Die Summe
+der vorgegebenen Abgangsströme beträgt rechnerisch
+\SI{1730}{\ampere}. Die Werte bilden die projektspezifische
+Prüfkonfiguration ab und stellen keine allgemeingültige Bemessung eines
+MCC-Feldes dar.
 
 \begin{table}[htbp]
   \centering

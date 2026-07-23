@@ -1,7 +1,11 @@
+% =============================================================================
+% Fachbücher und wissenschaftliche Veröffentlichungen
+% =============================================================================
+
 @book{ABB_Handbuch,
   author    = {{ABB AG}},
   edition   = {12., neubearbeitete Auflage},
-  note      = {Herausgeber: Kämpfer, Stefan and Kopatsch, Gerald},
+  note      = {Herausgegeben von Stefan Kämpfer und Gerald Kopatsch},
   publisher = {ABB AG},
   title     = {Schaltanlagen-Handbuch},
   year      = {2011}
@@ -45,13 +49,13 @@
 }
 
 @techreport{kitzrow2013waermerohre,
-  address   = {Dresden},
-  author    = {Kitzrow, G. and Rogler, R.-D.},
+  address     = {Dresden},
+  author      = {Kitzrow, G. and Rogler, R.-D.},
   institution = {Hochschule für Technik und Wirtschaft Dresden},
-  note      = {Abschlussbericht zum BMBF-Forschungsprojekt},
-  title     = {Ertüchtigung der Nennstromtragfähigkeit von Mittelspannungs-Schaltanlagen durch den Einsatz von Wärmerohren},
-  type      = {Forschungsbericht},
-  year      = {2013}
+  note        = {Abschlussbericht zum BMBF-Forschungsprojekt},
+  title       = {Ertüchtigung der Nennstromtragfähigkeit von Mittelspannungs-Schaltanlagen durch den Einsatz von Wärmerohren},
+  type        = {Forschungsbericht},
+  year        = {2013}
 }
 
 @book{Kuepfmueller_TET,
@@ -185,13 +189,16 @@
   author    = {Wintrich, Arendt and Nicolai, Ulrich and Tursky, Werner and Reimann, Tobias},
   edition   = {2., überarbeitete Auflage},
   isbn      = {978-3-938843-85-7},
-  note      = {Herausgeber: SEMIKRON International GmbH},
+  note      = {Herausgegeben von SEMIKRON International GmbH},
   publisher = {ISLE Verlag},
   title     = {Applikationshandbuch Leistungshalbleiter},
   year      = {2015}
 }
 
---------------------------------------------------------------------------------
+
+% =============================================================================
+% Normen
+% =============================================================================
 
 @misc{din_en_61439_1,
   address   = {Berlin},
@@ -258,55 +265,52 @@
   author    = {{Deutsches Institut für Normung e.V.}},
   note      = {Deutsche Fassung EN IEC 61439-7:2020},
   publisher = {Beuth Verlag / VDE Verlag},
-  title     = {{DIN EN IEC 61439-7 (VDE 0660-600-7):2021-06, Niederspannungs-Schaltgerätekombinationen -- Teil 7: Schaltgerätekombinationen für bestimmte Anwendungen wie Marinas, Campingplätze, Marktplätze, Ladestationen für Elektrofahrzeuge}},
+  title     = {{DIN EN IEC 61439-7 (VDE 0660-600-7):2021-06, Niederspannungs-Schaltgerätekombinationen -- Teil 7: Schaltgerätekombinationen für bestimmte Anwendungen wie Marinas, Campingplätze, Marktplätze und Ladestationen für Elektrofahrzeuge}},
   type      = {Norm},
   year      = {2021}
 }
-beispiel:(@misc{janssen_schaltplan_pruefstand,
-  author    = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title     = {Stromlaufplan: Einspeisung Stelltrafo und Edelstahlwiderstand},
-  address   = {Aurich},
-  note      = {Internes Dokument, unveröffentlicht},
-  year      = {2026}
-})
---------------------------------------------------------------------------------
-
-@manual{matlab_simulink_2026,
-  author    = {{The MathWorks Inc.}},
-  title     = {MATLAB and Simulink Release 2026a},
-  address   = {Natick, Massachusetts, USA},
-  year      = {2026},
-  url       = {https://www.mathworks.com}
-}
-
-
-
-beispiel:(@manual{janssen_arbeitsanweisung_mcc,
-  author    = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title     = {Montage- und Prüfanweisung für MCC-Einschubmodule},
-  address   = {Aurich},
-  note      = {Vertrauliches internes Dokument},
-  year      = {2025}
-})
-
-
-
-
-================================================================================
-
 
 @misc{norm-DIN_EN_61869_2-Messwandler_Teil2-DIN,
   address   = {Berlin},
-  label     = {DIN13},
+  author    = {{Deutsches Institut für Normung e.V.}},
   note      = {Deutsche Fassung EN 61869-2:2012; IEC 61869-2:2012},
   publisher = {DIN Deutsches Institut für Normung e.V. / VDE Verlag},
-  title     = {DIN EN 61869-2 (VDE 0414-9-2):2013-07, Messwandler -- Teil 2: Zusätzliche Anforderungen für Stromwandler},
-  url       = {https://www.beuth.de/de/norm/din-en-61869-2/172722083},
+  title     = {{DIN EN 61869-2 (VDE 0414-9-2):2013-07, Messwandler -- Teil 2: Zusätzliche Anforderungen für Stromwandler}},
+  type      = {Norm},
   year      = {2013}
 }
 
+@misc{norm-DIN_ISO_50001-Energiemanagement-DIN,
+  address   = {Berlin},
+  author    = {{Deutsches Institut für Normung e.V.}},
+  note      = {Deutsche Fassung EN ISO 50001:2018},
+  publisher = {Beuth Verlag},
+  title     = {{DIN EN ISO 50001:2018-12, Energiemanagementsysteme -- Anforderungen mit Anleitung zur Anwendung}},
+  type      = {Norm},
+  year      = {2018}
+}
+
+
+% =============================================================================
+% Software
+% =============================================================================
+
+@manual{matlab_simulink_2026,
+  author       = {{The MathWorks Inc.}},
+  organization = {The MathWorks Inc.},
+  title        = {MATLAB and Simulink Release 2026a},
+  address      = {Natick, Massachusetts, USA},
+  url          = {https://www.mathworks.com},
+  year         = {2026}
+}
+
+
+% =============================================================================
+% Weitere Fach- und Onlinequellen
+% =============================================================================
+
 @online{website-Magnetisierungskurve-Mietke,
-  author  = {Detlef Mietke},
+  author  = {Mietke, Detlef},
   title   = {Magnetisierungskurve und Hysterese},
   url     = {https://www.elektroniktutor.de/elektrophysik/magkurve.html},
   urldate = {2026-02-05},
@@ -317,15 +321,13 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   address   = {Berlin},
   author    = {Grafe, Hermann and Loose, Johannes and Kühn, Hellmut},
   edition   = {10. Auflage},
-  label     = {GLK83},
-  note      = {Unveränderter Nachdruck der 10. Auflage (1978). Lehrbuch für Ingenieurschulen},
+  note      = {Unveränderter Nachdruck der 10. Auflage von 1978},
   publisher = {VEB Verlag Technik},
   title     = {Grundlagen der Elektrotechnik Band 1: Gleichspannungstechnik},
   year      = {1983}
 }
 
 @inbook{book-Magnetisches_Feld_Moeller-Harriehausen,
-  abstract  = {Mit diesem Kapitel wird die Klasse der Potenzialfelder (in denen das Feld der elektrischen Feldst{\"a}rke wirbelfrei ist und somit jeder Feldpunkt ein eindeutiges elektrisches Potenzial hat) verlassen. Daher sollen vorab wichtige Gemeinsamkeiten und Unterschiede zwischen elektrischen Potenzialfeldern und Magnetfeldern aufgezeigt werden.},
   address   = {Wiesbaden},
   author    = {Harriehausen, Thomas and Schwarzenau, Dieter},
   booktitle = {Moeller Grundlagen der Elektrotechnik},
@@ -334,65 +336,39 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   pages     = {570--683},
   publisher = {Springer Fachmedien Wiesbaden},
   title     = {Magnetisches Feld},
-  url       = {https://doi.org/10.1007/978-3-658-49993-8_11},
   year      = {2025}
 }
 
 @book{book-Physik_Ingenieure-Hering,
   address   = {Berlin, Heidelberg},
   author    = {Hering, Ekbert and Martin, Rolf and Stohrer, Martin},
-  edition   = {12.},
+  edition   = {12. Auflage},
   publisher = {Springer Vieweg},
-  title     = {Physik f{\"u}r Ingenieure},
+  title     = {Physik für Ingenieure},
   year      = {2016}
-}
-
-@misc{norm-DIN_ISO_50001-Energiemanagement-DIN,
-  address   = {Berlin},
-  author    = {{Deutsches Institut für Normung e.V.}},
-  key       = {DIN EN ISO 50001},
-  note      = {Deutsche Fassung EN ISO 50001:2018},
-  publisher = {Beuth Verlag},
-  subtitle  = {Energiemanagementsysteme -- Anforderungen mit Anleitung zur Anwendung},
-  title     = {{DIN EN ISO 50001:2018-12}},
-  type      = {Norm},
-  year      = {2018}
 }
 
 @book{book-Taschenbuch_Physik-Kuchling,
   address   = {Leipzig},
   author    = {Kuchling, Horst},
-  edition   = {21.},
+  edition   = {21. Auflage},
   publisher = {Hanser Fachbuchverlag},
   title     = {Taschenbuch der Physik},
   year      = {2014}
 }
 
-@misc{website-Magnetfeld_Feldlinien-Leifi,
+@online{website-Magnetfeld_Feldlinien-Leifi,
   author       = {{Joachim Herz Stiftung}},
-  howpublished = {LEIFIphysik},
-  label        = {LEI26},
-  note         = {Abgerufen am 15. Januar 2026},
+  organization = {LEIFIphysik},
   title        = {Magnetfeld und Feldlinien},
   url          = {https://www.leifiphysik.de/elektrizitaetslehre/permanentmagnetismus/grundwissen/magnetfeld-und-feldlinien},
-  year         = {2026}
-}
-
-@book{book-Kuepfmueller_Theo_ETechnik-Mathis,
-  address   = {Berlin, Heidelberg},
-  author    = {Mathis, Wolfgang and Reibiger, Albrecht},
-  doi       = {10.1007/978-3-662-54837-0},
-  edition   = {20},
-  isbn      = {978-3-662-54837-0},
-  publisher = {Springer Vieweg},
-  title     = {Küpfmüller Theoretische Elektrotechnik: Elektromagnetische Felder, Schaltungen und elektronische Bauelemente},
-  year      = {2017}
+  urldate      = {2026-01-15}
 }
 
 @manual{website-Fremdfeldkompensierte_Wandler-MBS,
   author       = {{MBS AG}},
-  note         = {Technische Information und Produktbroschüre},
   organization = {MBS AG},
+  note         = {Technische Information und Produktbeschreibung},
   title        = {Fremdfeldkompensierte Stromwandler für hohe Primärströme},
   url          = {https://www.schutztechnik.com/posts/fremdfeldkompensierte-stromwandler-fur-hohe-primarstrome}
 }
@@ -402,22 +378,19 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   author    = {Metz, Dieter and Naundorf, Uwe and Schlabbach, Jürgen},
   edition   = {6. Auflage},
   isbn      = {978-3-446-43977-1},
-  label     = {MNS14},
-  note      = {Enthält die wichtigsten Formeln der Elektrotechnik für Studium und Beruf. Neue Themen: Smart Grids, Netzanschluss, Spannungsqualität},
-  pages     = {254},
   publisher = {Carl Hanser Verlag},
   title     = {Kleine Formelsammlung Elektrotechnik},
-  url       = {https://www.hanser-fachbuch.de/fachbuch/artikel/9783446439771},
   year      = {2014}
 }
 
 @misc{image-Growing_magnetic_domains-MikeRun,
   author       = {MikeRun},
-  howpublished = {\url{https://commons.wikimedia.org/wiki/File:Growing-magnetic-domains.svg}},
+  howpublished = {Wikimedia Commons},
   license      = {CC BY-SA 4.0},
-  note         = {Wikimedia Commons, abgerufen am 06.02.2026},
-  title        = {{Growing magnetic domains}},
+  title        = {Growing magnetic domains},
   type         = {Bild},
+  url          = {https://commons.wikimedia.org/wiki/File:Growing-magnetic-domains.svg},
+  urldate      = {2026-02-06},
   year         = {2020}
 }
 
@@ -426,29 +399,25 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   author    = {Minkner, Ruthard and Schmid, Joachim},
   doi       = {10.1007/978-3-658-30207-8},
   isbn      = {978-3-658-30206-1},
-  label     = {MS20},
   publisher = {Springer Vieweg},
   title     = {Technologie der Messwandler: Strom- und Spannungsmessung und Isolationssysteme},
-  url       = {https://doi.org/10.1007/978-3-658-30207-8},
   year      = {2020}
 }
 
 @article{pdf-Accuracy_Current_Transformers-Pfuntner,
-  author    = {Pfuntner, R. A.},
-  journal   = {Transactions of the American Institute of Electrical Engineers},
-  number    = {2},
-  pages     = {1656--1661},
-  publisher = {IEEE},
-  title     = {The Accuracy of Current Transformers Adjacent to High-Current Busses},
-  volume    = {70},
-  year      = {1951}
+  author  = {Pfuntner, R. A.},
+  journal = {Transactions of the American Institute of Electrical Engineers},
+  number  = {2},
+  pages   = {1656--1661},
+  title   = {The Accuracy of Current Transformers Adjacent to High-Current Busses},
+  volume  = {70},
+  year    = {1951}
 }
 
 @book{book-Einmaleins_Stromwandler-Redur,
   address   = {Merzenich},
   author    = {{REDUR GmbH \& Co. KG}},
   isbn      = {978-3-00-068179-0},
-  label     = {Red21},
   note      = {Unternehmenspublikation},
   publisher = {REDUR GmbH \& Co. KG},
   title     = {Das kleine Einmaleins der Stromwandler},
@@ -459,16 +428,17 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   author      = {{REDUR GmbH \& Co. KG}},
   date        = {2022-09-22},
   institution = {Deutsches Patent- und Markenamt},
-  note        = {Anmelder: REDUR GmbH \& Co. KG; Priorit{\"a}t: 2021-03-19; Ver{\"o}ffentlichung: 2022-09-22. Abgerufen am 04. Februar 2026},
+  note        = {Anmelder: REDUR GmbH \& Co. KG; Priorität: 19. März 2021},
   number      = {DE102021106843A1},
-  title       = {Niederspannungsabschirmk{\"o}rper, Niederspannungsstromwandler, Niederspannungsstromwandleranordnung bzw. Niederspannungselektrikanordnung},
-  type        = {Patent Application},
+  title       = {Niederspannungsabschirmkörper, Niederspannungsstromwandler, Niederspannungsstromwandleranordnung beziehungsweise Niederspannungselektrikanordnung},
+  type        = {Patentanmeldung},
   url         = {https://patentimages.storage.googleapis.com/03/7f/1e/50eb7828d085c8/DE102021106843A1.pdf},
+  urldate     = {2026-02-04},
   year        = {2022}
 }
 
 @article{pdf-Fremdfeldstoerungen_Stromwandler-Redur,
-  author  = {{Redur GmbH \& Co. KG}},
+  author  = {{REDUR GmbH \& Co. KG}},
   journal = {SCHALTSCHRANKBAU},
   note    = {Fachbeitrag zu Lösungen für hohe Ströme bei beengten Platzverhältnissen},
   number  = {6},
@@ -495,55 +465,50 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
 }
 
 @manual{pdf-Handbuch_PAC3120-Siemens,
-  author = {{Siemens AG}},
-  month  = {10},
-  note   = {Dokument-Bestellnummer: L1V30425208E-01},
-  title  = {Gerätehandbuch SENTRON Messgerät 7KM PAC3120 und PAC 3220},
-  url    = {https://cache.industry.siemens.com/dl/files/307/109767307/att_984482/v1/MAN_L1V30425208E-01_de_de-DE.pdf},
-  year   = {2019}
+  author       = {{Siemens AG}},
+  month        = {10},
+  note         = {Dokument-Bestellnummer L1V30425208E-01},
+  organization = {Siemens AG},
+  title        = {Gerätehandbuch SENTRON Messgerät 7KM PAC3120 und PAC3220},
+  url          = {https://cache.industry.siemens.com/dl/files/307/109767307/att_984482/v1/MAN_L1V30425208E-01_de_de-DE.pdf},
+  year         = {2019}
 }
 
 @manual{pdf-Handbuch_PAC4220-Siemens,
-  author = {{Siemens AG}},
-  month  = {05},
-  note   = {Dokument-Bestellnummer: L1V30827278A-02},
-  title  = {Gerätehandbuch SENTRON Multifunktionsmessgerät 7KM PAC 4220},
-  url    = {https://cache.industry.siemens.com/dl/files/026/109823026/att_1155887/v4/MAN_L1V30827278A-01_de_de-DE.pdf},
-  year   = {2024}
+  author       = {{Siemens AG}},
+  month        = {05},
+  note         = {Dokument-Bestellnummer L1V30827278A-02},
+  organization = {Siemens AG},
+  title        = {Gerätehandbuch SENTRON Multifunktionsmessgerät 7KM PAC4220},
+  url          = {https://cache.industry.siemens.com/dl/files/026/109823026/att_1155887/v4/MAN_L1V30827278A-01_de_de-DE.pdf},
+  year         = {2024}
 }
 
 @manual{pdf-Planung_Energieverteilung-Siemens,
-  address = {Erlangen},
-  author  = {{Siemens AG}},
-  note    = {Technische Publikation für Totally Integrated Power (TIP)},
-  title   = {Planung der elektrischen Energieverteilung: Technische Grundlagen},
-  url     = {https://assets.new.siemens.com/siemens/assets/api/uuid:d683c81df25afb360b79c5d48441eeda8b23477b/planung-der-elektrischen-energieverteilung-technische-grundlagen.pdf},
-  urldate = {2026-02-04},
-  year    = {2015}
+  address      = {Erlangen},
+  author       = {{Siemens AG}},
+  note         = {Technische Publikation für Totally Integrated Power},
+  organization = {Siemens AG},
+  title        = {Planung der elektrischen Energieverteilung: Technische Grundlagen},
+  url          = {https://assets.new.siemens.com/siemens/assets/api/uuid:d683c81df25afb360b79c5d48441eeda8b23477b/planung-der-elektrischen-energieverteilung-technische-grundlagen.pdf},
+  urldate      = {2026-02-04},
+  year         = {2015}
 }
 
 @techreport{pdf-Zellularer_Ansatz-VDE,
   address     = {Frankfurt am Main},
   author      = {{VDE -- Verband der Elektrotechnik Elektronik Informationstechnik e.V.}},
-  institution = {Energietechnische Gesellschaft im VDE (ETG)},
+  institution = {Energietechnische Gesellschaft im VDE},
   note        = {Grundlagenstudie zur Dezentralisierung der Energieversorgung},
   title       = {Der zellulare Ansatz -- Grundlage für eine erfolgreiche Energiewende},
   type        = {ETG-Studie},
   year        = {2015}
 }
-% =============================================================================
-% Ergänzungen für Kapitel 2 und 3
-% =============================================================================
 
-@mastersthesis{rothhammer2016,
-  author      = {Rothhammer, Marius},
-  title       = {Untersuchung der Erwärmung leistungsstarker, modularer Schaltgerätekombinationen unter Berücksichtigung der DIN EN 61439-1/-2 und Aufbereitung der Ergebnisse für Planungsunterlagen zur normgerechten und optimierten Dimensionierung von Schaltanlagen},
-  school      = {Hochschule Ansbach},
-  address     = {Ansbach},
-  type        = {Masterarbeit},
-  year        = {2016},
-  note        = {Unveröffentlicht}
-}
+
+% =============================================================================
+% Herstellerunterlagen und betriebsinterne Quellen
+% =============================================================================
 
 @manual{ruhstrat_betriebsanleitung,
   author       = {{Ruhstrat Power Technology GmbH}},
@@ -554,6 +519,15 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   note         = {Revision 01}
 }
 
+@manual{ruhstrat_broschuere_saeulentrafos,
+  author       = {{Ruhstrat Power Technology GmbH}},
+  title        = {Säulenstelltransformatoren: Technische Informationen},
+  organization = {Ruhstrat Power Technology GmbH},
+  address      = {Bovenden-Lenglern},
+  date         = {2019-05},
+  note         = {Herstellerbroschüre}
+}
+
 @misc{ruhstrat_korrespondenz_2026,
   author       = {Männecke, André},
   title        = {Dokumentation Stelltransformator Erwärmungsprüfstand},
@@ -562,34 +536,10 @@ beispiel:(@manual{janssen_arbeitsanweisung_mcc,
   note         = {Betriebsinterne, unveröffentlichte Korrespondenz}
 }
 
-@misc{rj_einspeisung_2026,
-  author       = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title        = {Einspeisung des Erwärmungsprüfstands: Stromlauf- und Aufbaupläne},
-  address      = {Aurich},
-  year         = {2026},
-  note         = {Betriebsinternes, unveröffentlichtes Dokument}
-}
-
-@misc{rj_feldansichten_2026,
-  author       = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title        = {Feldansichten und Strompfade des Erwärmungsprüfstands},
-  address      = {Aurich},
-  year         = {2026},
-  note         = {Betriebsinterne, unveröffentlichte Zeichnungen}
-}
-
-@misc{rj_mcc_pruefkonfiguration_2026,
-  author       = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title        = {Felder Gesamt- und Frontansicht MCC: kommentierte Prüfkonfiguration},
-  address      = {Aurich},
-  year         = {2026},
-  note         = {Betriebsinterne, unveröffentlichte Zeichnung}
-}
-
-@misc{rj_aufgabenstellung_2026,
-  author       = {{Rolf Janssen Elektrotechnische Werke GmbH}},
-  title        = {Optimierung des Erwärmungsprüfstands zum Nachweis von Bemessungsbetriebsströmen in Feldern mit mehreren Abgangseinheiten},
-  address      = {Aurich},
-  year         = {2026},
-  note         = {Betriebsinterne Aufgabenstellung, unveröffentlicht}
+@unpublished{rj_pruefstand_2026,
+  author   = {{Rolf Janssen Elektrotechnische Werke GmbH}},
+  title    = {Technische Bestands- und Projektdokumentation des Erwärmungsprüfstands},
+  address  = {Aurich},
+  date     = {2026},
+  note     = {Betriebsinterne, unveröffentlichte Sammlung aus Aufgabenstellung, Stromlaufplänen, Aufbauzeichnungen, Feldansichten, Typenschilddaten und Fotodokumentation}
 }
