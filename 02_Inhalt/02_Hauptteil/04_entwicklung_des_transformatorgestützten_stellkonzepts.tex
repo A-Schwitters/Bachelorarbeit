@@ -5,1458 +5,777 @@
 \label{chap:entwicklung_stellkonzept}
 
 Die Analyse des bestehenden Erwärmungsprüfstands hat gezeigt, dass die
-Ströme der einzelnen MCC-Abgänge während der Erwärmungsprüfung nicht
-unabhängig voneinander nachgeführt werden können. Die bestehende
-Regelung hält lediglich den unmittelbar hinter dem
-Hochstromtransformator gemessenen Gesamtstrom auf seinem Sollwert.
-Temperaturbedingte Änderungen der einzelnen Lastzweige müssen dagegen
-durch ein manuelles Verstellen der V2A-Widerstände ausgeglichen werden.
+zentrale Regelung zwar die unmittelbar hinter dem Festtransformator
+gemessenen Phasenströme nachführt, die Verteilung dieser Ströme auf die
+einzelnen Abgänge des MCC-Feldes jedoch nicht festlegt. Ändern sich die
+Widerstände der angeschlossenen Lastzweige infolge ihrer Erwärmung,
+weichen daher die einzelnen Modulströme von ihren Sollwerten ab. Diese
+Abweichungen müssen im bestehenden Prüfablauf durch manuelles
+Verstellen der V2A-Widerstände ausgeglichen werden.
 
-Ausgehend von den in Abschnitt~\ref{sec:anforderungen_optimierung}
-abgeleiteten Anforderungen wird im Folgenden ein transformatorgestütztes
-Stellkonzept entwickelt. Ziel des Konzepts ist es, für jede Phase eines
-MCC-Abgangs eine separat beeinflussbare Stellgröße bereitzustellen.
-Hierdurch soll der jeweilige Modulstrom während der Erwärmungsprüfung
-automatisch nachgeführt werden können, ohne die vorhandenen
-V2A-Widerstände händisch verstellen zu müssen.
+Ausgehend von den in
+Abschnitt~\ref{sec:anforderungen_optimierung}
+abgeleiteten Anforderungen wird im Folgenden ein
+transformatorgestütztes Stellkonzept entwickelt. Ziel ist die
+individuelle und automatisierte Nachführung jedes Phasenstroms der
+zwölf dreiphasigen MCC-Abgänge. Die vorhandene Prüfeinspeisung aus
+Säulenstelltransformator, Festtransformator, Leistungsschalterfeld,
+Anbindefeld und MCC-Feld soll dabei grundsätzlich erhalten bleiben.
 
-Das Konzept beruht auf einem zusätzlichen Transformator, der im
-Folgenden als Trafo~2 bezeichnet wird. Auf dessen Sekundärseite befindet
-sich ein motorisch verstellbarer Widerstand
-\(R_{\mathrm{Stell}}\). Durch die Impedanztransformation des
-Transformators kann der auf der Sekundärseite verwendete
-Widerstandsbereich an die wesentlich kleineren Impedanzen des
-Hochstromkreises angepasst werden. Damit lassen sich mechanisch
-handhabbare Stellwiderstände verwenden, während primärseitig eine
-ausreichende Beeinflussung des Modulstroms erreicht wird.
+Als elektrisches Stellglied wird für jeden Phasenstrom ein zusätzlicher
+Einphasentransformator eingesetzt, der im Folgenden als Trafo~2
+bezeichnet wird. An dessen Sekundärwicklung wird ein motorisch
+verstellbarer Widerstand \(R_{\mathrm{Stell}}\) angeschlossen. Durch
+die Impedanztransformation erscheint dieser Widerstand im
+niederspannungsseitigen Hochstromkreis mit einem wesentlich kleineren
+Wert. Die eigentliche Widerstandsverstellung kann dadurch auf der
+stromärmeren Sekundärseite erfolgen.
 
-Für die Abgänge mit Bemessungsströmen von
-\SI{250}{\ampere}, \SI{400}{\ampere} und
-\SI{630}{\ampere} wird Trafo~2 als zusätzlicher Strompfad parallel zum
-vorhandenen V2A-Widerstand angeordnet. Bei den Abgängen mit
-\SI{40}{\ampere} und \SI{70}{\ampere} entfällt der V2A-Widerstand.
-Der Modulstrom wird bei diesen Abgängen vollständig über den
-Primärzweig von Trafo~2 geführt und durch den sekundärseitigen
-Stellwiderstand beeinflusst.
+Die Entwicklung umfasst in diesem Kapitel das Wirkprinzip, die
+Anordnung der Stellkanäle, die vorgesehene Mess- und Regelungsstruktur
+sowie eine überschlägige Vorbemessung. Die detaillierte Abbildung der
+elektrischen und thermischen Zusammenhänge in MATLAB/Simulink ist
+Gegenstand von Kapitel~\ref{chap:modellbildung}.
 
-Da sämtliche zwölf MCC-Abgänge dreiphasig ausgeführt sind und jede
-Phase separat eingestellt werden soll, umfasst das Gesamtkonzept
+
+% -----------------------------------------------------------------------------
+% 4.1 Entwicklungsziel und Systemarchitektur
+% -----------------------------------------------------------------------------
+\subsection{Entwicklungsziel und Systemarchitektur}
+\label{sec:entwicklungsziel_systemarchitektur}
+
+Das Stellkonzept muss die Phasenströme der sechs
+\SI{40}{\ampere}-Abgänge, der drei \SI{70}{\ampere}-Abgänge sowie der
+Abgänge mit \SI{250}{\ampere}, \SI{400}{\ampere} und
+\SI{630}{\ampere} voneinander unabhängig beeinflussen können. Da
+sämtliche Abgänge dreiphasig betrieben werden, ist für jeden Abgang
+und jeden Außenleiter ein eigener Stellkanal erforderlich.
+
+Die Anzahl der Stellkanäle beträgt somit
 
 \begin{equation}
-    N_{\mathrm{Stellkanäle}}
+    n_{\mathrm{Stell}}
     =
     12 \cdot 3
     =
-    36
-    \label{eq:anzahl_stellkanäle}
+    36.
+    \label{eq:anzahl_stellkanaele}
 \end{equation}
 
-phasenselektive Stellkanäle. Die dreiphasigen MCC-Abgänge bleiben dabei
-jeweils eine funktionale Einheit. Die Anzahl von 36 bezeichnet daher
-nicht die Anzahl der Abgänge, sondern die Anzahl der einzeln zu
-beeinflussenden Phasenströme.
+Das Konzept umfasst daher insgesamt 36 Transformatoren des Typs
+Trafo~2 und 36 zugehörige motorisch verstellbare Widerstände. Die
+Aufteilung der Stellkanäle ist in
+Tabelle~\ref{tab:aufteilung_stellkanaele} zusammengefasst.
 
-Dieses Kapitel beschreibt zunächst die Grundidee und das elektrische
-Wirkprinzip des Konzepts. Anschließend werden die Ausführungen für die
-verschiedenen Stromklassen, das Mess- und Regelungskonzept sowie die
-erforderliche Dimensionierung und Stellreserve behandelt.
+\begin{table}[H]
+    \centering
+    \caption{Aufteilung der Stellkanäle auf die MCC-Abgänge}
+    \label{tab:aufteilung_stellkanaele}
+    \begin{tabular}{cccc}
+        \toprule
+        Prüfstrom je Abgang &
+        Anzahl Abgänge &
+        Stellkanäle je Abgang &
+        Anzahl Stellkanäle \\
+        \midrule
+        \SI{40}{\ampere}  & 6 & 3 & 18 \\
+        \SI{70}{\ampere}  & 3 & 3 & 9  \\
+        \SI{250}{\ampere} & 1 & 3 & 3  \\
+        \SI{400}{\ampere} & 1 & 3 & 3  \\
+        \SI{630}{\ampere} & 1 & 3 & 3  \\
+        \midrule
+        Gesamt            & 12 & -- & 36 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-
-% -----------------------------------------------------------------------------
-% 4.1 Grundidee und Wirkprinzip
-% -----------------------------------------------------------------------------
-\subsection{Grundidee und Wirkprinzip}
-\label{sec:grundidee_wirkprinzip}
-
-Die Grundidee des entwickelten Konzepts besteht darin, den Strom eines
-MCC-Abgangs nicht mehr ausschließlich durch die mechanische Einstellung
-des V2A-Widerstands festzulegen. Stattdessen wird ein zusätzlicher,
-elektrisch beeinflussbarer Strompfad geschaffen. Dieser Zusatzpfad
-besteht primärseitig aus der Wicklung von Trafo~2. Auf der galvanisch
-getrennten Sekundärseite wird der Transformator mit dem motorisch
-verstellbaren Widerstand \(R_{\mathrm{Stell}}\) belastet.
-
-Bei den Abgängen mit Bemessungsströmen von
-\SI{250}{\ampere}, \SI{400}{\ampere} und
-\SI{630}{\ampere} liegt die Primärwicklung von Trafo~2 parallel zum
-vorhandenen V2A-Widerstand. Der Modulstrom einer Phase teilt sich damit
-auf den V2A-Zweig und den Primärzweig von Trafo~2 auf. Für den Abgang
-\(k\) und die Phase \(\varphi\) gilt
+Für die weitere Beschreibung bezeichnet der Index \(k\) den
+betrachteten MCC-Abgang mit
 
 \begin{equation}
-    I_{k,\varphi}
-    =
-    I_{\mathrm{V2A},k,\varphi}
-    +
-    I_{\mathrm{T2,1},k,\varphi},
-    \qquad
-    \varphi \in \{\mathrm{L1},\mathrm{L2},\mathrm{L3}\}.
-    \label{eq:stromaufteilung_v2a_trafo2}
+    k \in \left\{1,\ldots,12\right\}.
+    \label{eq:definition_abgangsindex}
 \end{equation}
 
-Dabei bezeichnet \(I_{k,\varphi}\) den gesamten Phasenstrom des
-MCC-Abgangs, \(I_{\mathrm{V2A},k,\varphi}\) den Strom durch den
-V2A-Widerstand und \(I_{\mathrm{T2,1},k,\varphi}\) den Primärstrom von
-Trafo~2.
-
-Der sekundärseitige Stellwiderstand wird über das
-Übersetzungsverhältnis von Trafo~2 auf die Primärseite transformiert.
-Für den idealisierten Transformator ergibt sich die auf die Primärseite
-bezogene Stellimpedanz zu
+Der Index \(p\) kennzeichnet den zugehörigen Außenleiter:
 
 \begin{equation}
-    R_{\mathrm{Stell}}'
-    =
-    \left(
-        \frac{N_1}{N_2}
-    \right)^2
-    R_{\mathrm{Stell}},
-    \label{eq:stellwiderstand_transformation}
-\end{equation}
-
-wobei \(N_1\) und \(N_2\) die Windungszahlen der Primär- und
-Sekundärwicklung von Trafo~2 bezeichnen. Das Übersetzungsverhältnis wird
-so gewählt, dass ein auf der Sekundärseite technisch gut realisierbarer
-Widerstandsbereich auf die kleinen Impedanzwerte des primärseitigen
-Hochstromkreises transformiert wird.
-
-Unter Vernachlässigung der inneren Transformatorimpedanz kann der
-Primärstrom des Zusatzpfads näherungsweise durch
-
-\begin{equation}
-    I_{\mathrm{T2,1},k,\varphi}
-    \approx
-    \frac{U_{k,\varphi}}
-    {R_{\mathrm{Stell},k,\varphi}'}
-    \label{eq:primaerstrom_trafo2_idealisiert}
-\end{equation}
-
-beschrieben werden. \(U_{k,\varphi}\) bezeichnet dabei die Spannung
-zwischen dem Eingang des jeweiligen Lastzweigs und dessen
-Sternpunkt. Gleichung~\eqref{eq:primaerstrom_trafo2_idealisiert} dient
-zunächst der Beschreibung des grundlegenden Wirkzusammenhangs. Die
-Wicklungswiderstände, Streuinduktivitäten und die Kurzschlussimpedanz
-von Trafo~2 werden bei der späteren Modellbildung berücksichtigt.
-
-Wird \(R_{\mathrm{Stell}}\) verkleinert, verringert sich nach
-Gleichung~\eqref{eq:stellwiderstand_transformation} auch dessen auf die
-Primärseite transformierter Widerstand. Dadurch steigt der Primärstrom
-von Trafo~2. Bei den großen Abgängen erhöht sich somit der über den
-Zusatzpfad fließende Stromanteil und nach
-Gleichung~\eqref{eq:stromaufteilung_v2a_trafo2} der gesamte
-Modulstrom. Umgekehrt führt eine Vergrößerung von
-\(R_{\mathrm{Stell}}\) zu einer Verringerung des Zusatzstroms.
-
-Der V2A-Widerstand wird während dieser Nachführung nicht verstellt. Er
-bildet bei den großen Abgängen weiterhin den Grundlastpfad, während
-Trafo~2 und \(R_{\mathrm{Stell}}\) den regelbaren Anteil des
-Modulstroms bereitstellen. Damit muss der Zusatzpfad nicht den gesamten
-Bemessungsstrom des Abgangs führen, sondern lediglich den zur
-Einstellung und zum Ausgleich der thermischen Stromdrift erforderlichen
-Stromanteil.
-
-Bei den Abgängen mit Bemessungsströmen von
-\SI{40}{\ampere} und \SI{70}{\ampere} wird kein V2A-Widerstand
-verwendet. Der Phasenstrom fließt vollständig durch die Primärwicklung
-von Trafo~2. Für diese Ausführung gilt daher
-
-\begin{equation}
-    I_{k,\varphi}
-    =
-    I_{\mathrm{T2,1},k,\varphi}.
-    \label{eq:strom_kleinmodule_trafo2}
-\end{equation}
-
-Die Einstellung des vollständigen Modulstroms erfolgt in diesem Fall
-über den sekundärseitigen Stellwiderstand. Hieraus ergeben sich andere
-Anforderungen an den Stellbereich und die Belastbarkeit von Trafo~2
-und \(R_{\mathrm{Stell}}\) als bei den parallel zum V2A-Widerstand
-betriebenen Zusatzpfaden. Die beiden Ausführungsvarianten werden daher
-in den folgenden Abschnitten getrennt betrachtet.
-
-Die Verstellung von \(R_{\mathrm{Stell}}\) erfolgt motorisch. Dadurch
-steht für jeden Phasenstrom eine automatisierbare Stellgröße zur
-Verfügung. Zusammen mit der phasenweisen Strommessung kann somit ein
-geschlossener Regelkreis aufgebaut werden, in dem der jeweilige
-Modulstrom die Regelgröße und die Position des Schleifkontakts von
-\(R_{\mathrm{Stell}}\) die Stellgröße darstellt. Die vorhandene
-übergeordnete Regelung des Gesamtstroms bleibt weiterhin wirksam.
-Dadurch entsteht ein gekoppeltes Mehrgrößensystem aus der zentralen
-Gesamtstromregelung und den 36 unterlagerten phasenselektiven
-Stellkanälen.
-
-
-
-% -----------------------------------------------------------------------------
-% 4.2 Zusatzpfad aus Trafo 2 und Stellwiderstand
-% -----------------------------------------------------------------------------
-\subsection{Zusatzpfad aus Trafo~2 und Stellwiderstand}
-\label{sec:zusatzpfad_trafo2}
-
-Der regelbare Zusatzpfad besteht aus der Primärwicklung von Trafo~2 und
-dem auf dessen Sekundärseite angeschlossenen Stellwiderstand
-\(R_{\mathrm{Stell}}\). Zwischen dem primärseitigen Hochstromkreis und
-dem sekundärseitigen Stellkreis besteht keine galvanische Verbindung.
-Die Beeinflussung des Primärstroms erfolgt ausschließlich über die
-magnetische Kopplung der beiden Transformatorwicklungen.
-
-Die Aufgabe von Trafo~2 besteht nicht darin, dem MCC-Abgang Energie aus
-einer zusätzlichen Spannungsquelle zuzuführen. Die für den Zusatzstrom
-erforderliche Leistung wird weiterhin durch den bestehenden
-Erwärmungsprüfstand bereitgestellt. Trafo~2 dient vielmehr dazu, die
-sekundärseitige Lastimpedanz auf ein für den primärseitigen
-Hochstromkreis geeignetes Niveau zu transformieren. Dadurch kann ein
-mechanisch und elektrisch handhabbarer Stellwiderstand verwendet
-werden, obwohl die Impedanzen im primärseitigen Hochstromkreis im
-Milliohmbereich liegen.
-
-Das Übersetzungsverhältnis von Trafo~2 wird definiert als
-
-\begin{equation}
-    u_{\mathrm{T2}}
-    =
-    \frac{N_1}{N_2}
-    =
-    \frac{U_1}{U_2}
-    =
-    \frac{I_2}{I_1},
-    \label{eq:uebersetzungsverhaeltnis_trafo2}
-\end{equation}
-
-wobei \(N_1\) und \(N_2\) die Windungszahlen, \(U_1\) und \(U_2\) die
-Effektivwerte der Spannungen sowie \(I_1\) und \(I_2\) die
-Effektivwerte der Ströme auf der Primär- und Sekundärseite bezeichnen.
-Die Beziehungen gelten zunächst für den idealisierten Transformator.
-Die grundlegenden Transformatorbeziehungen und die
-Impedanztransformation wurden bereits in
-Abschnitt~\ref{sec:transformator_impedanztransformation} behandelt.
-
-Der auf der Sekundärseite angeschlossene Stellwiderstand erscheint auf
-der Primärseite mit dem transformierten Wert
-
-\begin{equation}
-    R_{\mathrm{Stell}}'
-    =
-    u_{\mathrm{T2}}^2
-    R_{\mathrm{Stell}}.
-    \label{eq:rstell_auf_primaerseite}
-\end{equation}
-
-Für eine Spannungserhöhung von der Primär- zur Sekundärseite gilt
-\(N_2>N_1\) und damit \(u_{\mathrm{T2}}<1\). Der sekundärseitige
-Stellwiderstand wird folglich mit dem Faktor
-\(u_{\mathrm{T2}}^2\) auf die Primärseite transformiert. Ein
-vergleichsweise großer und technisch gut einstellbarer
-Sekundärwiderstand entspricht dadurch einem wesentlich kleineren
-Widerstand im Hochstromkreis.
-
-Der reale Transformator weist zusätzlich Wicklungswiderstände,
-Streuinduktivitäten und einen Magnetisierungsstrom auf. Für die
-Beschreibung des belasteten Zusatzpfads kann die auf die Primärseite
-bezogene Gesamtimpedanz vereinfacht als
-
-\begin{equation}
-    \underline{Z}_{\mathrm{Zus}}
-    =
-    \underline{Z}_{\mathrm{T2}}
-    +
-    u_{\mathrm{T2}}^2 R_{\mathrm{Stell}}
-    \label{eq:gesamtimpedanz_zusatzpfad}
-\end{equation}
-
-angegeben werden. Darin fasst
-\(\underline{Z}_{\mathrm{T2}}\) die für das Betriebsverhalten
-maßgebenden inneren Transformatorimpedanzen zusammen. Der Unterstrich
-kennzeichnet eine komplexe Wechselstromgröße. Der zugehörige
-Primärstrom des Zusatzpfads ergibt sich zu
-
-\begin{equation}
-    \underline{I}_{\mathrm{T2,1}}
-    =
-    \frac{\underline{U}_{1}}
-    {\underline{Z}_{\mathrm{T2}}
-    + u_{\mathrm{T2}}^2 R_{\mathrm{Stell}}}.
-    \label{eq:primaerstrom_zusatzpfad}
-\end{equation}
-
-Gleichung~\eqref{eq:primaerstrom_zusatzpfad} zeigt den grundlegenden
-Stellzusammenhang. Durch eine Verringerung von
-\(R_{\mathrm{Stell}}\) sinkt die auf die Primärseite transformierte
-Gesamtimpedanz des Zusatzpfads. Bei näherungsweise konstanter
-Primärspannung steigt dadurch der Primärstrom von Trafo~2. Eine
-Vergrößerung von \(R_{\mathrm{Stell}}\) bewirkt entsprechend eine
-Verringerung des Primärstroms.
-
-Die Stellrichtung lässt sich damit qualitativ durch
-
-\begin{equation}
-    R_{\mathrm{Stell}} \downarrow
-    \quad\Longrightarrow\quad
-    R_{\mathrm{Stell}}' \downarrow
-    \quad\Longrightarrow\quad
-    I_{\mathrm{T2,1}} \uparrow
-    \label{eq:stellrichtung_trafo2}
-\end{equation}
-
-beschreiben. Diese monotone Beziehung ist für die spätere
-Stromregelung von wesentlicher Bedeutung, da jeder Stellung des
-Schleifkontakts innerhalb des nutzbaren Stellbereichs ein bestimmter
-sekundärseitiger Widerstand und damit ein bestimmter primärseitiger
-Strom zugeordnet werden kann.
-
-Der Stellwiderstand besteht aus einem Widerstandselement mit einem
-motorisch verfahrbaren Kontakt. Durch die Veränderung der
-Kontaktposition \(x_{\mathrm{Stell}}\) wird die wirksame Länge des
-Widerstandsmaterials verändert. Für ein Widerstandselement mit
-annähernd konstantem Querschnitt kann der Zusammenhang idealisiert
-durch
-
-\begin{equation}
-    R_{\mathrm{Stell}}
-    \left(x_{\mathrm{Stell}}\right)
-    =
-    \rho_{\mathrm{Stell}}
-    \frac{
-        l_{\mathrm{wirksam}}
-        \left(x_{\mathrm{Stell}}\right)
-    }
-    {A_{\mathrm{Stell}}}
-    \label{eq:rstell_position}
-\end{equation}
-
-beschrieben werden. Dabei sind
-\(\rho_{\mathrm{Stell}}\) der spezifische elektrische Widerstand,
-\(A_{\mathrm{Stell}}\) der Leiterquerschnitt und
-\(l_{\mathrm{wirksam}}\) die von der Kontaktposition abhängige wirksame
-Leiterlänge. Bei gleichmäßiger Geometrie ergibt sich näherungsweise ein
-linearer Zusammenhang zwischen Kontaktposition und Widerstand. Im
-realen Aufbau können Kontaktwiderstände, Anschlusswiderstände und
-geometrische Übergangsbereiche zu Abweichungen von diesem idealisierten
-Verlauf führen.
-
-Die sekundärseitige Belastung des Stellwiderstands ergibt sich aus
-
-\begin{equation}
-    P_{\mathrm{Stell}}
-    =
-    I_2^2 R_{\mathrm{Stell}}.
-    \label{eq:verlustleistung_rstell}
-\end{equation}
-
-Obwohl der Sekundärstrom aufgrund der gewählten
-Spannungstransformation kleiner als der Primärstrom ist, muss
-\(R_{\mathrm{Stell}}\) für die auftretende Verlustleistung und den
-Dauerbetrieb während einer Erwärmungsprüfung ausgelegt werden.
-Zusätzlich sind die Belastbarkeit von Trafo~2, dessen
-Kurzschlussimpedanz sowie die thermischen Grenzen beider Komponenten
-zu berücksichtigen. Die quantitative Dimensionierung erfolgt in
-Abschnitt~\ref{sec:dimensionierung_stellreserve}.
-
-Der mögliche Primärstrom wird durch die beiden Endstellungen des
-Stellwiderstands begrenzt. Mit dem minimalen und maximalen
-Stellwiderstand
-
-\begin{equation}
-    R_{\mathrm{Stell,min}}
-    \leq
-    R_{\mathrm{Stell}}
-    \leq
-    R_{\mathrm{Stell,max}}
-    \label{eq:stellbereich_rstell}
-\end{equation}
-
-ergibt sich ein zugehöriger Stromstellbereich
-
-\begin{equation}
-    I_{\mathrm{T2,1,min}}
-    \leq
-    I_{\mathrm{T2,1}}
-    \leq
-    I_{\mathrm{T2,1,max}}.
-    \label{eq:stromstellbereich_trafo2}
-\end{equation}
-
-Der minimale Widerstand darf nicht zu einem unzulässig hohen
-Primär- oder Sekundärstrom führen. Der maximale Widerstand muss
-dagegen groß genug sein, um den Zusatzstrom auf den für die
-Grundeinstellung erforderlichen Wert zu begrenzen. Ein vollständig
-stromloser Zusatzpfad wird durch einen endlichen
-\(R_{\mathrm{Stell,max}}\) nicht erreicht, da neben dem
-lastabhängigen Strom auch der Magnetisierungsstrom von Trafo~2
-verbleibt. Falls eine vollständige Trennung erforderlich ist, müsste
-hierfür ein zusätzliches Schaltgerät vorgesehen werden.
-
-Bei den Abgängen mit V2A-Widerstand stellt dieser den überwiegenden
-Grundlastpfad bereit. Der Zusatzpfad muss daher nur den für die
-Feineinstellung und die Kompensation des thermisch bedingten
-Stromrückgangs erforderlichen Stromanteil übernehmen. Bei den
-\SI{40}{\ampere}- und \SI{70}{\ampere}-Abgängen fließt dagegen der
-vollständige Modulstrom über die Primärwicklung von Trafo~2. Daraus
-ergeben sich unterschiedliche Anforderungen an Übersetzungsverhältnis,
-Stellbereich und Bemessungsleistung. Die konstruktive Ausführung für
-beide Anwendungsfälle wird in den folgenden Abschnitten getrennt
-untersucht.
-
-
-
-
-% -----------------------------------------------------------------------------
-% 4.3 Ausführung für die Abgänge mit hohen Bemessungsströmen
-% -----------------------------------------------------------------------------
-\subsection{Ausführung für die Abgänge mit hohen Bemessungsströmen}
-\label{sec:ausfuehrung_hohe_modulstroeme}
-
-Bei den Abgängen mit Bemessungsströmen von
-\SI{250}{\ampere}, \SI{400}{\ampere} und
-\SI{630}{\ampere} bleiben die vorhandenen V2A-Widerstände als
-Grundlastpfade erhalten. Trafo~2 bildet für jede Phase einen
-zusätzlichen, parallel zum jeweiligen V2A-Widerstand angeordneten
-Strompfad. Der Zusatzpfad übernimmt damit nicht den vollständigen
-Modulstrom, sondern lediglich den zur Einstellung und Nachführung
-erforderlichen Stromanteil.
-
-Die Aufteilung des Stroms erfolgt hinter dem zu prüfenden
-MCC-Modul. Dadurch durchfließt der gesamte Phasenstrom zunächst die
-inneren Strombahnen, Schaltgeräte und Kontaktstellen des Moduls. Erst
-am Ausgang des Moduls teilt sich der Strom auf den V2A-Grundlastpfad
-und die Primärwicklung von Trafo~2 auf. Beide Teilströme werden
-anschließend am gemeinsamen Sternpunkt wieder zusammengeführt. Somit
-entspricht die Summe der Teilströme dem thermisch wirksamen Strom durch
-das zu prüfende Modul.
-
-Für den Abgang \(k\) und die Phase \(\varphi\) gilt entsprechend
-
-\begin{equation}
-    I_{k,\varphi}
-    =
-    I_{\mathrm{V2A},k,\varphi}
-    +
-    I_{\mathrm{T2,1},k,\varphi}.
-    \label{eq:strombilanz_grosse_abgaenge}
-\end{equation}
-
-Der Index \(k\) bezeichnet einen der Abgänge mit
-\SI{250}{\ampere}, \SI{400}{\ampere} oder
-\SI{630}{\ampere}, während
-
-\begin{equation}
-    \varphi
-    \in
-    \{\mathrm{L1},\mathrm{L2},\mathrm{L3}\}
-    \label{eq:phasenmenge_grosse_abgaenge}
-\end{equation}
-
-die betrachtete Phase kennzeichnet. Da drei dreiphasige Abgänge dieser
-Stromklasse vorgesehen sind, werden für ihre individuelle Nachführung
-
-\begin{equation}
-    N_{\mathrm{Stellkanäle,hoch}}
-    =
-    3 \cdot 3
-    =
-    9
-    \label{eq:anzahl_stellkanaele_hohe_stroeme}
-\end{equation}
-
-phasenselektive Stellkanäle benötigt.
-
-Der Strom durch den V2A-Grundlastpfad wird durch die anliegende
-Phasenspannung und den temperaturabhängigen Widerstand bestimmt:
-
-\begin{equation}
-    I_{\mathrm{V2A},k,\varphi}
-    =
-    \frac{U_{k,\varphi}}
-    {R_{\mathrm{V2A},k,\varphi}(\vartheta)}.
-    \label{eq:v2a_strom_grosse_abgaenge}
-\end{equation}
-
-Mit zunehmender Temperatur steigt der elektrische Widerstand des
-V2A-Materials. Bei näherungsweise konstanter Spannung nimmt der Strom
-durch den V2A-Zweig daher ab. Der hierdurch entstehende Fehlbetrag wird
-durch eine Erhöhung des Primärstroms von Trafo~2 ausgeglichen.
-
-Der zur Einhaltung des Bemessungsstroms erforderliche Sollwert des
-Zusatzstroms ergibt sich aus der Differenz zwischen dem vorgesehenen
-Modulstrom und dem aktuell durch den V2A-Zweig fließenden Strom:
-
-\begin{equation}
-    I_{\mathrm{T2,1,soll},k,\varphi}
-    =
-    I_{\mathrm{N},k}
-    -
-    I_{\mathrm{V2A},k,\varphi}.
-    \label{eq:sollstrom_zusatzpfad_grosse_abgaenge}
-\end{equation}
-
-Dabei bezeichnet \(I_{\mathrm{N},k}\) den für den jeweiligen Abgang
-vorgesehenen Prüfstrom. Durch das motorische Verkleinern von
-\(R_{\mathrm{Stell},k,\varphi}\) wird die auf die Primärseite
-transformierte Impedanz des Zusatzpfads reduziert. Infolgedessen steigt
-der Primärstrom von Trafo~2, bis die Summe aus V2A-Strom und
-Zusatzstrom wieder dem vorgegebenen Modulstrom entspricht.
-
-Die Nachführung lässt sich damit durch die Wirkungskette
-
-\begin{equation}
-    \vartheta_{\mathrm{V2A}} \uparrow
-    \quad\Longrightarrow\quad
-    R_{\mathrm{V2A}} \uparrow
-    \quad\Longrightarrow\quad
-    I_{\mathrm{V2A}} \downarrow
-    \quad\Longrightarrow\quad
-    R_{\mathrm{Stell}} \downarrow
-    \quad\Longrightarrow\quad
-    I_{\mathrm{T2,1}} \uparrow
-    \label{eq:wirkungskette_nachfuehrung_grosse_abgaenge}
-\end{equation}
-
-darstellen. Trafo~2 und \(R_{\mathrm{Stell}}\) kompensieren damit den
-Stromrückgang des V2A-Grundlastpfads, ohne dass dessen mechanische
-Kontaktbrücke während der Prüfung nachgestellt werden muss.
-
-Das Konzept kann den Modulstrom ausschließlich durch einen positiven
-Zusatzstrom ergänzen. Der Zusatzpfad kann den Strom des
-V2A-Grundlastpfads nicht aktiv verringern. Die Grundeinstellung des
-V2A-Widerstands muss deshalb so gewählt werden, dass dessen Strom auch
-im kalten Zustand unterhalb des vorgesehenen Modulstroms liegt. Unter
-Berücksichtigung des minimal erreichbaren Zusatzstroms muss gelten:
-
-\begin{equation}
-    I_{\mathrm{V2A,kalt},k,\varphi}
-    +
-    I_{\mathrm{T2,1,min},k,\varphi}
-    \leq
-    I_{\mathrm{N},k}.
-    \label{eq:bedingung_kaltzustand_grosse_abgaenge}
-\end{equation}
-
-Diese Bedingung verhindert, dass der Modulstrom bereits zu Beginn der
-Prüfung oberhalb seines Sollwerts liegt, obwohl sich der Zusatzpfad in
-seiner Stellung mit dem kleinsten erreichbaren Primärstrom befindet.
-
-Im erwärmten Zustand muss Trafo~2 dagegen einen ausreichend großen
-Zusatzstrom bereitstellen können. Für den ungünstigsten vorgesehenen
-thermischen Betriebszustand gilt daher:
-
-\begin{equation}
-    I_{\mathrm{V2A,warm},k,\varphi}
-    +
-    I_{\mathrm{T2,1,max},k,\varphi}
-    \geq
-    I_{\mathrm{N},k}.
-    \label{eq:bedingung_warmzustand_grosse_abgaenge}
-\end{equation}
-
-Die Bedingungen
-\eqref{eq:bedingung_kaltzustand_grosse_abgaenge} und
-\eqref{eq:bedingung_warmzustand_grosse_abgaenge} legen den mindestens
-erforderlichen Stromstellbereich des Zusatzpfads fest. Zusätzlich ist
-eine Stellreserve erforderlich, um Bauteiltoleranzen,
-Kontaktwiderstände, Abweichungen der Versorgungsspannung und
-unterschiedliche Erwärmungsverläufe der drei Phasen ausgleichen zu
-können. Die quantitative Bestimmung dieser Reserve erfolgt in
-Abschnitt~\ref{sec:dimensionierung_stellreserve}.
-
-Da der Zusatzpfad parallel zum V2A-Widerstand liegt, liegt an beiden
-Zweigen dieselbe Spannung an. Für die idealisierte Parallelschaltung
-gilt
-
-\begin{equation}
-    U_{\mathrm{V2A},k,\varphi}
-    =
-    U_{\mathrm{T2,1},k,\varphi}
-    =
-    U_{k,\varphi}.
-    \label{eq:spannung_parallelzweige_grosse_abgaenge}
-\end{equation}
-
-Eine Veränderung des Zusatzstroms kann aufgrund der endlichen
-Innenimpedanz der gemeinsamen Einspeisung jedoch auch die an den
-übrigen Abgängen anliegende Spannung geringfügig beeinflussen. Die
-einzelnen Stellkanäle sind daher nicht vollständig voneinander
-entkoppelt. Diese gegenseitige Beeinflussung wird bei der Entwicklung
-des Mess- und Regelungskonzepts in
-Abschnitt~\ref{sec:mess_regelungskonzept} berücksichtigt.
-
-Für die drei Phasen eines Abgangs werden jeweils ein eigener
-Transformator beziehungsweise ein eigener magnetisch unabhängiger
-Transformatorzweig und ein eigener Stellwiderstand benötigt. Dadurch
-können Unterschiede zwischen den Phasen, beispielsweise infolge
-abweichender Kontaktwiderstände oder unterschiedlicher thermischer
-Bedingungen, separat ausgeglichen werden.
-
-Die Stellwiderstände und die verlustbehafteten Komponenten des
-Zusatzpfads sind so anzuordnen, dass ihre Verlustwärme die
-Temperaturmessung am Prüfling nicht unzulässig beeinflusst. Insbesondere
-die sekundärseitigen Stellwiderstände dürfen keine zusätzliche
-Erwärmung des MCC-Feldes verursachen, die nicht aus der elektrischen
-Belastung des Prüflings selbst resultiert. Andernfalls könnte das
-Ergebnis der Erwärmungsprüfung verfälscht werden.
-
-Die V2A-Widerstände übernehmen bei den großen Abgängen weiterhin den
-überwiegenden Anteil des Prüfstroms. Hierdurch werden die erforderliche
-Bemessungsleistung von Trafo~2 und die Verlustleistung des
-sekundärseitigen Stellwiderstands gegenüber einer vollständigen Führung
-des Modulstroms über den Transformator reduziert. Gleichzeitig bleibt
-durch den regelbaren Zusatzpfad die Möglichkeit erhalten, den
-thermisch verursachten Stromrückgang während der gesamten Prüfdauer
-auszugleichen.
-
-
-
-
-% -----------------------------------------------------------------------------
-% 4.4 Ausführung für Abgänge mit kleinen Bemessungsströmen
-% -----------------------------------------------------------------------------
-\subsection{Ausführung für Abgänge mit kleinen Bemessungsströmen}
-\label{sec:ausfuehrung_kleine_stroeme}
-
-Die Abgänge mit Bemessungsströmen von \SI{40}{\ampere} und
-\SI{70}{\ampere} werden ohne zusätzlichen V2A-Lastwiderstand
-ausgeführt. Im Gegensatz zu den in
-Abschnitt~\ref{sec:ausfuehrung_hohe_stroeme} betrachteten Abgängen
-bildet Trafo~2 somit keinen parallelen Zusatzpfad. Der gesamte
-Phasenstrom des jeweiligen MCC-Abgangs fließt durch dessen
-Primärwicklung. Die Sekundärwicklung wird wiederum mit dem motorisch
-verstellbaren Widerstand \(R_{\mathrm{Stell}}\) belastet.
-
-Für einen Abgang \(k\) und eine Phase \(\varphi\) gilt daher
-
-\begin{equation}
-    \underline{I}_{k,\varphi}
-    =
-    \underline{I}_{\mathrm{T2,1},k,\varphi}.
-    \label{eq:strom_kleinabgang}
-\end{equation}
-
-Unter Berücksichtigung der auf die Primärseite bezogenen
-Transformatorimpedanz kann der Phasenstrom entsprechend
-Abschnitt~\ref{sec:zusatzpfad_trafo2} näherungsweise durch
-
-\begin{equation}
-    \underline{I}_{k,\varphi}
-    =
-    \frac{\underline{U}_{k,\varphi}}
-    {
-        \underline{Z}_{\mathrm{T2},k,\varphi}
-        +
-        u_{\mathrm{T2},k}^{\,2}
-        R_{\mathrm{Stell},k,\varphi}
-    }
-    \label{eq:strom_kleinabgang_rstell}
-\end{equation}
-
-beschrieben werden. Darin bezeichnet
-\(\underline{Z}_{\mathrm{T2},k,\varphi}\) die auf die Primärseite
-bezogene innere Impedanz von Trafo~2. Das Übersetzungsverhältnis
-\(u_{\mathrm{T2},k}\) ist entsprechend
-Gleichung~\eqref{eq:uebersetzungsverhaeltnis_trafo2} definiert.
-
-Die Verstellung des Abgangsstroms erfolgt ausschließlich über
-\(R_{\mathrm{Stell},k,\varphi}\). Wird der Stellwiderstand verkleinert,
-verringert sich die auf die Primärseite transformierte Lastimpedanz.
-Dadurch steigt der Primärstrom und somit unmittelbar der Strom des
-MCC-Abgangs. Eine Vergrößerung des Stellwiderstands bewirkt den
-entgegengesetzten Vorgang. Die Wirkungsrichtung lässt sich damit als
-
-\begin{equation}
-    R_{\mathrm{Stell},k,\varphi} \downarrow
-    \quad\Longrightarrow\quad
-    \left|
-        \underline{I}_{k,\varphi}
-    \right| \uparrow
-\end{equation}
-
-beziehungsweise
-
-\begin{equation}
-    R_{\mathrm{Stell},k,\varphi} \uparrow
-    \quad\Longrightarrow\quad
-    \left|
-        \underline{I}_{k,\varphi}
-    \right| \downarrow
-\end{equation}
-
-angeben.
-
-Während Trafo~2 bei den Abgängen mit hohen Bemessungsströmen lediglich
-den durch den V2A-Widerstand geführten Grundstrom ergänzt, muss er bei
-den \SI{40}{\ampere}- und \SI{70}{\ampere}-Abgängen den vollständigen
-Abgangsstrom führen. Der erforderliche Stellbereich ist deshalb nicht
-nur für die Kompensation einer thermisch verursachten Stromänderung
-auszulegen. Vielmehr muss der vorgesehene Bemessungsstrom vollständig
-innerhalb des durch \(R_{\mathrm{Stell}}\) einstellbaren Strombereichs
-liegen.
-
-Für den kleinsten und den größten einstellbaren Strom gilt
-
-\begin{align}
-    I_{k,\varphi,\min}
-    &=
-    \left|
-        \frac{\underline{U}_{k,\varphi}}
-        {
-            \underline{Z}_{\mathrm{T2},k,\varphi}
-            +
-            u_{\mathrm{T2},k}^{\,2}
-            R_{\mathrm{Stell},k,\varphi,\max}
-        }
-    \right|,
-    \label{eq:strom_kleinabgang_min}
-    \\[1ex]
-    I_{k,\varphi,\max}
-    &=
-    \left|
-        \frac{\underline{U}_{k,\varphi}}
-        {
-            \underline{Z}_{\mathrm{T2},k,\varphi}
-            +
-            u_{\mathrm{T2},k}^{\,2}
-            R_{\mathrm{Stell},k,\varphi,\min}
-        }
-    \right|.
-    \label{eq:strom_kleinabgang_max}
-\end{align}
-
-Damit der jeweilige Bemessungsstrom eingestellt und während der
-Erwärmungsprüfung nachgeführt werden kann, muss die Bedingung
-
-\begin{equation}
-    I_{k,\varphi,\min}
-    <
-    I_{\mathrm{N},k}
-    <
-    I_{k,\varphi,\max}
-    \label{eq:stellbedingung_kleine_abgaenge}
-\end{equation}
-
-erfüllt sein. Der Bemessungsstrom soll dabei nicht unmittelbar an einer
-Grenze des Stellbereichs liegen. Sowohl unterhalb als auch oberhalb des
-Arbeitspunkts ist eine Stellreserve vorzusehen, damit
-Bauteiltoleranzen, Spannungsabweichungen und temperaturabhängige
-Änderungen der inneren Impedanzen ausgeglichen werden können. Die
-quantitative Festlegung dieser Reserven erfolgt in
-Abschnitt~\ref{sec:dimensionierung_stellreserve}.
-
-Das betrachtete MCC-Feld enthält sechs Abgänge mit einem
-Bemessungsstrom von \SI{40}{\ampere} und drei Abgänge mit einem
-Bemessungsstrom von \SI{70}{\ampere}. Da jede Phase separat beeinflusst
-werden soll, ergeben sich für die \SI{40}{\ampere}-Abgänge
-
-\begin{equation}
-    n_{\mathrm{Stell},40}
-    =
-    6 \cdot 3
-    =
-    18
-    \label{eq:stellkanaele_40a}
-\end{equation}
-
-und für die \SI{70}{\ampere}-Abgänge
-
-\begin{equation}
-    n_{\mathrm{Stell},70}
-    =
-    3 \cdot 3
-    =
-    9
-    \label{eq:stellkanaele_70a}
-\end{equation}
-
-phasenbezogene Stellkanäle. Insgesamt werden für diese beiden
-Modulgruppen somit
-
-\begin{equation}
-    n_{\mathrm{Stell,klein}}
-    =
-    n_{\mathrm{Stell},40}
-    +
-    n_{\mathrm{Stell},70}
-    =
-    27
-    \label{eq:stellkanaele_kleine_abgaenge}
-\end{equation}
-
-Stellkanäle benötigt.
-
-Ob für beide Stromklassen dieselbe Ausführung von Trafo~2 und
-\(R_{\mathrm{Stell}}\) verwendet werden kann, ist anhand der
-erforderlichen Strombereiche, Übersetzungsverhältnisse und
-Verlustleistungen zu überprüfen. Eine identische Ausführung wird daher
-nicht vorausgesetzt. Insbesondere müssen die Primärwicklungen von
-Trafo~2 für den jeweiligen vollständigen Abgangsstrom im Dauerbetrieb
-ausgelegt werden. Gleichzeitig sind die sekundärseitigen
-Stellwiderstände hinsichtlich ihres Widerstandsbereichs, ihres
-zulässigen Stroms und ihrer thermischen Belastbarkeit zu dimensionieren.
-
-Da bei dieser Ausführung kein V2A-Widerstand vorhanden ist, entfällt
-dessen temperaturabhängige Widerstandszunahme als unmittelbare
-Störgröße. Temperaturabhängige Veränderungen der Wicklungswiderstände,
-der Kontaktstellen und der übrigen Abgangsimpedanzen bleiben jedoch
-bestehen. Darüber hinaus können Änderungen der gemeinsamen
-Versorgungsspannung den Abgangsstrom beeinflussen. Die phasenbezogene
-Stromregelung ist deshalb auch für die kleinen Abgänge erforderlich.
-Ihre konzeptionelle Einbindung wird in
-Abschnitt~\ref{sec:mess_regelungskonzept} beschrieben.
-
-% -----------------------------------------------------------------------------
-% 4.5 Vorgesehenes Mess- und Regelungskonzept
-% -----------------------------------------------------------------------------
-\subsection{Vorgesehenes Mess- und Regelungskonzept}
-\label{sec:mess_regelungskonzept}
-
-Die bisherige Regelung des Erwärmungsprüfstands führt den
-Säulenstelltransformator anhand des gemessenen Gesamtstroms nach.
-Dieses Regelungsprinzip ist für den bestehenden Prüfaufbau geeignet,
-steht bei einer zusätzlichen individuellen Regelung der Modulströme
-jedoch in Wechselwirkung mit den neu hinzukommenden Regelkreisen.
-Verändert einer der unterlagerten Regler den Widerstand
-\(R_{\mathrm{Stell}}\), ändert sich der betreffende Modulstrom und
-damit zugleich der von der gemeinsamen Einspeisung bereitgestellte
-Gesamtstrom. Eine weiterhin aktive Gesamtstromregelung würde auf diese
-Änderung mit einer Anpassung der Versorgungsspannung reagieren. Diese
-Spannungsänderung würde wiederum sämtliche parallel angeschlossenen
-Abgänge beeinflussen.
-
-Für das entwickelte Optimierungskonzept ist daher vorgesehen, die
-bisherige Gesamtstromregelung des Säulenstelltransformators durch eine
-Spannungsregelung zu ersetzen. Die vorgelagerte Regelung soll die drei
-Phasenspannungen auf der Niederspannungsseite des
-Hochstromtransformators auf vorgegebenen Sollwerten halten. Die
-individuellen Modulströme werden anschließend durch die
-phasenbezogene Verstellung der sekundärseitigen Widerstände
-\(R_{\mathrm{Stell}}\) geregelt.
-
-Damit ergibt sich eine zweistufige Regelungsstruktur aus einer
-vorgelagerten Spannungsregelung und den nachgelagerten
-Stromregelkreisen. Die vorgelagerte Regelung stellt möglichst konstante
-elektrische Randbedingungen für die parallel angeschlossenen
-Abgangseinheiten bereit. Die nachgelagerten Regelkreise gleichen
-dagegen die abgangsspezifischen Abweichungen aus.
-
-Für die vorgelagerte Regelung werden die drei Phasenspannungen zu dem
-Vektor
-
-\begin{equation}
-    \mathbf{U}
-    =
-    \begin{bmatrix}
-        U_{\mathrm{L1}} &
-        U_{\mathrm{L2}} &
-        U_{\mathrm{L3}}
-    \end{bmatrix}^{\mathrm{T}}
-    \label{eq:spannungsvektor}
-\end{equation}
-
-zusammengefasst. Die zugehörigen Sollwerte lauten
-
-\begin{equation}
-    \mathbf{U}_{\mathrm{soll}}
-    =
-    \begin{bmatrix}
-        U_{\mathrm{L1,soll}} &
-        U_{\mathrm{L2,soll}} &
-        U_{\mathrm{L3,soll}}
-    \end{bmatrix}^{\mathrm{T}}.
-    \label{eq:spannungssollwertvektor}
-\end{equation}
-
-Die Regelabweichung der vorgelagerten Spannungsregelung ergibt sich
-damit zu
-
-\begin{equation}
-    \mathbf{e}_{U}
-    =
-    \mathbf{U}_{\mathrm{soll}}
-    -
-    \mathbf{U}.
-    \label{eq:regelabweichung_spannung}
-\end{equation}
-
-Als Stellglieder dienen die motorisch verfahrbaren Stromabnehmer des
-Säulenstelltransformators. Da jede Phase über einen eigenen
-motorischen Antrieb verfügt, können die Phasenspannungen grundsätzlich
-separat beeinflusst werden. Die Spannungsmessung ist für eine spätere
-Realisierung am gemeinsamen Einspeisepunkt der Prüfanordnung
-vorzusehen. Dadurch wird die tatsächlich an den parallelen
-Lastzweigen wirksame Spannung erfasst.
-
-Der Sollwert der Spannungsregelung ist so festzulegen, dass der
-vorgesehene Arbeitspunkt der Prüfanordnung erreicht wird und für die
-nachgelagerten Stromregelkreise eine ausreichende Stellreserve
-verbleibt. Der Gesamtstrom ist nach der Umstellung nicht mehr die
-unmittelbare Regelgröße des Säulenstelltransformators. Er muss jedoch
-weiterhin messtechnisch überwacht werden, da er für die Belastung des
-Leistungsschalterfeldes und der gemeinsamen Strompfade maßgebend ist.
-
-Für jede Phase gilt die Strombilanz
-
-\begin{equation}
-    I_{\mathrm{ges},\varphi}
-    =
-    I_{\mathrm{KB},\varphi}
-    +
-    \sum_{k=1}^{12} I_{k,\varphi},
-    \qquad
-    \varphi \in
+    p \in
     \left\{
         \mathrm{L1},
         \mathrm{L2},
         \mathrm{L3}
     \right\}.
-    \label{eq:strombilanz_regelungskonzept}
+    \label{eq:definition_phasenindex}
 \end{equation}
 
-Dabei bezeichnet \(I_{\mathrm{KB},\varphi}\) den über das
-Leistungsschalterfeld und die Kurzschlussbrücke geführten Stromanteil
-der jeweiligen Phase. Der Spannungssollwert muss folglich nicht nur
-unter Berücksichtigung der MCC-Abgänge, sondern anhand des
-vollständigen Prüfaufbaus festgelegt werden.
+Für die Abgänge mit \SI{250}{\ampere}, \SI{400}{\ampere} und
+\SI{630}{\ampere} bleibt der vorhandene V2A-Widerstand als
+Grundlastpfad erhalten. Trafo~2 bildet dort einen parallel
+angeordneten Zusatzpfad, über den der zur Einstellung und Nachführung
+benötigte Stromanteil geführt wird.
 
-Die nachgelagerte Stromregelung wird für jeden Abgang und jede Phase
-separat vorgesehen. Für den Abgang \(k\) und die Phase \(\varphi\)
-lautet die Regelabweichung
+Bei den Abgängen mit \SI{40}{\ampere} und \SI{70}{\ampere} entfällt
+der V2A-Grundlastpfad. Der vollständige Phasenstrom wird hier durch
+die Primärwicklung von Trafo~2 geführt und über den sekundärseitigen
+Stellwiderstand eingestellt.
 
-\begin{equation}
-    e_{I,k,\varphi}
-    =
-    I_{\mathrm{soll},k,\varphi}
-    -
-    I_{k,\varphi}.
-    \label{eq:regelabweichung_modulstrom}
-\end{equation}
+Die Stromaufteilung beziehungsweise Strombeeinflussung erfolgt jeweils
+hinter dem zu prüfenden MCC-Modul. Der vollständige Modulstrom
+durchfließt somit zunächst die in der Abgangseinheit enthaltenen
+Schaltgeräte, Kontakte und Strombahnen. Erst anschließend wird der
+Strom über den jeweiligen Lastpfad zum gemeinsamen Sternpunkt
+geführt. Die für die Erwärmungsprüfung notwendige Belastung des
+MCC-Moduls bleibt dadurch erhalten.
 
-Der Sollwert entspricht im regulären Prüfbetrieb dem vorgesehenen
-Prüfstrom der jeweiligen Abgangseinheit. Die Stellgröße des
-Stromregelkreises ist die Position des motorisch verfahrbaren
-Stellwiderstands. Über diese Position wird der Widerstand
+\begin{center}
+    \fbox{
+        \parbox{0.90\textwidth}{
+            \centering
+            \textcolor{red}{
+                Abbildung ergänzen: Gesamtstruktur des
+                transformatorgestützten Stellkonzepts mit
+                zwölf dreiphasigen MCC-Abgängen,
+                36 Stellkanälen und gemeinsamem Sternpunkt.
+            }
+        }
+    }
+\end{center}
 
-\begin{equation}
-    R_{\mathrm{Stell},k,\varphi}
-    =
-    f\left(
-        x_{\mathrm{Stell},k,\varphi}
-    \right)
-    \label{eq:stellwiderstand_position_regelung}
-\end{equation}
-
-eingestellt. Darin bezeichnet
-\(x_{\mathrm{Stell},k,\varphi}\) die mechanische Position des
-zugehörigen Schleifkontakts.
-
-Ist der gemessene Modulstrom kleiner als sein Sollwert, gilt
-
-\begin{equation}
-    e_{I,k,\varphi} > 0.
-\end{equation}
-
-In diesem Fall muss der wirksame Stellwiderstand verkleinert werden.
-Die auf die Primärseite von Trafo~2 transformierte Impedanz nimmt
-dadurch ab und der Modulstrom steigt. Ist der gemessene Strom dagegen
-größer als der Sollwert, muss \(R_{\mathrm{Stell},k,\varphi}\)
-vergrößert werden. Die erforderliche Wirkungsrichtung des
-Stromregelkreises lässt sich somit durch
-
-\begin{equation}
-    \begin{aligned}
-        e_{I,k,\varphi} > 0
-        &\quad\Longrightarrow\quad
-        R_{\mathrm{Stell},k,\varphi} \downarrow,
-        \\[0.5ex]
-        e_{I,k,\varphi} < 0
-        &\quad\Longrightarrow\quad
-        R_{\mathrm{Stell},k,\varphi} \uparrow
-    \end{aligned}
-    \label{eq:regelrichtung_stellwiderstand}
-\end{equation}
-
-beschreiben.
-
-Die Widerstandsverstellung ist auf den physikalisch verfügbaren
-Stellbereich zu begrenzen:
-
-\begin{equation}
-    R_{\mathrm{Stell},k,\varphi,\min}
-    \leq
-    R_{\mathrm{Stell},k,\varphi}
-    \leq
-    R_{\mathrm{Stell},k,\varphi,\max}.
-    \label{eq:begrenzung_stellwiderstand_regelung}
-\end{equation}
-
-Die Begrenzung verhindert, dass der Regler einen außerhalb des
-technisch realisierbaren Bereichs liegenden Widerstandswert anfordert.
-Für eine spätere konstruktive Umsetzung sind zusätzlich mechanische
-Endlagen, zulässige Verfahrgeschwindigkeiten sowie Strom- und
-Temperaturgrenzen der Stellwiderstände zu berücksichtigen.
-
-Für die zwölf dreiphasigen Abgangseinheiten werden insgesamt
-36 phasenbezogene Stromregelkreise benötigt. Die einzelnen
-Stromregelkreise sind jedoch nicht vollständig voneinander unabhängig.
-Alle Abgänge werden aus gemeinsamen Kupferschienen gespeist. Eine
-Änderung eines Stellwiderstands verändert deshalb die Gesamtbelastung
-der Spannungsquelle und kann über deren innere Impedanz geringfügige
-Spannungsänderungen hervorrufen. Diese wirken wiederum auf die übrigen
-Abgänge zurück.
-
-Die Regelgrößen und Stellgrößen des nachgelagerten Systems können
-vereinfacht zu den Vektoren
-
-\begin{equation}
-    \mathbf{I}_{\mathrm{MCC}}
-    =
-    \begin{bmatrix}
-        I_{1,\mathrm{L1}} &
-        I_{1,\mathrm{L2}} &
-        I_{1,\mathrm{L3}} &
-        \ldots &
-        I_{12,\mathrm{L3}}
-    \end{bmatrix}^{\mathrm{T}}
-    \label{eq:stromvektor_mcc}
-\end{equation}
-
-und
-
-\begin{equation}
-    \mathbf{R}_{\mathrm{Stell}}
-    =
-    \begin{bmatrix}
-        R_{\mathrm{Stell},1,\mathrm{L1}} &
-        R_{\mathrm{Stell},1,\mathrm{L2}} &
-        R_{\mathrm{Stell},1,\mathrm{L3}} &
-        \ldots &
-        R_{\mathrm{Stell},12,\mathrm{L3}}
-    \end{bmatrix}^{\mathrm{T}}
-    \label{eq:stellwiderstandsvektor}
-\end{equation}
-
-zusammengefasst werden. Da eine Stellgrößenänderung neben dem
-zugeordneten Modulstrom auch die gemeinsamen elektrischen Größen
-beeinflussen kann, ist die gesamte Prüfanordnung als gekoppeltes
-Mehrgrößensystem zu betrachten.
-
-Für den vorgesehenen Prüfablauf werden die Stellwiderstände zunächst
-in eine definierte, strombegrenzende Ausgangsposition gefahren.
-Anschließend wird die gemeinsame Versorgungsspannung auf den
-vorgesehenen Arbeitspunkt eingestellt und durch die vorgelagerte
-Spannungsregelung konstant gehalten. Erst danach werden die
-phasenbezogenen Stromregelkreise freigegeben. Die eigentliche
-Erwärmungsprüfung kann beginnen, sobald sämtliche Modulströme innerhalb
-des festgelegten Toleranzbereichs liegen und ein stabiler Betriebspunkt
-erreicht ist.
-
-Die vorliegende Arbeit umfasst keine hardwareseitige Realisierung
-dieser Regelungsstruktur. Die Regelkreise werden daher im weiteren
-Verlauf durch mathematische Modelle und eine Simulation untersucht.
-Die Auswahl der Reglerstruktur, ihre Parametrierung, die Abbildung der
-Stellgrößenbegrenzungen und die Untersuchung der gegenseitigen
-Beeinflussung erfolgen im Rahmen der Modellbildung und
-Plausibilisierung.
+% Vorgesehener Dateiname:
+% 03_Ressourcen/drawio/gesamtstruktur_stellkonzept.pdf
 
 
 % -----------------------------------------------------------------------------
-% 4.6 Dimensionierung und erforderliche Stellreserven
+% 4.2 Wirkprinzip des transformatorgestützten Stellkanals
 % -----------------------------------------------------------------------------
-\subsection{Dimensionierung und erforderliche Stellreserven}
-\label{sec:dimensionierung_stellreserve}
+\subsection{Wirkprinzip des transformatorgestützten Stellkanals}
+\label{sec:wirkprinzip_trafo2}
 
-Ziel der Dimensionierung ist die Festlegung eines Wertebereichs, in
-dem der jeweilige Modulstrom sicher eingestellt und während der
-Erwärmungsprüfung nachgeführt werden kann. Maßgebend sind dabei das
-Übersetzungsverhältnis und die innere Impedanz von Trafo~2, der
-Widerstandsbereich von \(R_{\mathrm{Stell}}\), die gemeinsame
-Versorgungsspannung sowie der für den jeweiligen Abgang erforderliche
-Strombereich.
+Ein Stellkanal besteht aus der Primärwicklung von Trafo~2, dessen
+Sekundärwicklung, dem motorisch verstellbaren Widerstand
+\(R_{\mathrm{Stell},k,p}\), der zugehörigen Strommessung und einem
+Regelkanal. Trafo~2 stellt dabei keine zusätzliche Energiequelle dar.
+Die im Stellwiderstand umgesetzte Leistung wird weiterhin durch die
+bestehende Hochstromeinspeisung bereitgestellt.
 
-Da im Rahmen dieser Arbeit keine hardwareseitige Realisierung erfolgt,
-wird keine abschließende konstruktive Dimensionierung vorgenommen.
-Stattdessen werden die für die Funktionsfähigkeit des Konzepts
-notwendigen Zusammenhänge und Auslegungsbedingungen hergeleitet. Diese
-bilden anschließend die Grundlage für die Parametrierung des
-Simulationsmodells.
-
-Die auf die Primärseite bezogene innere Impedanz von Trafo~2 wird durch
-
-\begin{equation}
-    \underline{Z}_{\mathrm{T2},1}
-    =
-    R_{\mathrm{T2},1}
-    +
-    \mathrm{j}X_{\sigma,\mathrm{T2},1}
-    \label{eq:trafo2_innenimpedanz}
-\end{equation}
-
-beschrieben. Darin umfasst \(R_{\mathrm{T2},1}\) die auf die
-Primärseite bezogenen ohmschen Wicklungsverluste und
-\(X_{\sigma,\mathrm{T2},1}\) die zugehörige Streureaktanz. Zusammen mit
-dem transformierten Stellwiderstand ergibt sich die für den
-Primärstrom wirksame Gesamtimpedanz zu
-
-\begin{equation}
-    \underline{Z}_{\mathrm{ges,T2}}
-    =
-    R_{\mathrm{T2},1}
-    +
-    u_{\mathrm{T2}}^{\,2}R_{\mathrm{Stell}}
-    +
-    \mathrm{j}X_{\sigma,\mathrm{T2},1}.
-    \label{eq:gesamtimpedanz_trafo2_dimensionierung}
-\end{equation}
-
-Der Betrag des Primärstroms folgt damit aus
-
-\begin{equation}
-    I_{\mathrm{T2},1}
-    =
-    \frac{U_1}
-    {
-        \sqrt{
-            \left(
-                R_{\mathrm{T2},1}
-                +
-                u_{\mathrm{T2}}^{\,2}R_{\mathrm{Stell}}
-            \right)^2
-            +
-            X_{\sigma,\mathrm{T2},1}^{\,2}
-        }
-    }.
-    \label{eq:primaerstrom_trafo2_dimensionierung}
-\end{equation}
-
-Gleichung~\eqref{eq:primaerstrom_trafo2_dimensionierung} zeigt, dass
-der maximal erreichbare Primärstrom nicht allein durch
-\(R_{\mathrm{Stell},\min}\) bestimmt wird. Auch die innere Impedanz von
-Trafo~2 begrenzt den Strom. Selbst für einen idealisierten
-sekundärseitigen Kurzschluss mit
-
-\begin{equation}
-    R_{\mathrm{Stell}} = 0
-\end{equation}
-
-verbleibt die Kurzschlussimpedanz des Transformators im Stromkreis. Der
-maximal erreichbare Primärstrom beträgt daher
-
-\begin{equation}
-    I_{\mathrm{T2},1,\max}
-    =
-    \frac{U_1}
-    {
-        \sqrt{
-            R_{\mathrm{T2},1}^{\,2}
-            +
-            X_{\sigma,\mathrm{T2},1}^{\,2}
-        }
-    }.
-    \label{eq:maximalstrom_trafo2}
-\end{equation}
-
-Für die spätere Auslegung von Trafo~2 sind somit insbesondere dessen
-Kurzschlussimpedanz und relative Kurzschlussspannung erforderlich. Bei
-einem einphasig betrachteten Transformator kann die auf die
-Primärseite bezogene Kurzschlussimpedanz aus der relativen
-Kurzschlussspannung näherungsweise durch
-
-\begin{equation}
-    Z_{\mathrm{k},1}
-    =
-    \frac{u_{\mathrm{k}}}{100}
-    \frac{U_{1,\mathrm{N}}}{I_{1,\mathrm{N}}}
-    =
-    \frac{u_{\mathrm{k}}}{100}
-    \frac{U_{1,\mathrm{N}}^{\,2}}{S_{\mathrm{N}}}
-    \label{eq:kurzschlussimpedanz_trafo2}
-\end{equation}
-
-bestimmt werden. Dabei bezeichnet \(u_{\mathrm{k}}\) die relative
-Kurzschlussspannung in Prozent. Ohne diese Kenngröße kann nicht
-abschließend beurteilt werden, ob der gewünschte maximale Primärstrom
-mit dem vorgesehenen Transformator erreicht wird.
-
-Wird Gleichung~\eqref{eq:primaerstrom_trafo2_dimensionierung} nach dem
-Stellwiderstand aufgelöst, ergibt sich der für einen vorgegebenen
-Primärstrom erforderliche sekundärseitige Widerstand zu
-
-\begin{equation}
-    R_{\mathrm{Stell}}
-    =
-    \frac{1}{u_{\mathrm{T2}}^{\,2}}
-    \left[
-        \sqrt{
-            \left(
-                \frac{U_1}{I_{\mathrm{T2},1}}
-            \right)^2
-            -
-            X_{\sigma,\mathrm{T2},1}^{\,2}
-        }
-        -
-        R_{\mathrm{T2},1}
-    \right].
-    \label{eq:rstell_aus_primaerstrom}
-\end{equation}
-
-Eine reelle Lösung ist nur möglich, wenn
-
-\begin{equation}
-    \left(
-        \frac{U_1}{I_{\mathrm{T2},1}}
-    \right)^2
-    \geq
-    X_{\sigma,\mathrm{T2},1}^{\,2}
-    \label{eq:realisierbarkeitsbedingung_rstell}
-\end{equation}
-
-gilt und der nach
-Gleichung~\eqref{eq:rstell_aus_primaerstrom} berechnete
-Widerstand innerhalb des technisch verfügbaren Stellbereichs liegt.
-
-Für die Abgänge mit Bemessungsströmen von \SI{250}{\ampere},
-\SI{400}{\ampere} und \SI{630}{\ampere} übernimmt der vorhandene
-V2A-Widerstand den überwiegenden Anteil des Modulstroms. Trafo~2 muss
-lediglich die Differenz zwischen dem Strom durch den V2A-Pfad und dem
-vorgegebenen Modulstrom bereitstellen. Unter der Annahme eines
-überwiegend ohmschen Verhaltens kann der erforderliche Strom des
-Zusatzpfads näherungsweise durch
-
-\begin{equation}
-    I_{\mathrm{T2},1,\mathrm{erf}}(\vartheta)
-    =
-    I_{\mathrm{soll}}
-    -
-    I_{\mathrm{V2A}}(\vartheta)
-    \label{eq:erforderlicher_zusatzstrom_temperatur}
-\end{equation}
-
-bestimmt werden.
-
-Mit zunehmender Temperatur steigt der elektrische Widerstand des
-V2A-Materials. Bei näherungsweise konstanter Phasenspannung sinkt
-dadurch der Strom \(I_{\mathrm{V2A}}(\vartheta)\), während der
-erforderliche Zusatzstrom nach
-Gleichung~\eqref{eq:erforderlicher_zusatzstrom_temperatur} zunimmt. Die
-notwendige Nachführreserve ergibt sich folglich aus der Differenz
-zwischen dem V2A-Strom im kalten und im maximal betrachteten warmen
-Zustand:
-
-\begin{equation}
-    \Delta I_{\mathrm{th}}
-    =
-    I_{\mathrm{V2A}}(\vartheta_{\min})
-    -
-    I_{\mathrm{V2A}}(\vartheta_{\max}).
-    \label{eq:thermische_stromreserve}
-\end{equation}
-
-Zur thermisch bedingten Stromänderung ist eine zusätzliche Reserve für
-Modellabweichungen, Bauteiltoleranzen und Schwankungen des
-Arbeitspunkts vorzusehen. Der maximal erforderliche Strom des
-Zusatzpfads wird deshalb durch
-
-\begin{equation}
-    I_{\mathrm{T2},1,\mathrm{aus}}
-    =
-    I_{\mathrm{T2},1,\mathrm{erf,max}}
-    +
-    \Delta I_{\mathrm{Reserve}}
-    \label{eq:auslegungsstrom_zusatzpfad}
-\end{equation}
-
-festgelegt. Der Wert \(\Delta I_{\mathrm{Reserve}}\) ist im weiteren
-Verlauf anhand der Simulationsergebnisse zu bestimmen.
-
-Da der transformatorgestützte Zusatzpfad ausschließlich einen
-positiven Strombeitrag liefern kann, muss bereits im kalten Zustand
-sichergestellt werden, dass der Gesamtstrom nicht oberhalb des
-zulässigen Bereichs liegt. Die entsprechende Bedingung wurde in
-Gleichung~\eqref{eq:bedingung_kaltzustand_grosse_abgaenge}
-formuliert. Im maximal betrachteten warmen Zustand muss dagegen die in
-Gleichung~\eqref{eq:bedingung_warmzustand_grosse_abgaenge}
-angegebene Bedingung erfüllt sein. Der V2A-Widerstand ist somit so
-vorzudimensionieren, dass Trafo~2 im kalten Zustand nicht bereits an
-seiner unteren Stellgrenze und im warmen Zustand nicht an seiner
-oberen Stellgrenze betrieben wird.
-
-Für einen gewählten Arbeitspunkt
-\(R_{\mathrm{Stell},0}\) können die verfügbaren
-Widerstandsreserven durch
-
-\begin{align}
-    \Delta R_{\mathrm{Stell},\downarrow}
-    &=
-    R_{\mathrm{Stell},0}
-    -
-    R_{\mathrm{Stell},\min},
-    \label{eq:rstell_reserve_unten}
-    \\[1ex]
-    \Delta R_{\mathrm{Stell},\uparrow}
-    &=
-    R_{\mathrm{Stell},\max}
-    -
-    R_{\mathrm{Stell},0}
-    \label{eq:rstell_reserve_oben}
-\end{align}
-
-beschrieben werden. Die Reserve in Richtung kleinerer Widerstände
-ermöglicht eine Erhöhung des Modulstroms. Die Reserve in Richtung
-größerer Widerstände ermöglicht dessen Verringerung.
-
-Bei den Abgängen mit Bemessungsströmen von \SI{40}{\ampere} und
-\SI{70}{\ampere} ist kein paralleler V2A-Widerstand vorgesehen. Trafo~2
-muss daher den vollständigen Modulstrom übertragen. Für diese Abgänge
-ist nicht nur eine thermisch bedingte Stromdifferenz, sondern ein
-vollständiger Stromstellbereich bereitzustellen. Der Bemessungsstrom
-muss einschließlich der erforderlichen oberen und unteren
-Stellreserve innerhalb des erreichbaren Bereichs liegen:
-
-\begin{equation}
-    I_{\mathrm{T2},1,\min}
-    \leq
-    I_{\mathrm{N}}
-    -
-    \Delta I_{\mathrm{Reserve},-}
-    <
-    I_{\mathrm{N}}
-    <
-    I_{\mathrm{N}}
-    +
-    \Delta I_{\mathrm{Reserve},+}
-    \leq
-    I_{\mathrm{T2},1,\max}.
-    \label{eq:stromreserve_kleine_abgaenge}
-\end{equation}
-
-Die untere Stromreserve ermöglicht eine Verringerung des Stroms bei
-einem zu hohen Ausgangswert. Die obere Stromreserve wird benötigt, um
-Widerstandserhöhungen der Wicklungen, Kontakte und Verbindungen sowie
-Abweichungen der Versorgungsspannung ausgleichen zu können.
-
-Da alle Abgänge an einer gemeinsamen Phasenspannung betrieben werden,
-müssen die Übersetzungsverhältnisse und Widerstandsbereiche so gewählt
-werden, dass die jeweiligen Arbeitspunkte gleichzeitig erreichbar
-sind. Für jeden Kanal muss bei der vorgesehenen Phasenspannung gelten:
-
-\begin{equation}
-    I_{k,\varphi,\min}
-    \leq
-    I_{\mathrm{soll},k,\varphi}
-    \leq
-    I_{k,\varphi,\max}.
-    \label{eq:gemeinsamer_spannungsarbeitspunkt}
-\end{equation}
-
-Kann diese Bedingung nicht mit einer einheitlichen Ausführung erfüllt
-werden, sind für die unterschiedlichen Modulströme angepasste
-Übersetzungsverhältnisse oder unterschiedliche Stellwiderstandsbereiche
-vorzusehen. Eine identische Ausführung von Trafo~2 und
-\(R_{\mathrm{Stell}}\) für sämtliche Stromklassen wird daher nicht
-vorausgesetzt.
-
-Neben dem Widerstandsbereich ist die Dauerstrom- und
-Dauerleistungsfähigkeit der Komponenten zu berücksichtigen. Für das
-verwendete Übersetzungsverhältnis
+Die Aufgabe des Transformators besteht darin, die auf seiner
+Sekundärseite angeschlossene Impedanz auf einen für den
+niederspannungsseitigen Hochstromkreis geeigneten Wert zu
+transformieren. Für den idealisierten Transformator gilt das
+Übersetzungsverhältnis
 
 \begin{equation}
     u_{\mathrm{T2}}
     =
-    \frac{U_1}{U_2}
-    =
     \frac{N_1}{N_2}
+    =
+    \frac{U_{\mathrm{T2},1}}{U_{\mathrm{T2},2}}
+    =
+    \frac{I_{\mathrm{T2},2}}{I_{\mathrm{T2},1}}.
+    \label{eq:uebersetzungsverhaeltnis_trafo2}
 \end{equation}
 
-gelten im idealisierten Fall
+Dabei bezeichnen \(N_1\) und \(N_2\) die Windungszahlen,
+\(U_{\mathrm{T2},1}\) und \(U_{\mathrm{T2},2}\) die Effektivwerte der
+Spannungen sowie \(I_{\mathrm{T2},1}\) und
+\(I_{\mathrm{T2},2}\) die Effektivwerte der Ströme auf der Primär-
+und Sekundärseite. Die grundlegenden Transformatorbeziehungen und die
+Übertragung von Impedanzen werden in
+\textcite[Abschn.~2.1.2--2.1.5 und 2.3.3,
+S.~109--114 und 136--141]{spring2009maschinen} hergeleitet.
 
-\begin{align}
-    U_2
-    &=
-    \frac{U_1}{u_{\mathrm{T2}}},
-    \label{eq:sekundaerspannung_trafo2}
-    \\
-    I_2
-    &=
-    u_{\mathrm{T2}} I_1.
-    \label{eq:sekundaerstrom_trafo2}
-\end{align}
-
-Durch eine sekundärseitige Spannungserhöhung wird der dort fließende
-Strom gegenüber dem hohen Primärstrom reduziert. Dadurch kann der
-Stellwiderstand mit höheren Widerstandswerten und geringeren Strömen
-ausgeführt werden. Seine Verlustleistung beträgt
+Trafo~2 soll die niedrige Spannung des Hochstromkreises auf ein
+höheres sekundärseitiges Spannungsniveau transformieren. Damit gilt
 
 \begin{equation}
-    P_{\mathrm{Stell}}
-    =
-    I_2^{\,2}R_{\mathrm{Stell}}.
-    \label{eq:verlustleistung_stellwiderstand_dimensionierung}
+    N_2 > N_1
+    \qquad\Longrightarrow\qquad
+    u_{\mathrm{T2}} < 1.
+    \label{eq:trafo2_spannungserhoehung}
 \end{equation}
 
-Da sowohl \(I_2\) als auch \(R_{\mathrm{Stell}}\) vom eingestellten
-Arbeitspunkt abhängen, muss die maximale Verlustleistung über den
-gesamten Stellbereich ermittelt werden:
+Der sekundärseitige Stellwiderstand erscheint auf der Primärseite mit
 
 \begin{equation}
-    P_{\mathrm{Stell},\max}
+    R_{\mathrm{Stell},k,p}'
     =
-    \max_{
-        R_{\mathrm{Stell},\min}
-        \leq
-        R_{\mathrm{Stell}}
-        \leq
-        R_{\mathrm{Stell},\max}
+    u_{\mathrm{T2}}^{\,2}
+    R_{\mathrm{Stell},k,p}.
+    \label{eq:stellwiderstand_transformation}
+\end{equation}
+
+Da \(u_{\mathrm{T2}}<1\) ist, wird der sekundärseitige Widerstand auf
+einen deutlich kleineren primärseitig wirksamen Widerstand
+transformiert. Dadurch kann ein Stellwiderstand im Ohmbereich einen
+Hochstromkreis beeinflussen, dessen wirksame Widerstände im
+Milliohmbereich liegen.
+
+Eine Verringerung von \(R_{\mathrm{Stell},k,p}\) reduziert dessen
+primärseitig wirksamen Wert. Bei gleichbleibender Speisespannung
+steigt dadurch der Primärstrom von Trafo~2:
+
+\begin{equation}
+    R_{\mathrm{Stell},k,p} \downarrow
+    \quad\Longrightarrow\quad
+    R_{\mathrm{Stell},k,p}' \downarrow
+    \quad\Longrightarrow\quad
+    I_{\mathrm{T2},1,k,p} \uparrow.
+    \label{eq:stellrichtung_trafo2}
+\end{equation}
+
+Für eine Vergrößerung des Stellwiderstands ergibt sich die
+entgegengesetzte Wirkung. Der Stellwiderstand kann somit als
+motorisch betätigtes Stellglied der Stromregelung verwendet werden.
+
+Die erreichbare Stromänderung wird im realen Aufbau zusätzlich durch
+die Wicklungswiderstände und Streureaktanzen von Trafo~2 begrenzt.
+Insbesondere die Kurzschlussimpedanz beziehungsweise die relative
+Kurzschlussspannung bestimmt den maximal erreichbaren Strom bei
+kleinem sekundärseitigem Stellwiderstand. Die physikalische Bedeutung
+dieser Größen wird bei
+\textcite[Abschn.~2.3.4--2.4.2,
+S.~142--154]{spring2009maschinen} beschrieben. Ihre detaillierte
+Berücksichtigung erfolgt im elektrischen Simulationsmodell in
+Kapitel~\ref{chap:modellbildung}.
+
+
+% -----------------------------------------------------------------------------
+% 4.3 Ausführung für 250-A-, 400-A- und 630-A-Abgänge
+% -----------------------------------------------------------------------------
+\subsection{Ausführung für die Abgänge mit hohen Prüfströmen}
+\label{sec:ausfuehrung_hohe_modulstroeme}
+
+Bei den Abgängen mit Prüfströmen von \SI{250}{\ampere},
+\SI{400}{\ampere} und \SI{630}{\ampere} bleiben die vorhandenen
+V2A-Widerstände als Grundlastpfade erhalten. Für jeden Außenleiter
+wird die Primärwicklung eines eigenen Trafo~2 parallel zum
+zugehörigen V2A-Widerstand geschaltet.
+
+Der gesamte Phasenstrom durchfließt zunächst das MCC-Modul und teilt
+sich anschließend auf den V2A-Grundlastpfad und den
+Transformatorzweig auf. Beide Teilströme werden am gemeinsamen
+Sternpunkt wieder zusammengeführt.
+
+Da der Transformatorzweig neben einem ohmschen auch einen induktiven
+Anteil besitzt, ist die Stromaufteilung grundsätzlich als
+Zeigerbeziehung zu beschreiben:
+
+\begin{equation}
+    \underline{I}_{\mathrm{MCC},k,p}
+    =
+    \underline{I}_{\mathrm{V2A},k,p}
+    +
+    \underline{I}_{\mathrm{T2},1,k,p}.
+    \label{eq:stromaufteilung_hochstromabgang}
+\end{equation}
+
+Der V2A-Widerstand übernimmt den überwiegenden Anteil des
+Modulstroms. Trafo~2 muss deshalb nicht für den vollständigen
+Prüfstrom des Abgangs, sondern für den erforderlichen Grund-,
+Stell- und Nachführstrom ausgelegt werden. Hierdurch lässt sich die
+Bemessungsleistung des zusätzlichen Transformators gegenüber einer
+vollständigen Stromführung reduzieren.
+
+Vor Beginn der Prüfung wird der V2A-Widerstand so eingestellt, dass
+sein Teilstrom unterhalb des geforderten Modulstroms liegt. Die
+verbleibende Differenz wird bereits im kalten Ausgangszustand durch
+Trafo~2 bereitgestellt:
+
+\begin{equation}
+    I_{\mathrm{T2},1,k,p,\mathrm{kalt}}
+    =
+    I_{\mathrm{soll},k,p}
+    -
+    I_{\mathrm{V2A},k,p,\mathrm{kalt}}.
+    \label{eq:trafo2_grundstrom_hochstromabgang}
+\end{equation}
+
+Diese Einstellung ist erforderlich, da der Transformatorzweig einen
+zusätzlichen Strombeitrag bereitstellen, jedoch keinen Strom aus dem
+V2A-Pfad abziehen kann. Der V2A-Grundlastpfad darf den Sollstrom daher
+auch bei kaltem Widerstand nicht überschreiten.
+
+Mit zunehmender Temperatur steigt der Widerstand der V2A-Schienen.
+Bei näherungsweise konstanter Phasenspannung sinkt dadurch der
+V2A-Teilstrom. Der Stellwiderstand wird daraufhin verkleinert, sodass
+der Primärstrom von Trafo~2 zunimmt und der thermisch bedingte
+Stromrückgang ausgeglichen wird:
+
+\begin{equation}
+    I_{\mathrm{T2},1,k,p,\mathrm{warm}}
+    =
+    I_{\mathrm{soll},k,p}
+    -
+    I_{\mathrm{V2A},k,p,\mathrm{warm}}.
+    \label{eq:trafo2_nachfuehrstrom_hochstromabgang}
+\end{equation}
+
+Für die drei Abgänge mit hohen Prüfströmen werden jeweils drei
+phasenselektive Stellkanäle benötigt. Diese Ausführungsvariante
+umfasst somit neun Transformatoren und neun motorisch verstellbare
+Widerstände.
+
+
+% -----------------------------------------------------------------------------
+% 4.4 Ausführung für 40-A- und 70-A-Abgänge
+% -----------------------------------------------------------------------------
+\subsection{Ausführung für die Abgänge mit kleinen Prüfströmen}
+\label{sec:ausfuehrung_kleine_stroeme}
+
+Bei den sechs Abgängen mit jeweils \SI{40}{\ampere} und den drei
+Abgängen mit jeweils \SI{70}{\ampere} wird kein paralleler
+V2A-Grundlastpfad eingesetzt. Der vollständige Phasenstrom fließt
+durch die Primärwicklung des jeweils zugeordneten Trafo~2:
+
+\begin{equation}
+    \underline{I}_{\mathrm{MCC},k,p}
+    =
+    \underline{I}_{\mathrm{T2},1,k,p}.
+    \label{eq:strom_kleinabgang_trafo2}
+\end{equation}
+
+Der primärseitige Transformatorstrom wird durch den auf die
+Primärseite transformierten Stellwiderstand und die innere Impedanz
+von Trafo~2 bestimmt. Der Transformatorzweig dient bei diesen
+Abgängen daher nicht nur zur Korrektur einer Stromabweichung, sondern
+bildet den vollständigen Lastpfad des jeweiligen Außenleiters.
+
+Der Stellbereich muss sowohl die erstmalige Einstellung des
+Sollstroms als auch dessen Nachführung während der Erwärmungsprüfung
+ermöglichen. Neben der Eigenerwärmung von Trafo~2 und
+\(R_{\mathrm{Stell}}\) sind dabei auch die temperaturbedingten
+Änderungen der Modul-, Kontakt- und Verbindungswiderstände zu
+berücksichtigen.
+
+Für die neun kleinen MCC-Abgänge werden insgesamt 27 Stellkanäle
+benötigt. Eine identische Dimensionierung der
+\SI{40}{\ampere}- und \SI{70}{\ampere}-Kanäle ist nicht zwingend
+erforderlich. Das Wirkprinzip und die regelungstechnische Ansteuerung
+bleiben jedoch gleich.
+
+\begin{center}
+    \fbox{
+        \parbox{0.90\textwidth}{
+            \centering
+            \textcolor{red}{
+                Abbildung ergänzen: Gegenüberstellung eines
+                Hochstromabgangs mit parallelem V2A- und
+                Trafo-2-Pfad sowie eines 40-A-/70-A-Abgangs mit
+                vollständiger Stromführung durch Trafo~2.
+            }
+        }
     }
-    \left\{
-        I_2^{\,2}(R_{\mathrm{Stell}})
-        R_{\mathrm{Stell}}
-    \right\}.
-    \label{eq:maximale_verlustleistung_stellwiderstand}
+\end{center}
+
+% Vorgesehener Dateiname:
+% 03_Ressourcen/drawio/stellkanaele_trafo2.pdf
+
+
+% -----------------------------------------------------------------------------
+% 4.5 Mess- und Regelungskonzept
+% -----------------------------------------------------------------------------
+\subsection{Mess- und Regelungskonzept}
+\label{sec:mess_regelungskonzept}
+
+Im bestehenden Prüfstand werden die hinter dem Festtransformator
+gemessenen Phasenströme als Regelgrößen des Säulenstelltransformators
+verwendet. Diese übergeordnete Stromregelung ist nicht mit einer
+gleichzeitigen individuellen Regelung der 36 Modulströme vereinbar.
+
+Erhöht ein nachgelagerter Stellkanal den Strom eines einzelnen
+MCC-Abgangs, steigt gleichzeitig der von der gemeinsamen Einspeisung
+bereitgestellte Phasenstrom. Die bestehende Gesamtstromregelung würde
+darauf mit einer Verringerung der Ausgangsspannung reagieren. Diese
+Spannungsänderung würde wiederum sämtliche parallel angeschlossenen
+MCC-Abgänge beeinflussen. Die übergeordnete Gesamtstromregelung und
+die nachgelagerten Modulstromregelungen würden folglich gegeneinander
+arbeiten.
+
+Aus diesem Grund wird die vorgelagerte Stromregelung durch eine
+phasenselektive Spannungsregelung ersetzt. Der
+Säulenstelltransformator regelt zukünftig die drei Phasenspannungen
+an der gemeinsamen Niederspannungssammelschiene. Die 36
+nachgelagerten Regelkreise stellen anschließend die einzelnen
+Modulströme über die zugehörigen Stellwiderstände ein.
+
+Für die vorgelagerte Spannungsregelung ergibt sich je Außenleiter die
+Regelabweichung
+
+\begin{equation}
+    e_{U,p}
+    =
+    U_{\mathrm{NS,soll},p}
+    -
+    U_{\mathrm{NS,ist},p}.
+    \label{eq:regelabweichung_phasenspannung}
 \end{equation}
 
-Eine alleinige Betrachtung der beiden Endlagen des Stellwiderstands
-ist nicht grundsätzlich ausreichend, da die maximale Verlustleistung
-auch innerhalb des Stellbereichs auftreten kann.
+Als Stellglieder dienen weiterhin die motorisch verfahrbaren
+Stromabnehmer des Säulenstelltransformators. Die Regelung der drei
+Phasenspannungen ist notwendig, da die Stellungen der drei
+Phasenantriebe während des Betriebs voneinander abweichen können.
 
-Trafo~2 und \(R_{\mathrm{Stell}}\) sind für den Dauerbetrieb während
-der gesamten Erwärmungsprüfung auszulegen. Für die kleinen Abgänge ist
-die Primärwicklung von Trafo~2 für den vollständigen Modulstrom
-einschließlich Stellreserve zu bemessen. Bei den großen Abgängen ist
-dagegen der maximal erforderliche Zusatzstrom maßgebend. Zusätzlich
-müssen die zulässige magnetische Flussdichte, die Wicklungserwärmung,
-die Isolationsbeanspruchung und die thermische Rückwirkung der
-Stellwiderstände auf den eigentlichen Prüfling berücksichtigt werden.
+Der bisher als Regelgröße verwendete übergeordnete Phasenstrom wird
+weiterhin erfasst, jedoch nicht mehr durch den
+Säulenstelltransformator auf einen festen Wert geregelt. Er ergibt
+sich aus dem Strom des Leistungsschalterpfads und der Summe der
+parallel angeschlossenen MCC-Abgänge:
 
-Für eine abschließende Dimensionierung werden mindestens folgende
-Kenngrößen benötigt:
+\begin{equation}
+    \underline{I}_{\mathrm{ges},p}
+    =
+    \underline{I}_{\mathrm{KB},p}
+    +
+    \sum_{k=1}^{12}
+    \underline{I}_{\mathrm{MCC},k,p}.
+    \label{eq:gesamtstrom_neues_regelkonzept}
+\end{equation}
 
-\begin{itemize}
-    \item Bemessungsleistung und Übersetzungsverhältnis von Trafo~2,
-    \item relative Kurzschlussspannung beziehungsweise
-          Kurzschlussimpedanz von Trafo~2,
-    \item ohmsche Wicklungswiderstände und Streureaktanzen,
-    \item minimaler und maximaler Wert von \(R_{\mathrm{Stell}}\),
-    \item zulässiger Dauerstrom und zulässige Verlustleistung des
-          Stellwiderstands,
-    \item maximal betrachtete Temperatur der V2A-Widerstände,
-    \item Widerstände der MCC-Module, Kontakte und Verbindungen,
-    \item vorgesehene Versorgungsspannung und zulässige
-          Stromabweichung.
-\end{itemize}
+Die Messung des Gesamtstroms bleibt für die Überwachung der
+Belastungsgrenzen des Festtransformators, der Kupferschienen, des
+Anbindefeldes und des Leistungsschalterpfads erforderlich.
 
-Da die konkreten Kurzschlussdaten von Trafo~2 gegenwärtig nicht
-vollständig vorliegen, werden die entsprechenden Parameter im
-Simulationsmodell zunächst als Modellannahmen festgelegt und
-transparent ausgewiesen. Die Simulation dient damit der Untersuchung
-der prinzipiellen Funktionsfähigkeit und der erforderlichen
-Stellreserven. Sie stellt keine abschließende Bau- oder
-Komponentenfreigabe für eine spätere hardwareseitige Umsetzung dar.
+Für jeden MCC-Abgang und Außenleiter wird ein eigener Stromregelkreis
+vorgesehen. Der Stromsensor muss jeweils den vollständigen Strom durch
+das MCC-Modul erfassen. Bei den hohen Prüfströmen ist die Messstelle
+daher vor der Aufteilung auf den V2A- und Transformatorpfad
+anzuordnen.
+
+Die Regelabweichung eines Stromkanals lautet
+
+\begin{equation}
+    e_{I,k,p}
+    =
+    I_{\mathrm{soll},k,p}
+    -
+    I_{\mathrm{ist},k,p}.
+    \label{eq:regelabweichung_modulstrom}
+\end{equation}
+
+Ist der gemessene Modulstrom kleiner als sein Sollwert, wird
+\(R_{\mathrm{Stell},k,p}\) verkleinert. Der Primärstrom von Trafo~2
+steigt. Überschreitet der Modulstrom seinen Sollwert, wird der
+Stellwiderstand vergrößert.
+
+Die Trennung in eine gemeinsame Spannungsregelung und dezentrale
+Stromregelkreise folgt dem regelungstechnischen Grundsatz, eine
+komplexe Strecke in eindeutig zugeordnete Teilregelkreise zu
+unterteilen. Die grundlegende Beschreibung geschlossener
+Regelkreise anhand von Führungs-, Rückführungs- und Störgrößen ist bei
+\textcite[Abschn.~3.4, S.~96--102]
+{schroeder2021elektrische_antriebe} dargestellt. Vorteile der
+Unterteilung komplexer Regelstrecken in einfachere Teilregelkreise
+werden von
+\textcite[Abschn.~4.3, S.~153--155]
+{schroeder2021elektrische_antriebe} erläutert.
+
+Bei der entwickelten Struktur handelt es sich jedoch nicht um eine
+klassische Kaskadenregelung, da die Sollwerte der Modulstromregler
+nicht durch den Spannungsregler erzeugt werden. Die Spannungsregelung
+stellt vielmehr eine möglichst konstante gemeinsame elektrische
+Randbedingung für die nachgelagerten Stromregelkreise bereit.
+
+Vollständig unabhängig sind die 36 Stromregelkreise dennoch nicht.
+Alle Abgänge werden über dieselben Niederspannungssammelschienen
+gespeist. Eine Änderung eines Stellwiderstands verändert die Belastung
+der gemeinsamen Quelle und kann infolge der endlichen
+Quellen- und Leitungsimpedanzen andere Abgänge beeinflussen.
+Zusätzlich bestehen Kopplungen zwischen den drei Außenleitern der
+Transformatoren. Der Prüfstand ist daher auch mit der neuen
+Regelungsstruktur als gekoppeltes Mehrgrößensystem zu behandeln.
+
+Durch die vorgelagerte Spannungsregelung wird diese Kopplung nicht
+vollständig beseitigt. Sie verhindert jedoch, dass die zentrale
+Regelung jede beabsichtigte Änderung eines Modulstroms unmittelbar
+durch eine gegenläufige Veränderung der gemeinsamen Speisespannung
+kompensiert.
+
+Beim Einschalten werden die Stellwiderstände zunächst in eine
+strombegrenzende Ausgangsposition gefahren. Danach werden die
+Phasenspannungen über den Säulenstelltransformator aufgebaut. Erst
+nach Erreichen eines stabilen Spannungsarbeitspunkts werden die
+nachgelagerten Stromregelkreise freigegeben.
+
+Die Soll- und Istwerte der Phasenspannungen, die übergeordneten
+Phasenströme, die 36 Modulströme und die Positionen der
+Stellwiderstände sollen durch die SPS erfasst und in WinCC dargestellt
+und aufgezeichnet werden. Zusätzlich sind die elektrischen und
+thermischen Belastungsgrenzen der Stelltransformatoren und
+Stellwiderstände zu überwachen.
+
+\begin{center}
+    \fbox{
+        \parbox{0.90\textwidth}{
+            \centering
+            \textcolor{red}{
+                Abbildung ergänzen: Regelungsarchitektur mit drei
+                vorgelagerten Spannungsregelkreisen, gemeinsamer
+                Niederspannungssammelschiene und 36 dezentralen
+                Modulstromregelkreisen.
+            }
+        }
+    }
+\end{center}
+
+% Vorgesehener Dateiname:
+% 03_Ressourcen/drawio/regelstruktur_stellkonzept.pdf
 
 
+% -----------------------------------------------------------------------------
+% 4.6 Vorbemessung und erforderliche Stellreserven
+% -----------------------------------------------------------------------------
+\subsection{Vorbemessung und erforderliche Stellreserven}
+\label{sec:dimensionierung_stellreserve}
 
+Die prinzipielle Funktionsfähigkeit des Konzepts setzt voraus, dass
+der Sollstrom jedes Stellkanals innerhalb seines technisch
+erreichbaren Strombereichs liegt. Für jeden Abgang und jeden
+Außenleiter muss daher gelten:
 
-Zusammenfassend ergeben sich aus der konzeptionellen Untersuchung die
-Anforderungen an den Übersetzungsfaktor und die innere Impedanz von
-Trafo~2, den Stellbereich und die Belastbarkeit von
-\(R_{\mathrm{Stell}}\) sowie an die erforderlichen Strom- und
-Positionsreserven. Da der entwickelte Aufbau im Rahmen dieser Arbeit
-nicht als reale Prüfanordnung umgesetzt wird, erfolgt der Nachweis der
-grundsätzlichen Funktionsfähigkeit anhand eines mathematischen
-Simulationsmodells. Die hierzu erforderliche Modellbildung ist
-Gegenstand des folgenden Kapitels.
+\begin{equation}
+    I_{\mathrm{MCC},k,p,\min}
+    <
+    I_{\mathrm{soll},k,p}
+    <
+    I_{\mathrm{MCC},k,p,\max}.
+    \label{eq:erreichbarer_strombereich_stellkanal}
+\end{equation}
+
+Die strengen Ungleichungen verdeutlichen, dass der Sollwert nicht
+unmittelbar auf einer Stellgrenze liegen darf. Sowohl in Richtung
+kleinerer als auch in Richtung größerer Ströme ist eine Stellreserve
+erforderlich. Diese Reserve wird zum Ausgleich thermischer
+Widerstandsänderungen, elektrischer und mechanischer Toleranzen sowie
+von Abweichungen der Speisespannung benötigt.
+
+Für die erste Vorbemessung wird für Trafo~2 ein
+Nennspannungsverhältnis von \SI{10}{\volt} zu
+\SI{230}{\volt} angesetzt. Daraus folgt
+
+\begin{equation}
+    u_{\mathrm{T2}}
+    =
+    \frac{\SI{10}{\volt}}{\SI{230}{\volt}}
+    \approx
+    0{,}0435.
+    \label{eq:vorbemessung_uebersetzung_trafo2}
+\end{equation}
+
+Bei einer vorläufig angesetzten primärseitigen Arbeitsspannung von
+
+\begin{equation}
+    U_{\mathrm{T2},1}
+    =
+    \SI{4.09}{\volt}
+    \label{eq:vorbemessung_arbeitsspannung}
+\end{equation}
+
+ergibt sich für den idealisierten Transformator eine sekundärseitige
+Spannung von
+
+\begin{equation}
+    U_{\mathrm{T2},2}
+    =
+    \frac{U_{\mathrm{T2},1}}{u_{\mathrm{T2}}}
+    \approx
+    \SI{94.1}{\volt}.
+    \label{eq:vorbemessung_sekundaerspannung}
+\end{equation}
+
+Für die kleinen Abgänge kann der erforderliche sekundärseitige Strom
+näherungsweise mit
+
+\begin{equation}
+    I_{\mathrm{T2},2}
+    =
+    u_{\mathrm{T2}}
+    I_{\mathrm{T2},1}
+    \label{eq:vorbemessung_sekundaerstrom}
+\end{equation}
+
+bestimmt werden. Der zugehörige Stellwiderstand im Arbeitspunkt folgt
+unter Vernachlässigung der inneren Transformatorimpedanz aus
+
+\begin{equation}
+    R_{\mathrm{Stell},0}
+    =
+    \frac{U_{\mathrm{T2},2}}
+         {I_{\mathrm{T2},2}}.
+    \label{eq:vorbemessung_stellwiderstand}
+\end{equation}
+
+Tabelle~\ref{tab:vorbemessung_kleine_stellkanaele} zeigt die daraus
+resultierenden idealisierten Arbeitspunkte.
+
+\begin{table}[H]
+    \centering
+    \caption{Idealisierte Vorbemessung der Stellkanäle für
+    \SI{40}{\ampere} und \SI{70}{\ampere}}
+    \label{tab:vorbemessung_kleine_stellkanaele}
+    \begin{tabular}{ccccc}
+        \toprule
+        \(I_{\mathrm{T2},1}\) &
+        \(U_{\mathrm{T2},1}\) &
+        \(U_{\mathrm{T2},2}\) &
+        \(I_{\mathrm{T2},2}\) &
+        \(R_{\mathrm{Stell},0}\) \\
+        \midrule
+        \SI{40}{\ampere} &
+        \SI{4.09}{\volt} &
+        \SI{94.1}{\volt} &
+        \SI{1.74}{\ampere} &
+        \SI{54.1}{\ohm} \\
+
+        \SI{70}{\ampere} &
+        \SI{4.09}{\volt} &
+        \SI{94.1}{\volt} &
+        \SI{3.04}{\ampere} &
+        \SI{30.9}{\ohm} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Die ideal übertragene Scheinleistung beträgt näherungsweise
+
+\begin{equation}
+    S_{\mathrm{T2}}
+    \approx
+    U_{\mathrm{T2},1} I_{\mathrm{T2},1}
+    \approx
+    U_{\mathrm{T2},2} I_{\mathrm{T2},2}.
+    \label{eq:scheinleistung_trafo2}
+\end{equation}
+
+Damit ergeben sich ohne Auslegungsreserve etwa
+\SI{164}{\volt\ampere} für einen \SI{40}{\ampere}-Kanal und
+\SI{286}{\volt\ampere} für einen \SI{70}{\ampere}-Kanal. Diese Werte
+stellen ausschließlich idealisierte Ausgangswerte dar. Für die
+Komponentenauswahl müssen Transformatorverluste,
+Kurzschlussimpedanz, Eigenerwärmung und die erforderliche
+Stellreserve berücksichtigt werden.
+
+Für die überschlägige Bewertung der Hochstromabgänge wird die
+temperaturabhängige Widerstandsänderung des V2A-Grundlastpfads
+herangezogen. Unter der Annahme einer konstanten Spannung gilt
+näherungsweise
+
+\begin{equation}
+    \frac{I_{\mathrm{V2A}}(T)}
+         {I_{\mathrm{V2A}}(T_0)}
+    =
+    \frac{1}
+    {1+\alpha_{\mathrm{el}}(T-T_0)}.
+    \label{eq:stromverhaeltnis_v2a_vorbemessung}
+\end{equation}
+
+Mit dem für die Voruntersuchung verwendeten Temperaturkoeffizienten
+
+\begin{equation}
+    \alpha_{\mathrm{el}}
+    =
+    \SI{0.001}{\per\kelvin},
+\end{equation}
+
+einer Ausgangstemperatur von \SI{20}{\degreeCelsius} und einer
+angenommenen Temperatur von \SI{150}{\degreeCelsius} ergibt sich
+
+\begin{equation}
+    \frac{I_{\mathrm{V2A}}(\SI{150}{\degreeCelsius})}
+         {I_{\mathrm{V2A}}(\SI{20}{\degreeCelsius})}
+    =
+    \frac{1}
+    {1+\SI{0.001}{\per\kelvin}\cdot\SI{130}{\kelvin}}
+    \approx
+    0{,}885.
+    \label{eq:stromverhaeltnis_v2a_150c}
+\end{equation}
+
+Der V2A-Teilstrom nimmt unter diesen vereinfachten Bedingungen somit
+um etwa \SI{11.5}{\percent} ab. Würde der V2A-Widerstand im kalten
+Zustand zunächst den vollständigen Nennstrom führen, ergäben sich die
+in Tabelle~\ref{tab:orientierungswerte_nachfuehrstrom}
+aufgeführten orientierenden Nachführströme.
+
+\begin{table}[H]
+    \centering
+    \caption{Orientierungswerte für die thermisch erforderliche
+    Stromnachführung der Hochstromabgänge}
+    \label{tab:orientierungswerte_nachfuehrstrom}
+    \begin{tabular}{ccc}
+        \toprule
+        Prüfstrom &
+        relative Stromabnahme &
+        orientierender Nachführstrom \\
+        \midrule
+        \SI{250}{\ampere} & \SI{11.5}{\percent} & \SI{28.8}{\ampere} \\
+        \SI{400}{\ampere} & \SI{11.5}{\percent} & \SI{46.0}{\ampere} \\
+        \SI{630}{\ampere} & \SI{11.5}{\percent} & \SI{72.5}{\ampere} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Die Werte stellen keine abschließende Dimensionierung von Trafo~2
+dar. Im entwickelten Konzept wird der V2A-Widerstand bereits im
+kalten Zustand unterhalb des Sollstroms eingestellt. Trafo~2 führt
+daher zusätzlich zum thermischen Nachführstrom einen anfänglichen
+Grundstrom. Für die Auslegung ist folglich der größte während der
+Prüfung auftretende Transformatorstrom maßgebend:
+
+\begin{equation}
+    I_{\mathrm{T2},1,k,p,\max}
+    \geq
+    I_{\mathrm{soll},k,p}
+    -
+    I_{\mathrm{V2A},k,p,\min}.
+    \label{eq:auslegungsbedingung_trafo2_hochstrom}
+\end{equation}
+
+Gleichzeitig muss der minimale Strombeitrag des Transformatorzweigs
+so klein sein, dass der Sollstrom im kalten Zustand nicht
+überschritten wird:
+
+\begin{equation}
+    I_{\mathrm{T2},1,k,p,\min}
+    \leq
+    I_{\mathrm{soll},k,p}
+    -
+    I_{\mathrm{V2A},k,p,\mathrm{kalt}}.
+    \label{eq:auslegungsbedingung_trafo2_minimalstrom}
+\end{equation}
+
+Der vorgesehene Arbeitspunkt des Stellwiderstands muss deshalb
+zwischen seinen mechanischen und elektrischen Grenzen liegen:
+
+\begin{equation}
+    R_{\mathrm{Stell},\min}
+    <
+    R_{\mathrm{Stell},0}
+    <
+    R_{\mathrm{Stell},\max}.
+    \label{eq:arbeitspunkt_stellwiderstand}
+\end{equation}
+
+Für Trafo~2 sind neben dem Übersetzungsverhältnis insbesondere die
+Bemessungsleistung, die zulässigen Primär- und Sekundärströme, die
+Kurzschlussimpedanz sowie die thermische Dauerbelastbarkeit
+maßgebend. Für den Stellwiderstand müssen der minimale und maximale
+Widerstandswert, der zulässige Dauerstrom, die Verlustleistung, die
+mechanische Auflösung und die Verfahrgeschwindigkeit bekannt sein.
+
+Da die Erwärmungsprüfung über mehrere Stunden durchgeführt wird,
+müssen Trafo~2, Stellwiderstand, Schleifkontakt und sämtliche
+elektrischen Verbindungen für Dauerbetrieb ausgelegt werden. Ihre
+Eigenerwärmung darf den verfügbaren Stellbereich nicht unzulässig
+verändern und die Temperaturmessung am eigentlichen Prüfling nicht
+beeinflussen.
+
+Die Vorbemessung zeigt, dass das Konzept mit technisch handhabbaren
+sekundärseitigen Strömen und Widerständen grundsätzlich umsetzbar ist.
+Eine abschließende Bewertung ist auf Grundlage der idealisierten
+Berechnungen jedoch nicht möglich. Hierzu müssen die inneren
+Transformatorimpedanzen, die temperaturabhängigen Widerstände, die
+Quellenimpedanz und die Wechselwirkungen zwischen den Stellkanälen
+berücksichtigt werden. Diese Zusammenhänge werden im folgenden
+Kapitel als Simulationsmodell abgebildet und anhand definierter
+Grenz- und Vergleichsfälle plausibilisiert.
