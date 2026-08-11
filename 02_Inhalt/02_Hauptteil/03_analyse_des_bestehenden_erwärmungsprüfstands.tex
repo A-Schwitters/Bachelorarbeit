@@ -1,53 +1,27 @@
-% =============================================================================
+% ===============================================================% =============================================================================
 % 3 Analyse des bestehenden Erwärmungsprüfstands
 % =============================================================================
 \section{Analyse des bestehenden Erwärmungsprüfstands}
 \label{chap:analyse_pruefstand}
 
-In diesem Kapitel werden der technische Aufbau des bestehenden
-Erwärmungsprüfstands und der gegenwärtige betriebliche Ablauf der
-Erwärmungsprüfung analysiert. Ziel ist es, die für die Erzeugung,
-Verteilung und Einstellung der Prüfströme maßgebenden Zusammenhänge
-herauszuarbeiten. Darauf aufbauend wird untersucht, weshalb sich die
-Ströme der einzelnen MCC-Abgänge während der Erwärmungsphase verändern
-und warum ihre Einhaltung im bestehenden Prüfstand wiederholte manuelle
-Nachstellungen erfordert.
+In diesem Kapitel wird der bestehende Erwärmungsprüfstand hinsichtlich seines
+technischen Aufbaus, des betrieblichen Prüfablaufs und der Einstellung der
+einzelnen Abgangsströme untersucht. Ziel der Analyse ist es, die Ursachen für
+den wiederkehrenden manuellen Nachstellbedarf zu bestimmen und daraus
+Anforderungen an die nachfolgende Konzeptentwicklung abzuleiten. Die
+normativen Grundlagen des Erwärmungsnachweises sowie die allgemeinen
+elektrischen und thermischen Zusammenhänge wurden bereits in
+Kapitel~\ref{chap:technische_grundlagen} erläutert.
 
-Die betrachtete Prüfanordnung besteht aus einer regelbaren
-Hochstromeinspeisung, einem Anbindefeld sowie einer Prüfkombination aus
-Leistungsschalterfeld und MCC-Feld. Innerhalb des MCC-Feldes werden
-zwölf dreiphasige Abgangseinheiten parallel über ein gemeinsames
-Verteilschienensystem gespeist. Die für die Analyse und die anschließende
-Konzeptentwicklung zugrunde gelegte Modulbestückung ist in
-Abbildung~\ref{fig:mcc_modulbestueckung} dargestellt. Sie umfasst sechs
-A-Module mit jeweils \SI{40}{\ampere}, drei B-Module mit jeweils
-\SI{70}{\ampere} sowie jeweils ein 1er/H-Modul mit
-\SI{250}{\ampere}, ein 2er-Modul mit \SI{400}{\ampere} und ein
-3er-Modul mit \SI{630}{\ampere}. Daraus ergibt sich ein gesamter
-Bemessungsstrom der betrachteten Abgangseinheiten von
-\SI{1730}{\ampere}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{03_Ressourcen/pic/Frontansicht_MCC_Xournal.pdf}
-    \caption{Schematische Frontansicht des MCC-Feldes mit der zugrunde gelegten Modulbestückung}
-    \label{fig:mcc_modulbestueckung}
-\end{figure}
-
-Die Untersuchung folgt zunächst dem elektrischen Energiepfad vom
-betrieblichen Drehstromnetz über den Säulenstelltransformator und den
-Festtransformator bis zur Hochstromverteilung. Anschließend werden das
-Anbindefeld, die Aufteilung des Gesamtstroms innerhalb der
-Prüfkombination, der Aufbau des MCC-Feldes und die Belastung der
-MCC-Abgänge durch die externen V2A-Lastwiderstände beschrieben.
-
-Darauf folgt die Analyse des betrieblichen Prüfablaufs. Im Mittelpunkt
-stehen die zentrale Nachführung der übergeordneten Phasenströme, die
-manuelle Einstellung der einzelnen Modulströme sowie deren Veränderung
-während der Erwärmungsphase. Aus den festgestellten elektrischen,
-thermischen und betrieblichen Einschränkungen werden abschließend die
-Anforderungen an das in Kapitel~\ref{chap:entwicklung_stellkonzept}
-zu entwickelnde Optimierungskonzept abgeleitet.
+Die Betrachtung folgt zunächst dem Energiepfad vom betrieblichen
+Drehstromnetz über die regelbare Hochstromeinspeisung bis zu den parallel
+belasteten Abgangseinheiten des MCC-Feldes. Anschließend wird der derzeitige
+Prüfablauf beschrieben. Darauf aufbauend werden der thermisch bedingte
+Stromdrift, die Kopplung der parallelen Lastzweige und die Grenzen der
+vorhandenen Gesamtstromregelung analysiert. Das Kapitel schließt mit
+lösungsneutral formulierten Anforderungen, anhand derer die in
+Kapitel~\ref{chap:konzeptentwicklung} untersuchten Stellkonzepte
+bewertet werden können.
 
 
 % -----------------------------------------------------------------------------
@@ -56,24 +30,23 @@ zu entwickelnde Optimierungskonzept abgeleitet.
 \subsection{Aufbau und Funktionsweise}
 \label{sec:aufbau_funktionsweise_pruefstand}
 
-Der bestehende Erwärmungsprüfstand dient dazu,
-Niederspannungs-Schaltgerätekombinationen mit hohen dreiphasigen
-Prüfströmen zu beaufschlagen. Hierzu wird die aus dem betrieblichen
-Drehstromnetz bereitgestellte Spannung zunächst einstellbar gemacht
-und anschließend auf ein für die Hochstromprüfung geeignetes niedriges
-Spannungsniveau transformiert. Die erzeugten Prüfströme werden über
-massive Kupferschienen und ein Anbindefeld der zu untersuchenden
-Prüfkombination zugeführt.
+Der bestehende Prüfstand dient der Durchführung von Erwärmungsprüfungen an
+Niederspannungs-Schaltgerätekombinationen. Die für den Prüfling benötigten
+hohen Ströme werden bei einer niedrigen Spannung erzeugt. Dadurch lässt sich
+die für die Erwärmung maßgebende Strombelastung bereitstellen, ohne den
+Prüfstromkreis mit der betrieblichen Netzspannung beaufschlagen zu müssen.
 
-Der funktionale Energiepfad des Prüfstands ist in
-Abbildung~\ref{fig:ist_energiepfad} dargestellt. Er verläuft vom
-betrieblichen Drehstromnetz über den Säulenstelltransformator, die
-nachgeschalteten induktiven Ausgleichselemente und den
-Festtransformator bis zur sekundärseitigen Hochstromverteilung.
-Unmittelbar hinter dem Festtransformator werden die Ströme der drei
-Außenleiter erfasst. Anschließend gelangt der Hochstrom über das
-Anbindefeld in die Prüfkombination aus Leistungsschalterfeld und
-MCC-Feld
+Der funktionale Energiepfad ist in
+Abbildung~\ref{fig:ist_energiepfad} dargestellt. Die Einspeisung erfolgt aus
+dem betrieblichen \SI{400}{\volt}-Drehstromnetz. Ein motorisch verstellbarer
+Säulenstelltransformator verändert die Spannung auf der Primärseite des
+nachgeschalteten Festtransformators. Dieser transformiert die Spannung auf
+das für die Hochstromprüfung benötigte niedrige Niveau. Unmittelbar hinter
+dem Festtransformator werden die Ströme der drei Außenleiter erfasst. Über
+ein Anbindefeld gelangt der Strom anschließend in die Prüfkombination aus
+Leistungsschalterfeld und MCC-Feld. Im MCC-Feld teilt er sich auf die
+parallel gespeisten Abgangseinheiten und einen über die Hauptsammelschiene
+geführten Rückstrompfad mit Kurzschlussbrücke auf
 \parencite[Bestandsaufnahme: Hochstromeinspeisung und
 Prüfanordnung]{rj_pruefstand_2026}.
 
@@ -82,100 +55,66 @@ Prüfanordnung]{rj_pruefstand_2026}.
     \includegraphics[width=\textwidth]
     {03_Ressourcen/drawio/ESB_Ist-Zustand.pdf}
     \caption{Funktionaler Energiepfad des bestehenden
-    Erwärmungsprüfstands mit der betrachteten Belastungskonfiguration
-    des MCC-Feldes (eigene Darstellung auf Grundlage der betrieblichen
-    Bestandsaufnahme)}
+    Erwärmungsprüfstands (eigene Darstellung auf Grundlage der
+    betrieblichen Bestandsaufnahme)}
     \label{fig:ist_energiepfad}
 \end{figure}
 
+Der Säulenstelltransformator besitzt drei Wicklungssäulen, die den drei
+Außenleitern zugeordnet sind. An jeder Wicklungssäule befinden sich zwei
+Stromabnehmer, die gemeinsam durch einen motorischen Antrieb entlang der
+freiliegenden Wicklung verfahren werden. Insgesamt sind somit sechs
+Stromabnehmer und drei motorische Antriebe vorhanden. Die Stellung der
+Stromabnehmer bestimmt die dem Festtransformator zugeführte Spannung. Da die
+drei Antriebe mechanisch voneinander getrennt sind, können Unterschiede
+zwischen den Außenleitern innerhalb der vorhandenen Stellgrenzen beeinflusst
+werden. Aus dem mechanischen Aufbau allein lässt sich jedoch nicht ableiten,
+dass im SPS-Programm drei vollständig unabhängige Regelkreise umgesetzt sind.
 
-% .............................................................................
-% Säulenstelltransformator
-% .............................................................................
-
-Die Einspeisung des Prüfstands erfolgt aus dem betrieblichen
-\SI{400}{\volt}-Drehstromnetz. Zur kontinuierlichen Einstellung der
-dem Festtransformator zugeführten Spannung wird ein motorisch
-verstellbarer Säulenstelltransformator eingesetzt.
-
-Das Typenschild des vorhandenen Betriebsmittels weist eine
-Nennleistung von \SI{90}{\kilo\volt\ampere}, eine primäre
-Nennspannung von \SI{380}{\volt}, einen primären Nennstrom von
-\SI{70}{\ampere} und eine Nennfrequenz von \SI{50}{\hertz} aus.
-Bei der Bewertung des heutigen Betriebs ist daher zu berücksichtigen,
-dass die auf dem Typenschild angegebene primäre Nennspannung von der
-gegenwärtigen betrieblichen Netzspannung von \SI{400}{\volt}
-abweicht.
-
-Bei einem Säulenstelltransformator wird die Ausgangsspannung durch die
-Position von Stromabnehmern verändert, die entlang der freiliegenden
-Transformatorwicklungen verfahren werden. Kohlerollen stellen dabei
-den elektrischen Kontakt zwischen den Stromabnehmern und den
-Wicklungen her. Die Bewegung der Stromabnehmer erfolgt über eine
-Antriebswelle, ein Kegelradgetriebe und eine Spindel. Dadurch kann die
-Ausgangsspannung während des Betriebs kontinuierlich zwischen null und
-dem konstruktiv vorgesehenen Endwert eingestellt werden
-\parencite[Abschn.~3.2, S.~3--4]{ruhstrat_betriebsanleitung}.
-
-Der vorhandene Säulenstelltransformator besitzt drei
-Wicklungssäulen, die den drei Außenleitern zugeordnet sind. An jeder
-Wicklungssäule befinden sich zwei Stromabnehmer, sodass insgesamt
-sechs Stromabnehmer vorhanden sind. Die beiden Stromabnehmer einer
-Wicklungssäule werden gemeinsam durch einen motorischen Antrieb
-verfahren. Insgesamt verfügt der Säulenstelltransformator somit über
-drei motorische Antriebe.
-
-Die Abgriffpositionen der drei Wicklungssäulen können während des
-Betriebs voneinander abweichen. Dadurch lassen sich die den drei
-Außenleitern zugeordneten Ausgangsspannungen innerhalb der
-mechanischen Stellmöglichkeiten getrennt beeinflussen.
-
-Die für die weitere Untersuchung relevanten technischen Daten sind in
-Tabelle~\ref{tab:ist_saeulenstelltransformator} zusammengefasst.
+Die wesentlichen Typenschilddaten des Säulenstelltransformators sind in
+Tabelle~\ref{tab:ist_saeulenstelltransformator} zusammengefasst. Die
+primäre Nennspannung von \SI{380}{\volt} weicht von der heutigen
+betrieblichen Netzspannung von \SI{400}{\volt} ab. Diese Abweichung ist bei
+der Beurteilung des vorhandenen Betriebsmittels zu berücksichtigen; eine
+weitergehende Bewertung seiner zulässigen Betriebsbeanspruchung ist nicht
+Gegenstand dieser Arbeit.
 
 \begin{table}[H]
     \centering
     \caption{Technische Daten des vorhandenen
-    Säulenstelltransformators}
+    Säulenstelltransformators nach Typenschild}
     \label{tab:ist_saeulenstelltransformator}
-    \begin{tabular}{
-        p{0.44\textwidth}
-        p{0.46\textwidth}
-    }
+    \begin{tabular}{p{0.48\textwidth}p{0.38\textwidth}}
         \toprule
         Kenngröße & Wert beziehungsweise Ausführung \\
         \midrule
-        Hersteller & Ruhstrat \\
+        Hersteller und Typ & Ruhstrat TKDMT \\
         Baujahr & 1987 \\
-        Typ & TKDMT \\
-        Nennleistung $S_\mathrm{N}$ &
-        \SI{90}{\kilo\volt\ampere} \\
-        Primäre Nennspannung $U_\mathrm{1N}$ &
-        \SI{380}{\volt} \\
-        Primärer Nennstrom $I_\mathrm{1N}$ &
-        \SI{70}{\ampere} \\
+        Nennleistung $S_\mathrm{N}$ & \SI{90}{\kilo\volt\ampere} \\
+        Primäre Nennspannung $U_\mathrm{1N}$ & \SI{380}{\volt} \\
+        Primärer Nennstrom $I_\mathrm{1N}$ & \SI{70}{\ampere} \\
         Sekundäre Ausgangsspannung &
-        je Außenleiter zwei Ausgänge mit
-        \SIrange{0}{380}{\volt} \\
+        je Außenleiter zwei Ausgänge mit \SIrange{0}{380}{\volt} \\
         Sekundärer Nennstrom &
-        je Außenleiter zwei Ausgänge mit jeweils
-        \SI{40}{\ampere} \\
-        Nennfrequenz $f_\mathrm{N}$ &
-        \SI{50}{\hertz} \\
-        Anzahl der Wicklungssäulen &
-        3 \\
-        Anzahl der Stromabnehmer &
-        6, jeweils zwei je Wicklungssäule \\
-        Anzahl der motorischen Antriebe &
-        3, jeweils ein Antrieb je Wicklungssäule \\
+        je Außenleiter zwei Ausgänge mit jeweils \SI{40}{\ampere} \\
+        Nennfrequenz $f_\mathrm{N}$ & \SI{50}{\hertz} \\
+        Motorische Antriebe & 3, jeweils einer je Wicklungssäule \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Abbildung~\ref{fig:ist_saeulenstelltransformator} zeigt den geöffneten
-Säulenstelltransformator. Erkennbar sind die drei Wicklungssäulen, die
-Spindelantriebe und die beidseitig an den Wicklungssäulen angeordneten
-Stromabnehmersysteme.
+Die Spannungsverstellung erfolgt während des Betriebs durch die entlang der
+Wicklungen bewegten Stromabnehmer. Kohlerollen stellen den elektrischen
+Kontakt zwischen den Stromabnehmern und den freiliegenden Wicklungen her.
+Die Bewegung wird über Motor, Getriebe und Spindel auf die jeweilige
+Stromabnehmereinheit übertragen. Auf diese Weise lässt sich die dem
+Festtransformator zugeführte Spannung kontinuierlich zwischen der unteren
+und der konstruktiv vorgegebenen oberen Stellgrenze verändern
+\parencite[Abschn.~3.2, S.~3--4]{ruhstrat_betriebsanleitung}. Da es sich um
+ein mechanisch verfahrendes Stellglied handelt, erfolgt die
+Spannungsänderung nicht sprungförmig. Stellgeschwindigkeit, Stellweg und die
+begrenzte Anzahl der Antriebe sind deshalb sowohl für den realen Prüfablauf
+als auch für die spätere Modellierung und Regelung relevant.
 
 \begin{figure}[H]
     \centering
@@ -187,80 +126,52 @@ Stromabnehmersysteme.
     \label{fig:ist_saeulenstelltransformator}
 \end{figure}
 
-
-% .............................................................................
-% Induktive Ausgleichselemente
-% .............................................................................
-
-Zwischen den Stromabnehmern des Säulenstelltransformators und dem
-Festtransformator befinden sich zusätzliche induktive Bauteile, die
-im betrieblichen Sprachgebrauch als Drosseln bezeichnet werden. Die
-Herstellerunterlagen beschreiben für Säulenstelltransformatoren mit
-zwei Stromabnehmern unter anderem beidseitige Schaltungsvarianten
-sowie Ausführungen mit galvanisch geteilter Stromschiene und
-Stromausgleichstransformator. Eine Funktion der vorhandenen Bauteile
-zum Ausgleich der beiden Stromabnehmerpfade ist daher technisch
-plausibel
-\parencite[Abschn.~\emph{Schaltarten} und
-\emph{Stromabnehmer}, S.~8--9]
-{ruhstrat_broschuere_saeulentrafos}.
-
-Eine eindeutige Zuordnung der Bauteile zu einer bestimmten
-Herstellerschaltung ist anhand der verfügbaren Unterlagen jedoch nicht
-möglich. Das historische Originalschaltbild des
-Säulenstelltransformators liegt nicht mehr vor. Auch der Hersteller
-konnte die tatsächliche Verschaltung anhand der noch verfügbaren
-Archivunterlagen nicht rekonstruieren
-\parencite[S.~1]{ruhstrat_korrespondenz_2026}.
-
-Die Bauteile werden im weiteren Verlauf daher neutral als
-\emph{induktive Ausgleichselemente} bezeichnet. Elektrische
-Eigenschaften, die durch die vorhandenen Unterlagen nicht eindeutig
-nachgewiesen sind, werden ihnen bei der späteren Modellbildung nicht
-zugeordnet.
+Zwischen den Stromabnehmerpfaden des Säulenstelltransformators und dem
+Festtransformator befinden sich zusätzliche induktive Bauteile. Im
+betrieblichen Sprachgebrauch werden diese als Drosseln bezeichnet. Die
+vorliegenden Herstellerunterlagen beschreiben für
+Säulenstelltransformatoren mit zwei Stromabnehmern unterschiedliche
+Schaltungsvarianten zum Stromausgleich. Das historische Originalschaltbild
+der vorhandenen Anlage ist jedoch nicht mehr verfügbar, und auch anhand der
+Archivunterlagen des Herstellers konnte die konkrete Verschaltung nicht
+eindeutig rekonstruiert werden
+\parencite[Abschn.~\emph{Schaltarten} und \emph{Stromabnehmer},
+S.~8--9]{ruhstrat_broschuere_saeulentrafos}
+\parencite[S.~1]{ruhstrat_korrespondenz_2026}. Die Bauteile werden daher im
+Folgenden neutral als \emph{induktive Ausgleichselemente} bezeichnet. Nicht
+nachgewiesene elektrische Eigenschaften werden ihnen bei der späteren
+Modellbildung nicht zugeordnet.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.92\textwidth]
     {03_Ressourcen/pic/Säulentrafo_Drosseln.png}
-    \caption{Anordnung der als Drosseln bezeichneten induktiven
-    Ausgleichselemente am Säulenstelltransformator
-    (eigene Darstellung und eigene Aufnahmen)}
+    \caption{Anordnung der induktiven Ausgleichselemente am
+    Säulenstelltransformator (eigene Darstellung und eigene Aufnahmen)}
     \label{fig:ist_ausgleichselemente}
 \end{figure}
 
-
-% .............................................................................
-% Festtransformator und zentrale Stromerfassung
-% .............................................................................
-
-Der dem Säulenstelltransformator nachgeschaltete Festtransformator
-übernimmt die Transformation auf das für die Erwärmungsprüfung
-erforderliche niedrige Spannungsniveau. Durch die starke Reduzierung
-der Spannung können auf der Sekundärseite Ströme im
-Kiloamperebereich bereitgestellt werden. Der grundlegende Zusammenhang
-zwischen Übersetzungsverhältnis, Spannung und Strom wurde bereits in
-Abschnitt~\ref{sec:transformator_impedanztransformation} erläutert.
-
-Das Typenschild des Festtransformators weist primärseitig zwei
-Wicklungssysteme mit jeweils \SI{380}{\volt},
-\SI{40}{\ampere} und \SI{15}{\kilo\volt\ampere} aus.
-Sekundärseitig sind eine Bemessungsspannung von \SI{6}{\volt} und ein
-Bemessungsstrom von \SI{5000}{\ampere} angegeben. Die relevanten
-Kenndaten sind in Tabelle~\ref{tab:ist_festtransformator}
-zusammengefasst.
+Der Festtransformator setzt die einstellbare Spannung auf das
+Niederspannungsniveau des Prüfstromkreises um. Nach Typenschild sind zwei
+primärseitige Wicklungssysteme mit jeweils \SI{380}{\volt},
+\SI{40}{\ampere} und \SI{15}{\kilo\volt\ampere} vorhanden. Für die
+Sekundärseite sind \SI{6}{\volt} und \SI{5000}{\ampere} angegeben. Die
+Typenschildangabe beschreibt den Bemessungspunkt des Transformators. Im
+Prüfbetrieb wird die wirksame Ausgangsspannung durch den vorgeschalteten
+Säulenstelltransformator verändert. Nach betrieblicher Bestandsaufnahme
+steht dafür ein Bereich von näherungsweise \SIrange{0}{8}{\volt} zur
+Verfügung
+\parencite[Bestandsaufnahme: Festtransformator und
+Betriebsbereich]{rj_pruefstand_2026}.
 
 \begin{table}[H]
     \centering
     \caption{Technische Daten des vorhandenen Festtransformators nach
     Typenschild}
     \label{tab:ist_festtransformator}
-    \begin{tabular}{
-        p{0.47\textwidth}
-        p{0.38\textwidth}
-    }
+    \begin{tabular}{p{0.48\textwidth}p{0.36\textwidth}}
         \toprule
-        Kenngröße & Wert \\
+        Kenngröße & Wert beziehungsweise Ausführung \\
         \midrule
         Primäre Nennspannung &
         \SI{380}{\volt} je Wicklungssystem \\
@@ -268,40 +179,32 @@ zusammengefasst.
         \SI{40}{\ampere} je Wicklungssystem \\
         Nennleistung &
         \SI{15}{\kilo\volt\ampere} je Wicklungssystem \\
-        Sekundäre Bemessungsspannung &
-        \SI{6}{\volt} \\
-        Sekundärer Bemessungsstrom &
-        \SI{5000}{\ampere} \\
-        Nennfrequenz &
-        \SI{50}{\hertz} \\
+        Sekundäre Bemessungsspannung & \SI{6}{\volt} \\
+        Sekundärer Bemessungsstrom & \SI{5000}{\ampere} \\
+        Nennfrequenz & \SI{50}{\hertz} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Durch die vorgelagerte Einstellung am Säulenstelltransformator kann
-sekundärseitig näherungsweise der Spannungsbereich
+Die niedrige Sekundärspannung ist kein eigenständiger Sollwert der
+Erwärmungsprüfung, sondern ergibt sich aus der Spannung, die zur
+Überwindung der Impedanzen des geschlossenen Prüfstromkreises erforderlich
+ist. Maßgebend für die Prüfung sind die vorgegebenen Ströme. Der
+Festtransformator stellt durch sein Übersetzungsverhältnis das hierfür
+erforderliche Verhältnis aus niedriger Spannung und hohem Strom bereit; die
+kontinuierliche Einstellung erfolgt über den vorgeschalteten
+Säulenstelltransformator.
 
-\begin{equation}
-    \SI{0}{\volt}
-    \leq
-    U_{2,\mathrm{eff}}
-    \lesssim
-    \SI{8}{\volt}
-    \label{eq:ist_spannungsbereich}
-\end{equation}
+Bei Spannungsangaben im sekundärseitigen Prüfstromkreis ist zwischen der
+Außenleiterspannung und der Spannung eines Außenleiters gegen den Sternpunkt
+der Lastwiderstände zu unterscheiden. Der Sternpunkt ist ein interner
+Rückführungspunkt des Prüfstromkreises und nicht mit einem Neutralleiter des
+betrieblichen Netzes verbunden. In den nachfolgenden Untersuchungen wird die
+jeweilige Bezugsart deshalb ausdrücklich angegeben.
 
-bereitgestellt werden. Die auf dem Typenschild angegebenen
-\SI{6}{\volt} kennzeichnen den Bemessungspunkt des
-Festtransformators. Der Bereich bis ungefähr \SI{8}{\volt}
-beschreibt dagegen den betrieblich nutzbaren Stellbereich der
-gesamten Hochstromeinspeisung
-\parencite[Bestandsaufnahme: Festtransformator und
-Betriebsbereich]{rj_pruefstand_2026}.
-
-Unmittelbar hinter dem Festtransformator ist für jeden Außenleiter
-\(L1\), \(L2\) und \(L3\) ein Stromwandler angeordnet. Nach den
-vorliegenden Typenschild- und Anlagenangaben besitzen die
-Stromwandler das Übersetzungsverhältnis
+Unmittelbar hinter dem Festtransformator ist für jeden Außenleiter ein
+Stromwandler angeordnet. Die vorhandenen Stromwandler besitzen nach den
+Anlagenangaben ein Übersetzungsverhältnis von
 
 \begin{equation}
     \frac{I_\mathrm{p}}{I_\mathrm{s}}
@@ -311,21 +214,13 @@ Stromwandler das Übersetzungsverhältnis
 \end{equation}
 
 eine Bemessungsleistung von \SI{10}{\volt\ampere} und die
-Genauigkeitsklasse \(0{,}2\)
+Genauigkeitsklasse (0{,}2)
 \parencite[Bestandsaufnahme: zentrale
-Strommessung]{rj_pruefstand_2026}.
-
-Die Sekundärsignale der drei Stromwandler werden der vorhandenen
-speicherprogrammierbaren Steuerung zugeführt. Auf Grundlage der
-gemessenen Phasenströme steuert diese die motorischen Antriebe des
-Säulenstelltransformators an. Durch die Veränderung der
-Abgriffpositionen werden die Eingangsspannungen des
-Festtransformators und damit die sekundärseitigen Phasenströme
-beeinflusst.
-
-Die räumliche Anordnung des Festtransformators, der sekundärseitigen
-Hochstromverbindungen und der drei nachgeschalteten Stromwandler ist in
-Abbildung~\ref{fig:ist_festtransformator} dargestellt.
+Strommessung]{rj_pruefstand_2026}. Ihre Messwerte werden von der SPS für die
+Ansteuerung der drei Motoren des Säulenstelltransformators verwendet. Der
+Säulenstelltransformator ist damit das Stellglied einer übergeordneten
+Stromregelung: Verändert wird die Spannung, zurückgeführt werden die hinter
+dem Festtransformator gemessenen Außenleiterströme.
 
 \begin{figure}[H]
     \centering
@@ -337,192 +232,82 @@ Abbildung~\ref{fig:ist_festtransformator} dargestellt.
     \label{fig:ist_festtransformator}
 \end{figure}
 
-Der Säulenstelltransformator stellt aus regelungstechnischer Sicht ein
-spannungseinstellendes Stellglied dar. Die von der vorhandenen
-Regelung zurückgeführten Größen sind dagegen die hinter dem
-Festtransformator gemessenen Phasenströme. Die geschlossene
-Regelungsfunktion ist daher als Stromregelung einzuordnen, deren
-Stellwirkung durch die Veränderung der dem Festtransformator
-zugeführten Spannungen erzeugt wird.
-
-Die phasenbezogene Strommessung sowie die im Betrieb voneinander
-abweichenden mechanischen Stellungen der drei Antriebe sind durch den
-Anlagenaufbau belegt. Ohne eine weitergehende Analyse des
-SPS-Programms wird jedoch nicht vorausgesetzt, dass drei vollständig
-voneinander unabhängige Regelkreise implementiert sind.
-
-
-% .............................................................................
-% Anbindefeld und Prüfkombination
-% .............................................................................
-
-Hinter der zentralen Stromerfassung wird der Hochstrom über ein
-Anbindefeld zur jeweils angeschlossenen Prüfkombination geführt. Das
-Anbindefeld enthält im Wesentlichen massive Kupferschienen und
-verschiedene Anschlussmöglichkeiten für unterschiedliche
-Prüffeldkonfigurationen.
-
-Für die vorliegende Untersuchung besitzt das Anbindefeld keine
-maßgebende aktive Schalt-, Steuerungs- oder Regelfunktion. Es bildet
-eine passive Hochstromschnittstelle zwischen der Hochstromeinspeisung
-und der jeweils zu untersuchenden Schaltgerätekombination. Funktional
-ist seine Aufgabe mit der eines universell ausgeführten Kuppelfeldes
-vergleichbar.
+Das Anbindefeld bildet eine passive Hochstromschnittstelle zwischen der
+Hochstromeinspeisung und unterschiedlichen Prüfkombinationen. Die in dieser
+Arbeit betrachtete Prüfkombination besteht aus einem Leistungsschalterfeld
+und einem MCC-Feld. Der eingespeiste Strom wird über den Leistungsschalter
+auf die Hauptsammelschienen geführt. Von dort gelangt ein Anteil über die
+vertikalen Verteilschienen zu den Abgangseinheiten des MCC-Feldes. Der
+verbleibende Anteil fließt über die Hauptsammelschienen und eine
+Kurzschlussbrücke zurück. Die Kurzschlussbrücke ermöglicht damit eine höhere
+Belastung des Leistungsschalterfeldes und der Hauptsammelschienen, als sie
+allein durch die Summe der MCC-Abgangsströme entstehen würde.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[
-        width=0.68\textwidth,
-        keepaspectratio
-    ]{03_Ressourcen/pic/Anbindefeld.jpg}
+    \includegraphics[width=0.68\textwidth]
+    {03_Ressourcen/pic/Anbindefeld.jpg}
     \caption{Kupferschienensystem des als passive
     Hochstromschnittstelle eingesetzten Anbindefeldes
     (eigene Aufnahme)}
     \label{fig:ist_anbindefeld}
 \end{figure}
 
-Die betrachtete Prüfkombination besteht aus einem
-Leistungsschalterfeld und dem daran angeschlossenen MCC-Feld. Der
-eingespeiste Gesamtstrom \(I_\mathrm{ges}\) wird zunächst über den
-Leistungsschalter auf das Hauptsammelschienensystem geführt.
-
-Innerhalb des MCC-Feldes teilt sich der Strom auf die zwölf parallel
-gespeisten MCC-Abgänge und den über die Hauptsammelschienen zur
-Kurzschlussbrücke weiterfließenden Stromanteil auf. Für jeden
-Außenleiter gilt die Strombilanz
+Für einen Außenleiter gilt im stationären sinusförmigen Betrieb die
+Knotenregel in Zeigerdarstellung:
 
 \begin{equation}
-    I_\mathrm{ges}
+    \underline{I}_\mathrm{ges}
     =
-    I_{\mathrm{MCC},\Sigma}
+    \underline{I}_\mathrm{KB}
     +
-    I_\mathrm{KB}.
+    \sum_{k=1}^{12}\underline{I}_{\mathrm{MCC},k}.
     \label{eq:ist_strombilanz}
 \end{equation}
 
-Dabei bezeichnet \(I_{\mathrm{MCC},\Sigma}\) den Summenstrom der zwölf
-MCC-Abgänge und \(I_\mathrm{KB}\) den über die Kurzschlussbrücke
-geführten Stromanteil. Sämtliche Stromangaben beziehen sich auf einen
-Außenleiter. Eine Addition der Ströme der drei Außenleiter erfolgt
-nicht.
+Dabei bezeichnet \(\underline{I}_\mathrm{KB}\) den Stromzeiger des
+Kurzschlussbrückenpfads und \(\underline{I}_{\mathrm{MCC},k}\) den
+Stromzeiger des jeweiligen MCC-Abgangs. Die häufig verwendete skalare
+Addition der Effektivwerte ist nur dann eine hinreichende Näherung, wenn die
+Phasenverschiebungen der parallelen Teilströme gegeneinander vernachlässigt
+werden können.
 
-Der Summenstrom der MCC-Abgänge ergibt sich aus
-
-\begin{equation}
-    I_{\mathrm{MCC},\Sigma}
-    =
-    \sum_{k=1}^{12}
-    I_{\mathrm{MCC},k},
-    \label{eq:ist_mcc_summenstrom}
-\end{equation}
-
-wobei \(I_{\mathrm{MCC},k}\) den Strom des jeweiligen Abgangs
-bezeichnet. Zur Kennzeichnung eines konkreten Abgangs kann anstelle des
-allgemeinen Indexes \(k\) dessen vorgesehener Prüfstrom verwendet
-werden. Beispielsweise kennzeichnet \(I_{\mathrm{MCC},400}\) den
-Strom des \SI{400}{\ampere}-Abgangs.
-
-Die zugrunde gelegte Belastungskonfiguration ist in
-Tabelle~\ref{tab:mcc_belastungskonfiguration} aufgeführt.
+Im bisherigen Prüfstand wurden für die kleinen Modulbaugrößen Prüfströme von
+\SI{32}{\ampere} und \SI{63}{\ampere} eingesetzt. Die Abgänge der größeren
+Modulbauformen wurden mit \SI{250}{\ampere}, \SI{400}{\ampere} und
+\SI{630}{\ampere} belastet. Für die aus sechs A-Modulen, drei B-Modulen und
+jeweils einem der drei größeren Abgänge bestehende Anordnung ergibt sich der
+in Tabelle~\ref{tab:ist_belastungskonfiguration} aufgeführte Summenstrom.
 
 \begin{table}[H]
     \centering
-    \caption{Betrachtete Belastungskonfiguration des MCC-Feldes je
-    Außenleiter}
-    \label{tab:mcc_belastungskonfiguration}
+    \caption{Im bestehenden Prüfaufbau zugrunde gelegte und bereits
+    erprobte Abgangsströme je Außenleiter}
+    \label{tab:ist_belastungskonfiguration}
     \begin{tabular}{lccc}
         \toprule
-        Modulgruppe &
-        Anzahl &
-        Strom je Abgang &
-        Teilsumme \\
+        Abgangsgruppe & Anzahl & Prüfstrom je Abgang & Teilsumme \\
         \midrule
-        A-Module &
-        6 &
-        \SI{40}{\ampere} &
-        \SI{240}{\ampere} \\
-        B-Module &
-        3 &
-        \SI{70}{\ampere} &
-        \SI{210}{\ampere} \\
-        \SI{250}{\ampere}-Abgang &
-        1 &
-        \SI{250}{\ampere} &
+        A-Module & 6 & \SI{32}{\ampere} & \SI{192}{\ampere} \\
+        B-Module & 3 & \SI{63}{\ampere} & \SI{189}{\ampere} \\
+        \SI{250}{\ampere}-Abgang & 1 & \SI{250}{\ampere} &
         \SI{250}{\ampere} \\
-        \SI{400}{\ampere}-Abgang &
-        1 &
-        \SI{400}{\ampere} &
+        \SI{400}{\ampere}-Abgang & 1 & \SI{400}{\ampere} &
         \SI{400}{\ampere} \\
-        \SI{630}{\ampere}-Abgang &
-        1 &
-        \SI{630}{\ampere} &
+        \SI{630}{\ampere}-Abgang & 1 & \SI{630}{\ampere} &
         \SI{630}{\ampere} \\
         \midrule
-        Gesamt &
-        12 &
-        -- &
-        \SI{1730}{\ampere} \\
+        Gesamt & 12 & -- & \SI{1661}{\ampere} \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Für die betrachtete Konfiguration beträgt der Summenstrom der zwölf
-MCC-Abgänge je Außenleiter somit
-
-\begin{equation}
-\begin{aligned}
-    I_{\mathrm{MCC},\Sigma}
-    &=
-    6 \cdot \SI{40}{\ampere}
-    +
-    3 \cdot \SI{70}{\ampere}
-    +
-    \SI{250}{\ampere}
-    +
-    \SI{400}{\ampere}
-    +
-    \SI{630}{\ampere}
-    \\
-    &=
-    \SI{1730}{\ampere}.
-\end{aligned}
-\label{eq:mcc_summenstrom_belastungskonfiguration}
-\end{equation}
-
-Der Gesamtstrom des Prüfstands richtet sich nach der jeweils
-untersuchten Prüfanordnung. Wird beispielhaft ein Gesamtstrom von
-\(I_\mathrm{ges}=\SI{3200}{\ampere}\) zugrunde gelegt, ergibt sich
-für den über die Kurzschlussbrücke geführten Stromanteil nach
-Gleichung~\eqref{eq:ist_strombilanz}
-
-\begin{equation}
-\begin{aligned}
-    I_\mathrm{KB}
-    &=
-    I_\mathrm{ges}
-    -
-    I_{\mathrm{MCC},\Sigma}
-    \\
-    &=
-    \SI{3200}{\ampere}
-    -
-    \SI{1730}{\ampere}
-    \\
-    &=
-    \SI{1470}{\ampere}.
-\end{aligned}
-\label{eq:ist_kurzschlussbruecke_beispiel}
-\end{equation}
-
-Dieses Zahlenbeispiel dient ausschließlich zur Veranschaulichung der
-Stromaufteilung. Der während einer konkreten Prüfung tatsächlich über
-die Kurzschlussbrücke geführte Strom ergibt sich aus dem eingestellten
-Gesamtstrom und der Summe der jeweiligen MCC-Abgangsströme.
-
-Die Kurzschlussbrücke stellt eine niederimpedante Verbindung der
-Hauptstromschienen her. Dadurch kann das Leistungsschalterfeld mit
-einem höheren Strom beaufschlagt werden, als über die zwölf Abgänge des
-MCC-Feldes geführt wird.
+Die in der Tabelle aufgeführten Ströme beziehen sich jeweils auf einen
+Außenleiter. Die Ströme der drei Außenleiter werden nicht addiert. Der durch
+die Kurzschlussbrücke fließende Anteil ergibt sich aus der Differenz
+zwischen dem für das Leistungsschalterfeld vorgesehenen Gesamtstrom und der
+Summe der parallel abgezweigten MCC-Ströme. Er hängt damit vom jeweiligen
+Prüfauftrag ab und ist kein unveränderlicher Anlagenparameter.
 
 \begin{figure}[H]
     \centering
@@ -534,19 +319,28 @@ MCC-Feldes geführt wird.
     \label{fig:ist_kurzschlussbruecke}
 \end{figure}
 
+Das MCC-Feld ist in Geräte-, Sammelschienen- und Kabelanschlussräume
+gegliedert. Die horizontalen Hauptsammelschienen führen den Gesamtstrom durch
+das Feld, während die vertikalen Verteilschienen die parallel angeordneten
+Abgangseinheiten versorgen. Nach der betrieblichen Projektdokumentation ist
+das betrachtete Feld mit der inneren Unterteilung der Form 4a ausgeführt
+\parencite[Bestandsaufnahme: konstruktive Ausführung des
+MCC-Feldes]{rj_pruefstand_2026}. Die Sammelschienen sind damit von den
+Funktionseinheiten und die Funktionseinheiten untereinander getrennt. Die
+Anschlüsse äußerer Leiter befinden sich im selben Abteil wie die jeweils
+zugeordnete Funktionseinheit
+\parencite[Anhang~AA, Tab.~AA.1]{din_en_61439_2}.
 
-% .............................................................................
-% Aufbau und Strompfad des MCC-Feldes
-% .............................................................................
-
-Das MCC-Feld ist funktional in den Geräteraum, den Sammel- und
-Verteilschienenbereich sowie den Kabelanschlussraum gegliedert. Im
-Geräteraum befinden sich die zwölf dreiphasigen Abgangseinheiten. Der
-Kabelanschlussraum nimmt die abgangsseitigen Anschlüsse und die
-Verbindungen zu den externen Lastwiderständen auf.
-
-Die räumliche Zuordnung des Geräte- und Kabelanschlussraums ist in
-Abbildung~\ref{fig:ist_mcc_raeume} dargestellt.
+Die lösbaren Abgangseinheiten werden über Adapter und federnde
+Lyra-Kontakte mit den Verteilschienen verbunden. Innerhalb eines Abgangs
+durchfließt der Strom die eingebauten Schalt-, Schutz- und
+Stromerfassungsgeräte sowie die internen Verbindungen. Danach wird er über
+die abgangsseitigen Kontakte und die Anschlussleitungen zu den außerhalb des
+MCC-Feldes angeordneten Lastwiderständen geführt. Die Kontaktstellen,
+Leitungen und Geräte tragen somit zur Ersatzimpedanz und zur Verlustleistung
+des jeweiligen Strompfads bei. Ihre quantitative Ermittlung erfolgt in der
+späteren Modellbildung; an dieser Stelle ist zunächst ihre Lage im realen
+Strompfad maßgebend.
 
 \begin{figure}[H]
     \centering
@@ -567,15 +361,12 @@ Abbildung~\ref{fig:ist_mcc_raeume} dargestellt.
     \label{fig:ist_mcc_raeume}
 \end{figure}
 
-Im rückwärtigen Bereich des Feldes verlaufen die horizontalen
-Hauptsammelschienen und die vertikalen Verteilschienen. Das
-Hauptsammelschienensystem führt den Gesamtstrom durch das Feld und
-weiter zur Kurzschlussbrücke. Von den Hauptsammelschienen zweigen die
-vertikalen Verteilschienen ab, über die die parallel angeordneten
-MCC-Abgänge gespeist werden.
-
-Die Lage der beiden Schienensysteme ist in
-Abbildung~\ref{fig:ist_mcc_schienensystem} gekennzeichnet.
+Abbildung~\ref{fig:ist_mcc_schienensystem} zeigt die räumliche Anordnung
+der horizontalen Hauptsammelschienen und der vertikalen Verteilschienen. Die
+Unterscheidung ist für die Analyse wesentlich: Der Strom über die
+Kurzschlussbrücke verbleibt im Hauptsammelschienenpfad, während die
+Modulströme über die Verteilschienen zu den einzelnen Abgängen geführt
+werden.
 
 \begin{figure}[H]
     \centering
@@ -588,42 +379,26 @@ Abbildung~\ref{fig:ist_mcc_schienensystem} gekennzeichnet.
     \label{fig:ist_mcc_schienensystem}
 \end{figure}
 
-Der Strompfad eines MCC-Abgangs verläuft von der Verteilschiene über
-die eingangsseitigen Adapterkontakte in die jeweilige
-Abgangseinheit. Innerhalb des Moduls durchfließt der Strom die
-eingebauten Schalt- und Schutzgeräte. Anschließend wird er über die
-abgangsseitigen Kontakte in den Kabelanschlussraum und von dort über
-die angeschlossenen Lastleitungen zu den externen
-V2A-Lastwiderständen geführt.
-
-Nach der betrieblichen Projektdokumentation ist das betrachtete
-MCC-Feld mit einer inneren Unterteilung der Form 4a ausgeführt
-\parencite[Bestandsaufnahme: konstruktive Ausführung des
-MCC-Feldes]{rj_pruefstand_2026}. Bei dieser Form sind die
-Sammelschienen von sämtlichen Funktionseinheiten und die
-Funktionseinheiten untereinander getrennt. Die Anschlüsse für von
-außen herangeführte Leiter befinden sich im gleichen Abteil wie die
-jeweils zugeordnete Funktionseinheit
-\parencite[Anhang~AA, Tab.~AA.1]{din_en_61439_2}.
-
-Die lösbaren Abgangseinheiten werden über Adapter beziehungsweise
-Einschubkontakte mit den Verteilschienen verbunden. Lyra-Kontakte
-stellen hierbei die federnde Kontaktierung der stromführenden
-Schienen her. Shutter trennen die Kontaktbereiche bei entnommenem
-Einschub mechanisch vom Geräteraum. Die für den Strompfad relevanten
-Komponenten sind in Abbildung~\ref{fig:ist_mcc_module_adapter}
-dargestellt.
+Der Strompfad eines Abgangs beginnt an der Verteilschiene und führt über
+eingangsseitige Adapterkontakte in die Abgangseinheit. Dort durchfließt der
+Strom die jeweils eingebauten Schalt-, Schutz- und Stromerfassungsgeräte.
+Über abgangsseitige Kontakte gelangt er anschließend in den
+Kabelanschlussraum und über die Lastleitungen zum externen Widerstand. Die
+zahlreichen lösbaren und festen Kontaktstellen erklären, weshalb der
+Abgangspfad nicht allein durch den äußeren Lastwiderstand beschrieben werden
+kann. Für das spätere Ersatzmodell müssen auch die elektrischen
+Eigenschaften des Moduls, seiner Kontakte und der Leitungen berücksichtigt
+werden.
 
 \begin{figure}[H]
     \centering
-
     \begin{minipage}[c]{0.48\textwidth}
         \centering
         \includegraphics[width=\textwidth]
         {03_Ressourcen/pic/MCC-Feld_Einschübe_Kabelanschlussraum.png}
         \smallskip
 
-        {\small (a) Geräteraum und Kabelanschlussraum}
+        {\small (a) Geräte- und Kabelanschlussraum}
     \end{minipage}
     \hfill
     \begin{minipage}[c]{0.48\textwidth}
@@ -656,48 +431,25 @@ dargestellt.
     \end{minipage}
 
     \caption{Ausgewählte Komponenten des Strompfads im MCC-Feld:
-    Geräteraum und Kabelanschlussraum, MCC-Einschub, Lyra-Kontakt
-    sowie Adapterkontakte mit Shutter
+    Geräte- und Kabelanschlussraum, MCC-Einschub, Lyra-Kontakt sowie
+    Adapterkontakte mit Shutter
     (betriebsinterne Darstellungen und eigene Aufnahme)}
     \label{fig:ist_mcc_module_adapter}
 \end{figure}
 
+Die einstellbaren Lastwiderstände bestehen aus nichtrostenden
+Stahlschienen. Je Phasenpfad sind zwei räumlich nebeneinander angeordnete
+Schienen über eine verschiebbare Brücke elektrisch miteinander verbunden.
+Der Strom fließt bis zur Position der Brücke über die erste Schiene und über
+die zweite Schiene zum gemeinsamen Laststernpunkt zurück. Durch das
+Verschieben der Brücke verändert sich die wirksame Leiterlänge und damit der
+elektrische Widerstand des betreffenden Lastpfads. Die Brückenposition dient
+im bestehenden Prüfaufbau als manuelle Stellgröße für den Abgangsstrom. Der
+grundlegende Zusammenhang zwischen Leiterlänge und Widerstand wurde in
+Abschnitt~\ref{sec:verlustleistung_temperaturkoeffizient} erläutert.
 
-% .............................................................................
-% V2A-Lastwiderstände
-% .............................................................................
-
-Die einzelnen MCC-Abgänge werden über verstellbare Lastwiderstände aus
-nichtrostendem Stahl belastet. Für jeden Phasenpfad sind zwei
-räumlich parallel angeordnete Flach- beziehungsweise Profilschienen
-vorhanden. Die parallele Anordnung bezieht sich ausschließlich auf die
-geometrische Lage der Schienen. Elektrisch bilden beide Schienen über
-eine verschiebbare Brücke einen zusammenhängenden Strompfad.
-
-Eine der beiden Schienen ist mit dem Ausgang des jeweiligen
-MCC-Abgangs verbunden. Die zweite Schiene führt zum gemeinsamen
-Sternpunkt des Lastwiderstands. Die verschiebbare Brücke stellt die
-elektrische Verbindung zwischen beiden Schienen her.
-
-Der Strom fließt zunächst über die erste Schiene bis zur Position der
-Brücke und anschließend über die zweite Schiene zurück zum
-Sternpunkt. Durch das Verschieben der Brücke wird die insgesamt
-stromdurchflossene Leiterlänge verändert. Die Brückenposition dient
-damit als mechanische Stellgröße für den elektrischen Widerstand des
-jeweiligen Lastpfads.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[height=0.68\textheight]
-    {03_Ressourcen/pic/Widerstandswagen.png}
-    \caption{Widerstandswagen mit paarweise angeordneten
-    V2A-Widerstandsschienen und verschiebbaren Brücken zur Einstellung
-    der wirksamen Leiterlänge (betriebsinterne Aufnahme)}
-    \label{fig:ist_v2a_widerstandswagen}
-\end{figure}
-
-Der elektrische Widerstand des V2A-Lastpfads eines Abgangs \(k\) kann
-näherungsweise durch
+Für einen Lastpfad \(k\) lässt sich der durch die Brückenposition
+eingestellte Widerstand näherungsweise zu
 
 \begin{equation}
     R_{\mathrm{V2A},k}
@@ -707,96 +459,31 @@ näherungsweise durch
     \label{eq:ist_v2a_widerstand}
 \end{equation}
 
-beschrieben werden. Dabei bezeichnet
-\(\rho_{\mathrm{V2A}}\) den spezifischen elektrischen Widerstand des
-verwendeten Werkstoffs, \(A_k\) den wirksamen Leiterquerschnitt und
-\(l_{\mathrm{eff},k}\) die von der Brückenposition abhängige wirksame
-Leiterlänge.
+angeben. Dabei umfasst \(l_{\mathrm{eff},k}\) die auf Hin- und Rückweg
+stromdurchflossene Länge beider Schienen bis zur Brückenposition. Die
+geometrisch parallele Anordnung der beiden Schienen ist somit nicht als
+elektrische Parallelschaltung zu interpretieren. Sie bilden gemeinsam einen
+zusammenhängenden, über die Brücke geschlossenen Strompfad. Da jeder
+dreiphasige Abgang phasenbezogen belastet wird, müssen die drei zugehörigen
+Lastpfade so eingestellt werden, dass die vorgesehenen Ströme in \(L1\),
+\(L2\) und \(L3\) eingehalten werden.
 
-Neben dem V2A-Widerstand wirken im Strompfad weitere Widerstände. Der
-Gesamtwiderstand eines Abgangs kann daher näherungsweise als
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=0.65\textheight]
+    {03_Ressourcen/pic/Widerstandswagen.png}
+    \caption{Widerstandswagen mit verstellbaren Lastwiderständen aus
+    nichtrostenden Stahlschienen (betriebsinterne Aufnahme)}
+    \label{fig:ist_v2a_widerstandswagen}
+\end{figure}
 
-\begin{equation}
-    R_{\mathrm{ges},k}
-    =
-    R_{\mathrm{V2A},k}
-    +
-    R_{\mathrm{Modul},k}
-    +
-    R_{\mathrm{Kontakt},k}
-    +
-    R_{\mathrm{Leitung},k}
-    \label{eq:ist_gesamtwiderstand_abgang}
-\end{equation}
-
-beschrieben werden. Darin sind der innere Widerstand des MCC-Moduls,
-die Übergangswiderstände der Kontaktstellen sowie die Widerstände der
-Verbindungsleitungen berücksichtigt.
-
-Für eine vorgegebene Spannung
-\(U_{\mathrm{MCC},k}\) am betrachteten Lastzweig ergibt sich der
-Abgangsstrom näherungsweise zu
-
-\begin{equation}
-    I_{\mathrm{MCC},k}
-    =
-    \frac{U_{\mathrm{MCC},k}}
-    {R_{\mathrm{ges},k}}.
-    \label{eq:ist_modulstrom}
-\end{equation}
-
-Eine Vergrößerung der wirksamen Leiterlänge erhöht den elektrischen
-Widerstand und verringert dadurch den zugehörigen Abgangsstrom. Eine
-Verkürzung der wirksamen Leiterlänge verringert den Widerstand und
-erhöht den Strom. Im bestehenden Prüfaufbau werden die einzelnen
-Abgangsströme deshalb durch manuelles Verschieben der V2A-Brücken
-eingestellt.
-
-
-% .............................................................................
-% Regelungstechnische Einordnung
-% .............................................................................
-
-Die drei unmittelbar hinter dem Festtransformator angeordneten
-Stromwandler erfassen die übergeordneten Phasenströme. Diese Messwerte
-werden zur motorischen Nachführung des Säulenstelltransformators
-verwendet. Die vorhandene Regelung beeinflusst damit die
-bereitgestellten Spannungen und führt auf diese Weise die
-übergeordneten Phasenströme nach.
-
-Die Ströme der einzelnen MCC-Abgänge werden während der Prüfung
-ebenfalls phasenbezogen erfasst. Im bestehenden Prüfaufbau wirkt
-jedoch keiner dieser Modulstrom-Istwerte unmittelbar auf ein
-individuell zugeordnetes automatisches Stellglied zurück. Die
-Einstellung der einzelnen Abgangsströme erfolgt durch manuelles
-Verstellen der zugehörigen V2A-Lastwiderstände.
-
-Der Ist-Zustand kombiniert damit eine automatische Nachführung der
-übergeordneten Phasenströme mit einer manuellen Einstellung der
-einzelnen Modulströme. Eine Veränderung der Abgriffpositionen des
-Säulenstelltransformators beeinflusst die gemeinsame
-Versorgungsspannung und wirkt dadurch sowohl auf den Strom durch die
-Kurzschlussbrücke als auch auf sämtliche parallel gespeisten
-MCC-Abgänge.
-
-Eine Veränderung eines einzelnen V2A-Widerstands beeinflusst zunächst
-den Strom des zugehörigen Abgangs. Gleichzeitig verändert sich die
-Belastung der gemeinsamen Hochstromeinspeisung. Die zentrale
-Stromregelung kann darauf mit einer Veränderung der bereitgestellten
-Spannung reagieren, wodurch auch weitere Abgangsströme beeinflusst
-werden können.
-
-Aufgrund der gemeinsamen Spannungsquelle, des Haupt- und
-Verteilschienensystems sowie der Aufteilung des Gesamtstroms auf
-mehrere Lastpfade ist der Prüfstand regelungstechnisch als gekoppeltes
-Mehrgrößensystem zu betrachten. Eine Änderung innerhalb eines
-Lastzweigs kann über die gemeinsame Einspeisung eine Reaktion der
-übergeordneten Stromregelung hervorrufen und dadurch weitere
-Abgangsströme beeinflussen.
-
-Die genaue Auswirkung dieser Kopplung während der Erwärmungsprüfung
-wird nach der Beschreibung des betrieblichen Prüfablaufs in
-Abschnitt~\ref{sec:analyse_problematik} untersucht.
+Der Ist-Zustand verbindet somit zwei unterschiedliche Arten der
+Strombeeinflussung. Die übergeordneten Außenleiterströme werden durch die SPS
+und den Säulenstelltransformator automatisch nachgeführt. Die Ströme der
+einzelnen MCC-Abgänge werden zwar phasenbezogen gemessen, jedoch durch
+manuelles Verstellen der jeweiligen Lastwiderstände eingestellt. Da die
+Abgänge dieselbe Hochstromeinspeisung nutzen, wirken Änderungen der
+gemeinsamen Speisespannung auf sämtliche parallelen Lastzweige.
 
 
 % -----------------------------------------------------------------------------
@@ -805,213 +492,143 @@ Abschnitt~\ref{sec:analyse_problematik} untersucht.
 \subsection{Derzeitige Durchführung der Erwärmungsprüfung}
 \label{sec:durchfuehrung_ist}
 
-Die Durchführung einer Erwärmungsprüfung gliedert sich im bestehenden
-Prüfstand in die Vorbereitung der Prüfanordnung, die Einstellung der
-vorgegebenen Prüfströme, die mehrstündige Erwärmungsphase und die
-abschließende Bewertung des thermischen Beharrungszustands. Im
-Folgenden wird der betriebliche Ablauf mit besonderem Blick auf die
-Einstellung und Nachführung der einzelnen Modulströme beschrieben.
+Die betriebliche Durchführung lässt sich in die Vorbereitung der
+Prüfanordnung, das Einstellen der Prüfströme, die mehrstündige
+Erwärmungsphase und die abschließende Bewertung unterteilen. Vor Beginn der
+Prüfung werden die vorgesehene Kombination aus Leistungsschalter- und
+MCC-Feld aufgebaut, die Abgangseinheiten eingesetzt und die Lastleitungen
+mit den zugeordneten Lastwiderständen verbunden. Der für die Belastung der
+Hauptsammelschienen zusätzlich erforderliche Strompfad wird über die
+Kurzschlussbrücke geschlossen. Anschließend werden die
+Hochstromverbindungen, die Zuordnung der Messkanäle sowie die erforderlichen
+Schutz- und Überwachungsfunktionen kontrolliert.
 
-Vor Beginn der Erwärmungsprüfung wird die zu untersuchende Kombination
-aus Leistungsschalterfeld und MCC-Feld entsprechend dem jeweiligen
-Prüfauftrag aufgebaut. Die zwölf dreiphasigen Abgangseinheiten werden
-in das MCC-Feld eingesetzt und im Kabelanschlussraum mit den
-zugeordneten V2A-Lastwiderständen verbunden. Der nicht über die
-MCC-Abgänge geführte Anteil des Gesamtstroms wird über die
-Kurzschlussbrücke zurückgeführt.
-
-Anschließend werden die Hochstromverbindungen, die Zuordnung der
-Messkanäle und die Funktionsfähigkeit der für den Prüfaufbau
-erforderlichen Schutz- und Überwachungseinrichtungen kontrolliert.
-Erst nach Abschluss dieser vorbereitenden Kontrollen wird die
-Prüfanordnung eingeschaltet.
-
-Zur Erfassung der Erwärmung sind Pt100-Widerstandsthermometer an den
-für die Bewertung maßgebenden Bauteilen und Verbindungsstellen
-angebracht. Hierzu zählen insbesondere stromführende Anschlüsse,
-Kontaktstellen, Schaltgeräte und weitere thermisch relevante
-Komponenten der Prüfkombination. Die Temperaturmesswerte werden
-gemeinsam mit den Strommesswerten von der vorhandenen Mess- und
-Automatisierungstechnik verarbeitet. Die Anzeige und zeitliche
-Aufzeichnung der erfassten Größen erfolgt über das
-Prozessvisualisierungssystem WinCC
+Zur Erfassung des Erwärmungsverlaufs werden Pt100-Widerstandsthermometer an
+den für die Nachweisaufgabe festgelegten Messstellen angebracht. Dazu gehören
+insbesondere stromführende Anschlüsse, Kontaktstellen, Schaltgeräte und
+weitere thermisch relevante Komponenten der Prüfkombination. Die
+Temperaturen werden gemeinsam mit den Strommesswerten in WinCC angezeigt und
+zeitlich aufgezeichnet
 \parencite[Bestandsaufnahme: Messwerterfassung und
 Prüfablauf]{rj_pruefstand_2026}.
 
-Die Stromerfassung umfasst sowohl die drei übergeordneten
-Phasenströme unmittelbar hinter dem Festtransformator als auch die
-phasenbezogenen Ströme der einzelnen MCC-Abgänge. Für jeden der zwölf
-Abgänge stehen somit Messwerte für die Außenleiter \(L1\), \(L2\) und
-\(L3\) zur Verfügung. Die wesentlichen Messgrößen und ihre Bedeutung
-für den Prüfablauf sind in
-Tabelle~\ref{tab:ist_messgroessen_pruefablauf}
-zusammengefasst.
+Die Strommessung erfolgt auf zwei Ebenen. Drei Stromwandler erfassen die
+übergeordneten Außenleiterströme unmittelbar hinter dem Festtransformator.
+Zusätzlich werden die drei Außenleiterströme jedes der zwölf MCC-Abgänge
+gemessen. Damit stehen 36 phasenbezogene Modulstromwerte zur Überwachung der
+Stromverteilung zur Verfügung. Diese 36 Messwerte sind von der Anzahl später
+benötigter Stellglieder zu unterscheiden; die Zuordnung von Mess- und
+Stellkanälen ist eine Fragestellung der Konzeptentwicklung.
+
+Tabelle~\ref{tab:ist_messgroessen_pruefablauf} ordnet die wesentlichen
+Messgrößen ihrer Funktion im bestehenden Prüfablauf zu. Die zentrale
+Strommessung dient unmittelbar der vorhandenen Regelung. Die Modulströme und
+Temperaturen werden dagegen überwacht und aufgezeichnet, ohne dass aus den
+einzelnen Modulstromwerten automatisch eine dezentrale Stellbewegung
+abgeleitet wird.
 
 \begin{table}[H]
     \centering
     \caption{Wesentliche Messgrößen der bestehenden
     Erwärmungsprüfung}
     \label{tab:ist_messgroessen_pruefablauf}
-    \begin{tabular}{
-        p{0.23\textwidth}
-        p{0.32\textwidth}
-        p{0.34\textwidth}
-    }
+    \begin{tabular}{p{0.22\textwidth}p{0.31\textwidth}p{0.35\textwidth}}
         \toprule
-        Messgröße &
-        Erfassung &
-        Funktion im Prüfablauf \\
+        Messgröße & Erfassung & Funktion im Prüfablauf \\
         \midrule
-
-        Übergeordnete Phasenströme &
-        Je ein Stromwandler für \(L1\), \(L2\) und \(L3\)
-        unmittelbar hinter dem Festtransformator &
-        Rückführung der Istwerte für die zentrale
-        Stromregelung \\
-
+        Übergeordnete Außenleiterströme &
+        je ein Stromwandler für \(L1\), \(L2\) und \(L3\) hinter dem
+        Festtransformator &
+        Rückführung der Istwerte für die zentrale Stromregelung \\
         \addlinespace
-
         Modulströme &
-        Phasenbezogene Stromerfassung an den zwölf
-        MCC-Abgängen &
-        Einstellung und Überwachung der vorgegebenen
-        Abgangsströme \\
-
+        phasenbezogene Erfassung an den zwölf MCC-Abgängen &
+        manuelle Einstellung und fortlaufende Überwachung der
+        vorgegebenen Abgangsströme \\
         \addlinespace
-
         Temperaturen &
-        Pt100-Widerstandsthermometer an den festgelegten
-        Messstellen &
-        Aufzeichnung des Erwärmungsverlaufs und Beurteilung
-        des thermischen Beharrungszustands \\
-
+        Pt100-Widerstandsthermometer an den festgelegten Messstellen &
+        Aufzeichnung des Erwärmungsverlaufs und Beurteilung des
+        thermischen Beharrungszustands \\
         \bottomrule
     \end{tabular}
 \end{table}
 
-Nach dem Einschalten der Prüfanordnung wird der übergeordnete
-Prüfstrom schrittweise auf den für die jeweilige Prüfung vorgesehenen
-Sollwert erhöht. Hierzu verarbeitet die SPS die unmittelbar hinter
-dem Festtransformator gemessenen Phasenströme und steuert die drei
-motorischen Antriebe des Säulenstelltransformators an.
+Nach dem Einschalten wird der übergeordnete Prüfstrom mithilfe des
+Säulenstelltransformators schrittweise auf den vorgesehenen Wert erhöht. Die
+SPS verarbeitet die hinter dem Festtransformator gemessenen Ströme und
+steuert die drei motorischen Antriebe an. Dadurch werden die dem
+Festtransformator zugeführten Spannungen und in der Folge die
+sekundärseitigen Außenleiterströme verändert.
 
-Durch die Veränderung der Stromabnehmerpositionen ändern sich die dem
-Festtransformator zugeführten Spannungen und damit die auf dessen
-Sekundärseite bereitgestellten Hochströme. Die zentrale Regelung führt
-somit die übergeordneten Phasenströme nach. Die mechanischen
-Stellungen der drei Antriebe können dabei voneinander abweichen,
-sodass Unterschiede zwischen den Außenleitern innerhalb der
-vorhandenen Stellmöglichkeiten ausgeglichen werden können.
+Nachdem der übergeordnete Strom näherungsweise eingestellt ist, werden die
+einzelnen Abgangsströme angepasst. Hierzu kontrolliert das Prüfpersonal die
+in WinCC angezeigten Modulströme und verändert die Brückenpositionen der
+zugeordneten Lastwiderstände. Eine Verkürzung der wirksamen Leiterlänge
+verringert den Widerstand und erhöht den Abgangsstrom; eine Verlängerung
+bewirkt das Gegenteil.
 
-Da die genaue Struktur und Parametrierung des vorhandenen
-SPS-Programms nicht Gegenstand dieser Arbeit ist, wird aus dem
-phasenbezogenen Anlagenaufbau jedoch keine vollständige Unabhängigkeit
-dreier einzelner Phasenregelkreise abgeleitet.
+Die Reihenfolge ist betrieblich relevant. Wird zuerst ein einzelner
+Modulstrom eingestellt und anschließend der übergeordnete Strom deutlich
+verändert, verschiebt sich auch der bereits eingestellte Modulstrom. Die
+Annäherung an den vorgesehenen Betriebszustand erfolgt deshalb durch ein
+wechselseitiges Nachführen der zentralen Einspeisung und der dezentralen
+Lastwiderstände. Ein eindeutiger einmaliger Einstellvorgang existiert bei der
+gekoppelten Prüfanordnung nicht.
 
-Nachdem der übergeordnete Prüfstrom näherungsweise eingestellt ist,
-werden die Ströme der zwölf MCC-Abgänge an ihre jeweiligen Sollwerte
-angepasst. Hierzu werden die verschiebbaren Brücken der zugeordneten
-V2A-Lastwiderstände manuell verstellt. Durch die Änderung der
-Brückenposition wird die wirksame Leiterlänge des jeweiligen
-Widerstandspfads verändert. Damit ändern sich dessen elektrischer
-Widerstand und der Strom des zugehörigen MCC-Abgangs.
+Die Einstellung erfolgt iterativ. Jede Änderung eines Lastwiderstands
+verändert zunächst den Strom des zugehörigen Abgangs, zugleich aber auch die
+Belastung der gemeinsamen Hochstromeinspeisung. Reagiert die übergeordnete
+Stromregelung mit einer Spannungsänderung, werden ebenfalls die Ströme der
+übrigen Abgänge beeinflusst. Nach einer Verstellung müssen deshalb nicht nur
+der unmittelbar betroffene Abgang, sondern die gesamte Stromverteilung und
+gegebenenfalls auch die Einstellungen weiterer Lastwiderstände erneut
+kontrolliert werden.
 
-Die Einstellung kann im bestehenden Prüfablauf während der Bestromung
-vorgenommen werden. Das niedrige sekundärseitige Spannungsniveau darf
-dabei nicht mit einer insgesamt geringen Gefährdung gleichgesetzt
-werden. Aufgrund der hohen Ströme sind insbesondere die thermische
-Belastung, die Lichtbogengefahr und die bei Fehlern auftretenden
-elektrodynamischen Kräfte zu berücksichtigen. Die Verstellung erfolgt
-daher im Rahmen des festgelegten betrieblichen Prüfablaufs.
+Die mechanische Verstellung kann im derzeitigen Prüfablauf während der
+Bestromung vorgenommen werden. Das niedrige Spannungsniveau des
+Prüfstromkreises verringert zwar die Anforderungen an die elektrische
+Isolation, darf jedoch wegen der hohen Ströme nicht mit einer allgemein
+geringen Gefährdung gleichgesetzt werden. Thermische Belastungen,
+Kontaktunterbrechungen, mögliche Lichtbogenbildung und elektrodynamische
+Kräfte bleiben bei Eingriffen in den bestromten Lastkreis zu
+berücksichtigen.
 
-Die aktuellen Modulströme werden über die vorhandene
-Strommesstechnik kontrolliert und in WinCC angezeigt. Für die
-betrachtete Belastungskonfiguration werden sechs A-Module auf jeweils
-\SI{40}{\ampere}, drei B-Module auf jeweils
-\SI{70}{\ampere} sowie die drei weiteren Abgänge auf
-\SI{250}{\ampere}, \SI{400}{\ampere} und
-\SI{630}{\ampere} eingestellt. Der Summenstrom der zwölf
-MCC-Abgänge beträgt nach
-Gleichung~\eqref{eq:mcc_summenstrom_belastungskonfiguration}
-\SI{1730}{\ampere} je Außenleiter. Der verbleibende Anteil des
-übergeordneten Phasenstroms wird über die Kurzschlussbrücke geführt.
-
-Die Einstellung der Modulströme erfolgt iterativ. Wird die
-Brückenposition eines V2A-Lastwiderstands verändert, ändert sich
-zunächst der Strom des betreffenden Abgangs. Gleichzeitig verändert
-sich jedoch auch die Belastung der gemeinsam genutzten
-Hochstromeinspeisung. Die zentrale Stromregelung kann darauf mit einer
-Anpassung des Säulenstelltransformators reagieren. Dadurch ändert sich
-die für sämtliche parallel gespeisten Lastzweige bereitgestellte
-Spannung.
-
-Die Korrektur eines einzelnen Modulstroms kann deshalb auch bereits
-eingestellte Ströme anderer Abgänge beeinflussen. Nach einer
-Verstellung wird daher nicht nur der unmittelbar betroffene Abgang
-kontrolliert. Auch die übrigen Modulströme müssen erneut betrachtet
-und bei vorhandenen Abweichungen nachgestellt werden. Dieser Vorgang
-wird wiederholt, bis die Ströme der Abgänge innerhalb der für die
-Prüfung vorgesehenen Bereiche liegen.
-
-Nach der anfänglichen Einstellung der Prüfströme beginnt die
-eigentliche Erwärmungsphase. Das Leistungsschalterfeld, das MCC-Feld,
-die darin enthaltenen Betriebsmittel, die Schienenverbindungen und die
-angeschlossenen Lastwiderstände werden über mehrere Stunden mit den
-vorgegebenen Strömen belastet.
-
-Während dieses Zeitraums werden die Temperaturen, die übergeordneten
-Phasenströme und die phasenbezogenen Modulströme fortlaufend erfasst
-und in WinCC zeitlich aufgezeichnet. Die zentrale Stromregelung führt
-die unmittelbar hinter dem Festtransformator gemessenen
-Phasenströme nach.
-
-Für die einzelnen Modulströme besteht im vorhandenen Prüfstand dagegen
-keine individuell zugeordnete automatische Nachführung. Mit
-zunehmender Prüfungsdauer erwärmen sich insbesondere die
-V2A-Lastwiderstände. Durch die temperaturbedingte Änderung ihrer
-elektrischen Widerstände können die Ströme der zugehörigen
-MCC-Abgänge von den zuvor eingestellten Sollwerten abweichen.
-
-Diese Abweichungen müssen vom Prüfpersonal anhand der angezeigten
-Messwerte erkannt werden. Die Korrektur erfolgt durch erneutes
-Verschieben der Brücke des jeweils zugeordneten
-V2A-Lastwiderstands. Da eine solche Widerstandsänderung wiederum die
-Belastung der gemeinsamen Einspeisung beeinflusst, müssen nach dem
-Eingriff auch die Stromwerte der übrigen Abgänge erneut kontrolliert
+Mit der anfänglichen Einstellung beginnt die eigentliche Erwärmungsphase.
+Während der mehrstündigen Belastung werden die Temperaturen, die
+übergeordneten Außenleiterströme und die Modulströme fortlaufend erfasst. Die
+zentrale Stromregelung führt weiterhin die hinter dem Festtransformator
+gemessenen Ströme nach. Für die einzelnen Modulströme besteht dagegen keine
+automatische Korrektur. Verändern sich die Lastzweigwiderstände infolge der
+Erwärmung, müssen daraus resultierende Stromabweichungen vom Prüfpersonal
+erkannt und durch erneutes Verschieben der Widerstandsbrücken ausgeglichen
 werden.
 
-Während einer Erwärmungsprüfung kann sich dieser Ablauf mehrfach
-wiederholen. Die Stromverteilung erfordert deshalb über einen langen
-Zeitraum eine regelmäßige Überwachung und gegebenenfalls wiederholte
-manuelle Nachstellungen. Der erforderliche Bedienaufwand hängt von
-der jeweiligen Prüfanordnung und den unterschiedlichen thermischen
-Verläufen der einzelnen Lastzweige ab.
+Eine solche Nachstellung beendet den Einstellvorgang nicht zwangsläufig. Die
+veränderte Stromaufnahme eines Zweigs kann eine Reaktion der zentralen
+Regelung hervorrufen und damit die gemeinsame Speisespannung verändern. Nach
+jedem Eingriff sind daher die Ströme aller Abgänge erneut zu kontrollieren.
+Abhängig von der jeweiligen Erwärmung und der Reaktion der übergeordneten
+Regelung kann sich dieser Ablauf während einer Prüfung mehrfach wiederholen.
+Der personelle Aufwand entsteht somit nicht allein durch die mechanische
+Verstellung, sondern vor allem durch die fortlaufende Beobachtung und die
+wechselseitige Korrektur der gekoppelten Strompfade.
 
-Die Belastung wird fortgeführt, bis sich ein thermischer
-Beharrungszustand eingestellt hat. Nach DIN EN IEC 61439-1 gilt dieser
-Zustand als erreicht, wenn die Änderung der Temperaturerhöhung an
-sämtlichen betrachteten Messstellen höchstens
-\SI{1}{\kelvin\per\hour} beträgt
-\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
+Die nach Abschnitt~\ref{sec:erwaermungspruefung_norm} einzuhaltenden
+Stromtoleranzen gelten bis zur maßgebenden Messwertaufnahme. Eine lediglich
+zu Beginn erreichte Stromeinstellung reicht daher nicht aus. Die Prüfung wird
+fortgeführt, bis der thermische Beharrungszustand erreicht ist. Dieser liegt
+vor, wenn die Änderung der Temperaturerhöhung an den maßgebenden Messstellen
+höchstens \SI{1}{\kelvin\per\hour} beträgt
+\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}. Anschließend werden die
+Temperatur- und Stromwerte dokumentiert, anhand der vorgegebenen Kriterien
+bewertet und der Prüfstrom kontrolliert zurückgenommen.
 
-Die in WinCC aufgezeichneten Temperaturverläufe stellen die
-Datengrundlage zur Beurteilung dieses Kriteriums bereit. Eine
-vollständig automatische Erkennung des Beharrungszustands durch das
-Prozessvisualisierungssystem wird hierbei nicht vorausgesetzt.
-
-Nach Erreichen des thermischen Beharrungszustands werden die
-maßgebenden Endwerte der Temperaturen und Ströme dokumentiert und mit
-den für die jeweilige Prüfung geltenden Bewertungskriterien
-verglichen. Anschließend wird der Prüfstrom kontrolliert
-zurückgenommen und die Prüfanordnung abgeschaltet.
-
-Der derzeitige Prüfablauf verbindet somit eine automatische
-Nachführung der übergeordneten Phasenströme mit einer manuellen
-Einstellung und Nachführung der einzelnen Modulströme. Insbesondere
-die während der Erwärmungsphase auftretenden Änderungen der
-V2A-Lastwiderstände, die gegenseitige Beeinflussung der parallel
-gespeisten Abgänge und die wiederholte Kontrolle sämtlicher
-Modulströme führen zu einem hohen Bedien- und Überwachungsaufwand.
+Der derzeitige Ablauf kombiniert folglich eine automatische Nachführung der
+übergeordneten Ströme mit einer manuellen Einstellung und Überwachung der
+einzelnen Modulströme. Die wiederholte Kontrolle aller Abgänge bindet über
+einen langen Zeitraum Personal und erschwert eine reproduzierbare
+Einstellung der Stromverteilung.
 
 
 % -----------------------------------------------------------------------------
@@ -1020,104 +637,76 @@ Modulströme führen zu einem hohen Bedien- und Überwachungsaufwand.
 \subsection{Analyse der bestehenden Problematik}
 \label{sec:analyse_problematik}
 
-Die zentrale Stromregelung des bestehenden Prüfstands führt die
-unmittelbar hinter dem Festtransformator gemessenen Phasenströme
-nach. Für die zwölf Modulströme des MCC-Feldes besteht dagegen keine
-individuelle automatische Nachführung. Die Modulströme werden zwar
-phasenbezogen erfasst, ihre Einstellung und Korrektur erfolgt jedoch
-durch manuelles Verstellen der zugeordneten V2A-Lastwiderstände.
+Die wesentliche Schwachstelle des bestehenden Prüfstands liegt nicht in der
+grundsätzlichen Bereitstellung des Hochstroms, sondern in dessen Verteilung
+auf die einzelnen MCC-Abgänge. Die vorhandene Regelung erfasst ausschließlich
+die übergeordneten Außenleiterströme. Unterschiedliche Verteilungen der
+Teilströme können jedoch zum selben Gesamtstrom führen. Die Einhaltung des
+Sollwerts von \(I_\mathrm{ges}\) gewährleistet daher nicht, dass gleichzeitig
+alle Abgangsströme ihren jeweiligen Sollwerten entsprechen.
 
-Die wesentliche Schwachstelle des bestehenden Prüfstands liegt damit
-nicht in der grundsätzlichen Bereitstellung des erforderlichen
-Hochstroms, sondern in dessen Verteilung auf die einzelnen
-MCC-Abgänge. Während der Erwärmungsphase verändern sich die
-elektrischen Eigenschaften der Lastwiderstände. Dadurch können die
-Modulströme von ihren zuvor eingestellten Sollwerten abweichen, obwohl
-der übergeordnete Phasenstrom weiterhin auf seinem Sollwert gehalten
-wird.
+Die nachfolgende Betrachtung erfolgt stellvertretend für einen Außenleiter.
+Der Index \(k\) bezeichnet den jeweiligen MCC-Abgang. Dessen elektrische
+Ersatzimpedanz lässt sich in einen Anteil der Abgangseinheit einschließlich
+Kontakten und Leitungen sowie den temperaturabhängigen Lastwiderstand
+zerlegen:
 
-Die nachfolgende Betrachtung erfolgt stellvertretend für einen
-Außenleiter. Da die Abgangseinheiten dreiphasig ausgeführt sind,
-treten die beschriebenen Zusammenhänge grundsätzlich in den
-Außenleitern \(L1\), \(L2\) und \(L3\) auf. Zur besseren Lesbarkeit
-wird auf einen zusätzlichen Phasenindex verzichtet. Der Index
-\(k \in \{1,\ldots,12\}\) kennzeichnet den jeweils betrachteten
-MCC-Abgang.
+\begin{equation}
+    \underline{Z}_{\mathrm{ges},k}(\vartheta_k)
+    =
+    \underline{Z}_{\mathrm{MCC},k}
+    +
+    \underline{Z}_{\mathrm{Ltg},k}
+    +
+    R_{\mathrm{V2A},k}(\vartheta_k).
+    \label{eq:ist_gesamtimpedanz_abgang}
+\end{equation}
 
-Die innerhalb des V2A-Lastwiderstands eines Abgangs umgesetzte
-elektrische Verlustleistung beträgt
+Für den Strom des Abgangs gilt damit
+
+\begin{equation}
+    \underline{I}_{\mathrm{MCC},k}(\vartheta_k)
+    =
+    \frac{\underline{U}_\mathrm{B}}
+    {\underline{Z}_{\mathrm{ges},k}(\vartheta_k)},
+    \label{eq:ist_modulstrom_temperatur}
+\end{equation}
+
+wobei \(\underline{U}_\mathrm{B}\) die Spannung am gemeinsamen
+Verteilungspunkt bezeichnet. Die Verwendung einer Impedanz ist erforderlich,
+solange ein Blindanteil nicht nachweislich vernachlässigt werden kann. Die
+spätere Ermittlung und begründete Vereinfachung der
+MCC-Ersatzimpedanz erfolgt in der Modellbildung.
+
+Die im Lastwiderstand umgesetzte Wirkleistung führt zu dessen Erwärmung. Für
+den überwiegend ohmschen Widerstand gilt
 
 \begin{equation}
     P_{\mathrm{V2A},k}
     =
-    I_{\mathrm{MCC},k}^{2}
-    R_{\mathrm{V2A},k}.
+    I_{\mathrm{MCC},k}^{2}R_{\mathrm{V2A},k}.
     \label{eq:ist_verlustleistung_v2a}
 \end{equation}
 
-Die Verlustleistung führt zur Erwärmung der Widerstandsschienen. Der
-verwendete nichtrostende Stahl besitzt einen positiven elektrischen
-Temperaturkoeffizienten. Der Widerstand des Lastpfads steigt daher mit
-zunehmender Temperatur. Ausgehend von
-Gleichung~\eqref{eq:widerstand_temperatur} kann der
-temperaturabhängige Widerstand eines V2A-Lastpfads durch
+Der verwendete nichtrostende Stahl besitzt im betrachteten Bereich einen
+positiven Temperaturkoeffizienten. Unter Verwendung der in
+Abschnitt~\ref{sec:verlustleistung_temperaturkoeffizient} eingeführten
+linearen Näherung ergibt sich
 
 \begin{equation}
     R_{\mathrm{V2A},k}(\vartheta_k)
     =
     R_{\mathrm{V2A},20,k}
     \left[
-        1
-        +
+        1+
         \alpha_{20}
-        \left(
-            \vartheta_k
-            -
-            \SI{20}{\degreeCelsius}
-        \right)
-    \right]
+        \left(\vartheta_k-\SI{20}{\degreeCelsius}\right)
+    \right].
     \label{eq:ist_v2a_temperaturabhaengigkeit}
 \end{equation}
 
-beschrieben werden. Dabei bezeichnet
-\(R_{\mathrm{V2A},20,k}\) den elektrischen Widerstand des
-betrachteten Lastpfads bei \SI{20}{\degreeCelsius},
-\(\alpha_{20}\) den linearen elektrischen Temperaturkoeffizienten und
-\(\vartheta_k\) die aktuelle Temperatur der Widerstandsschienen.
-
-Neben dem V2A-Lastwiderstand wirken im Strompfad weitere elektrische
-Widerstände. Hierzu gehören insbesondere die Widerstände der
-MCC-Abgangseinheit, der Kontaktstellen und der Verbindungsleitungen.
-Für die qualitative Betrachtung werden diese Anteile zu
-\(R_{\mathrm{rest},k}\) zusammengefasst. Der Gesamtwiderstand des
-Abgangs ergibt sich damit zu
-
-\begin{equation}
-    R_{\mathrm{ges},k}(\vartheta_k)
-    =
-    R_{\mathrm{rest},k}
-    +
-    R_{\mathrm{V2A},k}(\vartheta_k).
-    \label{eq:ist_gesamtwiderstand_temperatur}
-\end{equation}
-
-Für den Strom des betrachteten Abgangs gilt näherungsweise
-
-\begin{equation}
-    I_{\mathrm{MCC},k}(\vartheta_k)
-    =
-    \frac{U_{\mathrm{MCC},k}}
-    {
-        R_{\mathrm{rest},k}
-        +
-        R_{\mathrm{V2A},k}(\vartheta_k)
-    }.
-    \label{eq:ist_modulstrom_temperatur}
-\end{equation}
-
-Wird die am Abgang anliegende Spannung zunächst als konstant
-betrachtet, führt die Erwärmung des V2A-Lastwiderstands zu dem
-Wirkzusammenhang
+Wird die Spannung am Verteilungspunkt für die grundlegende Betrachtung als
+konstant angenommen, folgt aus der Erwärmung die Ursache-Wirkungs-Kette
 
 \begin{equation}
     \vartheta_k \uparrow
@@ -1128,180 +717,85 @@ Wirkzusammenhang
     \label{eq:ist_kausalkette_stromdrift}
 \end{equation}
 
-Dieser Vorgang wird im weiteren Verlauf der Arbeit als thermisch
-bedingter Stromdrift bezeichnet. Die Annahme einer konstanten
-Abgangsspannung dient zunächst der Darstellung des grundlegenden
-Wirkzusammenhangs. Im realen Prüfstand kann die zentrale
-Stromregelung die vom Transformatorsystem bereitgestellte Spannung
-verändern. Diese Spannungsänderung wirkt jedoch gleichzeitig auf
-sämtliche parallel gespeisten Strompfade und ermöglicht keine
-selektive Korrektur eines einzelnen Modulstroms.
+Dieser Vorgang wird im weiteren Verlauf als thermisch bedingter Stromdrift
+bezeichnet. Die Annahme einer konstanten Spannung dient ausschließlich der
+Darstellung des lokalen Wirkzusammenhangs. Im realen Prüfstand verändert die
+übergeordnete Stromregelung bei einer Änderung des Gesamtstroms die
+gemeinsame Speisespannung. Diese Korrektur wirkt jedoch gleichzeitig auf den
+Kurzschlussbrückenpfad und alle zwölf MCC-Abgänge. Sie kann deshalb keine
+selektive Abweichung eines einzelnen Abgangs ausgleichen.
 
-Der thermisch bedingte Stromdrift tritt nicht bei allen Abgängen in
-gleichem Umfang auf. Die einzelnen Lastzweige unterscheiden sich
-hinsichtlich ihrer Prüfströme, der verwendeten
-Widerstandsquerschnitte, der eingestellten Leiterlängen sowie ihrer
-elektrischen und thermischen Randbedingungen.
+Der thermische Stromdrift fällt zwischen den Abgängen unterschiedlich aus.
+Ursachen sind die verschiedenen Prüfströme, Leiterquerschnitte und wirksamen
+Leiterlängen sowie Unterschiede der Kontakt-, Leitungs- und
+Modulimpedanzen. Hinzu kommen unterschiedliche thermische Randbedingungen,
+beispielsweise die Oberfläche, die Anordnung der Widerstände und die
+Wärmeabgabe an die Umgebung. Eine einzige zentrale Stellgröße kann diese
+individuellen Verläufe nicht gleichzeitig kompensieren.
 
-Aufgrund der quadratischen Abhängigkeit der Verlustleistung vom Strom
-werden die Lastwiderstände unterschiedlich stark thermisch belastet.
-Zusätzlich beeinflussen die Oberfläche, die räumliche Anordnung und
-die Wärmeabgabe an die Umgebung die Erwärmung der einzelnen
-Widerstandsschienen. Aus diesen Unterschieden ergeben sich
-individuelle Temperatur-, Widerstands- und Stromverläufe. Eine
-gemeinsame Nachführung über die zentrale Stellgröße des
-Säulenstelltransformators kann diese unterschiedlichen Verläufe nicht
-vollständig ausgleichen.
+Die manuelle Korrektur eines Abgangs führt zu einer weiteren Kopplung. Wird
+die wirksame Länge seines Lastwiderstands verkürzt, steigt der betreffende
+Abgangsstrom. Dadurch erhöht sich zunächst auch der übergeordnete Strom. Die
+zentrale Regelung kann darauf mit einer Verringerung der gemeinsamen Spannung
+reagieren, wodurch die Ströme der übrigen Abgänge sinken. Eine lokale
+Korrektur kann somit neue Abweichungen in bereits eingestellten Zweigen
+erzeugen. Dieser Zusammenhang erklärt den iterativen Charakter der
+Stromeinstellung.
 
-Der von der zentralen Stromregelung erfasste Phasenstrom setzt sich
-aus dem Strom über die Kurzschlussbrücke und den zwölf Modulströmen
-zusammen:
-
-\begin{equation}
-    I_{\mathrm{ges}}
-    =
-    I_{\mathrm{KB}}
-    +
-    \sum_{k=1}^{12}
-    I_{\mathrm{MCC},k}.
-    \label{eq:ist_gesamtstrom_mit_modulstroemen}
-\end{equation}
-
-Der Messwert \(I_{\mathrm{ges}}\) beschreibt lediglich die Summe der
-Teilströme. Er enthält keine eindeutige Information darüber, wie sich
-der Gesamtstrom auf die zwölf MCC-Abgänge und die Kurzschlussbrücke
-verteilt. Unterschiedliche Kombinationen der Teilströme können daher
-zum gleichen Gesamtstrom führen. Die Einhaltung des Sollwerts von
-\(I_{\mathrm{ges}}\) gewährleistet nicht, dass gleichzeitig alle
-Modulströme ihren jeweiligen Sollwerten entsprechen.
-
-Sinkt beispielsweise der Strom eines einzelnen Abgangs infolge der
-Erwärmung, erfasst die zentrale Regelung lediglich die daraus
-resultierende Änderung des Gesamtstroms. Zur Wiederherstellung des
-Gesamtstroms verändert die Regelung die Abgriffposition des
-Säulenstelltransformators. Dadurch ändern sich die vom
-Festtransformator bereitgestellten Spannungen. Diese Veränderung wirkt
-gleichzeitig auf
-
-\begin{itemize}
-    \item den ursächlich abweichenden MCC-Abgang,
-    \item die übrigen elf MCC-Abgänge und
-    \item den Strom über die Kurzschlussbrücke.
-\end{itemize}
-
-Die zentrale Regelung kann den übergeordneten Phasenstrom dadurch
-nachführen. Eine selektive Wiederherstellung des Sollstroms eines
-einzelnen Abgangs ist jedoch nicht möglich.
-
-Die manuelle Korrektur eines abweichenden Modulstroms erfolgt durch
-das Verschieben der Brücke des betreffenden V2A-Lastwiderstands. Wird
-die wirksame Leiterlänge verkürzt, verringert sich der elektrische
-Widerstand des Lastpfads. Bei näherungsweise unveränderter Spannung
-steigt dadurch der zugehörige Modulstrom.
-
-Die Korrektur verändert jedoch zugleich die Belastung der
-gemeinsamen Hochstromeinspeisung. Der übergeordnete Phasenstrom steigt
-infolge der Widerstandsverringerung ebenfalls an. Die zentrale
-Stromregelung kann darauf mit einer Verringerung der bereitgestellten
-Spannung reagieren. Diese Spannungsänderung wirkt wiederum auf alle
-parallel gespeisten Lastzweige. Dadurch können bereits eingestellte
-Modulströme erneut von ihren Sollwerten abweichen.
-
-Nach jeder manuellen Veränderung muss deshalb nicht nur der
-unmittelbar verstellte Abgang kontrolliert werden. Vielmehr ist die
-gesamte Stromverteilung erneut zu betrachten. Werden weitere
-Abweichungen festgestellt, sind zusätzliche Nachstellungen
-erforderlich. Die Einstellung und Aufrechterhaltung der zwölf
-Modulströme stellt damit einen iterativen Vorgang dar.
-
-Eine Abweichung des Modulstroms beeinflusst unmittelbar die
-elektrische Verlustleistung und damit die thermische Beanspruchung des
-betrachteten Prüfpfads. Wird der Widerstand für den betrachteten
-Zeitpunkt als konstant angenommen, ergibt sich das Verhältnis zwischen
-der veränderten und der ursprünglichen Verlustleistung zu
+Eine Stromabweichung verändert außerdem die im Prüfling entstehende
+Verlustleistung. Wird der elektrische Widerstand des betrachteten
+Prüfpfads für einen Zeitpunkt als konstant angenommen, gilt
 
 \begin{equation}
-    \frac{
-        P_{\mathrm{el},k}
-        \left(
-            I_{\mathrm{MCC},k}
-            +
-            \Delta I_{\mathrm{MCC},k}
-        \right)
-    }{
-        P_{\mathrm{el},k}
-        \left(
-            I_{\mathrm{MCC},k}
-        \right)
-    }
+    \frac{P_k(I_k+\Delta I_k)}{P_k(I_k)}
     =
-    \left(
-        1
-        +
-        \frac{
-            \Delta I_{\mathrm{MCC},k}
-        }{
-            I_{\mathrm{MCC},k}
-        }
-    \right)^2.
+    \left(1+\frac{\Delta I_k}{I_k}\right)^2.
     \label{eq:ist_leistungsabweichung_stromabweichung}
 \end{equation}
 
-Unterschreitet der Modulstrom seinen Sollwert beispielsweise um
-\SI{5}{\percent}, beträgt der verbleibende Stromanteil
-\SI{95}{\percent}. Für die relative Verlustleistung folgt
+Bei einer Unterschreitung des Sollstroms um \SI{5}{\percent} verbleiben
+damit nur
 
 \begin{equation}
-    \frac{P_{\mathrm{el},k}}{P_{\mathrm{el},k,0}}
+    \frac{P_k}{P_{k,0}}
     =
-    \left(0{,}95\right)^2
+    (0{,}95)^2
     =
-    0{,}9025.
+    0{,}9025
     \label{eq:ist_leistungsabweichung_beispiel}
 \end{equation}
 
-Die momentane Verlustleistung verringert sich in diesem Fall um
+der vorgesehenen momentanen Verlustleistung. Die Verringerung beträgt somit
+\SI{9.75}{\percent}. Bereits eine vergleichsweise kleine Stromabweichung kann
+folglich den Erwärmungsverlauf und die erreichte Beharrungstemperatur
+merklich beeinflussen. Die Stromnachführung ist daher nicht nur eine Frage
+des Bedienkomforts, sondern eine Voraussetzung für vergleichbare und
+reproduzierbare Prüfbedingungen.
 
-\begin{equation}
-    1-0{,}9025
-    =
-    0{,}0975
-    =
-    \SI{9.75}{\percent}.
-    \label{eq:ist_leistungsverringerung_beispiel}
-\end{equation}
+Aus regelungstechnischer Sicht ist der Prüfstand als gekoppeltes
+Mehrgrößensystem einzuordnen. Die gemeinsame Speisespannung wirkt als
+zentrale Stellgröße auf sämtliche Lastpfade. Die einzelnen
+Widerstandsbrücken stellen dezentrale Stellmöglichkeiten dar, werden jedoch
+manuell betätigt. Der vorhandenen Regelung steht nur die Summe der
+Teilströme als Regelgröße zur Verfügung; aus ihr kann die Verteilung auf die
+einzelnen Abgänge nicht eindeutig rekonstruiert werden.
 
-Bereits eine vergleichsweise geringe Stromabweichung verursacht somit
-eine deutlich größere Abweichung der elektrischen Verlustleistung.
-Eine unzureichende Nachführung der Modulströme beeinflusst daher den
-Erwärmungsverlauf und die erreichbaren Endtemperaturen der geprüften
-Betriebsmittel. Die Sollwertabweichungen sind folglich nicht nur
-hinsichtlich des Bedienaufwands relevant, sondern können auch die
-Vergleichbarkeit, Reproduzierbarkeit und Aussagekraft der
-Erwärmungsprüfung beeinträchtigen.
+Damit ergeben sich vier wesentliche Defizite des Ist-Zustands:
 
-Aus regelungstechnischer Sicht stellt die Prüfanordnung ein
-gekoppeltes Mehrgrößensystem dar. Innerhalb eines Außenleiters treten
-die zwölf Modulströme und der Strom über die Kurzschlussbrücke als
-voneinander abhängige Teilströme auf. Die vom
-Säulenstelltransformator beeinflusste Spannung stellt eine gemeinsame
-Stellgröße dar, die auf sämtliche Strompfade wirkt. Die verschiebbaren
-Brücken der V2A-Lastwiderstände bilden zusätzliche dezentrale
-Stellmöglichkeiten, werden im bestehenden Prüfstand jedoch
-ausschließlich manuell betätigt.
+\begin{itemize}
+    \item Die einzelnen Abgangsströme werden nicht automatisch nachgeführt.
+    \item Die Erwärmung der Lastwiderstände verursacht zeitlich
+    unterschiedliche Stromabweichungen.
+    \item Manuelle und zentrale Stellvorgänge beeinflussen über die
+    gemeinsame Einspeisung auch andere Lastzweige.
+    \item Die wiederholte Verstellung im bestromten Hochstromkreis verursacht
+    Bedienaufwand und stellt erhöhte Anforderungen an einen sicheren
+    Arbeitsablauf.
+\end{itemize}
 
-Die vorhandene zentrale Regelung berücksichtigt das
-Mehrgrößenverhalten nur über die zusammengefasste Regelgröße
-\(I_{\mathrm{ges}}\). Individuelle und zeitlich unterschiedlich
-auftretende Abweichungen der Modulströme können dadurch nicht gezielt
-kompensiert werden.
-
-Die Analyse zeigt, dass eine Optimierung des Prüfstands nicht allein
-durch eine genauere Regelung des übergeordneten Phasenstroms erreicht
-werden kann. Hierdurch ließe sich zwar der Gesamtstrom präziser
-nachführen, nicht jedoch seine Verteilung auf die einzelnen
-MCC-Abgänge. Erforderlich ist daher eine individuelle und
-mehrkanalfähige Nachführung der Modulströme.
+Eine Optimierung allein der vorhandenen Gesamtstromregelung kann diese
+Defizite nicht beseitigen. Erforderlich ist eine gezielte Beeinflussung der
+Stromverteilung auf die einzelnen MCC-Abgänge.
 
 
 % -----------------------------------------------------------------------------
@@ -1310,256 +804,1786 @@ mehrkanalfähige Nachführung der Modulströme.
 \subsection{Anforderungen an das Optimierungskonzept}
 \label{sec:anforderungen_optimierung}
 
-Aus der Analyse des bestehenden Prüfstands werden im Folgenden die
-Anforderungen an das zu entwickelnde Optimierungskonzept abgeleitet.
-Das wesentliche Defizit des Ist-Zustands besteht darin, dass die
-vorhandene Regelung ausschließlich auf die unmittelbar hinter dem
-Festtransformator gemessenen Phasenströme einwirkt. Die einzelnen
-Modulströme werden zwar phasenbezogen erfasst, können jedoch nicht
-automatisch und selektiv nachgeführt werden.
+Aus der Analyse werden im Folgenden die Anforderungen an die zu
+untersuchenden Stellkonzepte abgeleitet. Die Anforderungen werden zunächst
+vom später gewählten Wirkprinzip getrennt. Dadurch können ein zusätzlicher
+verstellbarer Widerstand, ein induktiver Stellpfad und
+transformatorgestützte Lösungen in Kapitel~\ref{chap:konzeptentwicklung}
+an denselben Kriterien beurteilt werden.
 
-Die zentrale funktionale Anforderung besteht daher in einer
-automatisierbaren Nachführung der einzelnen Modulströme. Für jeden
-MCC-Abgang muss der gemessene Iststrom mit einem vorgegebenen Sollwert
-verglichen und durch eine geeignete Stellgröße beeinflusst werden
-können. Die Nachführung darf nicht ausschließlich auf Grundlage des
-übergeordneten Phasenstroms erfolgen, da aus dessen Einhaltung keine
-eindeutige Aussage über die Verteilung der Teilströme abgeleitet
-werden kann.
-
-Da sämtliche Abgangseinheiten dreiphasig ausgeführt sind, muss die
-Stromerfassung weiterhin phasenbezogen erfolgen. Bei zwölf
-dreiphasigen MCC-Abgängen ergeben sich insgesamt
+Die zentrale funktionale Anforderung ist die automatische Nachführung der
+einzelnen Abgangsströme. Für jeden Außenleiter jedes MCC-Abgangs muss der
+Iststrom erfasst und mit dem vorgesehenen Sollwert verglichen werden. Bei
+zwölf dreiphasigen Abgängen ergeben sich
 
 \begin{equation}
-    n_{\mathrm{I}}
+    n_\mathrm{I}
     =
-    12 \cdot 3
+    12\cdot 3
     =
     36
     \label{eq:anzahl_modulstromkanaele}
 \end{equation}
 
-zu berücksichtigende Modulstrommesswerte. Die Mess-, Steuerungs- und
-Regelungsstruktur muss daher mehrkanalfähig ausgeführt werden.
-Abweichungen zwischen den Außenleitern müssen erkennbar bleiben, da
-eine ausschließliche Betrachtung eines Mittelwerts mögliche
-Unsymmetrien der Modulströme verdecken würde.
+phasenbezogene Strommesswerte. Die Zahl der Messkanäle legt die Zahl der
+mechanisch oder elektrisch unabhängigen Stellglieder noch nicht fest. Eine
+gemeinsame dreiphasige Stellbewegung ist nur dann geeignet, wenn die
+Abweichungen aller drei Außenleiter innerhalb der zulässigen Grenzen bleiben.
+Andernfalls ist eine phasenselektive Stellwirkung erforderlich.
 
-Aus der Forderung nach einer phasenbezogenen Stromerfassung folgt
-jedoch nicht zwangsläufig, dass jedem der 36 Messkanäle ein vollständig
-eigenständiges Stellglied zugeordnet werden muss. Im Rahmen der
-Konzeptentwicklung ist zu untersuchen, ob die drei Außenleiter eines
-Abgangs gemeinsam oder getrennt beeinflusst werden können. Dabei ist
-zu bewerten, in welchem Umfang eine gemeinsame Stellbewegung für einen
-dreiphasigen Abgang zulässig ist und wie verbleibende
-Phasenabweichungen berücksichtigt werden können.
+Für die künftige Belastungskonfiguration sollen die sechs A-Module mit
+jeweils \SI{40}{\ampere} und die drei B-Module mit jeweils
+\SI{70}{\ampere} betrieben werden. Die Prüfströme der drei größeren Abgänge
+bleiben bei \SI{250}{\ampere}, \SI{400}{\ampere} und
+\SI{630}{\ampere}. Damit steigt der vorgesehene Summenstrom der zwölf
+MCC-Abgänge gegenüber der bisher erprobten Konfiguration von
+\SI{1661}{\ampere} auf \SI{1730}{\ampere} je Außenleiter.
 
-Der erforderliche Strombereich ergibt sich aus der betrachteten
-Belastungskonfiguration. Das Optimierungskonzept muss die Nachführung
-von sechs Abgängen mit jeweils \SI{40}{\ampere}, drei Abgängen mit
-jeweils \SI{70}{\ampere} sowie jeweils einem Abgang mit
-\SI{250}{\ampere}, \SI{400}{\ampere} und
-\SI{630}{\ampere} ermöglichen. Der Summenstrom der zwölf
-MCC-Abgänge beträgt nach
-Gleichung~\eqref{eq:mcc_summenstrom_belastungskonfiguration}
-\SI{1730}{\ampere} je Außenleiter.
+\begin{table}[H]
+    \centering
+    \caption{Für die Optimierung vorgesehene Belastungskonfiguration je
+    Außenleiter}
+    \label{tab:mcc_belastungskonfiguration}
+    \begin{tabular}{lccc}
+        \toprule
+        Abgangsgruppe & Anzahl & Sollstrom je Abgang & Teilsumme \\
+        \midrule
+        A-Module & 6 & \SI{40}{\ampere} & \SI{240}{\ampere} \\
+        B-Module & 3 & \SI{70}{\ampere} & \SI{210}{\ampere} \\
+        \SI{250}{\ampere}-Abgang & 1 & \SI{250}{\ampere} &
+        \SI{250}{\ampere} \\
+        \SI{400}{\ampere}-Abgang & 1 & \SI{400}{\ampere} &
+        \SI{400}{\ampere} \\
+        \SI{630}{\ampere}-Abgang & 1 & \SI{630}{\ampere} &
+        \SI{630}{\ampere} \\
+        \midrule
+        Gesamt & 12 & -- & \SI{1730}{\ampere} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-Die unterschiedlichen Prüfströme führen zu deutlich voneinander
-abweichenden elektrischen und thermischen Randbedingungen. Ein für
-einen \SI{40}{\ampere}-Abgang geeignetes Stellglied kann daher nicht
-ohne weitere Untersuchung auf einen \SI{630}{\ampere}-Abgang
-übertragen werden. Das Konzept muss entweder an die jeweilige
-Stromklasse angepasst oder so skalierbar ausgeführt werden, dass die
-unterschiedlichen Abgangsströme mit einem gemeinsamen Wirkprinzip
-beherrscht werden können.
+Der zugehörige Summenstrom beträgt
 
-Neben dem Erreichen des jeweiligen Sollstroms muss eine ausreichende
-Stellreserve vorhanden sein. Zu Beginn der Erwärmungsprüfung ist
-zunächst der vorgesehene Modulstrom einzustellen. Während der
-anschließenden Erwärmungsphase muss zusätzlich die
-temperaturbedingte Veränderung des Lastzweigwiderstands ausgeglichen
-werden können. Der erforderliche Stellbereich setzt sich daher aus
-dem Bereich für die anfängliche Einstellung und einer zusätzlichen
-Reserve für die thermische Nachführung zusammen.
+\begin{equation}
+\begin{aligned}
+    I_{\mathrm{MCC},\Sigma}
+    &=
+    6\cdot\SI{40}{\ampere}
+    +3\cdot\SI{70}{\ampere}
+    +\SI{250}{\ampere}
+    +\SI{400}{\ampere}
+    +\SI{630}{\ampere}
+    \\
+    &=
+    \SI{1730}{\ampere}.
+\end{aligned}
+\label{eq:mcc_summenstrom_belastungskonfiguration}
+\end{equation}
 
-Die Stellreserve ist so zu bemessen, dass der Sollstrom auch bei der
-für den jeweiligen Lastwiderstand zu erwartenden maximalen
-Betriebstemperatur erreicht werden kann. Gleichzeitig darf das
-Stellglied nicht bereits im Ausgangszustand an einer mechanischen oder
-elektrischen Stellgrenze betrieben werden. Die quantitative
-Bestimmung des erforderlichen Stellbereichs erfolgt im Rahmen der
-Dimensionierung und der späteren Modelluntersuchung.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]
+    {03_Ressourcen/pic/Frontansicht_MCC_Xournal.pdf}
+    \caption{Für die Optimierung vorgesehene Modulbestückung des
+    MCC-Feldes}
+    \label{fig:mcc_modulbestueckung}
+\end{figure}
 
-Eine weitere Anforderung ergibt sich aus der elektrischen Kopplung der
-parallel gespeisten Abgänge. Eine Änderung des Stroms eines einzelnen
-Lastzweigs verändert zugleich die Belastung der gemeinsamen
-Hochstromeinspeisung. Die vorhandene Gesamtstromregelung kann darauf
-mit einer Veränderung der vom Transformatorsystem bereitgestellten
-Spannung reagieren. Diese Spannungsänderung wirkt wiederum auf
-sämtliche MCC-Abgänge und den Strom über die Kurzschlussbrücke.
+Die große Spannweite der Abgangsströme ist nicht nur für den elektrischen
+Stellbereich, sondern auch für die konstruktive Ausführung maßgebend. Ein
+Stellglied für einen \SI{40}{\ampere}-Abgang unterliegt anderen
+Anforderungen an Leiterquerschnitt, Kontaktierung und Wärmeabfuhr als ein
+Stellglied im \SI{630}{\ampere}-Pfad. Ein gemeinsames Wirkprinzip ist daher
+nur dann vorteilhaft, wenn es auf die unterschiedlichen Stromklassen
+skalierbar ist. Eine identische Baugröße für sämtliche Abgänge wird nicht
+vorausgesetzt.
 
-Das Optimierungskonzept muss diese gegenseitige Beeinflussung
-berücksichtigen und möglichst begrenzen. Eine Nachführung eines
-einzelnen Modulstroms darf nicht zu unzulässigen Abweichungen der
-übrigen Modulströme führen. Nicht vollständig vermeidbare
-Wechselwirkungen müssen bei der Auslegung der Regelungsstruktur und
-bei der Bewertung des dynamischen Verhaltens berücksichtigt werden.
+Neben dem Sollstrombereich ist eine ausreichende Stellreserve erforderlich.
+Das Stellglied muss zunächst die Einstellung des Sollstroms ermöglichen und
+anschließend die temperaturbedingte Änderung der Lastzweigimpedanz
+ausgleichen können. Es darf weder im kalten Ausgangszustand noch bei der
+größten zu erwartenden Betriebstemperatur an einer mechanischen,
+elektrischen oder regelungstechnischen Grenze betrieben werden. Der
+quantitativ erforderliche Stellbereich wird auf Grundlage der Modellbildung
+und der Simulation bestimmt.
 
-Die vorhandene Regelung der übergeordneten Phasenströme soll
-grundsätzlich erhalten bleiben. Sie erfüllt weiterhin die Aufgabe,
-den Gesamtstrom der Prüfanordnung über die motorischen Antriebe des
-Säulenstelltransformators nachzuführen. Das neue System soll diese
-übergeordnete Regelung um eine nachgelagerte und gezielte
-Beeinflussung der einzelnen Modulströme ergänzen.
+Bei Konzepten mit bewegten elektrischen Kontakten ist zusätzlich zu prüfen,
+welcher Strom während der Stellbewegung über die Kontaktstelle geführt wird.
+Der Kontaktwiderstand muss gegenüber der wirksamen Lastzweigimpedanz
+hinreichend klein und über die vorgesehene Lebensdauer reproduzierbar sein.
+Eine Unterbrechung des Hochstrompfads während der Bewegung oder eine
+unzulässige Lichtbogenbildung ist auszuschließen. Diese Anforderung ist
+insbesondere bei den hohen Abgangsströmen von Bedeutung und bildet ein
+eigenständiges Kriterium für die spätere Bewertung der Stellkonzepte.
 
-Daraus ergibt sich eine hierarchische Regelungsstruktur. Die
-übergeordnete Regelung beeinflusst die gemeinsame Spannung des
-Prüfstands, während die nachgelagerten Stellglieder die Verteilung des
-bereitgestellten Stroms auf die einzelnen MCC-Abgänge korrigieren.
-Beide Ebenen müssen so aufeinander abgestimmt werden, dass sie sich
-nicht gegenseitig zu fortlaufenden Stellbewegungen oder Schwingungen
-anregen.
+Die vorhandene Hochstromeinspeisung und ihre übergeordnete Regelung sind bei
+der Entwicklung zu berücksichtigen. Eine dezentrale Stellbewegung darf keine
+unzulässigen Stromabweichungen in anderen Abgängen hervorrufen. Gleichzeitig
+müssen die Dynamiken der zentralen und der dezentralen Stellvorgänge so
+aufeinander abgestimmt werden, dass keine bleibenden Schwingungen oder
+fortlaufenden gegenläufigen Stellbewegungen entstehen. Welche Regelgröße dem
+Säulenstelltransformator im optimierten Aufbau zugeordnet wird, ist dabei
+nicht vorwegzunehmen, sondern für das jeweilige Konzept zu untersuchen.
 
-Die wiederholte manuelle Einstellung der V2A-Lastwiderstände soll
-durch eine elektrisch ansteuerbare Stellmöglichkeit ersetzt werden.
-Diese muss eine reproduzierbare Veränderung des jeweiligen
-Modulstroms ermöglichen und grundsätzlich in die vorhandene SPS
-integrierbar sein. Die Stellung beziehungsweise der Betriebszustand
-des Stellglieds muss erfassbar sein, damit ein definierter Zustand
-wiederholt eingestellt und dokumentiert werden kann.
+Die zusätzlichen Komponenten müssen in den vorhandenen Prüfstand integrierbar
+und für den mehrstündigen Dauerbetrieb geeignet sein. Ihre Verlustleistung
+und Eigenerwärmung dürfen das thermische Verhalten des Prüflings nicht
+unzulässig beeinflussen. Wärme erzeugende Betriebsmittel sind deshalb nach
+Möglichkeit außerhalb der für den Erwärmungsnachweis maßgebenden thermischen
+Systemgrenze anzuordnen. Leiter, Wicklungen, Kontaktstellen und Stellglieder
+sind für die jeweiligen Dauerströme und die auftretenden Temperaturen zu
+dimensionieren.
 
-Die vorhandenen V2A-Lastwiderstände sollen weiterhin Bestandteil des
-Lastkreises bleiben. Sie übernehmen die Grundbelastung der jeweiligen
-MCC-Abgänge und bilden zugleich die thermisch veränderliche Last des
-bestehenden Prüfaufbaus ab. Das zusätzliche Stellglied soll den
-V2A-Widerstand daher nicht vollständig ersetzen, sondern dessen
-manuelle Nachstellung während der Erwärmungsprüfung vermeiden.
+Neben der elektrischen Dimensionierung sind der verfügbare Bauraum, der
+mechanische Stellweg und die Zugänglichkeit für Wartung und Austausch zu
+berücksichtigen. Ein Wirkprinzip, das die erforderliche Stellwirkung nur mit
+unverhältnismäßig großen magnetischen oder elektrischen Komponenten
+erreicht, ist für die vorhandene Prüfumgebung nicht zweckmäßig. Die
+technische Realisierbarkeit ist deshalb gemeinsam mit der erreichbaren
+Stellwirkung und nicht erst nach der regelungstechnischen Untersuchung zu
+bewerten.
 
-Aufgrund der niedrigen Spannung und der hohen Ströme im Lastkreis
-stellt die elektrische Belastbarkeit des zusätzlichen Stellpfads eine
-wesentliche Randbedingung dar. Ein unmittelbar im Hauptstrompfad
-angeordnetes Stellglied müsste den vollständigen Modulstrom führen.
-Insbesondere bei den Abgängen mit \SI{250}{\ampere},
-\SI{400}{\ampere} und \SI{630}{\ampere} würde dies hohe
-Anforderungen an Leiterquerschnitte, Kontaktstellen und
-Wärmeabfuhr stellen.
+Die automatische Nachführung soll Eingriffe in den bestromten Lastkreis
+vermeiden. Elektrische und mechanische Stellgrenzen müssen überwacht werden.
+Bei einem fehlerhaften oder fehlenden Messsignal darf die Regelung keine
+unkontrollierte Erhöhung des Abgangsstroms verursachen. Abhängig vom
+Wirkprinzip ist die Stellbewegung zu sperren, ein nachgewiesener sicherer
+Zustand einzunehmen oder der betroffene Kanal kontrolliert abzuschalten.
 
-Das Konzept soll daher eine ausreichende Stellwirkung bereitstellen,
-ohne den konstruktiven Aufwand und die zusätzliche Verlustleistung im
-Hochstrompfad unverhältnismäßig zu erhöhen. Die eingebrachten
-elektrischen Widerstände und Übergangswiderstände müssen so gering
-beziehungsweise so gezielt angeordnet sein, dass die eigentliche
-Erwärmungsprüfung der Schaltgerätekombination nicht unzulässig
-verfälscht wird.
+Für die betriebliche Nutzung sollen die vorhandene SPS- und WinCC-Umgebung
+soweit technisch zweckmäßig weiterverwendet werden. Mindestens Sollstrom,
+Iststrom, Regeldifferenz, Stellgröße und Grenzzustände müssen je Regelkanal
+erfasst und zeitlich aufgezeichnet werden können. Eine definierte
+Stellposition muss reproduzierbar anfahrbar sein, damit sich Prüfabläufe
+wiederholen und Ergebnisse nachvollziehbar dokumentieren lassen.
 
-Zusätzliche Verlustwärme darf insbesondere nicht unmittelbar auf die
-zu bewertenden Komponenten des MCC-Feldes einwirken. Transformatoren,
-Stellwiderstände und weitere wärmeerzeugende Komponenten sind deshalb
-räumlich und thermisch so anzuordnen, dass ihre Eigenerwärmung das
-Temperaturverhalten der Prüfkombination nicht maßgebend beeinflusst.
+Tabelle~\ref{tab:anforderungen_optimierung} fasst die aus der Analyse
+abgeleiteten Bewertungskriterien zusammen. Die quantitative Konkretisierung
+erfolgt dort, wo Mess- oder Modelldaten erforderlich sind, in den
+nachfolgenden Kapiteln.
 
-Da die Erwärmungsprüfung über mehrere Stunden durchgeführt wird,
-müssen sämtliche zusätzlichen Komponenten für Dauerbetrieb geeignet
-sein. Die thermische Belastung der Leiter, Wicklungen,
-Kontaktstellen und Stellglieder ist bei der Dimensionierung zu
-berücksichtigen. Ihre Erwärmung darf nicht dazu führen, dass sich die
-Stellwirkung während der Prüfung fortlaufend verändert oder der
-erforderliche Stellbereich eingeschränkt wird.
+\begin{table}[H]
+    \centering
+    \caption{Anforderungen und Bewertungskriterien für die
+    Konzeptentwicklung}
+    \label{tab:anforderungen_optimierung}
+    \small
+    \begin{tabular}{p{0.06\textwidth}p{0.27\textwidth}p{0.55\textwidth}}
+        \toprule
+        ID & Anforderung & Bewertungskriterium \\
+        \midrule
+        A1 & Sollwerttreue &
+        Einhaltung der in Abschnitt~\ref{sec:erwaermungspruefung_norm}
+        festgelegten Stromtoleranzen bis zur Messwertaufnahme \\
+        A2 & Strombereich &
+        Nachführung der vorgesehenen Abgangsströme von
+        \SIrange{40}{630}{\ampere} \\
+        A3 & Phasenbezogene Erfassung &
+        Verarbeitung aller 36 Modulstrommesswerte und Erkennung
+        verbleibender Phasenabweichungen \\
+        A4 & Stellbereich und Reserve &
+        Sollstrom im kalten Zustand und thermische Nachführung ohne
+        Anschlagbetrieb \\
+        A5 & Beherrschung der Kopplung &
+        Keine unzulässige Beeinflussung anderer Abgänge und stabiles
+        Zusammenwirken mit der übergeordneten Regelung \\
+        A6 & Dauerbetriebsfähigkeit &
+        Zulässige elektrische und thermische Beanspruchung während der
+        gesamten Prüfdauer \\
+        A7 & Rückwirkungsarme Integration &
+        Keine unzulässige zusätzliche Erwärmung oder Veränderung der
+        Randbedingungen des Prüflings \\
+        A8 & Automatisierbarkeit &
+        Elektrische Ansteuerung, erfassbare Stellposition und Einbindung in
+        SPS und WinCC \\
+        A9 & Betriebssicherheit &
+        Grenzüberwachung und definierter Zustand bei Mess- oder
+        Stellfehlern \\
+        A10 & Reproduzierbarkeit und Bedienaufwand &
+        Wiederholbare Stellzustände und weniger manuelle Eingriffe während
+        der Erwärmungsphase \\
+        A11 & Hochstromtaugliche Kontaktierung &
+        Dauerstromfeste, niederohmige und während der Stellbewegung sichere
+        Kontaktstellen ohne unzulässige Lichtbogenbildung \\
+        A12 & Konstruktive Realisierbarkeit &
+        Vertretbarer Bauraum, mechanischer Stellweg sowie Wartungs- und
+        Integrationsaufwand für alle Stromklassen \\
+        \bottomrule
+    \end{tabular}
+\end{table}
 
-Für die Beurteilung des Regelungsverhaltens müssen die maßgebenden
-Größen erfasst und aufgezeichnet werden können. Hierzu gehören
-mindestens
+Die Anforderungen legen noch kein bestimmtes Stellprinzip fest. In
+Kapitel~\ref{chap:konzeptentwicklung} werden deshalb zunächst vier
+technische Ansätze untersucht: ein zusätzlicher paralleler motorisch verstellbarer
+Widerstandspfad, ein induktiver Parallelzweig mit veränderlichem
+magnetischem Kreis sowie zwei Varianten mit einem zusätzlichen Transformator
+und motorisch verstellbaren Widerständen. Erst der anschließende Vergleich
+entscheidet, welche Konzepte in der Modellbildung und Simulation weiter
+verfolgt werden.
 
-\begin{itemize}
-    \item der Sollwert des jeweiligen Modulstroms,
-    \item der gemessene Istwert des Modulstroms,
-    \item die Abweichung zwischen Soll- und Istwert sowie
-    \item die zugehörige Stellgröße beziehungsweise Stellposition.
-\end{itemize}
 
-Die Mess- und Stellgrößen sollen über die vorhandene SPS- und
-WinCC-Umgebung dargestellt und zeitlich aufgezeichnet werden können.
-Dadurch lassen sich die Sollwerttreue, der Verlauf der Stellgrößen,
-das dynamische Verhalten und die gegenseitige Beeinflussung der
-einzelnen Regelkanäle anhand reproduzierbarer Daten bewerten.
+% '% =============================================================================
+% % 3 Analyse des bestehenden Erwärmungsprüfstands
+% % =============================================================================
+% \section{Analyse des bestehenden Erwärmungsprüfstands}
+% \label{chap:analyse_pruefstand}
 
-Neben den funktionalen und regelungstechnischen Anforderungen ist ein
-sicherer Betrieb zu gewährleisten. Die Nachführung der Modulströme
-soll ohne unmittelbaren manuellen Eingriff in den bestromten
-Lastkreis erfolgen. Mechanische und elektrische Stellgrenzen müssen
-überwacht werden, damit der zulässige Strom-, Spannungs- und
-Temperaturbereich der eingesetzten Komponenten nicht überschritten
-wird.
+% In diesem Kapitel werden der technische Aufbau des bestehenden
+% Erwärmungsprüfstands und der gegenwärtige betriebliche Ablauf der
+% Erwärmungsprüfung analysiert. Ziel ist es, die für die Erzeugung,
+% Verteilung und Einstellung der Prüfströme maßgebenden Zusammenhänge
+% herauszuarbeiten. Darauf aufbauend wird untersucht, weshalb sich die
+% Ströme der einzelnen MCC-Abgänge während der Erwärmungsphase verändern
+% und warum ihre Einhaltung im bestehenden Prüfstand wiederholte manuelle
+% Nachstellungen erfordert.
 
-Bei Ausfall eines Messsignals oder beim Erreichen einer Stellgrenze
-muss ein definierter Betriebszustand erhalten bleiben. Die
-automatische Nachführung darf in einem solchen Fall nicht zu einer
-unkontrollierten Erhöhung des Modulstroms führen. Je nach Ausführung
-ist die Stellbewegung zu begrenzen, der zuletzt sichere Zustand zu
-halten oder der betroffene Regelkanal kontrolliert zu deaktivieren.
+% Die betrachtete Prüfanordnung besteht aus einer regelbaren
+% Hochstromeinspeisung, einem Anbindefeld sowie einer Prüfkombination aus
+% Leistungsschalterfeld und MCC-Feld. Innerhalb des MCC-Feldes werden
+% zwölf dreiphasige Abgangseinheiten parallel über ein gemeinsames
+% Verteilschienensystem gespeist. Die für die Analyse und die anschließende
+% Konzeptentwicklung zugrunde gelegte Modulbestückung ist in
+% Abbildung~\ref{fig:mcc_modulbestueckung} dargestellt. Sie umfasst sechs
+% A-Module mit jeweils \SI{40}{\ampere}, drei B-Module mit jeweils
+% \SI{70}{\ampere} sowie jeweils ein 1er/H-Modul mit
+% \SI{250}{\ampere}, ein 2er-Modul mit \SI{400}{\ampere} und ein
+% 3er-Modul mit \SI{630}{\ampere}. Daraus ergibt sich ein gesamter
+% Bemessungsstrom der betrachteten Abgangseinheiten von
+% \SI{1730}{\ampere}.
 
-Zusammenfassend muss das Optimierungskonzept eine automatisierte und
-phasenselektive Nachführung der Ströme sämtlicher MCC-Abgänge
-ermöglichen. Da zwölf dreiphasige Abgangseinheiten gleichzeitig
-belastet werden, sind insgesamt 36 voneinander unabhängige Strompfade
-zu berücksichtigen. Jedem Strompfad muss eine elektrisch ansteuerbare
-Stellgröße zugeordnet werden, sodass Abweichungen zwischen Soll- und
-Iststrom für die Außenleiter \(L1\), \(L2\) und \(L3\) unabhängig
-voneinander ausgeglichen werden können.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{03_Ressourcen/pic/Frontansicht_MCC_Xournal.pdf}
+%     \caption{Schematische Frontansicht des MCC-Feldes mit der zugrunde gelegten Modulbestückung}
+%     \label{fig:mcc_modulbestueckung}
+% \end{figure}
 
-Die Stellkanäle müssen für Prüfströme zwischen
-\SI{40}{\ampere} und \SI{630}{\ampere} ausgelegt werden. Dabei ist
-neben der anfänglichen Einstellung des jeweiligen Sollstroms eine
-ausreichende Stellreserve zum Ausgleich der temperaturbedingten
-Widerstandsänderung während der Erwärmungsprüfung vorzusehen. Die
-Stellglieder dürfen deshalb weder zu Beginn der Prüfung noch beim
-Erreichen der maximal zu erwartenden Betriebstemperatur an einer
-mechanischen oder elektrischen Stellgrenze betrieben werden. Die
-quantitative Bestimmung der erforderlichen Stellbereiche erfolgt im
-Rahmen der Dimensionierung und Modellbildung.
+% Die Untersuchung folgt zunächst dem elektrischen Energiepfad vom
+% betrieblichen Drehstromnetz über den Säulenstelltransformator und den
+% Festtransformator bis zur Hochstromverteilung. Anschließend werden das
+% Anbindefeld, die Aufteilung des Gesamtstroms innerhalb der
+% Prüfkombination, der Aufbau des MCC-Feldes und die Belastung der
+% MCC-Abgänge durch die externen V2A-Lastwiderstände beschrieben.
 
-Aufgrund der gemeinsamen Einspeisung bilden die 36 Strompfade ein
-gekoppeltes Mehrgrößensystem. Eine Änderung der Stellgröße eines
-einzelnen Strompfads kann die Spannung der gemeinsamen Einspeisung und
-damit auch die Ströme der übrigen Abgänge beeinflussen. Das
-Regelungskonzept muss diese Wechselwirkungen berücksichtigen und so
-begrenzen, dass die Nachführung eines Modulstroms keine unzulässigen
-Abweichungen in anderen Strompfaden verursacht.
+% Darauf folgt die Analyse des betrieblichen Prüfablaufs. Im Mittelpunkt
+% stehen die zentrale Nachführung der übergeordneten Phasenströme, die
+% manuelle Einstellung der einzelnen Modulströme sowie deren Veränderung
+% während der Erwärmungsphase. Aus den festgestellten elektrischen,
+% thermischen und betrieblichen Einschränkungen werden abschließend die
+% Anforderungen an das in Kapitel~\ref{chap:entwicklung_stellkonzept}
+% zu entwickelnde Optimierungskonzept abgeleitet.
 
-Für die weitere Konzeptentwicklung wird daher eine hierarchische
-Regelungsstruktur vorausgesetzt. Die vorgelagerte Regelung soll die
-vom Säulenstelltransformator und Festtransformator bereitgestellte
-Phasenspannung stabilisieren. Die nachgelagerten Regelkreise sollen
-dagegen die 36 phasenbezogenen Modulströme durch die jeweils
-zugeordneten Stellglieder nachführen. Die Dynamik beider
-Regelungsebenen muss so aufeinander abgestimmt werden, dass keine
-gegenseitige Anregung oder dauerhafte Stellbewegung entsteht.
 
-Das Optimierungskonzept muss außerdem in den bestehenden Prüfstand
-integrierbar sein. Der vorhandene Hochstrompfad, die motorischen
-Antriebe des Säulenstelltransformators sowie die vorhandene Mess-,
-SPS- und WinCC-Infrastruktur sollen soweit wie möglich weiterverwendet
-werden. Die Soll- und Istwerte der einzelnen Modulströme, die daraus
-resultierenden Regelabweichungen sowie die jeweiligen Stellgrößen
-müssen erfasst, dargestellt und zeitlich aufgezeichnet werden können.
-Hierdurch wird eine reproduzierbare Bewertung des stationären und
-dynamischen Regelungsverhaltens ermöglicht.
+% % -----------------------------------------------------------------------------
+% % 3.1 Aufbau und Funktionsweise
+% % -----------------------------------------------------------------------------
+% \subsection{Aufbau und Funktionsweise}
+% \label{sec:aufbau_funktionsweise_pruefstand}
 
-Zusätzliche Komponenten müssen für den mehrstündigen Dauerbetrieb
-einer Erwärmungsprüfung geeignet sein. Ihre elektrischen Verluste und
-ihre Eigenerwärmung sind so zu begrenzen, dass die zu untersuchende
-Erwärmung des MCC-Feldes nicht unzulässig beeinflusst wird. Gleichzeitig
-müssen die zulässigen Strom-, Spannungs-, Temperatur- und Stellgrenzen
-überwacht werden. Bei einem Ausfall eines Messsignals oder beim
-Erreichen einer Stellgrenze ist ein definierter sicherer
-Betriebszustand einzunehmen; insbesondere darf die automatische
-Nachführung keine unkontrollierte Erhöhung eines Modulstroms
-verursachen.
+% Der bestehende Erwärmungsprüfstand dient dazu,
+% Niederspannungs-Schaltgerätekombinationen mit hohen dreiphasigen
+% Prüfströmen zu beaufschlagen. Hierzu wird die aus dem betrieblichen
+% Drehstromnetz bereitgestellte Spannung zunächst einstellbar gemacht
+% und anschließend auf ein für die Hochstromprüfung geeignetes niedriges
+% Spannungsniveau transformiert. Die erzeugten Prüfströme werden über
+% massive Kupferschienen und ein Anbindefeld der zu untersuchenden
+% Prüfkombination zugeführt.
 
-Aus diesen Anforderungen wird in
-Kapitel~\ref{chap:entwicklung_stellkonzept} das
-transformatorgestützte Stellkonzept abgeleitet. Dort werden das
-Wirkprinzip, die Aufteilung in 36 Stellkanäle, die unterschiedlichen
-Ausführungen für kleine und hohe Prüfströme sowie das zugehörige Mess-
-und Regelungskonzept beschrieben.
+% Der funktionale Energiepfad des Prüfstands ist in
+% Abbildung~\ref{fig:ist_energiepfad} dargestellt. Er verläuft vom
+% betrieblichen Drehstromnetz über den Säulenstelltransformator, die
+% nachgeschalteten induktiven Ausgleichselemente und den
+% Festtransformator bis zur sekundärseitigen Hochstromverteilung.
+% Unmittelbar hinter dem Festtransformator werden die Ströme der drei
+% Außenleiter erfasst. Anschließend gelangt der Hochstrom über das
+% Anbindefeld in die Prüfkombination aus Leistungsschalterfeld und
+% MCC-Feld
+% \parencite[Bestandsaufnahme: Hochstromeinspeisung und
+% Prüfanordnung]{rj_pruefstand_2026}.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/drawio/ESB_Ist-Zustand.pdf}
+%     \caption{Funktionaler Energiepfad des bestehenden
+%     Erwärmungsprüfstands mit der betrachteten Belastungskonfiguration
+%     des MCC-Feldes (eigene Darstellung auf Grundlage der betrieblichen
+%     Bestandsaufnahme)}
+%     \label{fig:ist_energiepfad}
+% \end{figure}
+
+
+% % .............................................................................
+% % Säulenstelltransformator
+% % .............................................................................
+
+% Die Einspeisung des Prüfstands erfolgt aus dem betrieblichen
+% \SI{400}{\volt}-Drehstromnetz. Zur kontinuierlichen Einstellung der
+% dem Festtransformator zugeführten Spannung wird ein motorisch
+% verstellbarer Säulenstelltransformator eingesetzt.
+
+% Das Typenschild des vorhandenen Betriebsmittels weist eine
+% Nennleistung von \SI{90}{\kilo\volt\ampere}, eine primäre
+% Nennspannung von \SI{380}{\volt}, einen primären Nennstrom von
+% \SI{70}{\ampere} und eine Nennfrequenz von \SI{50}{\hertz} aus.
+% Bei der Bewertung des heutigen Betriebs ist daher zu berücksichtigen,
+% dass die auf dem Typenschild angegebene primäre Nennspannung von der
+% gegenwärtigen betrieblichen Netzspannung von \SI{400}{\volt}
+% abweicht.
+
+% Bei einem Säulenstelltransformator wird die Ausgangsspannung durch die
+% Position von Stromabnehmern verändert, die entlang der freiliegenden
+% Transformatorwicklungen verfahren werden. Kohlerollen stellen dabei
+% den elektrischen Kontakt zwischen den Stromabnehmern und den
+% Wicklungen her. Die Bewegung der Stromabnehmer erfolgt über eine
+% Antriebswelle, ein Kegelradgetriebe und eine Spindel. Dadurch kann die
+% Ausgangsspannung während des Betriebs kontinuierlich zwischen null und
+% dem konstruktiv vorgesehenen Endwert eingestellt werden
+% \parencite[Abschn.~3.2, S.~3--4]{ruhstrat_betriebsanleitung}.
+
+% Der vorhandene Säulenstelltransformator besitzt drei
+% Wicklungssäulen, die den drei Außenleitern zugeordnet sind. An jeder
+% Wicklungssäule befinden sich zwei Stromabnehmer, sodass insgesamt
+% sechs Stromabnehmer vorhanden sind. Die beiden Stromabnehmer einer
+% Wicklungssäule werden gemeinsam durch einen motorischen Antrieb
+% verfahren. Insgesamt verfügt der Säulenstelltransformator somit über
+% drei motorische Antriebe.
+
+% Die Abgriffpositionen der drei Wicklungssäulen können während des
+% Betriebs voneinander abweichen. Dadurch lassen sich die den drei
+% Außenleitern zugeordneten Ausgangsspannungen innerhalb der
+% mechanischen Stellmöglichkeiten getrennt beeinflussen.
+
+% Die für die weitere Untersuchung relevanten technischen Daten sind in
+% Tabelle~\ref{tab:ist_saeulenstelltransformator} zusammengefasst.
+
+% \begin{table}[H]
+%     \centering
+%     \caption{Technische Daten des vorhandenen
+%     Säulenstelltransformators}
+%     \label{tab:ist_saeulenstelltransformator}
+%     \begin{tabular}{
+%         p{0.44\textwidth}
+%         p{0.46\textwidth}
+%     }
+%         \toprule
+%         Kenngröße & Wert beziehungsweise Ausführung \\
+%         \midrule
+%         Hersteller & Ruhstrat \\
+%         Baujahr & 1987 \\
+%         Typ & TKDMT \\
+%         Nennleistung $S_\mathrm{N}$ &
+%         \SI{90}{\kilo\volt\ampere} \\
+%         Primäre Nennspannung $U_\mathrm{1N}$ &
+%         \SI{380}{\volt} \\
+%         Primärer Nennstrom $I_\mathrm{1N}$ &
+%         \SI{70}{\ampere} \\
+%         Sekundäre Ausgangsspannung &
+%         je Außenleiter zwei Ausgänge mit
+%         \SIrange{0}{380}{\volt} \\
+%         Sekundärer Nennstrom &
+%         je Außenleiter zwei Ausgänge mit jeweils
+%         \SI{40}{\ampere} \\
+%         Nennfrequenz $f_\mathrm{N}$ &
+%         \SI{50}{\hertz} \\
+%         Anzahl der Wicklungssäulen &
+%         3 \\
+%         Anzahl der Stromabnehmer &
+%         6, jeweils zwei je Wicklungssäule \\
+%         Anzahl der motorischen Antriebe &
+%         3, jeweils ein Antrieb je Wicklungssäule \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% Abbildung~\ref{fig:ist_saeulenstelltransformator} zeigt den geöffneten
+% Säulenstelltransformator. Erkennbar sind die drei Wicklungssäulen, die
+% Spindelantriebe und die beidseitig an den Wicklungssäulen angeordneten
+% Stromabnehmersysteme.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[height=0.50\textheight]
+%     {03_Ressourcen/pic/stelltrafo.jpg}
+%     \caption{Geöffneter Säulenstelltransformator mit drei
+%     Wicklungssäulen, sechs Stromabnehmern und drei motorischen
+%     Antrieben (eigene Aufnahme)}
+%     \label{fig:ist_saeulenstelltransformator}
+% \end{figure}
+
+
+% % .............................................................................
+% % Induktive Ausgleichselemente
+% % .............................................................................
+
+% Zwischen den Stromabnehmern des Säulenstelltransformators und dem
+% Festtransformator befinden sich zusätzliche induktive Bauteile, die
+% im betrieblichen Sprachgebrauch als Drosseln bezeichnet werden. Die
+% Herstellerunterlagen beschreiben für Säulenstelltransformatoren mit
+% zwei Stromabnehmern unter anderem beidseitige Schaltungsvarianten
+% sowie Ausführungen mit galvanisch geteilter Stromschiene und
+% Stromausgleichstransformator. Eine Funktion der vorhandenen Bauteile
+% zum Ausgleich der beiden Stromabnehmerpfade ist daher technisch
+% plausibel
+% \parencite[Abschn.~\emph{Schaltarten} und
+% \emph{Stromabnehmer}, S.~8--9]
+% {ruhstrat_broschuere_saeulentrafos}.
+
+% Eine eindeutige Zuordnung der Bauteile zu einer bestimmten
+% Herstellerschaltung ist anhand der verfügbaren Unterlagen jedoch nicht
+% möglich. Das historische Originalschaltbild des
+% Säulenstelltransformators liegt nicht mehr vor. Auch der Hersteller
+% konnte die tatsächliche Verschaltung anhand der noch verfügbaren
+% Archivunterlagen nicht rekonstruieren
+% \parencite[S.~1]{ruhstrat_korrespondenz_2026}.
+
+% Die Bauteile werden im weiteren Verlauf daher neutral als
+% \emph{induktive Ausgleichselemente} bezeichnet. Elektrische
+% Eigenschaften, die durch die vorhandenen Unterlagen nicht eindeutig
+% nachgewiesen sind, werden ihnen bei der späteren Modellbildung nicht
+% zugeordnet.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.92\textwidth]
+%     {03_Ressourcen/pic/Säulentrafo_Drosseln.png}
+%     \caption{Anordnung der als Drosseln bezeichneten induktiven
+%     Ausgleichselemente am Säulenstelltransformator
+%     (eigene Darstellung und eigene Aufnahmen)}
+%     \label{fig:ist_ausgleichselemente}
+% \end{figure}
+
+
+% % .............................................................................
+% % Festtransformator und zentrale Stromerfassung
+% % .............................................................................
+
+% Der dem Säulenstelltransformator nachgeschaltete Festtransformator
+% übernimmt die Transformation auf das für die Erwärmungsprüfung
+% erforderliche niedrige Spannungsniveau. Durch die starke Reduzierung
+% der Spannung können auf der Sekundärseite Ströme im
+% Kiloamperebereich bereitgestellt werden. Der grundlegende Zusammenhang
+% zwischen Übersetzungsverhältnis, Spannung und Strom wurde bereits in
+% Abschnitt~\ref{sec:transformator_impedanztransformation} erläutert.
+
+% Das Typenschild des Festtransformators weist primärseitig zwei
+% Wicklungssysteme mit jeweils \SI{380}{\volt},
+% \SI{40}{\ampere} und \SI{15}{\kilo\volt\ampere} aus.
+% Sekundärseitig sind eine Bemessungsspannung von \SI{6}{\volt} und ein
+% Bemessungsstrom von \SI{5000}{\ampere} angegeben. Die relevanten
+% Kenndaten sind in Tabelle~\ref{tab:ist_festtransformator}
+% zusammengefasst.
+
+% \begin{table}[H]
+%     \centering
+%     \caption{Technische Daten des vorhandenen Festtransformators nach
+%     Typenschild}
+%     \label{tab:ist_festtransformator}
+%     \begin{tabular}{
+%         p{0.47\textwidth}
+%         p{0.38\textwidth}
+%     }
+%         \toprule
+%         Kenngröße & Wert \\
+%         \midrule
+%         Primäre Nennspannung &
+%         \SI{380}{\volt} je Wicklungssystem \\
+%         Primärer Nennstrom &
+%         \SI{40}{\ampere} je Wicklungssystem \\
+%         Nennleistung &
+%         \SI{15}{\kilo\volt\ampere} je Wicklungssystem \\
+%         Sekundäre Bemessungsspannung &
+%         \SI{6}{\volt} \\
+%         Sekundärer Bemessungsstrom &
+%         \SI{5000}{\ampere} \\
+%         Nennfrequenz &
+%         \SI{50}{\hertz} \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% Durch die vorgelagerte Einstellung am Säulenstelltransformator kann
+% sekundärseitig näherungsweise der Spannungsbereich
+
+% \begin{equation}
+%     \SI{0}{\volt}
+%     \leq
+%     U_{2,\mathrm{eff}}
+%     \lesssim
+%     \SI{8}{\volt}
+%     \label{eq:ist_spannungsbereich}
+% \end{equation}
+
+% bereitgestellt werden. Die auf dem Typenschild angegebenen
+% \SI{6}{\volt} kennzeichnen den Bemessungspunkt des
+% Festtransformators. Der Bereich bis ungefähr \SI{8}{\volt}
+% beschreibt dagegen den betrieblich nutzbaren Stellbereich der
+% gesamten Hochstromeinspeisung
+% \parencite[Bestandsaufnahme: Festtransformator und
+% Betriebsbereich]{rj_pruefstand_2026}.
+
+% Unmittelbar hinter dem Festtransformator ist für jeden Außenleiter
+% \(L1\), \(L2\) und \(L3\) ein Stromwandler angeordnet. Nach den
+% vorliegenden Typenschild- und Anlagenangaben besitzen die
+% Stromwandler das Übersetzungsverhältnis
+
+% \begin{equation}
+%     \frac{I_\mathrm{p}}{I_\mathrm{s}}
+%     =
+%     \frac{\SI{5000}{\ampere}}{\SI{5}{\ampere}},
+%     \label{eq:ist_stromwandler_uebersetzung}
+% \end{equation}
+
+% eine Bemessungsleistung von \SI{10}{\volt\ampere} und die
+% Genauigkeitsklasse \(0{,}2\)
+% \parencite[Bestandsaufnahme: zentrale
+% Strommessung]{rj_pruefstand_2026}.
+
+% Die Sekundärsignale der drei Stromwandler werden der vorhandenen
+% speicherprogrammierbaren Steuerung zugeführt. Auf Grundlage der
+% gemessenen Phasenströme steuert diese die motorischen Antriebe des
+% Säulenstelltransformators an. Durch die Veränderung der
+% Abgriffpositionen werden die Eingangsspannungen des
+% Festtransformators und damit die sekundärseitigen Phasenströme
+% beeinflusst.
+
+% Die räumliche Anordnung des Festtransformators, der sekundärseitigen
+% Hochstromverbindungen und der drei nachgeschalteten Stromwandler ist in
+% Abbildung~\ref{fig:ist_festtransformator} dargestellt.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.95\textwidth]
+%     {03_Ressourcen/pic/saeulenstelltransformator_festtransformator_strommesswandler.png}
+%     \caption{Festtransformator mit sekundärseitigen
+%     Hochstromverbindungen und den drei nachgeschalteten Stromwandlern
+%     (eigene Aufnahme)}
+%     \label{fig:ist_festtransformator}
+% \end{figure}
+
+% Der Säulenstelltransformator stellt aus regelungstechnischer Sicht ein
+% spannungseinstellendes Stellglied dar. Die von der vorhandenen
+% Regelung zurückgeführten Größen sind dagegen die hinter dem
+% Festtransformator gemessenen Phasenströme. Die geschlossene
+% Regelungsfunktion ist daher als Stromregelung einzuordnen, deren
+% Stellwirkung durch die Veränderung der dem Festtransformator
+% zugeführten Spannungen erzeugt wird.
+
+% Die phasenbezogene Strommessung sowie die im Betrieb voneinander
+% abweichenden mechanischen Stellungen der drei Antriebe sind durch den
+% Anlagenaufbau belegt. Ohne eine weitergehende Analyse des
+% SPS-Programms wird jedoch nicht vorausgesetzt, dass drei vollständig
+% voneinander unabhängige Regelkreise implementiert sind.
+
+
+% % .............................................................................
+% % Anbindefeld und Prüfkombination
+% % .............................................................................
+
+% Hinter der zentralen Stromerfassung wird der Hochstrom über ein
+% Anbindefeld zur jeweils angeschlossenen Prüfkombination geführt. Das
+% Anbindefeld enthält im Wesentlichen massive Kupferschienen und
+% verschiedene Anschlussmöglichkeiten für unterschiedliche
+% Prüffeldkonfigurationen.
+
+% Für die vorliegende Untersuchung besitzt das Anbindefeld keine
+% maßgebende aktive Schalt-, Steuerungs- oder Regelfunktion. Es bildet
+% eine passive Hochstromschnittstelle zwischen der Hochstromeinspeisung
+% und der jeweils zu untersuchenden Schaltgerätekombination. Funktional
+% ist seine Aufgabe mit der eines universell ausgeführten Kuppelfeldes
+% vergleichbar.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[
+%         width=0.68\textwidth,
+%         keepaspectratio
+%     ]{03_Ressourcen/pic/Anbindefeld.jpg}
+%     \caption{Kupferschienensystem des als passive
+%     Hochstromschnittstelle eingesetzten Anbindefeldes
+%     (eigene Aufnahme)}
+%     \label{fig:ist_anbindefeld}
+% \end{figure}
+
+% Die betrachtete Prüfkombination besteht aus einem
+% Leistungsschalterfeld und dem daran angeschlossenen MCC-Feld. Der
+% eingespeiste Gesamtstrom \(I_\mathrm{ges}\) wird zunächst über den
+% Leistungsschalter auf das Hauptsammelschienensystem geführt.
+
+% Innerhalb des MCC-Feldes teilt sich der Strom auf die zwölf parallel
+% gespeisten MCC-Abgänge und den über die Hauptsammelschienen zur
+% Kurzschlussbrücke weiterfließenden Stromanteil auf. Für jeden
+% Außenleiter gilt die Strombilanz
+
+% \begin{equation}
+%     I_\mathrm{ges}
+%     =
+%     I_{\mathrm{MCC},\Sigma}
+%     +
+%     I_\mathrm{KB}.
+%     \label{eq:ist_strombilanz}
+% \end{equation}
+
+% Dabei bezeichnet \(I_{\mathrm{MCC},\Sigma}\) den Summenstrom der zwölf
+% MCC-Abgänge und \(I_\mathrm{KB}\) den über die Kurzschlussbrücke
+% geführten Stromanteil. Sämtliche Stromangaben beziehen sich auf einen
+% Außenleiter. Eine Addition der Ströme der drei Außenleiter erfolgt
+% nicht.
+
+% Der Summenstrom der MCC-Abgänge ergibt sich aus
+
+% \begin{equation}
+%     I_{\mathrm{MCC},\Sigma}
+%     =
+%     \sum_{k=1}^{12}
+%     I_{\mathrm{MCC},k},
+%     \label{eq:ist_mcc_summenstrom}
+% \end{equation}
+
+% wobei \(I_{\mathrm{MCC},k}\) den Strom des jeweiligen Abgangs
+% bezeichnet. Zur Kennzeichnung eines konkreten Abgangs kann anstelle des
+% allgemeinen Indexes \(k\) dessen vorgesehener Prüfstrom verwendet
+% werden. Beispielsweise kennzeichnet \(I_{\mathrm{MCC},400}\) den
+% Strom des \SI{400}{\ampere}-Abgangs.
+
+% Die zugrunde gelegte Belastungskonfiguration ist in
+% Tabelle~\ref{tab:mcc_belastungskonfiguration} aufgeführt.
+
+% \begin{table}[H]
+%     \centering
+%     \caption{Betrachtete Belastungskonfiguration des MCC-Feldes je
+%     Außenleiter}
+%     \label{tab:mcc_belastungskonfiguration}
+%     \begin{tabular}{lccc}
+%         \toprule
+%         Modulgruppe &
+%         Anzahl &
+%         Strom je Abgang &
+%         Teilsumme \\
+%         \midrule
+%         A-Module &
+%         6 &
+%         \SI{40}{\ampere} &
+%         \SI{240}{\ampere} \\
+%         B-Module &
+%         3 &
+%         \SI{70}{\ampere} &
+%         \SI{210}{\ampere} \\
+%         \SI{250}{\ampere}-Abgang &
+%         1 &
+%         \SI{250}{\ampere} &
+%         \SI{250}{\ampere} \\
+%         \SI{400}{\ampere}-Abgang &
+%         1 &
+%         \SI{400}{\ampere} &
+%         \SI{400}{\ampere} \\
+%         \SI{630}{\ampere}-Abgang &
+%         1 &
+%         \SI{630}{\ampere} &
+%         \SI{630}{\ampere} \\
+%         \midrule
+%         Gesamt &
+%         12 &
+%         -- &
+%         \SI{1730}{\ampere} \\
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% Für die betrachtete Konfiguration beträgt der Summenstrom der zwölf
+% MCC-Abgänge je Außenleiter somit
+
+% \begin{equation}
+% \begin{aligned}
+%     I_{\mathrm{MCC},\Sigma}
+%     &=
+%     6 \cdot \SI{40}{\ampere}
+%     +
+%     3 \cdot \SI{70}{\ampere}
+%     +
+%     \SI{250}{\ampere}
+%     +
+%     \SI{400}{\ampere}
+%     +
+%     \SI{630}{\ampere}
+%     \\
+%     &=
+%     \SI{1730}{\ampere}.
+% \end{aligned}
+% \label{eq:mcc_summenstrom_belastungskonfiguration}
+% \end{equation}
+
+% Der Gesamtstrom des Prüfstands richtet sich nach der jeweils
+% untersuchten Prüfanordnung. Wird beispielhaft ein Gesamtstrom von
+% \(I_\mathrm{ges}=\SI{3200}{\ampere}\) zugrunde gelegt, ergibt sich
+% für den über die Kurzschlussbrücke geführten Stromanteil nach
+% Gleichung~\eqref{eq:ist_strombilanz}
+
+% \begin{equation}
+% \begin{aligned}
+%     I_\mathrm{KB}
+%     &=
+%     I_\mathrm{ges}
+%     -
+%     I_{\mathrm{MCC},\Sigma}
+%     \\
+%     &=
+%     \SI{3200}{\ampere}
+%     -
+%     \SI{1730}{\ampere}
+%     \\
+%     &=
+%     \SI{1470}{\ampere}.
+% \end{aligned}
+% \label{eq:ist_kurzschlussbruecke_beispiel}
+% \end{equation}
+
+% Dieses Zahlenbeispiel dient ausschließlich zur Veranschaulichung der
+% Stromaufteilung. Der während einer konkreten Prüfung tatsächlich über
+% die Kurzschlussbrücke geführte Strom ergibt sich aus dem eingestellten
+% Gesamtstrom und der Summe der jeweiligen MCC-Abgangsströme.
+
+% Die Kurzschlussbrücke stellt eine niederimpedante Verbindung der
+% Hauptstromschienen her. Dadurch kann das Leistungsschalterfeld mit
+% einem höheren Strom beaufschlagt werden, als über die zwölf Abgänge des
+% MCC-Feldes geführt wird.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.72\textwidth]
+%     {03_Ressourcen/pic/Kurzschlussbrücke.jpg}
+%     \caption{Kurzschlussbrücke zur niederimpedanten Rückführung des
+%     nicht über die MCC-Abgänge geführten Stromanteils
+%     (betriebsinterne Aufnahme)}
+%     \label{fig:ist_kurzschlussbruecke}
+% \end{figure}
+
+
+% % .............................................................................
+% % Aufbau und Strompfad des MCC-Feldes
+% % .............................................................................
+
+% Das MCC-Feld ist funktional in den Geräteraum, den Sammel- und
+% Verteilschienenbereich sowie den Kabelanschlussraum gegliedert. Im
+% Geräteraum befinden sich die zwölf dreiphasigen Abgangseinheiten. Der
+% Kabelanschlussraum nimmt die abgangsseitigen Anschlüsse und die
+% Verbindungen zu den externen Lastwiderständen auf.
+
+% Die räumliche Zuordnung des Geräte- und Kabelanschlussraums ist in
+% Abbildung~\ref{fig:ist_mcc_raeume} dargestellt.
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[height=0.47\textheight]
+%         {03_Ressourcen/pic/MCC_Geräteraum.png}
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[height=0.47\textheight]
+%         {03_Ressourcen/pic/MCC_Kabelanschlussraum.png}
+%     \end{minipage}
+%     \caption{Kennzeichnung des Geräteraums (links) und des
+%     Kabelanschlussraums (rechts) am betrachteten MCC-Feld
+%     (betriebsinterne Darstellungen)}
+%     \label{fig:ist_mcc_raeume}
+% \end{figure}
+
+% Im rückwärtigen Bereich des Feldes verlaufen die horizontalen
+% Hauptsammelschienen und die vertikalen Verteilschienen. Das
+% Hauptsammelschienensystem führt den Gesamtstrom durch das Feld und
+% weiter zur Kurzschlussbrücke. Von den Hauptsammelschienen zweigen die
+% vertikalen Verteilschienen ab, über die die parallel angeordneten
+% MCC-Abgänge gespeist werden.
+
+% Die Lage der beiden Schienensysteme ist in
+% Abbildung~\ref{fig:ist_mcc_schienensystem} gekennzeichnet.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[height=0.72\textheight]
+%     {03_Ressourcen/pic/Entwurf.png}
+%     \caption{Anordnung der horizontalen Hauptsammelschienen und der
+%     vertikalen Verteilschienen im betrachteten MCC-Feld
+%     (eigene Hervorhebung auf Grundlage der betriebsinternen
+%     Konstruktionszeichnung)}
+%     \label{fig:ist_mcc_schienensystem}
+% \end{figure}
+
+% Der Strompfad eines MCC-Abgangs verläuft von der Verteilschiene über
+% die eingangsseitigen Adapterkontakte in die jeweilige
+% Abgangseinheit. Innerhalb des Moduls durchfließt der Strom die
+% eingebauten Schalt- und Schutzgeräte. Anschließend wird er über die
+% abgangsseitigen Kontakte in den Kabelanschlussraum und von dort über
+% die angeschlossenen Lastleitungen zu den externen
+% V2A-Lastwiderständen geführt.
+
+% Nach der betrieblichen Projektdokumentation ist das betrachtete
+% MCC-Feld mit einer inneren Unterteilung der Form 4a ausgeführt
+% \parencite[Bestandsaufnahme: konstruktive Ausführung des
+% MCC-Feldes]{rj_pruefstand_2026}. Bei dieser Form sind die
+% Sammelschienen von sämtlichen Funktionseinheiten und die
+% Funktionseinheiten untereinander getrennt. Die Anschlüsse für von
+% außen herangeführte Leiter befinden sich im gleichen Abteil wie die
+% jeweils zugeordnete Funktionseinheit
+% \parencite[Anhang~AA, Tab.~AA.1]{din_en_61439_2}.
+
+% Die lösbaren Abgangseinheiten werden über Adapter beziehungsweise
+% Einschubkontakte mit den Verteilschienen verbunden. Lyra-Kontakte
+% stellen hierbei die federnde Kontaktierung der stromführenden
+% Schienen her. Shutter trennen die Kontaktbereiche bei entnommenem
+% Einschub mechanisch vom Geräteraum. Die für den Strompfad relevanten
+% Komponenten sind in Abbildung~\ref{fig:ist_mcc_module_adapter}
+% dargestellt.
+
+% \begin{figure}[H]
+%     \centering
+
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC-Feld_Einschübe_Kabelanschlussraum.png}
+%         \smallskip
+
+%         {\small (a) Geräteraum und Kabelanschlussraum}
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=0.74\textwidth]
+%         {03_Ressourcen/pic/MCC-Einschub_draufsicht_Adapter.png}
+%         \smallskip
+
+%         {\small (b) MCC-Einschub mit Adapter}
+%     \end{minipage}
+
+%     \vspace{0.8em}
+
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[height=0.25\textheight]
+%         {03_Ressourcen/pic/Lyra_Kontakt.jpg}
+%         \smallskip
+
+%         {\small (c) Federnder Lyra-Kontakt}
+%     \end{minipage}
+%     \hfill
+%     \begin{minipage}[c]{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=0.78\textwidth]
+%         {03_Ressourcen/pic/1_h_adapter_kontakte_verkupfert_geraeteraum.png}
+%         \smallskip
+
+%         {\small (d) Adapterkontakte und Shutter}
+%     \end{minipage}
+
+%     \caption{Ausgewählte Komponenten des Strompfads im MCC-Feld:
+%     Geräteraum und Kabelanschlussraum, MCC-Einschub, Lyra-Kontakt
+%     sowie Adapterkontakte mit Shutter
+%     (betriebsinterne Darstellungen und eigene Aufnahme)}
+%     \label{fig:ist_mcc_module_adapter}
+% \end{figure}
+
+
+% % .............................................................................
+% % V2A-Lastwiderstände
+% % .............................................................................
+
+% Die einzelnen MCC-Abgänge werden über verstellbare Lastwiderstände aus
+% nichtrostendem Stahl belastet. Für jeden Phasenpfad sind zwei
+% räumlich parallel angeordnete Flach- beziehungsweise Profilschienen
+% vorhanden. Die parallele Anordnung bezieht sich ausschließlich auf die
+% geometrische Lage der Schienen. Elektrisch bilden beide Schienen über
+% eine verschiebbare Brücke einen zusammenhängenden Strompfad.
+
+% Eine der beiden Schienen ist mit dem Ausgang des jeweiligen
+% MCC-Abgangs verbunden. Die zweite Schiene führt zum gemeinsamen
+% Sternpunkt des Lastwiderstands. Die verschiebbare Brücke stellt die
+% elektrische Verbindung zwischen beiden Schienen her.
+
+% Der Strom fließt zunächst über die erste Schiene bis zur Position der
+% Brücke und anschließend über die zweite Schiene zurück zum
+% Sternpunkt. Durch das Verschieben der Brücke wird die insgesamt
+% stromdurchflossene Leiterlänge verändert. Die Brückenposition dient
+% damit als mechanische Stellgröße für den elektrischen Widerstand des
+% jeweiligen Lastpfads.
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[height=0.68\textheight]
+%     {03_Ressourcen/pic/Widerstandswagen.png}
+%     \caption{Widerstandswagen mit paarweise angeordneten
+%     V2A-Widerstandsschienen und verschiebbaren Brücken zur Einstellung
+%     der wirksamen Leiterlänge (betriebsinterne Aufnahme)}
+%     \label{fig:ist_v2a_widerstandswagen}
+% \end{figure}
+
+% Der elektrische Widerstand des V2A-Lastpfads eines Abgangs \(k\) kann
+% näherungsweise durch
+
+% \begin{equation}
+%     R_{\mathrm{V2A},k}
+%     =
+%     \rho_{\mathrm{V2A}}
+%     \frac{l_{\mathrm{eff},k}}{A_k}
+%     \label{eq:ist_v2a_widerstand}
+% \end{equation}
+
+% beschrieben werden. Dabei bezeichnet
+% \(\rho_{\mathrm{V2A}}\) den spezifischen elektrischen Widerstand des
+% verwendeten Werkstoffs, \(A_k\) den wirksamen Leiterquerschnitt und
+% \(l_{\mathrm{eff},k}\) die von der Brückenposition abhängige wirksame
+% Leiterlänge.
+
+% Neben dem V2A-Widerstand wirken im Strompfad weitere Widerstände. Der
+% Gesamtwiderstand eines Abgangs kann daher näherungsweise als
+
+% \begin{equation}
+%     R_{\mathrm{ges},k}
+%     =
+%     R_{\mathrm{V2A},k}
+%     +
+%     R_{\mathrm{Modul},k}
+%     +
+%     R_{\mathrm{Kontakt},k}
+%     +
+%     R_{\mathrm{Leitung},k}
+%     \label{eq:ist_gesamtwiderstand_abgang}
+% \end{equation}
+
+% beschrieben werden. Darin sind der innere Widerstand des MCC-Moduls,
+% die Übergangswiderstände der Kontaktstellen sowie die Widerstände der
+% Verbindungsleitungen berücksichtigt.
+
+% Für eine vorgegebene Spannung
+% \(U_{\mathrm{MCC},k}\) am betrachteten Lastzweig ergibt sich der
+% Abgangsstrom näherungsweise zu
+
+% \begin{equation}
+%     I_{\mathrm{MCC},k}
+%     =
+%     \frac{U_{\mathrm{MCC},k}}
+%     {R_{\mathrm{ges},k}}.
+%     \label{eq:ist_modulstrom}
+% \end{equation}
+
+% Eine Vergrößerung der wirksamen Leiterlänge erhöht den elektrischen
+% Widerstand und verringert dadurch den zugehörigen Abgangsstrom. Eine
+% Verkürzung der wirksamen Leiterlänge verringert den Widerstand und
+% erhöht den Strom. Im bestehenden Prüfaufbau werden die einzelnen
+% Abgangsströme deshalb durch manuelles Verschieben der V2A-Brücken
+% eingestellt.
+
+
+% % .............................................................................
+% % Regelungstechnische Einordnung
+% % .............................................................................
+
+% Die drei unmittelbar hinter dem Festtransformator angeordneten
+% Stromwandler erfassen die übergeordneten Phasenströme. Diese Messwerte
+% werden zur motorischen Nachführung des Säulenstelltransformators
+% verwendet. Die vorhandene Regelung beeinflusst damit die
+% bereitgestellten Spannungen und führt auf diese Weise die
+% übergeordneten Phasenströme nach.
+
+% Die Ströme der einzelnen MCC-Abgänge werden während der Prüfung
+% ebenfalls phasenbezogen erfasst. Im bestehenden Prüfaufbau wirkt
+% jedoch keiner dieser Modulstrom-Istwerte unmittelbar auf ein
+% individuell zugeordnetes automatisches Stellglied zurück. Die
+% Einstellung der einzelnen Abgangsströme erfolgt durch manuelles
+% Verstellen der zugehörigen V2A-Lastwiderstände.
+
+% Der Ist-Zustand kombiniert damit eine automatische Nachführung der
+% übergeordneten Phasenströme mit einer manuellen Einstellung der
+% einzelnen Modulströme. Eine Veränderung der Abgriffpositionen des
+% Säulenstelltransformators beeinflusst die gemeinsame
+% Versorgungsspannung und wirkt dadurch sowohl auf den Strom durch die
+% Kurzschlussbrücke als auch auf sämtliche parallel gespeisten
+% MCC-Abgänge.
+
+% Eine Veränderung eines einzelnen V2A-Widerstands beeinflusst zunächst
+% den Strom des zugehörigen Abgangs. Gleichzeitig verändert sich die
+% Belastung der gemeinsamen Hochstromeinspeisung. Die zentrale
+% Stromregelung kann darauf mit einer Veränderung der bereitgestellten
+% Spannung reagieren, wodurch auch weitere Abgangsströme beeinflusst
+% werden können.
+
+% Aufgrund der gemeinsamen Spannungsquelle, des Haupt- und
+% Verteilschienensystems sowie der Aufteilung des Gesamtstroms auf
+% mehrere Lastpfade ist der Prüfstand regelungstechnisch als gekoppeltes
+% Mehrgrößensystem zu betrachten. Eine Änderung innerhalb eines
+% Lastzweigs kann über die gemeinsame Einspeisung eine Reaktion der
+% übergeordneten Stromregelung hervorrufen und dadurch weitere
+% Abgangsströme beeinflussen.
+
+% Die genaue Auswirkung dieser Kopplung während der Erwärmungsprüfung
+% wird nach der Beschreibung des betrieblichen Prüfablaufs in
+% Abschnitt~\ref{sec:analyse_problematik} untersucht.
+
+
+% % -----------------------------------------------------------------------------
+% % 3.2 Derzeitige Durchführung der Erwärmungsprüfung
+% % -----------------------------------------------------------------------------
+% \subsection{Derzeitige Durchführung der Erwärmungsprüfung}
+% \label{sec:durchfuehrung_ist}
+
+% Die Durchführung einer Erwärmungsprüfung gliedert sich im bestehenden
+% Prüfstand in die Vorbereitung der Prüfanordnung, die Einstellung der
+% vorgegebenen Prüfströme, die mehrstündige Erwärmungsphase und die
+% abschließende Bewertung des thermischen Beharrungszustands. Im
+% Folgenden wird der betriebliche Ablauf mit besonderem Blick auf die
+% Einstellung und Nachführung der einzelnen Modulströme beschrieben.
+
+% Vor Beginn der Erwärmungsprüfung wird die zu untersuchende Kombination
+% aus Leistungsschalterfeld und MCC-Feld entsprechend dem jeweiligen
+% Prüfauftrag aufgebaut. Die zwölf dreiphasigen Abgangseinheiten werden
+% in das MCC-Feld eingesetzt und im Kabelanschlussraum mit den
+% zugeordneten V2A-Lastwiderständen verbunden. Der nicht über die
+% MCC-Abgänge geführte Anteil des Gesamtstroms wird über die
+% Kurzschlussbrücke zurückgeführt.
+
+% Anschließend werden die Hochstromverbindungen, die Zuordnung der
+% Messkanäle und die Funktionsfähigkeit der für den Prüfaufbau
+% erforderlichen Schutz- und Überwachungseinrichtungen kontrolliert.
+% Erst nach Abschluss dieser vorbereitenden Kontrollen wird die
+% Prüfanordnung eingeschaltet.
+
+% Zur Erfassung der Erwärmung sind Pt100-Widerstandsthermometer an den
+% für die Bewertung maßgebenden Bauteilen und Verbindungsstellen
+% angebracht. Hierzu zählen insbesondere stromführende Anschlüsse,
+% Kontaktstellen, Schaltgeräte und weitere thermisch relevante
+% Komponenten der Prüfkombination. Die Temperaturmesswerte werden
+% gemeinsam mit den Strommesswerten von der vorhandenen Mess- und
+% Automatisierungstechnik verarbeitet. Die Anzeige und zeitliche
+% Aufzeichnung der erfassten Größen erfolgt über das
+% Prozessvisualisierungssystem WinCC
+% \parencite[Bestandsaufnahme: Messwerterfassung und
+% Prüfablauf]{rj_pruefstand_2026}.
+
+% Die Stromerfassung umfasst sowohl die drei übergeordneten
+% Phasenströme unmittelbar hinter dem Festtransformator als auch die
+% phasenbezogenen Ströme der einzelnen MCC-Abgänge. Für jeden der zwölf
+% Abgänge stehen somit Messwerte für die Außenleiter \(L1\), \(L2\) und
+% \(L3\) zur Verfügung. Die wesentlichen Messgrößen und ihre Bedeutung
+% für den Prüfablauf sind in
+% Tabelle~\ref{tab:ist_messgroessen_pruefablauf}
+% zusammengefasst.
+
+% \begin{table}[H]
+%     \centering
+%     \caption{Wesentliche Messgrößen der bestehenden
+%     Erwärmungsprüfung}
+%     \label{tab:ist_messgroessen_pruefablauf}
+%     \begin{tabular}{
+%         p{0.23\textwidth}
+%         p{0.32\textwidth}
+%         p{0.34\textwidth}
+%     }
+%         \toprule
+%         Messgröße &
+%         Erfassung &
+%         Funktion im Prüfablauf \\
+%         \midrule
+
+%         Übergeordnete Phasenströme &
+%         Je ein Stromwandler für \(L1\), \(L2\) und \(L3\)
+%         unmittelbar hinter dem Festtransformator &
+%         Rückführung der Istwerte für die zentrale
+%         Stromregelung \\
+
+%         \addlinespace
+
+%         Modulströme &
+%         Phasenbezogene Stromerfassung an den zwölf
+%         MCC-Abgängen &
+%         Einstellung und Überwachung der vorgegebenen
+%         Abgangsströme \\
+
+%         \addlinespace
+
+%         Temperaturen &
+%         Pt100-Widerstandsthermometer an den festgelegten
+%         Messstellen &
+%         Aufzeichnung des Erwärmungsverlaufs und Beurteilung
+%         des thermischen Beharrungszustands \\
+
+%         \bottomrule
+%     \end{tabular}
+% \end{table}
+
+% Nach dem Einschalten der Prüfanordnung wird der übergeordnete
+% Prüfstrom schrittweise auf den für die jeweilige Prüfung vorgesehenen
+% Sollwert erhöht. Hierzu verarbeitet die SPS die unmittelbar hinter
+% dem Festtransformator gemessenen Phasenströme und steuert die drei
+% motorischen Antriebe des Säulenstelltransformators an.
+
+% Durch die Veränderung der Stromabnehmerpositionen ändern sich die dem
+% Festtransformator zugeführten Spannungen und damit die auf dessen
+% Sekundärseite bereitgestellten Hochströme. Die zentrale Regelung führt
+% somit die übergeordneten Phasenströme nach. Die mechanischen
+% Stellungen der drei Antriebe können dabei voneinander abweichen,
+% sodass Unterschiede zwischen den Außenleitern innerhalb der
+% vorhandenen Stellmöglichkeiten ausgeglichen werden können.
+
+% Da die genaue Struktur und Parametrierung des vorhandenen
+% SPS-Programms nicht Gegenstand dieser Arbeit ist, wird aus dem
+% phasenbezogenen Anlagenaufbau jedoch keine vollständige Unabhängigkeit
+% dreier einzelner Phasenregelkreise abgeleitet.
+
+% Nachdem der übergeordnete Prüfstrom näherungsweise eingestellt ist,
+% werden die Ströme der zwölf MCC-Abgänge an ihre jeweiligen Sollwerte
+% angepasst. Hierzu werden die verschiebbaren Brücken der zugeordneten
+% V2A-Lastwiderstände manuell verstellt. Durch die Änderung der
+% Brückenposition wird die wirksame Leiterlänge des jeweiligen
+% Widerstandspfads verändert. Damit ändern sich dessen elektrischer
+% Widerstand und der Strom des zugehörigen MCC-Abgangs.
+
+% Die Einstellung kann im bestehenden Prüfablauf während der Bestromung
+% vorgenommen werden. Das niedrige sekundärseitige Spannungsniveau darf
+% dabei nicht mit einer insgesamt geringen Gefährdung gleichgesetzt
+% werden. Aufgrund der hohen Ströme sind insbesondere die thermische
+% Belastung, die Lichtbogengefahr und die bei Fehlern auftretenden
+% elektrodynamischen Kräfte zu berücksichtigen. Die Verstellung erfolgt
+% daher im Rahmen des festgelegten betrieblichen Prüfablaufs.
+
+% Die aktuellen Modulströme werden über die vorhandene
+% Strommesstechnik kontrolliert und in WinCC angezeigt. Für die
+% betrachtete Belastungskonfiguration werden sechs A-Module auf jeweils
+% \SI{40}{\ampere}, drei B-Module auf jeweils
+% \SI{70}{\ampere} sowie die drei weiteren Abgänge auf
+% \SI{250}{\ampere}, \SI{400}{\ampere} und
+% \SI{630}{\ampere} eingestellt. Der Summenstrom der zwölf
+% MCC-Abgänge beträgt nach
+% Gleichung~\eqref{eq:mcc_summenstrom_belastungskonfiguration}
+% \SI{1730}{\ampere} je Außenleiter. Der verbleibende Anteil des
+% übergeordneten Phasenstroms wird über die Kurzschlussbrücke geführt.
+
+% Die Einstellung der Modulströme erfolgt iterativ. Wird die
+% Brückenposition eines V2A-Lastwiderstands verändert, ändert sich
+% zunächst der Strom des betreffenden Abgangs. Gleichzeitig verändert
+% sich jedoch auch die Belastung der gemeinsam genutzten
+% Hochstromeinspeisung. Die zentrale Stromregelung kann darauf mit einer
+% Anpassung des Säulenstelltransformators reagieren. Dadurch ändert sich
+% die für sämtliche parallel gespeisten Lastzweige bereitgestellte
+% Spannung.
+
+% Die Korrektur eines einzelnen Modulstroms kann deshalb auch bereits
+% eingestellte Ströme anderer Abgänge beeinflussen. Nach einer
+% Verstellung wird daher nicht nur der unmittelbar betroffene Abgang
+% kontrolliert. Auch die übrigen Modulströme müssen erneut betrachtet
+% und bei vorhandenen Abweichungen nachgestellt werden. Dieser Vorgang
+% wird wiederholt, bis die Ströme der Abgänge innerhalb der für die
+% Prüfung vorgesehenen Bereiche liegen.
+
+% Nach der anfänglichen Einstellung der Prüfströme beginnt die
+% eigentliche Erwärmungsphase. Das Leistungsschalterfeld, das MCC-Feld,
+% die darin enthaltenen Betriebsmittel, die Schienenverbindungen und die
+% angeschlossenen Lastwiderstände werden über mehrere Stunden mit den
+% vorgegebenen Strömen belastet.
+
+% Während dieses Zeitraums werden die Temperaturen, die übergeordneten
+% Phasenströme und die phasenbezogenen Modulströme fortlaufend erfasst
+% und in WinCC zeitlich aufgezeichnet. Die zentrale Stromregelung führt
+% die unmittelbar hinter dem Festtransformator gemessenen
+% Phasenströme nach.
+
+% Für die einzelnen Modulströme besteht im vorhandenen Prüfstand dagegen
+% keine individuell zugeordnete automatische Nachführung. Mit
+% zunehmender Prüfungsdauer erwärmen sich insbesondere die
+% V2A-Lastwiderstände. Durch die temperaturbedingte Änderung ihrer
+% elektrischen Widerstände können die Ströme der zugehörigen
+% MCC-Abgänge von den zuvor eingestellten Sollwerten abweichen.
+
+% Diese Abweichungen müssen vom Prüfpersonal anhand der angezeigten
+% Messwerte erkannt werden. Die Korrektur erfolgt durch erneutes
+% Verschieben der Brücke des jeweils zugeordneten
+% V2A-Lastwiderstands. Da eine solche Widerstandsänderung wiederum die
+% Belastung der gemeinsamen Einspeisung beeinflusst, müssen nach dem
+% Eingriff auch die Stromwerte der übrigen Abgänge erneut kontrolliert
+% werden.
+
+% Während einer Erwärmungsprüfung kann sich dieser Ablauf mehrfach
+% wiederholen. Die Stromverteilung erfordert deshalb über einen langen
+% Zeitraum eine regelmäßige Überwachung und gegebenenfalls wiederholte
+% manuelle Nachstellungen. Der erforderliche Bedienaufwand hängt von
+% der jeweiligen Prüfanordnung und den unterschiedlichen thermischen
+% Verläufen der einzelnen Lastzweige ab.
+
+% Die Belastung wird fortgeführt, bis sich ein thermischer
+% Beharrungszustand eingestellt hat. Nach DIN EN IEC 61439-1 gilt dieser
+% Zustand als erreicht, wenn die Änderung der Temperaturerhöhung an
+% sämtlichen betrachteten Messstellen höchstens
+% \SI{1}{\kelvin\per\hour} beträgt
+% \parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
+
+% Die in WinCC aufgezeichneten Temperaturverläufe stellen die
+% Datengrundlage zur Beurteilung dieses Kriteriums bereit. Eine
+% vollständig automatische Erkennung des Beharrungszustands durch das
+% Prozessvisualisierungssystem wird hierbei nicht vorausgesetzt.
+
+% Nach Erreichen des thermischen Beharrungszustands werden die
+% maßgebenden Endwerte der Temperaturen und Ströme dokumentiert und mit
+% den für die jeweilige Prüfung geltenden Bewertungskriterien
+% verglichen. Anschließend wird der Prüfstrom kontrolliert
+% zurückgenommen und die Prüfanordnung abgeschaltet.
+
+% Der derzeitige Prüfablauf verbindet somit eine automatische
+% Nachführung der übergeordneten Phasenströme mit einer manuellen
+% Einstellung und Nachführung der einzelnen Modulströme. Insbesondere
+% die während der Erwärmungsphase auftretenden Änderungen der
+% V2A-Lastwiderstände, die gegenseitige Beeinflussung der parallel
+% gespeisten Abgänge und die wiederholte Kontrolle sämtlicher
+% Modulströme führen zu einem hohen Bedien- und Überwachungsaufwand.
+
+
+% % -----------------------------------------------------------------------------
+% % 3.3 Analyse der bestehenden Problematik
+% % -----------------------------------------------------------------------------
+% \subsection{Analyse der bestehenden Problematik}
+% \label{sec:analyse_problematik}
+
+% Die zentrale Stromregelung des bestehenden Prüfstands führt die
+% unmittelbar hinter dem Festtransformator gemessenen Phasenströme
+% nach. Für die zwölf Modulströme des MCC-Feldes besteht dagegen keine
+% individuelle automatische Nachführung. Die Modulströme werden zwar
+% phasenbezogen erfasst, ihre Einstellung und Korrektur erfolgt jedoch
+% durch manuelles Verstellen der zugeordneten V2A-Lastwiderstände.
+
+% Die wesentliche Schwachstelle des bestehenden Prüfstands liegt damit
+% nicht in der grundsätzlichen Bereitstellung des erforderlichen
+% Hochstroms, sondern in dessen Verteilung auf die einzelnen
+% MCC-Abgänge. Während der Erwärmungsphase verändern sich die
+% elektrischen Eigenschaften der Lastwiderstände. Dadurch können die
+% Modulströme von ihren zuvor eingestellten Sollwerten abweichen, obwohl
+% der übergeordnete Phasenstrom weiterhin auf seinem Sollwert gehalten
+% wird.
+
+% Die nachfolgende Betrachtung erfolgt stellvertretend für einen
+% Außenleiter. Da die Abgangseinheiten dreiphasig ausgeführt sind,
+% treten die beschriebenen Zusammenhänge grundsätzlich in den
+% Außenleitern \(L1\), \(L2\) und \(L3\) auf. Zur besseren Lesbarkeit
+% wird auf einen zusätzlichen Phasenindex verzichtet. Der Index
+% \(k \in \{1,\ldots,12\}\) kennzeichnet den jeweils betrachteten
+% MCC-Abgang.
+
+% Die innerhalb des V2A-Lastwiderstands eines Abgangs umgesetzte
+% elektrische Verlustleistung beträgt
+
+% \begin{equation}
+%     P_{\mathrm{V2A},k}
+%     =
+%     I_{\mathrm{MCC},k}^{2}
+%     R_{\mathrm{V2A},k}.
+%     \label{eq:ist_verlustleistung_v2a}
+% \end{equation}
+
+% Die Verlustleistung führt zur Erwärmung der Widerstandsschienen. Der
+% verwendete nichtrostende Stahl besitzt einen positiven elektrischen
+% Temperaturkoeffizienten. Der Widerstand des Lastpfads steigt daher mit
+% zunehmender Temperatur. Ausgehend von
+% Gleichung~\eqref{eq:widerstand_temperatur} kann der
+% temperaturabhängige Widerstand eines V2A-Lastpfads durch
+
+% \begin{equation}
+%     R_{\mathrm{V2A},k}(\vartheta_k)
+%     =
+%     R_{\mathrm{V2A},20,k}
+%     \left[
+%         1
+%         +
+%         \alpha_{20}
+%         \left(
+%             \vartheta_k
+%             -
+%             \SI{20}{\degreeCelsius}
+%         \right)
+%     \right]
+%     \label{eq:ist_v2a_temperaturabhaengigkeit}
+% \end{equation}
+
+% beschrieben werden. Dabei bezeichnet
+% \(R_{\mathrm{V2A},20,k}\) den elektrischen Widerstand des
+% betrachteten Lastpfads bei \SI{20}{\degreeCelsius},
+% \(\alpha_{20}\) den linearen elektrischen Temperaturkoeffizienten und
+% \(\vartheta_k\) die aktuelle Temperatur der Widerstandsschienen.
+
+% Neben dem V2A-Lastwiderstand wirken im Strompfad weitere elektrische
+% Widerstände. Hierzu gehören insbesondere die Widerstände der
+% MCC-Abgangseinheit, der Kontaktstellen und der Verbindungsleitungen.
+% Für die qualitative Betrachtung werden diese Anteile zu
+% \(R_{\mathrm{rest},k}\) zusammengefasst. Der Gesamtwiderstand des
+% Abgangs ergibt sich damit zu
+
+% \begin{equation}
+%     R_{\mathrm{ges},k}(\vartheta_k)
+%     =
+%     R_{\mathrm{rest},k}
+%     +
+%     R_{\mathrm{V2A},k}(\vartheta_k).
+%     \label{eq:ist_gesamtwiderstand_temperatur}
+% \end{equation}
+
+% Für den Strom des betrachteten Abgangs gilt näherungsweise
+
+% \begin{equation}
+%     I_{\mathrm{MCC},k}(\vartheta_k)
+%     =
+%     \frac{U_{\mathrm{MCC},k}}
+%     {
+%         R_{\mathrm{rest},k}
+%         +
+%         R_{\mathrm{V2A},k}(\vartheta_k)
+%     }.
+%     \label{eq:ist_modulstrom_temperatur}
+% \end{equation}
+
+% Wird die am Abgang anliegende Spannung zunächst als konstant
+% betrachtet, führt die Erwärmung des V2A-Lastwiderstands zu dem
+% Wirkzusammenhang
+
+% \begin{equation}
+%     \vartheta_k \uparrow
+%     \quad\Longrightarrow\quad
+%     R_{\mathrm{V2A},k} \uparrow
+%     \quad\Longrightarrow\quad
+%     I_{\mathrm{MCC},k} \downarrow.
+%     \label{eq:ist_kausalkette_stromdrift}
+% \end{equation}
+
+% Dieser Vorgang wird im weiteren Verlauf der Arbeit als thermisch
+% bedingter Stromdrift bezeichnet. Die Annahme einer konstanten
+% Abgangsspannung dient zunächst der Darstellung des grundlegenden
+% Wirkzusammenhangs. Im realen Prüfstand kann die zentrale
+% Stromregelung die vom Transformatorsystem bereitgestellte Spannung
+% verändern. Diese Spannungsänderung wirkt jedoch gleichzeitig auf
+% sämtliche parallel gespeisten Strompfade und ermöglicht keine
+% selektive Korrektur eines einzelnen Modulstroms.
+
+% Der thermisch bedingte Stromdrift tritt nicht bei allen Abgängen in
+% gleichem Umfang auf. Die einzelnen Lastzweige unterscheiden sich
+% hinsichtlich ihrer Prüfströme, der verwendeten
+% Widerstandsquerschnitte, der eingestellten Leiterlängen sowie ihrer
+% elektrischen und thermischen Randbedingungen.
+
+% Aufgrund der quadratischen Abhängigkeit der Verlustleistung vom Strom
+% werden die Lastwiderstände unterschiedlich stark thermisch belastet.
+% Zusätzlich beeinflussen die Oberfläche, die räumliche Anordnung und
+% die Wärmeabgabe an die Umgebung die Erwärmung der einzelnen
+% Widerstandsschienen. Aus diesen Unterschieden ergeben sich
+% individuelle Temperatur-, Widerstands- und Stromverläufe. Eine
+% gemeinsame Nachführung über die zentrale Stellgröße des
+% Säulenstelltransformators kann diese unterschiedlichen Verläufe nicht
+% vollständig ausgleichen.
+
+% Der von der zentralen Stromregelung erfasste Phasenstrom setzt sich
+% aus dem Strom über die Kurzschlussbrücke und den zwölf Modulströmen
+% zusammen:
+
+% \begin{equation}
+%     I_{\mathrm{ges}}
+%     =
+%     I_{\mathrm{KB}}
+%     +
+%     \sum_{k=1}^{12}
+%     I_{\mathrm{MCC},k}.
+%     \label{eq:ist_gesamtstrom_mit_modulstroemen}
+% \end{equation}
+
+% Der Messwert \(I_{\mathrm{ges}}\) beschreibt lediglich die Summe der
+% Teilströme. Er enthält keine eindeutige Information darüber, wie sich
+% der Gesamtstrom auf die zwölf MCC-Abgänge und die Kurzschlussbrücke
+% verteilt. Unterschiedliche Kombinationen der Teilströme können daher
+% zum gleichen Gesamtstrom führen. Die Einhaltung des Sollwerts von
+% \(I_{\mathrm{ges}}\) gewährleistet nicht, dass gleichzeitig alle
+% Modulströme ihren jeweiligen Sollwerten entsprechen.
+
+% Sinkt beispielsweise der Strom eines einzelnen Abgangs infolge der
+% Erwärmung, erfasst die zentrale Regelung lediglich die daraus
+% resultierende Änderung des Gesamtstroms. Zur Wiederherstellung des
+% Gesamtstroms verändert die Regelung die Abgriffposition des
+% Säulenstelltransformators. Dadurch ändern sich die vom
+% Festtransformator bereitgestellten Spannungen. Diese Veränderung wirkt
+% gleichzeitig auf
+
+% \begin{itemize}
+%     \item den ursächlich abweichenden MCC-Abgang,
+%     \item die übrigen elf MCC-Abgänge und
+%     \item den Strom über die Kurzschlussbrücke.
+% \end{itemize}
+
+% Die zentrale Regelung kann den übergeordneten Phasenstrom dadurch
+% nachführen. Eine selektive Wiederherstellung des Sollstroms eines
+% einzelnen Abgangs ist jedoch nicht möglich.
+
+% Die manuelle Korrektur eines abweichenden Modulstroms erfolgt durch
+% das Verschieben der Brücke des betreffenden V2A-Lastwiderstands. Wird
+% die wirksame Leiterlänge verkürzt, verringert sich der elektrische
+% Widerstand des Lastpfads. Bei näherungsweise unveränderter Spannung
+% steigt dadurch der zugehörige Modulstrom.
+
+% Die Korrektur verändert jedoch zugleich die Belastung der
+% gemeinsamen Hochstromeinspeisung. Der übergeordnete Phasenstrom steigt
+% infolge der Widerstandsverringerung ebenfalls an. Die zentrale
+% Stromregelung kann darauf mit einer Verringerung der bereitgestellten
+% Spannung reagieren. Diese Spannungsänderung wirkt wiederum auf alle
+% parallel gespeisten Lastzweige. Dadurch können bereits eingestellte
+% Modulströme erneut von ihren Sollwerten abweichen.
+
+% Nach jeder manuellen Veränderung muss deshalb nicht nur der
+% unmittelbar verstellte Abgang kontrolliert werden. Vielmehr ist die
+% gesamte Stromverteilung erneut zu betrachten. Werden weitere
+% Abweichungen festgestellt, sind zusätzliche Nachstellungen
+% erforderlich. Die Einstellung und Aufrechterhaltung der zwölf
+% Modulströme stellt damit einen iterativen Vorgang dar.
+
+% Eine Abweichung des Modulstroms beeinflusst unmittelbar die
+% elektrische Verlustleistung und damit die thermische Beanspruchung des
+% betrachteten Prüfpfads. Wird der Widerstand für den betrachteten
+% Zeitpunkt als konstant angenommen, ergibt sich das Verhältnis zwischen
+% der veränderten und der ursprünglichen Verlustleistung zu
+
+% \begin{equation}
+%     \frac{
+%         P_{\mathrm{el},k}
+%         \left(
+%             I_{\mathrm{MCC},k}
+%             +
+%             \Delta I_{\mathrm{MCC},k}
+%         \right)
+%     }{
+%         P_{\mathrm{el},k}
+%         \left(
+%             I_{\mathrm{MCC},k}
+%         \right)
+%     }
+%     =
+%     \left(
+%         1
+%         +
+%         \frac{
+%             \Delta I_{\mathrm{MCC},k}
+%         }{
+%             I_{\mathrm{MCC},k}
+%         }
+%     \right)^2.
+%     \label{eq:ist_leistungsabweichung_stromabweichung}
+% \end{equation}
+
+% Unterschreitet der Modulstrom seinen Sollwert beispielsweise um
+% \SI{5}{\percent}, beträgt der verbleibende Stromanteil
+% \SI{95}{\percent}. Für die relative Verlustleistung folgt
+
+% \begin{equation}
+%     \frac{P_{\mathrm{el},k}}{P_{\mathrm{el},k,0}}
+%     =
+%     \left(0{,}95\right)^2
+%     =
+%     0{,}9025.
+%     \label{eq:ist_leistungsabweichung_beispiel}
+% \end{equation}
+
+% Die momentane Verlustleistung verringert sich in diesem Fall um
+
+% \begin{equation}
+%     1-0{,}9025
+%     =
+%     0{,}0975
+%     =
+%     \SI{9.75}{\percent}.
+%     \label{eq:ist_leistungsverringerung_beispiel}
+% \end{equation}
+
+% Bereits eine vergleichsweise geringe Stromabweichung verursacht somit
+% eine deutlich größere Abweichung der elektrischen Verlustleistung.
+% Eine unzureichende Nachführung der Modulströme beeinflusst daher den
+% Erwärmungsverlauf und die erreichbaren Endtemperaturen der geprüften
+% Betriebsmittel. Die Sollwertabweichungen sind folglich nicht nur
+% hinsichtlich des Bedienaufwands relevant, sondern können auch die
+% Vergleichbarkeit, Reproduzierbarkeit und Aussagekraft der
+% Erwärmungsprüfung beeinträchtigen.
+
+% Aus regelungstechnischer Sicht stellt die Prüfanordnung ein
+% gekoppeltes Mehrgrößensystem dar. Innerhalb eines Außenleiters treten
+% die zwölf Modulströme und der Strom über die Kurzschlussbrücke als
+% voneinander abhängige Teilströme auf. Die vom
+% Säulenstelltransformator beeinflusste Spannung stellt eine gemeinsame
+% Stellgröße dar, die auf sämtliche Strompfade wirkt. Die verschiebbaren
+% Brücken der V2A-Lastwiderstände bilden zusätzliche dezentrale
+% Stellmöglichkeiten, werden im bestehenden Prüfstand jedoch
+% ausschließlich manuell betätigt.
+
+% Die vorhandene zentrale Regelung berücksichtigt das
+% Mehrgrößenverhalten nur über die zusammengefasste Regelgröße
+% \(I_{\mathrm{ges}}\). Individuelle und zeitlich unterschiedlich
+% auftretende Abweichungen der Modulströme können dadurch nicht gezielt
+% kompensiert werden.
+
+% Die Analyse zeigt, dass eine Optimierung des Prüfstands nicht allein
+% durch eine genauere Regelung des übergeordneten Phasenstroms erreicht
+% werden kann. Hierdurch ließe sich zwar der Gesamtstrom präziser
+% nachführen, nicht jedoch seine Verteilung auf die einzelnen
+% MCC-Abgänge. Erforderlich ist daher eine individuelle und
+% mehrkanalfähige Nachführung der Modulströme.
+
+
+% % -----------------------------------------------------------------------------
+% % 3.4 Anforderungen an das Optimierungskonzept
+% % -----------------------------------------------------------------------------
+% \subsection{Anforderungen an das Optimierungskonzept}
+% \label{sec:anforderungen_optimierung}
+
+% Aus der Analyse des bestehenden Prüfstands werden im Folgenden die
+% Anforderungen an das zu entwickelnde Optimierungskonzept abgeleitet.
+% Das wesentliche Defizit des Ist-Zustands besteht darin, dass die
+% vorhandene Regelung ausschließlich auf die unmittelbar hinter dem
+% Festtransformator gemessenen Phasenströme einwirkt. Die einzelnen
+% Modulströme werden zwar phasenbezogen erfasst, können jedoch nicht
+% automatisch und selektiv nachgeführt werden.
+
+% Die zentrale funktionale Anforderung besteht daher in einer
+% automatisierbaren Nachführung der einzelnen Modulströme. Für jeden
+% MCC-Abgang muss der gemessene Iststrom mit einem vorgegebenen Sollwert
+% verglichen und durch eine geeignete Stellgröße beeinflusst werden
+% können. Die Nachführung darf nicht ausschließlich auf Grundlage des
+% übergeordneten Phasenstroms erfolgen, da aus dessen Einhaltung keine
+% eindeutige Aussage über die Verteilung der Teilströme abgeleitet
+% werden kann.
+
+% Da sämtliche Abgangseinheiten dreiphasig ausgeführt sind, muss die
+% Stromerfassung weiterhin phasenbezogen erfolgen. Bei zwölf
+% dreiphasigen MCC-Abgängen ergeben sich insgesamt
+
+% \begin{equation}
+%     n_{\mathrm{I}}
+%     =
+%     12 \cdot 3
+%     =
+%     36
+%     \label{eq:anzahl_modulstromkanaele}
+% \end{equation}
+
+% zu berücksichtigende Modulstrommesswerte. Die Mess-, Steuerungs- und
+% Regelungsstruktur muss daher mehrkanalfähig ausgeführt werden.
+% Abweichungen zwischen den Außenleitern müssen erkennbar bleiben, da
+% eine ausschließliche Betrachtung eines Mittelwerts mögliche
+% Unsymmetrien der Modulströme verdecken würde.
+
+% Aus der Forderung nach einer phasenbezogenen Stromerfassung folgt
+% jedoch nicht zwangsläufig, dass jedem der 36 Messkanäle ein vollständig
+% eigenständiges Stellglied zugeordnet werden muss. Im Rahmen der
+% Konzeptentwicklung ist zu untersuchen, ob die drei Außenleiter eines
+% Abgangs gemeinsam oder getrennt beeinflusst werden können. Dabei ist
+% zu bewerten, in welchem Umfang eine gemeinsame Stellbewegung für einen
+% dreiphasigen Abgang zulässig ist und wie verbleibende
+% Phasenabweichungen berücksichtigt werden können.
+
+% Der erforderliche Strombereich ergibt sich aus der betrachteten
+% Belastungskonfiguration. Das Optimierungskonzept muss die Nachführung
+% von sechs Abgängen mit jeweils \SI{40}{\ampere}, drei Abgängen mit
+% jeweils \SI{70}{\ampere} sowie jeweils einem Abgang mit
+% \SI{250}{\ampere}, \SI{400}{\ampere} und
+% \SI{630}{\ampere} ermöglichen. Der Summenstrom der zwölf
+% MCC-Abgänge beträgt nach
+% Gleichung~\eqref{eq:mcc_summenstrom_belastungskonfiguration}
+% \SI{1730}{\ampere} je Außenleiter.
+
+% Die unterschiedlichen Prüfströme führen zu deutlich voneinander
+% abweichenden elektrischen und thermischen Randbedingungen. Ein für
+% einen \SI{40}{\ampere}-Abgang geeignetes Stellglied kann daher nicht
+% ohne weitere Untersuchung auf einen \SI{630}{\ampere}-Abgang
+% übertragen werden. Das Konzept muss entweder an die jeweilige
+% Stromklasse angepasst oder so skalierbar ausgeführt werden, dass die
+% unterschiedlichen Abgangsströme mit einem gemeinsamen Wirkprinzip
+% beherrscht werden können.
+
+% Neben dem Erreichen des jeweiligen Sollstroms muss eine ausreichende
+% Stellreserve vorhanden sein. Zu Beginn der Erwärmungsprüfung ist
+% zunächst der vorgesehene Modulstrom einzustellen. Während der
+% anschließenden Erwärmungsphase muss zusätzlich die
+% temperaturbedingte Veränderung des Lastzweigwiderstands ausgeglichen
+% werden können. Der erforderliche Stellbereich setzt sich daher aus
+% dem Bereich für die anfängliche Einstellung und einer zusätzlichen
+% Reserve für die thermische Nachführung zusammen.
+
+% Die Stellreserve ist so zu bemessen, dass der Sollstrom auch bei der
+% für den jeweiligen Lastwiderstand zu erwartenden maximalen
+% Betriebstemperatur erreicht werden kann. Gleichzeitig darf das
+% Stellglied nicht bereits im Ausgangszustand an einer mechanischen oder
+% elektrischen Stellgrenze betrieben werden. Die quantitative
+% Bestimmung des erforderlichen Stellbereichs erfolgt im Rahmen der
+% Dimensionierung und der späteren Modelluntersuchung.
+
+% Eine weitere Anforderung ergibt sich aus der elektrischen Kopplung der
+% parallel gespeisten Abgänge. Eine Änderung des Stroms eines einzelnen
+% Lastzweigs verändert zugleich die Belastung der gemeinsamen
+% Hochstromeinspeisung. Die vorhandene Gesamtstromregelung kann darauf
+% mit einer Veränderung der vom Transformatorsystem bereitgestellten
+% Spannung reagieren. Diese Spannungsänderung wirkt wiederum auf
+% sämtliche MCC-Abgänge und den Strom über die Kurzschlussbrücke.
+
+% Das Optimierungskonzept muss diese gegenseitige Beeinflussung
+% berücksichtigen und möglichst begrenzen. Eine Nachführung eines
+% einzelnen Modulstroms darf nicht zu unzulässigen Abweichungen der
+% übrigen Modulströme führen. Nicht vollständig vermeidbare
+% Wechselwirkungen müssen bei der Auslegung der Regelungsstruktur und
+% bei der Bewertung des dynamischen Verhaltens berücksichtigt werden.
+
+% Die vorhandene Regelung der übergeordneten Phasenströme soll
+% grundsätzlich erhalten bleiben. Sie erfüllt weiterhin die Aufgabe,
+% den Gesamtstrom der Prüfanordnung über die motorischen Antriebe des
+% Säulenstelltransformators nachzuführen. Das neue System soll diese
+% übergeordnete Regelung um eine nachgelagerte und gezielte
+% Beeinflussung der einzelnen Modulströme ergänzen.
+
+% Daraus ergibt sich eine hierarchische Regelungsstruktur. Die
+% übergeordnete Regelung beeinflusst die gemeinsame Spannung des
+% Prüfstands, während die nachgelagerten Stellglieder die Verteilung des
+% bereitgestellten Stroms auf die einzelnen MCC-Abgänge korrigieren.
+% Beide Ebenen müssen so aufeinander abgestimmt werden, dass sie sich
+% nicht gegenseitig zu fortlaufenden Stellbewegungen oder Schwingungen
+% anregen.
+
+% Die wiederholte manuelle Einstellung der V2A-Lastwiderstände soll
+% durch eine elektrisch ansteuerbare Stellmöglichkeit ersetzt werden.
+% Diese muss eine reproduzierbare Veränderung des jeweiligen
+% Modulstroms ermöglichen und grundsätzlich in die vorhandene SPS
+% integrierbar sein. Die Stellung beziehungsweise der Betriebszustand
+% des Stellglieds muss erfassbar sein, damit ein definierter Zustand
+% wiederholt eingestellt und dokumentiert werden kann.
+
+% Die vorhandenen V2A-Lastwiderstände sollen weiterhin Bestandteil des
+% Lastkreises bleiben. Sie übernehmen die Grundbelastung der jeweiligen
+% MCC-Abgänge und bilden zugleich die thermisch veränderliche Last des
+% bestehenden Prüfaufbaus ab. Das zusätzliche Stellglied soll den
+% V2A-Widerstand daher nicht vollständig ersetzen, sondern dessen
+% manuelle Nachstellung während der Erwärmungsprüfung vermeiden.
+
+% Aufgrund der niedrigen Spannung und der hohen Ströme im Lastkreis
+% stellt die elektrische Belastbarkeit des zusätzlichen Stellpfads eine
+% wesentliche Randbedingung dar. Ein unmittelbar im Hauptstrompfad
+% angeordnetes Stellglied müsste den vollständigen Modulstrom führen.
+% Insbesondere bei den Abgängen mit \SI{250}{\ampere},
+% \SI{400}{\ampere} und \SI{630}{\ampere} würde dies hohe
+% Anforderungen an Leiterquerschnitte, Kontaktstellen und
+% Wärmeabfuhr stellen.
+
+% Das Konzept soll daher eine ausreichende Stellwirkung bereitstellen,
+% ohne den konstruktiven Aufwand und die zusätzliche Verlustleistung im
+% Hochstrompfad unverhältnismäßig zu erhöhen. Die eingebrachten
+% elektrischen Widerstände und Übergangswiderstände müssen so gering
+% beziehungsweise so gezielt angeordnet sein, dass die eigentliche
+% Erwärmungsprüfung der Schaltgerätekombination nicht unzulässig
+% verfälscht wird.
+
+% Zusätzliche Verlustwärme darf insbesondere nicht unmittelbar auf die
+% zu bewertenden Komponenten des MCC-Feldes einwirken. Transformatoren,
+% Stellwiderstände und weitere wärmeerzeugende Komponenten sind deshalb
+% räumlich und thermisch so anzuordnen, dass ihre Eigenerwärmung das
+% Temperaturverhalten der Prüfkombination nicht maßgebend beeinflusst.
+
+% Da die Erwärmungsprüfung über mehrere Stunden durchgeführt wird,
+% müssen sämtliche zusätzlichen Komponenten für Dauerbetrieb geeignet
+% sein. Die thermische Belastung der Leiter, Wicklungen,
+% Kontaktstellen und Stellglieder ist bei der Dimensionierung zu
+% berücksichtigen. Ihre Erwärmung darf nicht dazu führen, dass sich die
+% Stellwirkung während der Prüfung fortlaufend verändert oder der
+% erforderliche Stellbereich eingeschränkt wird.
+
+% Für die Beurteilung des Regelungsverhaltens müssen die maßgebenden
+% Größen erfasst und aufgezeichnet werden können. Hierzu gehören
+% mindestens
+
+% \begin{itemize}
+%     \item der Sollwert des jeweiligen Modulstroms,
+%     \item der gemessene Istwert des Modulstroms,
+%     \item die Abweichung zwischen Soll- und Istwert sowie
+%     \item die zugehörige Stellgröße beziehungsweise Stellposition.
+% \end{itemize}
+
+% Die Mess- und Stellgrößen sollen über die vorhandene SPS- und
+% WinCC-Umgebung dargestellt und zeitlich aufgezeichnet werden können.
+% Dadurch lassen sich die Sollwerttreue, der Verlauf der Stellgrößen,
+% das dynamische Verhalten und die gegenseitige Beeinflussung der
+% einzelnen Regelkanäle anhand reproduzierbarer Daten bewerten.
+
+% Neben den funktionalen und regelungstechnischen Anforderungen ist ein
+% sicherer Betrieb zu gewährleisten. Die Nachführung der Modulströme
+% soll ohne unmittelbaren manuellen Eingriff in den bestromten
+% Lastkreis erfolgen. Mechanische und elektrische Stellgrenzen müssen
+% überwacht werden, damit der zulässige Strom-, Spannungs- und
+% Temperaturbereich der eingesetzten Komponenten nicht überschritten
+% wird.
+
+% Bei Ausfall eines Messsignals oder beim Erreichen einer Stellgrenze
+% muss ein definierter Betriebszustand erhalten bleiben. Die
+% automatische Nachführung darf in einem solchen Fall nicht zu einer
+% unkontrollierten Erhöhung des Modulstroms führen. Je nach Ausführung
+% ist die Stellbewegung zu begrenzen, der zuletzt sichere Zustand zu
+% halten oder der betroffene Regelkanal kontrolliert zu deaktivieren.
+
+% Zusammenfassend muss das Optimierungskonzept eine automatisierte und
+% phasenselektive Nachführung der Ströme sämtlicher MCC-Abgänge
+% ermöglichen. Da zwölf dreiphasige Abgangseinheiten gleichzeitig
+% belastet werden, sind insgesamt 36 voneinander unabhängige Strompfade
+% zu berücksichtigen. Jedem Strompfad muss eine elektrisch ansteuerbare
+% Stellgröße zugeordnet werden, sodass Abweichungen zwischen Soll- und
+% Iststrom für die Außenleiter \(L1\), \(L2\) und \(L3\) unabhängig
+% voneinander ausgeglichen werden können.
+
+% Die Stellkanäle müssen für Prüfströme zwischen
+% \SI{40}{\ampere} und \SI{630}{\ampere} ausgelegt werden. Dabei ist
+% neben der anfänglichen Einstellung des jeweiligen Sollstroms eine
+% ausreichende Stellreserve zum Ausgleich der temperaturbedingten
+% Widerstandsänderung während der Erwärmungsprüfung vorzusehen. Die
+% Stellglieder dürfen deshalb weder zu Beginn der Prüfung noch beim
+% Erreichen der maximal zu erwartenden Betriebstemperatur an einer
+% mechanischen oder elektrischen Stellgrenze betrieben werden. Die
+% quantitative Bestimmung der erforderlichen Stellbereiche erfolgt im
+% Rahmen der Dimensionierung und Modellbildung.
+
+% Aufgrund der gemeinsamen Einspeisung bilden die 36 Strompfade ein
+% gekoppeltes Mehrgrößensystem. Eine Änderung der Stellgröße eines
+% einzelnen Strompfads kann die Spannung der gemeinsamen Einspeisung und
+% damit auch die Ströme der übrigen Abgänge beeinflussen. Das
+% Regelungskonzept muss diese Wechselwirkungen berücksichtigen und so
+% begrenzen, dass die Nachführung eines Modulstroms keine unzulässigen
+% Abweichungen in anderen Strompfaden verursacht.
+
+% Für die weitere Konzeptentwicklung wird daher eine hierarchische
+% Regelungsstruktur vorausgesetzt. Die vorgelagerte Regelung soll die
+% vom Säulenstelltransformator und Festtransformator bereitgestellte
+% Phasenspannung stabilisieren. Die nachgelagerten Regelkreise sollen
+% dagegen die 36 phasenbezogenen Modulströme durch die jeweils
+% zugeordneten Stellglieder nachführen. Die Dynamik beider
+% Regelungsebenen muss so aufeinander abgestimmt werden, dass keine
+% gegenseitige Anregung oder dauerhafte Stellbewegung entsteht.
+
+% Das Optimierungskonzept muss außerdem in den bestehenden Prüfstand
+% integrierbar sein. Der vorhandene Hochstrompfad, die motorischen
+% Antriebe des Säulenstelltransformators sowie die vorhandene Mess-,
+% SPS- und WinCC-Infrastruktur sollen soweit wie möglich weiterverwendet
+% werden. Die Soll- und Istwerte der einzelnen Modulströme, die daraus
+% resultierenden Regelabweichungen sowie die jeweiligen Stellgrößen
+% müssen erfasst, dargestellt und zeitlich aufgezeichnet werden können.
+% Hierdurch wird eine reproduzierbare Bewertung des stationären und
+% dynamischen Regelungsverhaltens ermöglicht.
+
+% Zusätzliche Komponenten müssen für den mehrstündigen Dauerbetrieb
+% einer Erwärmungsprüfung geeignet sein. Ihre elektrischen Verluste und
+% ihre Eigenerwärmung sind so zu begrenzen, dass die zu untersuchende
+% Erwärmung des MCC-Feldes nicht unzulässig beeinflusst wird. Gleichzeitig
+% müssen die zulässigen Strom-, Spannungs-, Temperatur- und Stellgrenzen
+% überwacht werden. Bei einem Ausfall eines Messsignals oder beim
+% Erreichen einer Stellgrenze ist ein definierter sicherer
+% Betriebszustand einzunehmen; insbesondere darf die automatische
+% Nachführung keine unkontrollierte Erhöhung eines Modulstroms
+% verursachen.
+
+% Aus diesen Anforderungen wird in
+% Kapitel~\ref{chap:entwicklung_stellkonzept} das
+% transformatorgestützte Stellkonzept abgeleitet. Dort werden das
+% Wirkprinzip, die Aufteilung in 36 Stellkanäle, die unterschiedlichen
+% Ausführungen für kleine und hohe Prüfströme sowie das zugehörige Mess-
+% und Regelungskonzept beschrieben.'

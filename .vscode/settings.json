@@ -80,7 +80,26 @@
     "02_Inhalt/02_Hauptteil/04_entwicklung_des_transformatorgestützten_stellkonzepts.aux": true,
     "02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands.aux": true,
     "02_Inhalt/02_Hauptteil/05_modellbildung.aux": true,
-    "02_Inhalt/02_Hauptteil/06_plausibilisierung_und_bewertung.aux": true
+    "02_Inhalt/02_Hauptteil/06_plausibilisierung_und_bewertung.aux": true,
+    "02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands-DESKTOP-SIT5NNJ.aux": true,
+    "01_Einstellungen/befehle.tex": true,
+    "v00-ba-Schwitters-Alexandername--EC-Schwitters-A.log": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.toc": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lot": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.log": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lof": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lod": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.blg": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.bcf": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.aux": true,
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ-2.log": true,
+    "02_Inhalt/02_Hauptteil/04_.aux": true,
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung.aux": true,
+    "02_Inhalt/02_Hauptteil/05_modellbildungmodellbildung_istzustand.aux": true,
+    "02_Inhalt/02_Hauptteil/06_modellbildung_und_plausibilisierung_der_stellkonzepte.aux": true,
+    "02_Inhalt/02_Hauptteil/05_modellbildung_istzustand.aux": true,
+    "02_Inhalt/02_Hauptteil/05_modellbildung_und_plausibilisierung_des_istzustands.aux": true,
+    "02_Inhalt/02_Hauptteil/02_technische_und_normative_grundlagen.aux": true
   },
   "hide-files.files": [
     "v00-ba-Schwitters-Alexandername-.sls",
@@ -158,7 +177,26 @@
     "02_Inhalt/02_Hauptteil/04_entwicklung_des_transformatorgestützten_stellkonzepts.aux",
     "02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands.aux",
     "02_Inhalt/02_Hauptteil/05_modellbildung.aux",
-    "02_Inhalt/02_Hauptteil/06_plausibilisierung_und_bewertung.aux"
+    "02_Inhalt/02_Hauptteil/06_plausibilisierung_und_bewertung.aux",
+    "02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands-DESKTOP-SIT5NNJ.aux",
+    "01_Einstellungen/befehle.tex",
+    "v00-ba-Schwitters-Alexandername--EC-Schwitters-A.log",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.toc",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lot",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.log",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lof",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.lod",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.blg",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.bcf",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ.aux",
+    "v00-ba-Schwitters-Alexandername--DESKTOP-SIT5NNJ-2.log",
+    "02_Inhalt/02_Hauptteil/04_.aux",
+    "02_Inhalt/02_Hauptteil/04_konzeptentwicklung.aux",
+    "02_Inhalt/02_Hauptteil/05_modellbildungmodellbildung_istzustand.aux",
+    "02_Inhalt/02_Hauptteil/06_modellbildung_und_plausibilisierung_der_stellkonzepte.aux",
+    "02_Inhalt/02_Hauptteil/05_modellbildung_istzustand.aux",
+    "02_Inhalt/02_Hauptteil/05_modellbildung_und_plausibilisierung_des_istzustands.aux",
+    "02_Inhalt/02_Hauptteil/02_technische_und_normative_grundlagen.aux"
   ],
   "cloudlatex.enabled": true,
 
@@ -166,11 +204,7 @@
     {
       "name": "💡 Vollständig: PDFLaTeX ➞ Glossar ➞ Biber",
       "tools": [
-        "pdflatex",
-        "makeglossaries",
-        "biber",
-        "pdflatex",
-        "pdflatex"
+        "full-build"
       ]
     },
     {
@@ -187,7 +221,20 @@
       ]
     }
   ],
+  "latex-workshop.latex.recipe.default": "first",
   "latex-workshop.latex.tools": [
+    {
+      "name": "full-build",
+      "command": "powershell",
+      "args": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "%DIR%/build_latex.ps1",
+        "%DOC%"
+      ]
+    },
     {
       "name": "pdflatex",
       "command": "pdflatex",

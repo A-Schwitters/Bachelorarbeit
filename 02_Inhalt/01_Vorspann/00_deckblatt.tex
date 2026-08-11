@@ -20,15 +20,16 @@
     \noindent
     \begin{tikzpicture}[remember picture, overlay]
         % blauer Hintergrund
-        \fill[JanssenDarkBlue] (current page.north west) ++(0,-1.5cm) rectangle ++(\paperwidth,-2cm);
+        \fill[JanssenDarkBlue]
+            ($(current page.north west)+(0,-1.5cm)$) rectangle
+            ($(current page.north east)+(0,-3.5cm)$);
         % weißer Block als 'Unterbrechung' – Parallelogramm schmäler
         % Basis 4cm 
         \fill[white]
-            (current page.north west) ++(2cm,-1.5cm) % unten links
-            -- ++(4cm,0)                           % unten rechts (1cm kürzer)
-            -- ++(-1cm,-2cm)                       % oben rechts verschoben nach links
-            -- ++(-4cm,0)                         % oben links
-            -- cycle;
+            ($(current page.north west)+(1.5cm,-1.5cm)$) --
+            ($(current page.north west)+(6.5cm,-1.5cm)$) --
+            ($(current page.north west)+(5.5cm,-3.5cm)$) --
+            ($(current page.north west)+(0.5cm,-3.5cm)$) -- cycle;
         % Logos
         \node[anchor=west] at ($(current page.north west)+(2cm,-2.5cm)$) {\includegraphics[height=1.5cm]{03_Ressourcen/logo/jadehs-logo.png}};
         \node[anchor=east] at ($(current page.north east)+(-2cm,-2.5cm)$) {\includegraphics[height=2.5cm]{03_Ressourcen/logo/logo-rolf_janssen-mit_text.pdf}};
@@ -89,6 +90,7 @@
     \begin{center}
         \normalsize
         \begin{tabular}{rl}
+            \textbf{Betreuer:} & \betreuerDrei \\[2ex]
             \textbf{Erstprüfer:}  & \betreuerEins \\
             \textbf{Zweitprüfer:} & \betreuerZwei \\[2ex]
             \textbf{Abgabedatum:} & Aurich, den \today

@@ -107,11 +107,14 @@
 % \include{02_Inhalt/02_Hauptteil/10_Modellierung_thermischer_Widerstand}
 
 \include{02_Inhalt/02_Hauptteil/01_einleitung}
-\include{02_Inhalt/02_Hauptteil/02_technische_und_normative_Grundlagen}
-\include{02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands}
-\include{02_Inhalt/02_Hauptteil/04_entwicklung_des_transformatorgestützten_stellkonzepts}
-\include{02_Inhalt/02_Hauptteil/05_modellbildung}
-\include{02_Inhalt/02_Hauptteil/06_plausibilisierung_und_bewertung}
+\include{02_Inhalt/02_Hauptteil/02_technische_und_normative_grundlagen}
+% \input vermeidet unter Windows eine fehlerhaft kodierte AUX-Unterdatei
+% für den Dateinamen mit Umlauten.
+\clearpage
+\input{02_Inhalt/02_Hauptteil/03_analyse_des_bestehenden_erwärmungsprüfstands.tex}
+\include{02_Inhalt/02_Hauptteil/04_konzeptentwicklung}
+\include{02_Inhalt/02_Hauptteil/05_modellbildung_und_plausibilisierung_des_istzustands}
+\include{02_Inhalt/02_Hauptteil/06_modellbildung_und_plausibilisierung_der_stellkonzepte}
 \include{02_Inhalt/02_Hauptteil/07_fazit}
 \include{02_Inhalt/02_Hauptteil/08_ausblick}
 

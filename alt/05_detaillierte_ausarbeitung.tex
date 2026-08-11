@@ -1,0 +1,1311 @@
+% =============================================================================
+% 5 MODELLBILDUNG UND PLAUSIBILISIERUNG
+% Weitgehend ausgearbeitete Arbeitsfassung vom 07.08.2026
+% =============================================================================
+%
+% Diese Fassung bildet den tatsächlichen Entwicklungsweg ab.
+% Noch offene Angaben sind ausschließlich als LaTeX-Kommentare gekennzeichnet.
+% Die auskommentierten Abbildungen verursachen keine Fehler, solange die
+% zugehörigen Bilddateien noch nicht im Projektordner liegen.
+%
+% Morgen vor der endgültigen Übernahme noch abzugleichen:
+% - genaue Implementierung des OSG im finalen Quellenmodell,
+% - Bezugspunkt und Endwert der Quellenspannung,
+% - Verwendung des phasenbezogenen oder gemittelten R_MCC im Gesamtmodell,
+% - Solver, Schrittweiten und Simulationszeiten der endgültigen Modelle,
+% - Export des zusammengeführten Gesamtmodells und seiner Ergebnisplots.
+%
+% =============================================================================
+
+\section{Modellbildung und Plausibilisierung}
+\label{chap:modellbildung}
+
+Zur Untersuchung der in Kapitel~\ref{chap:analyse_pruefstand}
+beschriebenen Stromabweichungen wird der betrachtete Lastzweig in
+MATLAB/Simulink abgebildet. Das Ziel der Modellbildung besteht nicht darin,
+sämtliche konstruktiven Einzelheiten des Erwärmungsprüfstands nachzubilden.
+Vielmehr werden die elektrischen und thermischen Zusammenhänge erfasst, die
+den Strom eines MCC-Abgangs und dessen zeitliche Änderung bestimmen. Das
+zusammengeführte Gesamtmodell bildet anschließend die Referenz für die
+Untersuchung der in Kapitel~\ref{chap:konzeptentwicklung} entwickelten
+Stellkonzepte.
+
+Die Modellbildung erfolgte nicht in einem einzigen Schritt. Zunächst wurde
+ein vollständiger elektrischer Signal- und Energiepfad aufgebaut und mit
+vorläufigen Parametern erweitert. Da mehrere noch nicht überprüfte
+Teilfunktionen gleichzeitig zusammenwirkten, konnten die beobachteten
+Abweichungen und Schwingungen keiner eindeutigen Ursache zugeordnet werden.
+Das Ausgangsmodell wurde deshalb in die Teilbereiche Spannungsquelle,
+elektrischer MCC-Pfad und thermisches Verhalten des V2A-Widerstands zerlegt.
+Erst nach der getrennten Untersuchung und Plausibilisierung dieser
+Teilmodelle werden sie zu einem Referenzmodell des bestehenden Lastzweigs
+zusammengeführt.
+
+
+% -----------------------------------------------------------------------------
+% 5.1 Ausgangsmodell und methodische Zerlegung
+% -----------------------------------------------------------------------------
+
+\subsection{Ausgangsmodell und methodische Zerlegung}
+\label{sec:ausgangsmodell_zerlegung}
+
+Der erste Modellstand entstand als funktionaler Aufbau ohne zuvor
+vollständig festgelegte Modellhierarchie. Zunächst wurde die
+Spannungsquelle erstellt. An diese wurde ein repräsentativer Lastzweig des
+\SI{400}{\ampere}-Moduls angeschlossen. Der Widerstand der V2A-Schienen wurde
+dabei nicht frei gewählt, sondern aus deren Geometrie und dem spezifischen
+elektrischen Widerstand berechnet. Demgegenüber wurde der Innenwiderstand des
+MCC-Moduls in dieser frühen Phase lediglich als pauschaler Widerstand
+angenommen. Für diesen Parameter lagen zu diesem Zeitpunkt noch keine
+Messwerte vor.
+
+Der wirksame V2A-Widerstand wurde zunächst mithilfe eines Sliders manuell
+verändert. Dadurch ließ sich prüfen, ob die Verschaltung grundsätzlich auf
+eine Widerstandsänderung mit der erwarteten Stromänderung reagiert. Im
+nächsten Schritt ersetzte eine exponentielle Testfunktion die manuelle
+Verstellung. Diese Funktion stellte noch kein thermisches Modell dar. Sie
+diente ausschließlich dazu, eine zeitlich veränderliche Störgröße zu
+erzeugen und die Reaktion des elektrischen Modells zu untersuchen.
+
+Anschließend wurde der Lastzweig um den parallelen Pfad aus Trafo~2 und
+Stellwiderstand erweitert. Auf dieser Grundlage wurden erste geschlossene
+Regelkreise untersucht. Die dabei auftretenden Schwingungen konnten jedoch
+nicht eindeutig dem Regler zugeordnet werden. Neben der Reglerparametrierung
+wirkten gleichzeitig die angenommene Modulimpedanz, die künstliche
+Widerstandsänderung, die Quellen- und Messwertaufbereitung sowie der
+zusätzliche Strompfad. Eine Bewertung der Regelgüte wäre auf dieser Grundlage
+nicht belastbar gewesen.
+
+Diese Erkenntnis führte zur Zerlegung des Modells. Die Zerlegung ist damit
+kein nachträglich gewähltes Darstellungsprinzip, sondern das Ergebnis der
+ersten Simulationsversuche. Tabelle~\ref{tab:modellstufen_kap5} fasst die
+daraus entstandenen Modellstufen zusammen.
+
+\begin{table}[H]
+    \centering
+    \caption{Entwicklungsstufen der Modellbildung}
+    \label{tab:modellstufen_kap5}
+    \begin{tabularx}{\textwidth}{@{}p{0.20\textwidth}p{0.28\textwidth}X@{}}
+        \toprule
+        Stufe & Inhalt & Zweck \\
+        \midrule
+        Ausgangsmodell &
+        Quelle, angenommener \(R_\mathrm{MCC}\), geometrisch bestimmter
+        V2A-Widerstand und repräsentativer \SI{400}{\ampere}-Abgang &
+        Prüfung der grundsätzlichen Verschaltung und der Signalrichtungen \\
+
+        Erweiterung &
+        Slider, exponentielle Teststörung, paralleler Stellpfad und Regler &
+        Untersuchung der Stellwirkung und Erkennen der nicht eindeutig
+        zuordenbaren Abweichungen \\
+
+        Quellenmodell &
+        sinusförmige Momentanspannung, lineare Effektivwertrampe,
+        RMS-Auswertung und OSG &
+        eindeutige Festlegung der elektrischen Anregung und der verwendeten
+        Effektivwertgröße \\
+
+        Elektrisches Teilmodell &
+        Messung und Berechnung des Ersatzwiderstands
+        \(R_\mathrm{MCC}\) &
+        Ersatz der vorläufigen Widerstandsannahmen durch messgestützte
+        Modellparameter \\
+
+        Thermisches Teilmodell &
+        Kreis~1, Kreis~2 und Kreis~3 &
+        schrittweise Prüfung des thermischen Grundmodells, seiner
+        Parametrierung und der elektrothermischen Rückkopplung \\
+
+        Gesamtmodell &
+        Zusammenführung der linearen Quelle, des gemessenen
+        \(R_\mathrm{MCC}\) und des elektrothermischen Modells &
+        Untersuchung des Stromdrifts unter den festgelegten Randbedingungen \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+% BILD 5.1 -- erst aktivieren, sobald der Export des ersten Gesamtmodells
+% vorliegt.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/pic/Ausgangsmodell_freier_Aufbau.pdf}
+%     \caption{Erster funktionaler Modellstand vor der Zerlegung in
+%     überprüfbare Teilmodelle (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_ausgangsmodell}
+% \end{figure}
+
+Die nachfolgende Darstellung folgt dieser tatsächlichen Entwicklung. Die
+frühen Annahmen werden dabei nicht als Parameter des endgültigen Modells
+übernommen. Sie werden nur dort beschrieben, wo sie die Entscheidung zur
+Zerlegung und Weiterentwicklung des Modells erklären.
+
+
+% -----------------------------------------------------------------------------
+% 5.2 Modellierung der Spannungsquelle
+% -----------------------------------------------------------------------------
+
+\subsection{Modellierung der Spannungsquelle und Effektivwertaufbereitung}
+\label{sec:spannungsquelle_osg}
+
+Der Säulenstelltransformator des realen Prüfstands verändert die
+Prüfspannung mechanisch. Die sekundärseitige Spannung erreicht ihren Endwert
+daher nicht sprunghaft, sondern steigt während der Stellbewegung an. Für das
+Quellenmodell wird dieser Vorgang zunächst durch einen linearen Anstieg des
+Phaseneffektivwerts angenähert. Die Spannung ist dabei als Spannung eines
+Außenleiters gegen den gemeinsamen Sternpunkt des Prüfaufbaus definiert. Da
+die drei Außenleiter im späteren Prüfstandsbetrieb einzeln ausgewertet und
+nachgeführt werden, wird die Signalaufbereitung für jede Phase separat
+angewendet. Eine Symmetrie der drei Phasenspannungen wird für die
+Effektivwertbestimmung somit nicht vorausgesetzt.
+
+Für eine betrachtete Phase lautet die sinusförmige Momentanspannung
+
+\begin{equation}
+    u_{\alpha}(t)
+    =
+    \sqrt{2}\,U_\mathrm{eff}(t)
+    \sin\!\left(2\pi f t+\varphi_0\right),
+    \qquad f=\SI{50}{\hertz}.
+    \label{eq:kap5_momentanspannung}
+\end{equation}
+
+Für den untersuchten Quellenvergleich wird der Effektivwert durch
+
+\begin{equation}
+    U_\mathrm{eff}(t)
+    =
+    \begin{cases}
+        U_\mathrm{eff,max}\dfrac{t}{t_\mathrm{r}},
+        & 0\leq t<t_\mathrm{r}, \\[3mm]
+        U_\mathrm{eff,max},
+        & t\geq t_\mathrm{r}
+    \end{cases}
+    \label{eq:kap5_spannungsrampe}
+\end{equation}
+
+beschrieben. In den bisher durchgeführten Quellenvergleichen wurden
+\(U_\mathrm{eff,max}=\SI{4.0}{\volt}\) und
+\(t_\mathrm{r}=\SI{5}{\second}\) verwendet. Diese Werte kennzeichnen den
+untersuchten Simulationsfall. Insbesondere der endgültige Spannungsendwert des
+gekoppelten Modells ist später an den Bezugspunkt der Spannung und die dann
+berücksichtigten Serienwiderstände anzupassen.
+
+Eine klassische Effektivwertbildung bestimmt den quadratischen Mittelwert
+über ein Zeitfenster der Länge \(T=1/f\):
+
+\begin{equation}
+    U_\mathrm{RMS}(t)
+    =
+    \sqrt{
+        \frac{1}{T}
+        \int_{t-T}^{t}u_{\alpha}^{2}(\lambda)\,\mathrm{d}\lambda
+    }.
+    \label{eq:kap5_rms_fenster}
+\end{equation}
+
+Für eine stationäre sinusförmige Spannung liefert diese Beziehung den
+korrekten Effektivwert. Während der Rampe enthält das Messfenster jedoch
+Momentanwerte mit unterschiedlichen Amplituden. Der berechnete RMS-Wert folgt
+der aktuellen Amplitude deshalb zeitlich verzögert. Dieses Verhalten ist kein
+Fehler der Effektivwertdefinition, erschwert aber die eindeutige Auswertung
+des vorgegebenen linearen Hochlaufs.
+
+Aus diesem Grund wurde zusätzlich eine orthogonale Signalgenerierung
+verwendet. Zu \(u_{\alpha}\) wird eine um \(90^\circ\) verschobene Komponente
+\(u_{\beta}\) gebildet. Die Bezeichnungen \(\alpha\) und \(\beta\) beziehen
+sich hier auf das orthogonale Signalpaar einer einzelnen Phase. Es handelt
+sich nicht um eine Clarke-Transformation, bei der ein dreiphasiges System
+gemeinsam ausgewertet wird. Im idealen Fall gilt
+
+\begin{align}
+    u_{\alpha}(t)
+    &=
+    \sqrt{2}\,U_\mathrm{eff}(t)\sin(\omega t),
+    \\
+    u_{\beta}(t)
+    &=
+    \sqrt{2}\,U_\mathrm{eff}(t)\cos(\omega t).
+    \label{eq:kap5_osg_komponenten}
+\end{align}
+
+Der Betrag des daraus gebildeten Effektivwertzeigers ergibt sich zu
+
+\begin{equation}
+    U_\mathrm{eff,Zeiger}(t)
+    =
+    \frac{1}{\sqrt{2}}
+    \sqrt{u_{\alpha}^{2}(t)+u_{\beta}^{2}(t)}.
+    \label{eq:kap5_osg_betrag}
+\end{equation}
+
+Bei idealer Orthogonalität entspricht dieser Wert unmittelbar der
+vorgegebenen Effektivwertamplitude. Im Vergleich mit der klassischen
+RMS-Auswertung folgt der Effektivwertzeiger der linearen Rampe ohne die durch
+das gleitende Messfenster verursachte Nachwirkung. Für das elektrische
+Lastmodell wird deshalb der Effektivwertzeiger verwendet. Die
+Momentanspannung bleibt parallel verfügbar, damit Spannungsform, Frequenz und
+Scheitelwert getrennt kontrolliert werden können. Derselbe Aufbau kann für
+L1, L2 und L3 verwendet werden, wobei für jede Phase ein eigener
+Effektivwertzeiger ausgegeben wird.
+
+% OFFEN:
+% Im endgültigen Text anhand des Simulink-Modells ergänzen, ob u_beta direkt
+% in der MATLAB-Funktion oder in einem eigenständigen OSG-Subsystem erzeugt
+% wurde. Keine konkrete OSG-Struktur behaupten, bevor das finale Modellbild
+% und der zugehörige Code abgeglichen wurden.
+
+% BILD 5.2 -- Quellenmodell mit Momentanspannung und OSG.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/pic/Spannungsquelle_lineare_Rampe_OSG.pdf}
+%     \caption{Modell der sinusförmigen Spannungsquelle mit linearer
+%     Effektivwertrampe und orthogonaler Signalgenerierung
+%     (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_spannungsquelle_osg}
+% \end{figure}
+
+% BILD 5.3 -- Vergleich RMS und Zeiger.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/plots/02_Vergleich_RMS_vs_Zeiger.pdf}
+%     \caption{Vergleich der klassischen RMS-Auswertung mit dem
+%     Effektivwertzeiger während des linearen Spannungshochlaufs}
+%     \label{fig:kap5_vergleich_rms_zeiger}
+% \end{figure}
+
+% BILD 5.4 -- Vergleich Zeiger und ideale Rampe.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/plots/03_Vergleich_Zeiger_vs_Ideal.pdf}
+%     \caption{Vergleich des Effektivwertzeigers mit der ideal vorgegebenen
+%     linearen Effektivwertrampe}
+%     \label{fig:kap5_vergleich_zeiger_ideal}
+% \end{figure}
+
+Die lineare Rampe ist von dem später im thermischen Teilmodell verwendeten
+Spannungssprung zu unterscheiden. Der Sprung dient dort als definierte
+Prüfanregung zur Untersuchung des thermischen Einschwingvorgangs. Er bildet
+nicht das reale Verfahren des Säulenstelltransformators ab und wird daher im
+zusammengeführten Gesamtmodell wieder durch das Quellenmodell nach
+Gleichung~\eqref{eq:kap5_spannungsrampe} ersetzt.
+
+
+% -----------------------------------------------------------------------------
+% 5.3 Messung und Modellierung von R_MCC
+% -----------------------------------------------------------------------------
+
+\subsection{Messung und Modellierung des MCC-Ersatzwiderstands}
+\label{sec:rmcc_messung_modellierung}
+
+Im ersten Modellstand wurde der Widerstand der MCC-Abgangseinheit mangels
+Messwerten pauschal angenommen. Bei den sehr niedrigen Prüfspannungen besitzt
+dieser Anteil jedoch einen wesentlichen Einfluss auf den Laststrom. Die
+Ermittlung des MCC-Ersatzwiderstands erfolgte in drei zeitlich getrennten
+Messständen. Diese Messstände besitzen nicht dieselbe Aussagekraft und werden
+deshalb im Folgenden nicht zu einer gemeinsamen Messreihe zusammengefasst.
+
+\noindent\textbf{Erste Messung: orientierende Untersuchung des Messaufbaus.}
+Die erste Messung wurde ohne Anwesenheit des Verfassers durchgeführt. Die
+übermittelte Dokumentation nennt für ein 1er-Modul einen Prüfstrom von
+\SI{100.2}{\ampere} und für ein 3er-Modul einen Prüfstrom von
+\SI{300}{\ampere}. Da der genaue Aufbau, die Lage sämtlicher
+Spannungsabgriffpunkte und die Führung der Messleitungen nicht vollständig
+nachvollzogen werden konnten, werden die dabei ermittelten Spannungswerte
+nicht zur Parametrierung des Modells verwendet.
+
+Aus der ersten Messung ließ sich dennoch das Messprinzip ableiten. Der
+Prüfstrom wurde über die Leistungskontakte des
+ausgebauten MCC-Einschubs geführt. Zusätzliche Kupferstücke verbanden die
+    Kontaktstellen so, dass die zu untersuchenden Phasenpfade einzeln oder in
+Reihe bestromt werden konnten. Dadurch durchfloss der Prüfstrom nicht nur die
+eingebauten Schaltgeräte und internen Leiter, sondern auch die innerhalb der
+gewählten Spannungs\-abgriffpunkte liegenden Steck- und
+Übergangs\-kontakte. Der
+zu bestimmende Ersatzwiderstand beschreibt somit den eingebauten
+MCC-Strompfad und nicht lediglich die Summe einzelner
+Datenblatt\-widerstände.
+
+\noindent\textbf{Zweite Messung: fotografische Erfassung des Einschubs.}
+Auch der zweite Messstand war für eine quantitative Widerstandsbestimmung
+nicht hinreichend reproduzierbar dokumentiert. Seine Messwerte werden daher
+ebenfalls nicht in das Modell übernommen. Die dabei entstandenen Aufnahmen
+sind jedoch für die konstruktive Beschreibung des MCC-Einschubs geeignet.
+Sie zeigen die rückseitigen Leistungskontakte, die internen Kupferleiter, das
+Schutz- und Schaltgerät sowie die SIMOCODE-Komponenten. Der Hauptstrompfad
+verläuft damit vereinfacht von den einspeiseseitigen Leistungskontakten über
+die internen Leiter und die Schutz- beziehungsweise Schaltgeräte, durch die
+Stromerfassung und anschließend zu den abgangsseitigen Leistungskontakten.
+Die genaue Reihenfolge ist abhängig von der jeweiligen Modulbestückung.
+
+% BILD RMCC-A -- Bauteilübersicht aus der zweiten Messung.
+% Geeignete Quellen: Mess 2.pdf, Seite 3 (Gesamtansicht),
+% Seite 4 (SIRIUS-Schutzschalter) und Seite 5 (SIMOCODE PRO).
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_Einschub_Innenansicht.jpg}
+%         \caption{Innenansicht}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_Schutzschalter.jpg}
+%         \caption{Schutzschalter}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_SIMOCODE.jpg}
+%         \caption{SIMOCODE-Komponente}
+%     \end{subfigure}
+%     \caption{Ausgewählte Bauteile und Leitungsführung innerhalb eines
+%     MCC-Einschubs}
+%     \label{fig:kap5_mcc_bauteile}
+% \end{figure}
+
+\noindent\textbf{Dritte Messung: Parameterbestimmung für das Modell.}
+Erst die dritte Messung wurde mit einem einheitlichen Messablauf durchgeführt
+und sowohl fotografisch als auch in einem strukturierten Messprotokoll
+dokumentiert. Die Fotodokumentation hält für die einzelnen Messwerte den
+Prüfstrom, die Lage der Spannungsspitzen, die Kupferverbindungen und die
+jeweilige Anzeige des Millivoltmeters fest. Das zugehörige Tabellenprotokoll
+ordnet diese Einzelaufnahmen den Messpunkten zu und berechnet daraus
+Widerstände und Verlustleistungen. Erst die gemeinsame Betrachtung beider
+Unterlagen macht den Messwert räumlich und rechnerisch nachvollziehbar.
+Das vollständige Messprotokoll ist deshalb Bestandteil der
+Versuchsdokumentation. Im Haupttext werden daraus die für die Modellbildung
+maßgebenden Gesamt-, Phasen- und Teilspannungsfälle zusammengefasst.
+
+Vermessen wurden ein 1er-Modul, ein 3er-Modul und ein B-Modul. Die Module
+entsprechen in der vorgesehenen Konfiguration Bemessungsströmen von
+\SI{250}{\ampere}, \SI{630}{\ampere} und \SI{70}{\ampere}. Für das
+1er- und das 3er-Modul wurden die Prüfströme
+\SI{50}{\ampere} und \SI{100}{\ampere} verwendet. Beim B-Modul betrugen
+die Prüfströme \SI{10}{\ampere} und \SI{20}{\ampere}. Die Verwendung von
+jeweils zwei Stromstufen ermöglicht die Prüfung, ob der Spannungsfall im
+untersuchten Bereich näherungsweise proportional mit dem Strom ansteigt.
+
+Für jeden Messpunkt wurde der Spannungsfall zunächst mit unverdrillten und
+anschließend mit verdrillten Messleitungen aufgenommen. Bei Wechselstrom kann
+die von den Messleitungen aufgespannte Fläche einen induzierten
+Spannungsanteil erfassen. Dies ist bei den hier gemessenen Spannungsfällen im
+Millivoltbereich nicht vernachlässigbar. Zur Kontrolle wurden die beiden
+Messspitzen am Anschluss L1 an denselben elektrischen Punkt gehalten. Obwohl
+der reale Spannungsfall zwischen den Messspitzen in diesem Fall null sein
+müsste, zeigte das Messgerät abhängig von Messung und Leitungsführung Werte
+zwischen \SI{1.6}{\milli\volt} und \SI{3.4}{\milli\volt}. Die Anzeige belegt
+einen verbleibenden induzierten beziehungsweise störungsbedingten
+Messanteil.
+
+Der Vergleich der beiden Stromstufen zeigt den Einfluss der Leitungsführung
+noch deutlicher. Bei unverdrillten Messleitungen unterscheiden sich die aus
+\(\Delta U/I\) bestimmten mittleren Widerstände zwischen den beiden
+Stromstufen beim 1er-Modul um \SI{7.78}{\percent}, beim 3er-Modul um
+\SI{6.23}{\percent} und beim B-Modul um \SI{17.80}{\percent}. Nach dem
+Verdrillen sinken diese Abweichungen auf \SI{0.22}{\percent},
+\SI{2.87}{\percent} und \SI{0.20}{\percent}. Für die Modellbildung werden
+daher ausschließlich die verdrillt aufgenommenen Werte der dritten Messung
+verwendet.
+
+% BILD RMCC-B -- Messablauf der dritten Messung.
+% Geeignete Quellen: Mess 3.pdf, Seite 7 oder 17 (Spannungsabgriff am
+% 1er-Modul), Seite 38 (verdrillte Messleitungen) sowie Seite 51 oder 79
+% (Kontrollmessung mit zusammengehaltenen Messspitzen).
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_Messung3_Spannungsabgriff.jpg}
+%         \caption{Spannungsabgriff}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_Messung3_verdrillte_Leitung.jpg}
+%         \caption{Verdrillte Messleitung}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[t]{0.32\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]
+%         {03_Ressourcen/pic/MCC_Messung3_Kontrollmessung_L1.jpg}
+%         \caption{Kontrollmessung an L1}
+%     \end{subfigure}
+%     \caption{Dokumentierter Messablauf der dritten Spannungsfallmessung}
+%     \label{fig:kap5_mcc_messung3_ablauf}
+% \end{figure}
+
+% BILD RMCC-C -- Strompfad und Kupferverbindungen der dritten Messung.
+% Geeignete Quellen: Mess 3.pdf, Seite 17 oder 29 (1er-Modul) und
+% Seite 82 oder 94 (3er-Modul). Vor dem Aktivieren Stromrichtung und
+% Spannungsabgriffpunkte mit dezenten Pfeilen einzeichnen.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=0.88\textwidth]
+%     {03_Ressourcen/pic/MCC_Messung3_Strompfad_Messpunkte.jpg}
+%     \caption{Strompfad, Kupferverbindungen und Spannungsabgriffpunkte
+%     der dritten Messung}
+%     \label{fig:kap5_mcc_messung3_strompfad}
+% \end{figure}
+
+Die Restanzeige bei zusammengehaltenen Messspitzen wird nicht als konstanter
+Offset von den Einzelwerten abgezogen. Ein induzierter Messanteil ist von der
+räumlichen Lage der Messleitungen abhängig und kann daher nicht durch eine
+einzige skalare Korrektur für alle Messpunkte beschrieben werden. Die
+Restanzeige wird stattdessen als Hinweis auf die verbleibende
+Messunsicherheit dokumentiert. Dies ist insbesondere beim 3er-Modul zu
+beachten, da dessen Spannungsfälle aufgrund des niedrigen Ersatzwiderstands
+vergleichsweise klein sind.
+
+Für jeden Phasenpfad ergibt sich der im Modell verwendete Ersatzwiderstand aus
+
+\begin{equation}
+    R_\mathrm{MCC}
+    =
+    \frac{\Delta U_\mathrm{MCC}}{I_\mathrm{mess}}.
+    \label{eq:kap5_rmcc_bestimmung}
+\end{equation}
+
+Die Verlustleistung wird erst anschließend mit
+
+\begin{equation}
+    P_\mathrm{V,MCC}
+    =
+    I^2R_\mathrm{MCC}
+    \label{eq:kap5_rmcc_verlustleistung}
+\end{equation}
+
+berechnet. Zur Bestimmung des Widerstands wird sie nicht gemittelt. Sie hängt
+quadratisch vom Strom ab.
+
+Zusätzlich zur phasenweisen Messung wurden die drei Phasenpfade durch die
+Kupferverbindungen in Reihe geschaltet und gemeinsam gemessen. Diese
+Kontrollmessung erlaubt den Vergleich des direkt gemessenen gesamten
+Spannungsfalls \(U_\mathrm{3ph}\) mit der Summe der drei separat ermittelten
+Phasenspannungen. Tabelle~\ref{tab:kap5_rmcc_reihenkontrolle} zeigt, dass
+die Abweichung bei allen sechs Messpunkten kleiner als
+\SI{0.9}{\percent} bleibt.
+
+\begin{table}[H]
+    \centering
+    \caption{Kontrolle der verdrillten Messung durch Reihenschaltung der
+    drei Phasenpfade}
+    \label{tab:kap5_rmcc_reihenkontrolle}
+    \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        Modul & \(I_\mathrm{mess}\) &
+        \(\sum U_{L1\ldots L3}\) & \(U_\mathrm{3ph}\) & Abweichung \\
+        & \si{\ampere} & \si{\milli\volt} &
+        \si{\milli\volt} & \si{\percent} \\
+        \midrule
+        Modul 1 & \num{50}  & \num{657.4}  & \num{662.0}  & \num{0.70} \\
+        Modul 1 & \num{100} & \num{1311.9} & \num{1304.0} & \num{-0.60} \\
+        Modul 3 & \num{50}  & \num{97.6}   & \num{96.8}   & \num{-0.82} \\
+        Modul 3 & \num{100} & \num{189.6}  & \num{188.0}  & \num{-0.84} \\
+        Modul B & \num{10}  & \num{587.0}  & \num{592.0}  & \num{0.85} \\
+        Modul B & \num{20}  & \num{1171.7} & \num{1174.0} & \num{0.20} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Am 1er-Modul wurden in der dritten Messung zusätzlich Spannungsfälle über
+ausgewählten Teilabschnitten des Strompfads aufgenommen. Tabelle
+~\ref{tab:kap5_rmcc_teilspannungen} zeigt exemplarisch die Messung bei
+\SI{100}{\ampere}. Die Summe der einzeln erfassten Bauteilspannungen ist
+kleiner als der Spannungsfall des gesamten Phasenpfads, weil nicht sämtliche
+internen Leiter, Anschlussstellen und Übergangskontakte als eigene
+Messabschnitte aufgenommen wurden. Für das Ersatzmodell werden die
+Teilspannungen deshalb nicht zu einem Widerstand addiert. Sie dienen zur
+Einordnung der Entstehungsorte, während \(R_\mathrm{MCC}\) aus dem
+Spannungsfall über den vollständigen Phasenpfad gebildet wird.
+
+\begin{table}[H]
+    \centering
+    \caption{Spannungsfall ausgewählter Teilabschnitte des 1er-Moduls bei
+    \SI{100}{\ampere} und verdrillten Messleitungen}
+    \label{tab:kap5_rmcc_teilspannungen}
+    \begin{tabular}{@{}lrrr@{}}
+        \toprule
+        Messabschnitt & \(U_{L1}\) & \(U_{L2}\) & \(U_{L3}\) \\
+        & \si{\milli\volt} & \si{\milli\volt} & \si{\milli\volt} \\
+        \midrule
+        gesamter Phasenpfad & \num{464.4} & \num{421.1} & \num{426.4} \\
+        Motorschutz-/Leistungsschalter &
+        \num{169.0} & \num{164.8} & \num{155.4} \\
+        Schalter & \num{70.2} & \num{79.1} & \num{68.6} \\
+        SIMOCODE &
+        \num{47.5} & \num{47.7} & \num{45.3} \\
+        nicht einzeln erfasste Differenz &
+        \num{177.7} & \num{129.5} & \num{157.1} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Der verwendete Prüfadapter ist in der Excel-Auswertung nicht als eigener
+Widerstandsanteil angesetzt. Der Modellparameter beschreibt damit den
+vollständigen vermessenen Modulpfad innerhalb der festgelegten
+Spannungsabgriffpunkte.
+
+Die Excel-Auswertung bildet für jedes gemessene Modul den arithmetischen
+Mittelwert der sechs mit verdrillten Leitungen bestimmten Phasenwiderstände,
+also aus drei Phasen und zwei Prüfströmen. Die daraus resultierenden
+Modellparameter sind in Tabelle~\ref{tab:kap5_rmcc_parameter} aufgeführt.
+
+Die über die drei Phasen gemittelten Widerstände betragen beim 1er-Modul
+\SI{4.383}{\milli\ohm} bei \SI{50}{\ampere} und
+\SI{4.373}{\milli\ohm} bei \SI{100}{\ampere}. Beim 3er-Modul ergeben sich
+\SI{0.651}{\milli\ohm} und \SI{0.632}{\milli\ohm}, beim B-Modul
+\SI{19.567}{\milli\ohm} und \SI{19.528}{\milli\ohm}. Die Abweichungen
+zwischen den beiden Stromstufen liegen damit, bezogen auf den jeweils ersten
+Mittelwert, bei etwa \SI{0.22}{\percent}, \SI{2.87}{\percent} und
+\SI{0.20}{\percent}. Der annähernd konstante Quotient \(\Delta U/I\)
+stützt die Verwendung eines ohmschen Ersatzwerts im untersuchten
+Messstrombereich.
+
+\begin{table}[H]
+    \centering
+    \caption{Im Modell verwendete MCC-Ersatzwiderstände je Phase}
+    \label{tab:kap5_rmcc_parameter}
+    \begin{tabularx}{\textwidth}{@{}p{0.18\textwidth}
+        p{0.20\textwidth}p{0.23\textwidth}X@{}}
+        \toprule
+        Modul & \(I_\mathrm{N}\) & \(R_\mathrm{MCC}\) je Phase & Grundlage \\
+        \midrule
+        Modul 1 &
+        \SI{250}{\ampere} &
+        \SI{4.378}{\milli\ohm} &
+        Mittelwert der verdrillten Messungen bei
+        \SI{50}{\ampere} und \SI{100}{\ampere} \\
+
+        Modul 2 &
+        \SI{400}{\ampere} &
+        \SI{1.650}{\milli\ohm} &
+        abgeschätzt aus der mittleren Bemessungsverlustleistung von
+        Modul~1 und Modul~3 \\
+
+        Modul 3 &
+        \SI{630}{\ampere} &
+        \SI{0.641}{\milli\ohm} &
+        Mittelwert der verdrillten Messungen bei
+        \SI{50}{\ampere} und \SI{100}{\ampere} \\
+
+        Modul A &
+        \SI{40}{\ampere} &
+        \SI{34.208}{\milli\ohm} &
+        abgeschätzt durch Skalierung des B-Moduls mit dem Verhältnis
+        \(70/40\) \\
+
+        Modul B &
+        \SI{70}{\ampere} &
+        \SI{19.548}{\milli\ohm} &
+        Mittelwert der verdrillten Messungen bei
+        \SI{10}{\ampere} und \SI{20}{\ampere} \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Für eine phasenbezogene Modellierung können die Messwerte zusätzlich getrennt
+nach Außenleitern ausgewertet werden. Dazu wird je Phase über die beiden
+Prüfströme gemittelt. Tabelle~\ref{tab:kap5_rmcc_phasenwerte} zeigt diese
+Werte. Die Abweichungen zwischen L1, L2 und L3 bleiben auf diese Weise
+erhalten und können in einem dreiphasigen Gesamtmodell berücksichtigt werden.
+
+\begin{table}[H]
+    \centering
+    \caption{Phasenbezogene Mittelwerte der gemessenen
+    MCC-Ersatzwiderstände}
+    \label{tab:kap5_rmcc_phasenwerte}
+    \begin{tabular}{@{}lrrrr@{}}
+        \toprule
+        Modul & \(R_{\mathrm{MCC},L1}\) & \(R_{\mathrm{MCC},L2}\) &
+        \(R_{\mathrm{MCC},L3}\) & Gesamtmittelwert \\
+        & \si{\milli\ohm} & \si{\milli\ohm} & \si{\milli\ohm} &
+        \si{\milli\ohm} \\
+        \midrule
+        Modul 1 & \num{4.611} & \num{4.255} & \num{4.268} & \num{4.378} \\
+        Modul 3 & \num{0.796} & \num{0.523} & \num{0.606} & \num{0.641} \\
+        Modul B & \num{19.308} & \num{18.558} & \num{20.778} & \num{19.548} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Die Werte von Modul~1, Modul~3 und Modul~B stammen ausschließlich aus der
+dritten Messung und dem zugehörigen Messprotokoll. Für Modul~2 und Modul~A
+lagen keine eigenen Messreihen vor. Diese beiden Werte sind daher als
+Modellannahmen und nicht als Messergebnisse zu kennzeichnen. Die Abschätzung
+des 2er-Moduls basiert auf der mittleren Bemessungsverlustleistung der beiden
+benachbarten großen Modulbaugrößen:
+
+\begin{equation}
+    P_{\mathrm{V,N},2}
+    =
+    \frac{P_{\mathrm{V,N},1}+P_{\mathrm{V,N},3}}{2},
+    \qquad
+    R_{\mathrm{MCC},2}
+    =
+    \frac{P_{\mathrm{V,N},2}}{I_{\mathrm{N},2}^{2}}.
+    \label{eq:kap5_rmcc_modul2_abschaetzung}
+\end{equation}
+
+Für das A-Modul wurde
+
+\begin{equation}
+    R_{\mathrm{MCC,A}}
+    =
+    R_{\mathrm{MCC,B}}
+    \frac{I_{\mathrm{N,B}}}{I_{\mathrm{N,A}}}
+    \label{eq:kap5_rmcc_modula_abschaetzung}
+\end{equation}
+
+angesetzt. Die Gleichung stellt eine Skalierungsannahme und kein allgemeines
+Gesetz für MCC-Module dar.
+
+Für das im thermischen Modell betrachtete \SI{630}{\ampere}-Modul wird der
+gemessene Wert
+
+\begin{equation}
+    R_{\mathrm{MCC},630}
+    =
+    \SI{0.641}{\milli\ohm}
+    \label{eq:kap5_rmcc_630}
+\end{equation}
+
+verwendet. Im reduzierten Modell wird der aus dem Spannungsfall berechnete
+Wert als ohmscher Ersatzwiderstand behandelt. Da keine Phasenwinkelmessung
+vorliegt, ist diese Reduktion als Modellannahme zu verstehen. Das Verdrillen
+der Messleitungen reduziert einen möglichen induzierten Messanteil, ersetzt
+jedoch keine getrennte Bestimmung von Wirk- und Blindanteil. Für den zunächst
+repräsentativ betrachteten einphasigen 630-A-Lastzweig wird der
+Gesamtmittelwert verwendet. Wird das Gesamtmodell phasenbezogen ausgeführt,
+sind stattdessen die in Tabelle~\ref{tab:kap5_rmcc_phasenwerte} angegebenen
+Einzelwerte einzusetzen.
+
+Die Widerstände wurden bei \SI{50}{\ampere} und \SI{100}{\ampere}
+bestimmt. Ihre Übertragung auf den Bemessungsstrom setzt voraus, dass der
+Modulpfad im betrachteten Bereich näherungsweise linear und sein Widerstand
+während der Messung annähernd konstant bleibt. Eine mögliche Eigenerwärmung des
+MCC-Moduls bei Bemessungsstrom wird durch den konstanten Ersatzwiderstand
+nicht beschrieben. Das thermische Teilmodell dieses Kapitels bezieht sich
+ausschließlich auf den V2A-Widerstand.
+
+
+% -----------------------------------------------------------------------------
+% 5.4 Thermisches Grundmodell -- Kreis 1
+% -----------------------------------------------------------------------------
+
+\subsection{Thermisches Grundmodell -- Kreis 1}
+\label{sec:thermisches_modell_kreis1}
+
+Nach der Zerlegung wurde das thermische Verhalten zunächst unabhängig vom
+elektrischen Lastzweig aufgebaut. Kreis~1 bildet einen thermischen Speicher
+erster Ordnung. Die zugeführte elektrische Verlustleistung
+\(P_\mathrm{el}\) wird als Wärmestrom interpretiert. Ein Teil dieser Leistung
+erhöht die im V2A-Körper gespeicherte Wärmeenergie, während der verbleibende
+Anteil über den thermischen Widerstand an die Umgebung abgegeben wird.
+
+Die Energiebilanz lautet
+
+\begin{equation}
+    C_\mathrm{th}\frac{\mathrm{d}\Delta\vartheta}{\mathrm{d}t}
+    =
+    P_\mathrm{el}
+    -
+    \frac{\Delta\vartheta}{R_\mathrm{th}}.
+    \label{eq:kap5_kreis1_dgl}
+\end{equation}
+
+Kreis~1 wurde zunächst normiert mit
+\(C_\mathrm{th}=1\), \(R_\mathrm{th}=1\) und
+\(P_\mathrm{el}=1\) untersucht. Diese normierte Parametrierung
+diente nicht der Beschreibung des realen V2A-Widerstands. Mit ihr konnten
+Vorzeichen, Rückführungsrichtung, Integrator und stationärer Grenzwert ohne
+zusätzliche Parameterabhängigkeiten kontrolliert werden. Für den normierten
+Fall ergeben sich
+
+\begin{equation}
+    \tau_\mathrm{th}=R_\mathrm{th}C_\mathrm{th}=1
+    \label{eq:kap5_kreis1_tau}
+\end{equation}
+
+und
+
+\begin{equation}
+    \Delta\vartheta_\infty
+    =
+    P_\mathrm{el}R_\mathrm{th}
+    =1.
+    \label{eq:kap5_kreis1_endwert}
+\end{equation}
+
+Neben der Temperatur wurden die gespeicherte beziehungsweise zur
+Temperaturänderung wirksame Leistung und die abgeführte Wärmeleistung
+ausgegeben. Im stationären Zustand muss die zeitliche Temperaturänderung
+verschwinden. Damit gilt
+
+\begin{equation}
+    \dot Q_\mathrm{C}=0,
+    \qquad
+    P_\mathrm{el}=\dot Q_\mathrm{ab}.
+    \label{eq:kap5_kreis1_stationaer}
+\end{equation}
+
+% BILD 5.7 -- liegt als RC_Modell_1.pdf vor.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[page=3,width=\textwidth,
+%         trim={3.2cm 4.0cm 3.2cm 4.0cm},clip]
+%     {03_Ressourcen/pic/RC_Modell_1.pdf}
+%     \caption{Kreis~1: normiertes thermisches RC-Grundmodell
+%     (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_rc_modell_1}
+% \end{figure}
+
+Die erfolgreiche Prüfung dieses normierten Modells war die Voraussetzung für
+die Übernahme der Struktur in den physikalisch parametrierten Kreis~2.
+
+
+% -----------------------------------------------------------------------------
+% 5.5 Physikalische Parametrierung -- Kreis 2
+% -----------------------------------------------------------------------------
+
+\subsection{Physikalische Parametrierung -- Kreis 2}
+\label{sec:thermisches_modell_kreis2}
+
+In Kreis~2 wurde die normierte Struktur durch die geometrischen und
+thermischen Parameter des V2A-Widerstands ersetzt. Die elektrische
+Verlustleistung blieb zunächst eine unabhängig vorgegebene Eingangsgröße.
+Dadurch konnte die thermische Strecke geprüft werden, ohne dass eine
+gleichzeitig wirkende elektrische Rückkopplung das Ergebnis verändert.
+
+Die Masse des V2A-Körpers wird aus Geometrie und Dichte bestimmt:
+
+\begin{equation}
+    m
+    =
+    \rho_\mathrm{m}\,l\,b\,d.
+    \label{eq:kap5_masse_v2a}
+\end{equation}
+
+Unter Vernachlässigung der beiden kleinen Stirnflächen wird für die wirksame
+Oberfläche der Längs- und Schmalseiten
+
+\begin{equation}
+    A_\mathrm{O}
+    =
+    2l(b+d)
+    \label{eq:kap5_oberflaeche_v2a}
+\end{equation}
+
+angesetzt. Die thermische Kapazität folgt aus Masse und spezifischer
+Wärmekapazität:
+
+\begin{equation}
+    C_\mathrm{th}
+    =
+    m c_\mathrm{p}
+    =
+    \rho_\mathrm{m}\,l\,b\,d\,c_\mathrm{p}.
+    \label{eq:kap5_cth}
+\end{equation}
+
+Aus der wirksamen Oberfläche \(A_\mathrm{O}\) und dem angesetzten
+Wärmeübergangskoeffizienten \(\alpha_\mathrm{K}\) folgt der thermische
+Widerstand
+
+\begin{equation}
+    R_\mathrm{th}
+    =
+    \frac{1}{\alpha_\mathrm{K}A_\mathrm{O}}
+    \label{eq:kap5_rth}
+\end{equation}
+
+angenähert. Für den untersuchten \SI{630}{\ampere}-Lastzweig werden
+\(l=\SI{4.0}{\metre}\), \(b=\SI{150}{\milli\metre}\) und
+\(d=\SI{3}{\milli\metre}\) angesetzt. Mit
+\(\rho_\mathrm{m}=\SI{7900}{\kilogram\per\cubic\metre}\),
+\(c_\mathrm{p}=\SI{500}{\joule\per\kilogram\per\kelvin}\) und
+\(\alpha_\mathrm{K}=\SI{7.5}{\watt\per\square\metre\per\kelvin}\)
+ergeben sich die in Tabelle~\ref{tab:kap5_thermische_parameter_630}
+zusammengefassten Werte.
+
+\begin{table}[H]
+    \centering
+    \caption{Parameter des thermischen Modells für den untersuchten
+    \SI{630}{\ampere}-V2A-Widerstand}
+    \label{tab:kap5_thermische_parameter_630}
+    \begin{tabular}{@{}lll@{}}
+        \toprule
+        Größe & Formelzeichen & Wert \\
+        \midrule
+        elektrischer Kaltwiderstand &
+        \(R_{\mathrm{V2A},20}\) &
+        \SI{6.489}{\milli\ohm} \\
+
+        Masse des V2A-Körpers &
+        \(m\) &
+        \SI{14.22}{\kilogram} \\
+
+        wirksame Oberfläche &
+        \(A_\mathrm{O}\) &
+        \SI{1.224}{\square\metre} \\
+
+        thermische Kapazität &
+        \(C_\mathrm{th}\) &
+        \SI{7110}{\joule\per\kelvin} \\
+
+        thermischer Widerstand &
+        \(R_\mathrm{th}\) &
+        \SI{0.1089}{\kelvin\per\watt} \\
+
+        thermische Zeitkonstante &
+        \(\tau_\mathrm{th}\) &
+        \SI{774.5}{\second} \\
+
+        fünffache Zeitkonstante &
+        \(5\tau_\mathrm{th}\) &
+        \SI{3872.6}{\second} \\
+
+        Umgebungstemperatur &
+        \(\vartheta_\mathrm{u}\) &
+        \SI{20}{\degreeCelsius} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Die Temperaturantwort auf einen konstanten Leistungssprung
+\(P_0\) lautet für das lineare RC-Modell
+
+\begin{equation}
+    \Delta\vartheta(t)
+    =
+    P_0R_\mathrm{th}
+    \left(1-\mathrm{e}^{-t/\tau_\mathrm{th}}\right).
+    \label{eq:kap5_thermische_sprungantwort}
+\end{equation}
+
+Nach einer Zeitkonstante sind etwa \(63.2\,\%\), nach fünf
+Zeitkonstanten etwa \(99.3\,\%\) des stationären Endwerts erreicht. Diese
+Beziehungen ermöglichen eine unabhängige Kontrolle der numerischen
+Simulation. Der stationäre Endwert
+
+\begin{equation}
+    \Delta\vartheta_\infty
+    =
+    P_0R_\mathrm{th}
+    \label{eq:kap5_thermischer_endwert}
+\end{equation}
+
+gilt unmittelbar nur bei konstanter Eingangsleistung. Im später gekoppelten
+Modell verändert sich die Verlustleistung mit Strom und Widerstand.
+
+Der Leistungssprung ist ein Sonderfall der in
+Abschnitt~\ref{sec:thermisches_rc_grundlagen} hergeleiteten Faltung. Für
+Kreis~2 mit konstanten thermischen Parametern und einer von außen
+vorgegebenen Verlustleistung kann jeder beliebige Leistungsverlauf mit der
+Gewichtsfunktion des PT1-Glieds auf die Übertemperatur abgebildet werden.
+Jeder zurückliegende Leistungsanteil wirkt dabei exponentiell abklingend auf
+die aktuelle Temperatur. In Kreis~3 bleibt diese Beschreibung für das
+isolierte thermische Teilmodell gültig. Durch die Rückkopplung von
+Temperatur, Widerstand und Verlustleistung ist das elektrothermische
+Gesamtsystem jedoch nichtlinear und kann nicht mehr allein durch eine Faltung
+mit einem vorab bekannten Leistungsverlauf gelöst werden.
+
+% BILD 5.8 -- liegt als RC_Modell_2.pdf vor.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth,
+%         trim={2.5cm 1.5cm 1.0cm 0.5cm},clip]
+%     {03_Ressourcen/pic/RC_Modell_2.pdf}
+%     \caption{Kreis~2: thermisches Teilmodell mit physikalischen Parametern
+%     und vorgegebener Verlustleistung
+%     (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_rc_modell_2}
+% \end{figure}
+
+Der Wärmeübergangskoeffizient wurde nicht durch eine zeitaufgelöste
+Temperaturmessung identifiziert. Die berechnete Temperatur ist daher eine
+Modellgröße des gewählten Parametersatzes. Kreis~2 dient vorrangig zur
+Plausibilisierung der Struktur, der Zeitkonstante und der Energiebilanz.
+
+
+% -----------------------------------------------------------------------------
+% 5.6 Elektrothermische Rückkopplung -- Kreis 3
+% -----------------------------------------------------------------------------
+
+\subsection{Elektrothermische Rückkopplung -- Kreis 3}
+\label{sec:thermisches_modell_kreis3}
+
+Kreis~3 schließt den elektrothermischen Wirkzusammenhang. Der elektrische
+Widerstand des V2A-Materials wird als linear temperaturabhängig beschrieben:
+
+\begin{equation}
+    R_\mathrm{V2A}(\vartheta)
+    =
+    R_{\mathrm{V2A},20}
+    \left[
+        1+\alpha_\mathrm{el}
+        \left(\vartheta-\SI{20}{\degreeCelsius}\right)
+    \right].
+    \label{eq:kap5_rv2a_temperatur}
+\end{equation}
+
+Der Kaltwiderstand folgt mit
+\(\rho_{\mathrm{el},20}=0.73\,\Omega\,\mathrm{mm^2/m}\) aus
+
+\begin{equation}
+    R_{\mathrm{V2A},20}
+    =
+    \rho_{\mathrm{el},20}\frac{l}{bd}
+    =
+    \SI{6.489}{\milli\ohm}.
+    \label{eq:kap5_rv2a_20}
+\end{equation}
+
+In dieser Modellstufe lag die vorgegebene Spannung unmittelbar am
+V2A-Widerstand. Strom und Verlustleistung wurden deshalb mit
+
+\begin{align}
+    I_\mathrm{V2A}(t)
+    &=
+    \frac{U_\mathrm{V2A}(t)}{R_\mathrm{V2A}(\vartheta(t))},
+    \\
+    P_\mathrm{V2A}(t)
+    &=
+    I_\mathrm{V2A}^{2}(t)R_\mathrm{V2A}(\vartheta(t))
+    =
+    \frac{U_\mathrm{V2A}^{2}(t)}{R_\mathrm{V2A}(\vartheta(t))}
+    \label{eq:kap5_kreis3_elektrisch}
+\end{align}
+
+bestimmt. Die Verlustleistung wird dem thermischen Modell zugeführt. Die
+daraus berechnete Temperatur verändert wiederum den elektrischen Widerstand
+und damit Strom und Leistung. Es entsteht die Wirkungskette
+
+\begin{equation}
+    U_\mathrm{V2A}
+    \longrightarrow
+    I_\mathrm{V2A}
+    \longrightarrow
+    P_\mathrm{V2A}
+    \longrightarrow
+    \vartheta
+    \longrightarrow
+    R_\mathrm{V2A}(\vartheta)
+    \longrightarrow
+    I_\mathrm{V2A}.
+    \label{eq:kap5_kreis3_wirkungskette}
+\end{equation}
+
+Für diese Untersuchung wurde eine Spannungssprungfunktion verwendet. Der
+Sprung besitzt gegenüber der realitätsnäheren Rampe einen methodischen
+Vorteil: Der Beginn der elektrischen Belastung ist eindeutig festgelegt und
+die daraus folgende thermische Antwort kann ohne überlagerten
+Spannungshochlauf beurteilt werden. Außerdem lässt sich das entkoppelte
+thermische Grundmodell unmittelbar mit der bekannten PT1-Sprungantwort
+vergleichen. Der Spannungssprung stellt daher eine Prüfanregung des
+thermischen Modells und keine Nachbildung des realen
+Säulenstelltransformators dar.
+
+% OFFEN:
+% Sprungzeitpunkt, U_sprung, Solver und Schrittweite erst aus dem final
+% verwendeten Kreis-3-Modell übernehmen. Zwischenstände nicht vermischen.
+
+% BILD 5.9 -- Gesamtansicht, Seite 1 der Datei RC_Modell_3.pdf.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[page=1,width=\textwidth]
+%     {03_Ressourcen/pic/RC_Modell_3.pdf}
+%     \caption{Kreis~3: elektrothermisch gekoppeltes Modell mit
+%     Spannungssprung und temperaturabhängigem V2A-Widerstand
+%     (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_rc_modell_3}
+% \end{figure}
+
+% BILD 5.10 -- thermisches Subsystem, Seite 3 der Datei RC_Modell_3.pdf.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[page=3,width=\textwidth]
+%     {03_Ressourcen/pic/RC_Modell_3.pdf}
+%     \caption{Thermisches Subsystem des elektrothermisch gekoppelten
+%     Kreis-3-Modells (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_rc_modell_3_subsystem}
+% \end{figure}
+
+Kreis~3 ist noch nicht mit dem zusammengeführten Gesamtmodell
+gleichzusetzen. Die Spannungsquelle bildet in diesem Stand nicht den linearen
+Hochlauf mit OSG ab. Außerdem fehlt der gemessene Ersatzwiderstand des
+MCC-Moduls. Die Ergebnisse von Kreis~3 beschreiben daher ausschließlich den
+elektrothermischen V2A-Lastwiderstand unter der verwendeten Sprunganregung.
+Sie dürfen nicht als vollständige Vorhersage des realen Prüfstands
+interpretiert werden.
+
+
+% -----------------------------------------------------------------------------
+% 5.7 Zusammenführung der Teilmodelle
+% -----------------------------------------------------------------------------
+
+\subsection{Zusammenführung der Teilmodelle}
+\label{sec:zusammenfuehrung_gesamtmodell}
+
+Das zusammengeführte Gesamtmodell entsteht aus den zuvor getrennt
+untersuchten und plausibilisierten Teilmodellen. Es dient als Referenzmodell
+des bestehenden Lastzweigs, erhebt jedoch nicht den Anspruch, sämtliche
+Eigenschaften des realen Prüfstands abzubilden. Für einen betrachteten
+Außenleiter des \SI{630}{\ampere}-Abgangs werden dazu
+
+\begin{itemize}
+    \item das Quellenmodell nach Abschnitt~\ref{sec:spannungsquelle_osg},
+    \item der gemessene MCC-Ersatzwiderstand
+          \(R_\mathrm{MCC,630}=\SI{0.641}{\milli\ohm}\),
+    \item der geometrisch bestimmte V2A-Kaltwiderstand
+          \(R_\mathrm{V2A,20}=\SI{6.489}{\milli\ohm}\) und
+    \item das in Kreis~1 und Kreis~2 geprüfte thermische RC-Modell
+\end{itemize}
+
+verwendet. Der Strom des Zweigs wird im ohmsch reduzierten Modell durch
+
+\begin{equation}
+    I(t)
+    =
+    \frac{U_\mathrm{eff,Zeiger}(t)}
+    {R_\mathrm{MCC,630}+R_\mathrm{V2A}(\vartheta(t))}
+    \label{eq:kap5_gesamtmodell_strom}
+\end{equation}
+
+bestimmt. Weitere Leitungs- und Kontaktwiderstände dürfen nur dann zusätzlich
+angesetzt werden, wenn sie nicht bereits in der Spannungsfallmessung des
+Moduls enthalten sind.
+
+Für das thermische Modell ist ausschließlich die im V2A-Widerstand
+umgesetzte Leistung maßgebend:
+
+\begin{equation}
+    P_\mathrm{V2A}(t)
+    =
+    I^2(t)R_\mathrm{V2A}(\vartheta(t)).
+    \label{eq:kap5_gesamtmodell_pv2a}
+\end{equation}
+
+Die Verlustleistung
+\(I^2R_\mathrm{MCC}\) entsteht innerhalb der MCC-Abgangseinheit und liegt
+außerhalb der thermischen Systemgrenze des V2A-Schienenmodells. Sie wird daher
+nicht auf die thermische Kapazität des V2A-Widerstands aufgeschaltet.
+
+Die elektrische Beschreibung und die thermische Energiebilanz ergeben
+gemeinsam das folgende gekoppelte Gleichungssystem:
+
+\begin{align}
+    I(t)
+    &=
+    \frac{U_\mathrm{eff,Zeiger}(t)}
+    {R_\mathrm{MCC,630}+R_\mathrm{V2A}(\vartheta(t))},
+    \\
+    P_\mathrm{V2A}(t)
+    &=
+    I^2(t)R_\mathrm{V2A}(\vartheta(t)),
+    \\
+    C_\mathrm{th}\frac{\mathrm{d}\Delta\vartheta(t)}{\mathrm{d}t}
+    &=
+    P_\mathrm{V2A}(t)
+    -
+    \frac{\Delta\vartheta(t)}{R_\mathrm{th}},
+    \\
+    R_\mathrm{V2A}(\vartheta(t))
+    &=
+    R_\mathrm{V2A,20}
+    \left[1+\alpha_\mathrm{el}\Delta\vartheta(t)\right].
+    \label{eq:kap5_gesamtmodell_gekoppelt}
+\end{align}
+
+Eine wichtige Abgrenzung betrifft den Bezugspunkt der Spannung. In Kreis~3
+wurde \(U_\mathrm{V2A}\) unmittelbar über dem V2A-Widerstand vorgegeben. Bei
+\(R_\mathrm{V2A,20}=\SI{6.489}{\milli\ohm}\) führen etwa
+\SI{4.089}{\volt} rechnerisch zu \SI{630}{\ampere}. Wird der gemessene
+MCC-Ersatzwiderstand in Reihe ergänzt, liegt dieselbe Spannung nun vor der
+Reihenschaltung. Der kalte Strom beträgt dann nur
+
+\begin{equation}
+    I(\SI{20}{\degreeCelsius})
+    =
+    \frac{\SI{4.089}{\volt}}
+    {\SI{0.641}{\milli\ohm}+\SI{6.489}{\milli\ohm}}
+    \approx
+    \SI{573.5}{\ampere}.
+    \label{eq:kap5_gesamtmodell_strom_4089v}
+\end{equation}
+
+Soll der kalte Zweig unter denselben Vereinfachungen
+\SI{630}{\ampere} führen, muss die vor der Reihenschaltung erforderliche
+Effektivspannung etwa
+
+\begin{equation}
+    U_\mathrm{eff,erf}
+    =
+    \SI{630}{\ampere}
+    \left(
+        \SI{0.641}{\milli\ohm}
+        +
+        \SI{6.489}{\milli\ohm}
+    \right)
+    \approx
+    \SI{4.49}{\volt}
+    \label{eq:kap5_gesamtmodell_spannung_erforderlich}
+\end{equation}
+
+betragen. Vor der endgültigen Simulation ist deshalb festzulegen, an welcher
+Stelle des realen und simulierten Zweigs die angegebene Spannung erfasst wird.
+Erst danach kann der Endwert der linearen Quellenrampe eindeutig festgelegt
+werden.
+
+% BILD 5.11 -- erst nach der tatsächlichen Zusammenführung exportieren.
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]
+%     {03_Ressourcen/pic/Gesamtmodell_Referenzlastzweig_630A.pdf}
+%     \caption{Zusammengeführtes Modell des betrachteten
+%     \SI{630}{\ampere}-Lastzweigs mit linearer OSG-Spannungsquelle,
+%     gemessenem MCC-Ersatzwiderstand und elektrothermischer Rückkopplung
+%     (eigene Darstellung in MATLAB/Simulink)}
+%     \label{fig:kap5_gesamtmodell_referenzlastzweig}
+% \end{figure}
+
+% OFFEN -- nach Fertigstellung des Gesamtmodells ergänzen:
+% - tatsächlicher Spannungsendwert und dessen Messort,
+% - Simulationszeit, Solver und Schrittweite,
+% - Anfangs- und Endstrom,
+% - Temperatur-, Widerstands- und Leistungsverlauf,
+% - Vergleich mit Kreis 3,
+% - Ableitung der erforderlichen Stellreserve.
+
+
+% -----------------------------------------------------------------------------
+% 5.8 Plausibilisierung des zusammengefuehrten Gesamtmodells
+%     und Aussagegrenzen
+% -----------------------------------------------------------------------------
+
+\subsection{Plausibilisierung des zusammengeführten Gesamtmodells und
+Aussagegrenzen}
+\label{sec:kap5_plausibilisierung_grenzen}
+
+Die Plausibilisierung erfolgt auf zwei Ebenen. Zunächst werden die Teilmodelle
+jeweils mit Beziehungen geprüft, die unabhängig von der numerischen Umsetzung
+gelten. Nach ihrer Zusammenführung wird zusätzlich geprüft, ob die
+Schnittstellen und die geschlossene elektrothermische Wirkungskette des
+Gesamtmodells konsistent sind. Für die Spannungsquelle muss der Scheitelwert
+im stationären Zustand
+
+\begin{equation}
+    \hat U=\sqrt{2}\,U_\mathrm{eff}
+    \label{eq:kap5_plausi_scheitelwert}
+\end{equation}
+
+erfüllen. Der Effektivwertzeiger muss der vorgegebenen Rampe folgen, während
+die Abweichung der klassischen RMS-Auswertung durch deren Messfenster
+erklärbar sein muss. Für die MCC-Messwerte ist zu prüfen, ob sich bei beiden
+Prüfströmen vergleichbare Werte von \(R_\mathrm{MCC}=\Delta U/I\) ergeben.
+Damit wird die angenommene Proportionalität des Spannungsfalls im untersuchten
+Strombereich kontrolliert.
+
+Für Kreis~1 und Kreis~2 werden stationärer Endwert und Zeitkonstante mit den
+analytischen Beziehungen verglichen. Ohne zugeführte Verlustleistung und bei
+einer Anfangstemperatur gleich der Umgebungstemperatur darf keine
+Temperaturänderung auftreten. Bei konstanter Eingangsleistung müssen nach
+\(\tau_\mathrm{th}\) etwa \(63.2\,\%\) und nach
+\(5\tau_\mathrm{th}\) etwa \(99.3\,\%\) des Endwerts erreicht sein.
+
+Für Kreis~3 und das zusammengeführte Gesamtmodell muss die Wirkungskette
+konsistent sein: Ein positiver Temperaturkoeffizient führt bei konstanter
+Spannung zu einem Anstieg des V2A-Widerstands und damit zu einer Abnahme des
+Stroms. Wird \(\alpha_\mathrm{el}=0\) gesetzt, muss dieser thermisch
+verursachte Stromdrift verschwinden. Die thermische Eingangsleistung muss
+stets aus dem V2A-Anteil und nicht aus der gesamten Serienverlustleistung
+gebildet werden. Im zusammengeführten Gesamtmodell ist außerdem zu prüfen,
+ob der kalte Anfangsstrom mit der vorgegebenen Quellenspannung und der Summe
+aus \(R_\mathrm{MCC}\) und \(R_\mathrm{V2A,20}\) übereinstimmt.
+
+Die Herkunft der maßgebenden Parameter ist in
+Tabelle~\ref{tab:kap5_parameterherkunft} zusammengefasst.
+
+\begin{table}[H]
+    \centering
+    \caption{Herkunft und Einordnung der maßgebenden Modellparameter}
+    \label{tab:kap5_parameterherkunft}
+    \begin{tabularx}{\textwidth}{@{}p{0.26\textwidth}
+        p{0.29\textwidth}X@{}}
+        \toprule
+        Parameter & Herkunft & Einordnung \\
+        \midrule
+        \(U_\mathrm{eff}(t)\), \(f\) &
+        definierter Quellenfall und Prüfstandsfrequenz &
+        Modellanregung; Spannungsendwert im Gesamtmodell noch abzugleichen \\
+
+        \(R_\mathrm{MCC,630}\) &
+        dritte Spannungsfallmessung mit Fotodokumentation und Messprotokoll &
+        messgestützter Ersatzwiderstand \\
+
+        \(R_\mathrm{MCC,400}\), \(R_\mathrm{MCC,A}\) &
+        Excel-basierte Abschätzungen &
+        Modellannahmen, keine Messergebnisse \\
+
+        \(R_\mathrm{V2A,20}\) &
+        Geometrie und spezifischer elektrischer Widerstand &
+        rechnerisch bestimmter Kaltwiderstand \\
+
+        \(\alpha_\mathrm{el}\), \(\rho_\mathrm{m}\), \(c_\mathrm{p}\) &
+        Werkstoffkennwerte &
+        auf das reduzierte Modell übertragene Kennwerte \\
+
+        \(R_\mathrm{th}\) &
+        Oberfläche und angenommener Wärmeübergangskoeffizient &
+        Modellparameter mit hoher Unsicherheit \\
+
+        \(C_\mathrm{th}\) &
+        Geometrie, Dichte und spezifische Wärmekapazität &
+        rechnerisch bestimmter Modellparameter \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+Das thermische Modell verwendet eine räumlich homogene Ersatztemperatur.
+Lokale Heißstellen, Wärmeleitung über Anschlüsse und Halterungen,
+temperaturabhängige Konvektion, Wärmestrahlung und die gegenseitige Erwärmung
+benachbarter Schienen werden nicht separat abgebildet. Insbesondere der
+angesetzte Wärmeübergangskoeffizient wurde nicht anhand einer vollständigen
+Temperaturmessreihe identifiziert. Berechnete Endtemperaturen sind deshalb als
+Ergebnisse des jeweiligen Rechenfalls und nicht als genaue Vorhersage des
+realen Prüfstands zu interpretieren.
+
+Auch die Spannungsfallmessung bestimmt ohne zusätzliche Phasenmessung keinen
+getrennten Wirk- und Blindanteil. Die Verwendung als ohmscher
+Ersatzwiderstand ist für das reduzierte Modell begründet zu dokumentieren.
+Eine Plausibilisierung anhand analytischer Grenzfälle weist die innere
+Konsistenz der Modellgleichungen nach, ersetzt jedoch keine experimentelle
+Validierung des vollständig gekoppelten Gesamtmodells.
+
+Die elektrische Parametrierung, die thermische Rückkopplung und ihre
+Schnittstellen sind damit festgelegt. Die Endwerte aus Kreis~3 unter
+Sprunganregung sind jedoch keine Ergebnisse des zusammengeführten
+Gesamtmodells. Dessen quantitative Plausibilisierung folgt nach Einbau der
+linearen Spannungsquelle, Festlegung des Spannungsbezugspunkts und Übernahme
+des gemessenen MCC-Ersatzwiderstands. Sie umfasst den Vergleich von
+Anfangsstrom, Temperatur, Widerstand, Leistung und thermischer Energiebilanz
+mit den zuvor hergeleiteten Beziehungen.
+
+% ABSCHLIESSENDER ERGEBNISTEIL:
+% Nach der finalen Simulation hier nicht einfach weitere Theorie ergänzen.
+% Stattdessen zwei bis vier Ergebnisabbildungen einfügen und jeweils angeben:
+% 1. verwendete Randbedingungen,
+% 2. dargestellte Größen,
+% 3. Anfangs- und Endwerte,
+% 4. physikalische Ursache des Verlaufs,
+% 5. Folgerung für die erforderliche Nachführung.

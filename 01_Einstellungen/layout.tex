@@ -42,7 +42,8 @@
 
 % Fußzeile befüllen
 \ifoot{\rightmark}
-\ofoot{Seite \thepage\ von \ref{TotPages}} % \ref ist korrekt für totpages
+% TotPages wird durch den vollständigen Build im zweiten LaTeX-Lauf aufgelöst.
+\ofoot{Seite \thepage\ von \ref*{TotPages}}
 
 % --- SCHRIFTARTEN ---
 \setkomafont{pagehead}{\kopfzeilenSchrift}

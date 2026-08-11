@@ -4,423 +4,812 @@
 \section{Technische und normative Grundlagen}
 \label{chap:technische_grundlagen}
 
-Dieses Kapitel stellt die technischen und normativen Grundlagen bereit,
-die für die Analyse des bestehenden Erwärmungsprüfstands, die Entwicklung
-des transformatorgestützten Stellkonzepts und die anschließende
-Modellbildung erforderlich sind. Hierzu werden zunächst die für die
-Erwärmungsprüfung maßgebenden Anforderungen der Normenreihe
-DIN EN IEC~61439 erläutert. Anschließend werden der grundsätzliche Aufbau
-eines MCC-Feldes, die Entstehung elektrischer Verlustleistung, das
-thermische Verhalten der Lastwiderstände, die für das Stellkonzept
-relevanten Transformatorgleichungen sowie die Grundlagen eines
-geschlossenen Regelkreises behandelt.
+Dieses Kapitel stellt die technischen und normativen Grundlagen bereit, die
+für die Analyse des bestehenden Erwärmungsprüfstands, die Entwicklung der
+Stellkonzepte und die anschließende Modellbildung erforderlich sind. Zunächst
+werden die für den Erwärmungsnachweis maßgebenden Anforderungen der
+Normenreihe DIN EN IEC~61439 erläutert. Danach werden der Aufbau eines
+MCC-Feldes und das elektrische Verhalten parallel belasteter Abgänge
+beschrieben. Darauf aufbauend folgen die Zusammenhänge zwischen Impedanz,
+Verlustleistung und temperaturabhängigem Widerstand sowie die Grundlagen der
+Transformator- und Magnetkreismodelle. Abschließend werden die
+Effektivwertbildung, die Stromregelung und das thermische RC-Modell
+einschließlich Sprungantwort und Faltung behandelt.
 
-Die Darstellung beschränkt sich auf die Zusammenhänge, die für die
-nachfolgenden Kapitel benötigt werden. Die konkrete Ausführung des
-bestehenden Prüfstands, die projektbezogene Belastungskonfiguration und
-die daraus abgeleitete Problemstellung werden in
-Kapitel~\ref{chap:analyse_pruefstand} untersucht. Die vollständige
-Herleitung des elektrothermischen Modells und dessen Umsetzung in der
-Simulation erfolgen in Kapitel~\ref{chap:modellbildung}.
+Die Darstellung beschränkt sich auf allgemeine Zusammenhänge, die in den
+nachfolgenden Kapiteln angewendet werden. Die konkrete Ausführung und die
+Schwachstellen des bestehenden Prüfstands werden in
+Kapitel~\ref{chap:analyse_pruefstand} untersucht. Die projektspezifischen
+Stellkonzepte werden anschließend entwickelt und bewertet. Ihre Umsetzung in
+Simulink sowie die Parametrierung der elektrischen und thermischen Teilmodelle
+erfolgen im Rahmen der Modellbildung.
 
 
 % -----------------------------------------------------------------------------
-% 2.1 Erwärmungsprüfung nach DIN EN IEC 61439
+% 2.1 Erwärmungsnachweis nach DIN EN IEC 61439
 % -----------------------------------------------------------------------------
-\subsection{Erwärmungsprüfung nach DIN EN IEC 61439}
+\subsection{Erwärmungsnachweis nach DIN EN IEC 61439}
 \label{sec:erwaermungspruefung_norm}
 
 Die Normenreihe DIN EN IEC~61439 legt die Anforderungen und
-Nachweisverfahren für Niederspannungs-Schaltgerätekombinationen fest.
-DIN EN IEC~61439-1 enthält die allgemeinen Festlegungen, ist jedoch
-nicht allein anzuwenden. Für die in dieser Arbeit betrachteten
-Energie-Schaltgerätekombinationen werden die allgemeinen Anforderungen
-durch DIN EN IEC~61439-2 ergänzt und konkretisiert
-\parencite[jeweils Abschn.~1]{din_en_61439_1,din_en_61439_2}.
-Ein MCC-Feld ist daher im Zusammenhang beider Normteile zu betrachten.
+Nachweisverfahren für Niederspannungs-Schaltgerätekombinationen fest. Die
+DIN EN IEC~61439-1 enthält die allgemeinen Festlegungen, ist jedoch nicht
+allein anzuwenden. Für die in dieser Arbeit betrachteten
+Energie-Schaltgerätekombinationen werden diese Festlegungen durch
+DIN EN IEC~61439-2 ergänzt und konkretisiert
+\parencite[jeweils Abschn.~1]{din_en_61439_1,din_en_61439_2}. Ein
+MCC-Feld ist daher im Zusammenhang beider Normteile zu betrachten.
 
-Die Norm unterscheidet zwischen dem Bauartnachweis und dem
-Stücknachweis. Der Bauartnachweis dient dem Nachweis, dass die
-Konstruktion einer Schaltgerätekombination die Anforderungen der
-zutreffenden Norm erfüllt. Er kann durch Prüfung, durch Vergleich mit
-einer nachgewiesenen Referenzkonstruktion oder durch Begutachtung
-geführt werden. Der Stücknachweis wird dagegen an jeder
-Schaltgerätekombination während oder nach ihrer Herstellung
-durchgeführt und dient insbesondere dem Erkennen von Werkstoff- und
-Fertigungsfehlern sowie der Überprüfung der ordnungsgemäßen Funktion
+Die Norm unterscheidet zwischen Bauartnachweis und Stücknachweis. Mit dem
+Bauartnachweis wird nachgewiesen, dass die Konstruktion einer
+Schaltgerätekombination die Anforderungen der zutreffenden Norm erfüllt. Der
+Nachweis kann abhängig von der jeweils zu verifizierenden Eigenschaft durch
+Prüfung, durch Vergleich mit einer nachgewiesenen Referenzkonstruktion oder
+durch Begutachtung geführt werden. Der Stücknachweis wird dagegen an jeder
+Schaltgerätekombination während oder nach ihrer Herstellung durchgeführt. Er
+dient insbesondere dem Erkennen von Werkstoff- und Fertigungsfehlern sowie der
+Überprüfung der ordnungsgemäßen Ausführung und Funktion
 \parencite[Abschn.~3.9.1 und 3.9.2]{din_en_61439_1}.
 
-Zu den im Rahmen des Bauartnachweises zu verifizierenden Eigenschaften
-gehört die Einhaltung der zulässigen Grenzübertemperaturen. Der
-Nachweis der Erwärmung kann nach DIN EN IEC~61439-1 durch eine Prüfung,
-durch Ableitung von einer nachgewiesenen Referenzkonstruktion oder,
-innerhalb der dafür festgelegten Anwendungsgrenzen, durch ein
-Berechnungsverfahren erfolgen
-\parencite[Abschn.~10.10.1]{din_en_61439_1}.
-Im Rahmen dieser Arbeit steht der experimentelle Nachweis durch
-Strombelastung im Vordergrund.
+Zu den im Rahmen des Bauartnachweises zu verifizierenden Eigenschaften gehört
+die Einhaltung der zulässigen Grenzübertemperaturen. Der Erwärmungsnachweis
+kann nach DIN EN IEC~61439-1 durch Prüfung, durch Ableitung von einer
+nachgewiesenen Referenzkonstruktion oder innerhalb festgelegter
+Anwendungsgrenzen durch Berechnung erbracht werden
+\parencite[Abschn.~10.10.1]{din_en_61439_1}. Gegenstand dieser Arbeit ist die
+Optimierung eines Prüfstands für den experimentellen Nachweis durch
+Strombelastung. Andere Bestandteile des Bauartnachweises werden nicht
+untersucht.
 
-Ziel der Erwärmungsprüfung ist der Nachweis, dass die bei einer
-festgelegten elektrischen Belastung entstehenden Temperaturen die
-zulässigen Grenzwerte nicht überschreiten. Bewertet wird grundsätzlich
-die Übertemperatur eines betrachteten Messpunktes gegenüber der
-Umgebungstemperatur. Sie ist definiert als
+Bei der Erwärmungsprüfung ist nachzuweisen, dass die unter festgelegter
+elektrischer Belastung auftretenden Temperaturen die jeweils zulässigen
+Grenzwerte nicht überschreiten. Bewertet wird die Übertemperatur eines
+Messpunktes gegenüber der Umgebungstemperatur. Sie ist definiert als
 
 \begin{equation}
-    \Delta\vartheta
-    =
-    \vartheta
-    -
-    \vartheta_{\mathrm{U}},
-    \label{eq:uebertemperatur}
+  \Delta\vartheta(t)
+  =
+  \vartheta(t)-\vartheta_{\mathrm{U}}(t),
+  \label{eq:uebertemperatur}
 \end{equation}
 
-wobei \(\vartheta\) die gemessene Temperatur des betrachteten
-Anlagenteils und \(\vartheta_{\mathrm{U}}\) die zugehörige
-Umgebungstemperatur bezeichnet.
+wobei \(\vartheta\) die Temperatur des betrachteten Anlagenteils und
+\(\vartheta_{\mathrm{U}}\) die zugehörige Umgebungstemperatur bezeichnet.
 
 Für eine Schaltgerätekombination existiert kein einheitlicher
-Grenzwert, der auf sämtliche Messstellen angewendet werden kann. Die
-zulässige Grenzübertemperatur hängt unter anderem von der Art und
-Funktion des Betriebsmittels, dem verwendeten Werkstoff sowie den
-Anforderungen der eingebauten Geräte ab. Die zu überwachenden
-Messstellen und die jeweils zulässigen Grenzwerte müssen daher aus der
-konkreten Nachweisaufgabe und den Festlegungen der Norm abgeleitet
-werden
+Temperaturgrenzwert, der auf sämtliche Messstellen angewendet werden kann. Die
+zulässige Grenzübertemperatur ist unter anderem von der Art und Funktion des
+Betriebsmittels, dem verwendeten Werkstoff und den Anforderungen der
+eingebauten Geräte abhängig. Die zu überwachenden Messstellen und die jeweils
+zulässigen Grenzwerte sind deshalb aus der konkreten Nachweisaufgabe und den
+Festlegungen der Norm abzuleiten
 \parencite[Abschn.~9.2 und Tab.~6]{din_en_61439_1}.
 
-Bei einer Erwärmungsprüfung ist die Schaltgerätekombination in einer
-Anordnung zu prüfen, die ihrem bestimmungsgemäßen Gebrauch entspricht.
-Hierzu gehören insbesondere die vorgesehenen Verkleidungen,
-Bodenplatten, äußeren Leiter und elektrischen Verbindungen. Die
-Stromkreise werden mit der vorgesehenen Stromart und Frequenz belastet.
-Die Temperaturen an den relevanten Messstellen und die
-Umgebungstemperatur sind über den zeitlichen Verlauf der Prüfung zu
-erfassen
+Die Prüfanordnung muss dem bestimmungsgemäßen Gebrauch der
+Schaltgerätekombination entsprechen. Dazu gehören insbesondere die
+vorgesehenen Verkleidungen, Bodenplatten, äußeren Leiter und elektrischen
+Verbindungen. Die Stromkreise werden mit der vorgesehenen Stromart und
+Frequenz belastet. Während der Prüfung sind die Temperaturen an den relevanten
+Messstellen sowie die Umgebungstemperatur zu erfassen
 \parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
 
-Die Prüfung ist so lange fortzuführen, bis die Übertemperaturen einen
-thermischen Beharrungszustand erreicht haben. Dieser gilt in der
-praktischen Bewertung als erreicht, wenn die zeitliche Änderung der
-Temperatur an sämtlichen Messstellen einschließlich der
-Umgebungstemperatur höchstens
+Die Prüfung ist fortzuführen, bis ein thermischer Beharrungszustand erreicht
+ist. Dieser gilt als erreicht, wenn die zeitliche Änderung der Temperatur an
+sämtlichen Messstellen einschließlich der Umgebungstemperatur höchstens
 
 \begin{equation}
-    \left|
-        \frac{\mathrm{d}\vartheta}{\mathrm{d}t}
-    \right|
-    \leq
-    \SI{1}{\kelvin\per\hour}
-    \label{eq:beharrungskriterium}
+  \left|\frac{\mathrm{d}\vartheta}{\mathrm{d}t}\right|
+  \leq
+  \SI{1}{\kelvin\per\hour}
+  \label{eq:beharrungskriterium}
 \end{equation}
 
 beträgt
-\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
-Das Beharrungskriterium ist damit keine vorgegebene Prüfzeit, sondern
-ein aus den gemessenen Temperaturverläufen abgeleitetes
-Abbruchkriterium.
+\parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}. Das Kriterium beschreibt
+somit keine feste Prüfdauer, sondern ein aus den Temperaturverläufen
+abgeleitetes Abbruchkriterium.
 
-Für die Einstellung der Prüfströme legt DIN EN IEC~61439-1 ebenfalls
-Toleranzen fest. Der Mittelwert der tatsächlichen Außenleiterströme an
-der Einspeisung muss zwischen \SI{100}{\percent} und
-\SI{103}{\percent} des vorgesehenen Prüfstroms liegen. Gleichzeitig
-darf der Strom eines einzelnen Außenleiters höchstens
+Auch für die Prüfströme gibt DIN EN IEC~61439-1 Toleranzen vor. Der Mittelwert
+der tatsächlichen Außenleiterströme an der Einspeisung muss zwischen
+\SI{100}{\percent} und \SI{103}{\percent} des vorgesehenen Prüfstroms liegen.
+Gleichzeitig darf der Strom eines einzelnen Außenleiters höchstens
 \SI{5}{\percent} vom Mittelwert der Außenleiterströme abweichen
 \parencite[Abschn.~10.10.2.3.1]{din_en_61439_1}.
 
-Diese Anforderung ist von der Stromaufteilung innerhalb einer
-Schaltgerätekombination zu unterscheiden. Bei gleichzeitig belasteten
-Abgangseinheiten müssen neben dem übergeordneten Einspeisestrom auch
-die für den jeweiligen Nachweis vorgesehenen Teilströme eingestellt
-und überwacht werden. Welche Stromkreise gleichzeitig zu belasten sind,
-ergibt sich aus der gewählten Prüfanordnung, den festgelegten
-Bemessungswerten und dem Ziel des Bauartnachweises.
+Diese Vorgabe für die Einspeisung ist von der Stromaufteilung innerhalb der
+Schaltgerätekombination zu unterscheiden. Werden mehrere Abgangseinheiten
+gleichzeitig belastet, müssen neben dem übergeordneten Einspeisestrom auch die
+für den jeweiligen Nachweis vorgesehenen Teilströme eingestellt und überwacht
+werden. Aus den normativen Anforderungen folgen damit drei Randbedingungen für
+den Prüfstand: Die Prüfströme müssen bis zum thermischen Beharrungszustand
+ausreichend stabil gehalten werden, die Stromaufteilung auf die gleichzeitig
+belasteten Abgänge ist zu berücksichtigen und die Nachführung darf die
+Prüfanordnung sowie die Temperaturmessung nicht unzulässig beeinflussen.
 
-Für die weitere Arbeit folgen daraus drei wesentliche Randbedingungen.
-Erstens müssen die vorgesehenen Prüfströme über die Dauer bis zum
-thermischen Beharrungszustand ausreichend stabil gehalten werden.
-Zweitens ist neben dem übergeordneten Gesamtstrom die Stromaufteilung
-auf die gleichzeitig belasteten Abgangseinheiten zu berücksichtigen.
-Drittens darf eine Nachführung der Prüfströme die Temperaturmessung,
-die Prüfanordnung und die Einhaltung der betrieblichen
-Sicherheitsanforderungen nicht unzulässig beeinflussen.
-% -----------------------------------------------------------------------------
-% 2.2 MCC-Feld und zu prüfende Abgangseinheiten
-% -----------------------------------------------------------------------------
-\subsection{MCC-Feld und zu prüfende Abgangseinheiten}
-\label{sec:mcc_feld_grundlagen}
-
-Ein Motor Control Center (MCC) ist eine Niederspannungs-Schaltgerätekombination,
-in der mehrere Abgangseinheiten zur Versorgung und zum Schutz elektrischer
-Verbraucher zusammengefasst sind. Die Energie wird über Haupt- und
-Verteilschienensysteme zu den einzelnen Abgangseinheiten geführt. Für eine
-Erwärmungsprüfung ist dabei nicht nur der Gesamtstrom des Feldes relevant. Die
-Verlustleistung entsteht verteilt in Schienen, Verbindungsstellen, Schalt- und
-Schutzgeräten sowie in den Anschlussleitungen der einzelnen Abgänge. Die
-Stromaufteilung bestimmt somit, welche Bereiche der Schaltgerätekombination
-thermisch beansprucht werden.
-
-Das im Rahmen dieser Arbeit betrachtete Prüffeld besitzt zwölf
-gleichzeitig zu belastende Abgänge. Die vorgesehene Konfiguration ist
-in Tabelle~\ref{tab:mcc_pruefkonfiguration} zusammengefasst. Die Summe
-der vorgegebenen Abgangsströme beträgt rechnerisch
-\SI{1730}{\ampere}. Die Werte bilden die projektspezifische
-Prüfkonfiguration ab und stellen keine allgemeingültige Bemessung eines
-MCC-Feldes dar.
-
-\begin{table}[htbp]
-  \centering
-  \caption{Projektbezogene Konfiguration der zu prüfenden Abgangseinheiten}
-  \label{tab:pruefkonfiguration_mcc}
-  \begin{tabular}{lrrr}
-    \toprule
-    Abgangsgröße & Anzahl & Strom je Abgang & Teilsumme \\
-    \midrule
-    A-Modul   & 6 & \SI{40}{\ampere}  & \SI{240}{\ampere} \\
-    B-Modul   & 3 & \SI{70}{\ampere}  & \SI{210}{\ampere} \\
-    1er-Modul & 1 & \SI{250}{\ampere} & \SI{250}{\ampere} \\
-    2er-Modul & 1 & \SI{400}{\ampere} & \SI{400}{\ampere} \\
-    3er-Modul & 1 & \SI{630}{\ampere} & \SI{630}{\ampere} \\
-    \midrule
-    Gesamt    & 12 & -- & \SI{1730}{\ampere} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-Die starke Spreizung zwischen \SI{40}{\ampere} und \SI{630}{\ampere} ist für
-die spätere Optimierung besonders bedeutsam. Ein gemeinsames Stellglied kann
-zwar die Einspeisung des gesamten Feldes verändern, es kann jedoch nicht ohne
-Weiteres die unterschiedlichen Driftanteile aller zwölf Lastpfade einzeln
-ausgleichen. Die konstruktive Ausführung des Feldes und der genaue Energiepfad
-werden deshalb in Kapitel~\ref{chap:analyse_pruefstand} anhand des bestehenden
-Prüfstands untersucht.
 
 % -----------------------------------------------------------------------------
-% 2.3 Elektrische Verlustleistung und temperaturabhängiger Widerstand
+% 2.2 MCC-Feld und elektrisches Verhalten des Prüfstromkreises
 % -----------------------------------------------------------------------------
-\subsection{Elektrische Verlustleistung und temperaturabhängiger Widerstand}
-\label{sec:verlustleistung_temperaturkoeffizient}
+\subsection{MCC-Feld und elektrisches Verhalten des Prüfstromkreises}
+\label{sec:mcc_pruefstromkreis_grundlagen}
 
-Die Erwärmung eines stromdurchflossenen Leiters entsteht im betrachteten Modell
-im Wesentlichen durch ohmsche Verluste. Für einen Gleichstrom beziehungsweise
-für Effektivwerte bei annähernd ohmscher Belastung gilt
+Ein Motor Control Center (MCC) ist eine Niederspannungs-
+Schaltgerätekombination, in der mehrere Abgangseinheiten zur Versorgung,
+Schaltung und zum Schutz elektrischer Verbraucher zusammengefasst sind. Die
+Energie wird über Haupt- und Verteilschienensysteme zu den einzelnen
+Abgangseinheiten geführt. Abhängig von ihrer Funktion enthalten die
+Abgangseinheiten beispielsweise Schalt- und Schutzgeräte,
+Stromerfassungseinrichtungen, Steckkontakte und interne Verbindungen. Jeder
+dieser Bestandteile trägt zur elektrischen Ersatzimpedanz und zur
+Verlustleistung des jeweiligen Abgangs bei.
+
+Für eine Erwärmungsprüfung ist deshalb nicht allein der Gesamtstrom des Feldes
+maßgebend. Die Verlustleistung entsteht räumlich verteilt in Schienen,
+Verbindungsstellen, Schaltgeräten, Schutzgeräten und Anschlussleitungen. Die
+Aufteilung des Gesamtstroms auf die einzelnen Abgänge bestimmt, welche
+Bereiche der Schaltgerätekombination thermisch beansprucht werden.
+
+Bei sinusförmigen Wechselgrößen werden Spannungen, Ströme und Impedanzen im
+stationären Zustand zweckmäßig als komplexe Zeiger beschrieben. Für einen
+Abgang \(k\) gilt
 
 \begin{equation}
-  P_\mathrm{el} = U I = I^2 R = \frac{U^2}{R}.
+  \underline{Z}_k
+  =
+  R_k+\mathrm{j}X_k,
+  \qquad
+  \underline{I}_k
+  =
+  \frac{\underline{U}_{\mathrm{B}}}{\underline{Z}_k},
+  \label{eq:abgangsimpedanz_strom}
+\end{equation}
+
+wobei \(\underline{U}_{\mathrm{B}}\) die Spannung am gemeinsamen
+Verteilungspunkt, \(R_k\) den ohmschen und \(X_k\) den reaktiven Anteil des
+Abgangs bezeichnet. Der Betrag der Impedanz beträgt
+
+\begin{equation}
+  \left|\underline{Z}_k\right|
+  =
+  \sqrt{R_k^2+X_k^2}.
+  \label{eq:betrag_impedanz}
+\end{equation}
+
+Die Unterscheidung zwischen Widerstand und Impedanz ist für die spätere
+Modellbildung wesentlich. Wird aus Effektivwerten lediglich der Quotient
+\(U/I\) gebildet, ergibt sich zunächst der Betrag einer Ersatzimpedanz. Eine
+Interpretation dieses Wertes als rein ohmscher Widerstand setzt voraus, dass
+der Blindanteil gegenüber dem Wirkanteil vernachlässigbar ist oder gesondert
+bestimmt wurde.
+
+Für \(n\) parallel angeschlossene Abgänge ergibt sich die Gesamtadmittanz zu
+
+\begin{equation}
+  \underline{Y}_{\Sigma}
+  =
+  \sum_{k=1}^{n}\frac{1}{\underline{Z}_k},
+  \qquad
+  \underline{I}_{\Sigma}
+  =
+  \underline{U}_{\mathrm{B}}\,\underline{Y}_{\Sigma}.
+  \label{eq:gesamtadmittanz}
+\end{equation}
+
+Der Strom eines einzelnen Abgangs kann damit auch aus dem Gesamtstrom
+bestimmt werden:
+
+\begin{equation}
+  \underline{I}_k
+  =
+  \underline{I}_{\Sigma}
+  \frac{\underline{Y}_k}{\underline{Y}_{\Sigma}}.
+  \label{eq:stromaufteilung_parallel}
+\end{equation}
+
+Besitzt die Quelle eine innere Impedanz \(\underline{Z}_{\mathrm{q}}\), ist die
+Spannung am Verteilungspunkt nicht unabhängig vom Gesamtstrom. Es gilt
+
+\begin{equation}
+  \underline{U}_{\mathrm{B}}
+  =
+  \underline{U}_{\mathrm{q}}
+  -
+  \underline{Z}_{\mathrm{q}}\,\underline{I}_{\Sigma}.
+  \label{eq:quellimpedanz_sammelschiene}
+\end{equation}
+
+Eine Änderung der Impedanz eines Abgangs verändert daher dessen Teilstrom,
+den Gesamtstrom und über den Spannungsfall an der Quellenimpedanz zugleich die
+Speisespannung der übrigen Abgänge. Diese elektrische Kopplung erklärt, warum
+die Regelung des Gesamtstroms nicht automatisch konstante Einzelströme
+gewährleistet. Sie bildet eine wesentliche Grundlage für die spätere
+Beurteilung zentraler und dezentraler Stellkonzepte.
+
+
+% -----------------------------------------------------------------------------
+% 2.3 Verlustleistung und veränderliche Lastwiderstände
+% -----------------------------------------------------------------------------
+\subsection{Verlustleistung und veränderliche Lastwiderstände}
+\label{sec:verlustleistung_temperaturkoeffizient}
+
+Die Erwärmung eines stromdurchflossenen Leiters wird im betrachteten
+Frequenzbereich im Wesentlichen durch seine ohmsche Verlustleistung bestimmt.
+Für Gleichstrom beziehungsweise für Effektivwerte bei sinusförmiger Belastung
+gilt für einen rein ohmschen Ersatzpfad
+
+\begin{equation}
+  P_{\mathrm{el}}
+  =
+  U_{\mathrm{eff}}I_{\mathrm{eff}}
+  =
+  I_{\mathrm{eff}}^2R
+  =
+  \frac{U_{\mathrm{eff}}^2}{R}.
   \label{eq:elektrische_verlustleistung}
 \end{equation}
 
-Bei einem dreiphasigen System ist die gesamte Verlustleistung als Summe der
-Leistungen der drei Außenleiter beziehungsweise der einzelnen Lastpfade zu
-bilden. Die Schreibweise in Gleichung~\ref{eq:elektrische_verlustleistung}
-bezieht sich daher jeweils auf den betrachteten Ersatzpfad.
-
-Der Widerstand eines homogenen Leiters kann über den spezifischen elektrischen
-Widerstand $\rho$, die wirksame Leiterlänge $l$ und den Querschnitt $A$
-beschrieben werden:
+Für einen allgemeinen Wechselstromzweig ist die Wirkleistung dagegen über die
+komplexe Leistung zu bestimmen:
 
 \begin{equation}
-  R = \rho\,\frac{l}{A}.
+  P
+  =
+  \operatorname{Re}
+  \left\{
+    \underline{U}\,\underline{I}^{*}
+  \right\}.
+  \label{eq:komplexe_wirkleistung}
+\end{equation}
+
+Nur der ohmsche Anteil der Impedanz setzt elektrische Energie unmittelbar in
+Wärme um. Für einen Zweig mit \(\underline Z=R+\mathrm jX\) gilt daher
+
+\begin{equation}
+  P_{R}
+  =
+  I_{\mathrm{eff}}^2R.
+  \label{eq:widerstandsverlust_impedanz}
+\end{equation}
+
+Bei einem dreiphasigen System ist die gesamte Verlustleistung als Summe der
+Leistungen aller Außenleiter beziehungsweise aller betrachteten Lastpfade zu
+bilden.
+
+Der Widerstand eines homogenen Leiters kann über den spezifischen elektrischen
+Widerstand \(\rho_{\mathrm{el}}\), die wirksame Leiterlänge \(l\) und den
+Querschnitt \(A\) beschrieben werden:
+
+\begin{equation}
+  R
+  =
+  \rho_{\mathrm{el}}\frac{l}{A}.
   \label{eq:widerstand_geometrie}
 \end{equation}
 
-Diese Beziehung erklärt das Wirkprinzip der im Prüfstand eingesetzten
-verstellbaren V2A-Lastwiderstände: Durch das Versetzen der Anschluss- oder
-Kurzschlussbrücke wird die wirksame Leiterlänge und damit der Widerstand des
-jeweiligen Lastpfades verändert.
+Diese Beziehung bildet die Grundlage längenveränderlicher
+Lastwiderstände. Wird die Position einer Anschluss- oder Kurzschlussbrücke
+verändert, ändert sich die wirksame Leiterlänge und damit der Widerstand des
+Strompfades. Bei einer motorischen Verstellung wird die mechanische Position
+zur Stellgröße. Der elektrisch nutzbare Stellbereich wird durch die kleinste
+und größte wirksame Leiterlänge sowie durch die zulässige Stromdichte und
+Erwärmung begrenzt. Kontakt- und Übergangswiderstände der verfahrbaren
+Verbindung sind zusätzlich zu berücksichtigen.
 
 Für einen begrenzten Temperaturbereich kann der Widerstand metallischer Leiter
-linear angenähert werden. Bezogen auf \SI{20}{\degreeCelsius} ergibt sich
+linear angenähert werden. Bezogen auf \(\SI{20}{\degreeCelsius}\) ergibt sich
 
 \begin{equation}
-  R(\vartheta) = R_{20}\left[1 + \alpha_{20}
-  \left(\vartheta-\SI{20}{\degreeCelsius}\right)\right].
+  R(\vartheta)
+  =
+  R_{20}
+  \left[
+    1+\alpha_{20}
+    \left(
+      \vartheta-\SI{20}{\degreeCelsius}
+    \right)
+  \right],
   \label{eq:widerstand_temperatur}
 \end{equation}
 
-Dabei bezeichnet $R_{20}$ den Widerstand bei \SI{20}{\degreeCelsius} und
-$\alpha_{20}$ den zugehörigen Temperaturkoeffizienten
-\autocite[Abschn.~2.1.4]{plassmann_formeln}. Für V2A ist kein universeller
-Koeffizient anzusetzen, da die Bezeichnung eine Werkstoffgruppe umfasst und der
-konkrete Wert von Legierung und Zustand abhängt. Der im Simulationsmodell
-verwendete Parameter muss daher aus dem eingesetzten Werkstoff, einem
-Herstellerwert oder einer Messung abgeleitet und in
-Kapitel~\ref{chap:modellbildung} dokumentiert werden.
+wobei \(R_{20}\) den Widerstand bei \(\SI{20}{\degreeCelsius}\) und
+\(\alpha_{20}\) den zugehörigen Temperaturkoeffizienten bezeichnet
+\autocite[Abschn.~2.1.4]{plassmann_formeln}. Die Werkstoffbezeichnung V2A
+umfasst unterschiedliche nichtrostende Stähle und legt deshalb keinen
+eindeutigen Temperaturkoeffizienten fest. Für eine quantitative Modellierung
+muss der Parameter aus der konkreten Werkstoffbezeichnung, aus belastbaren
+Herstellerangaben oder aus einer Messung abgeleitet werden.
 
-Aus den Gleichungen~\ref{eq:elektrische_verlustleistung} und
-\ref{eq:widerstand_temperatur} folgt, dass die Rückwirkung der Erwärmung von der
-elektrischen Randbedingung abhängt. Bei näherungsweise konstanter Spannung sinken
-mit steigendem Widerstand sowohl Strom als auch Verlustleistung:
+Die elektrothermische Rückwirkung hängt von der elektrischen Randbedingung ab.
+Bei eingeprägter Spannung sinken mit zunehmendem Widerstand sowohl Strom als
+auch Verlustleistung:
 
 \begin{equation}
-  I = \frac{U}{R(\vartheta)}, \qquad
-  P_\mathrm{el} = \frac{U^2}{R(\vartheta)}.
+  I(\vartheta)
+  =
+  \frac{U_{\mathrm{eff}}}{R(\vartheta)},
+  \qquad
+  P_{\mathrm{el}}(\vartheta)
+  =
+  \frac{U_{\mathrm{eff}}^2}{R(\vartheta)}.
   \label{eq:konstante_spannung}
 \end{equation}
 
 Bei eingeprägtem Strom steigt die Verlustleistung dagegen gemäß
-$P_\mathrm{el}=I^2R(\vartheta)$. Der reale Prüfstand liegt zwischen diesen
-idealen Grenzfällen: Die gemeinsame Quelle, ihre Innenimpedanz und die parallel
-betriebenen Lastpfade koppeln die einzelnen Abgangsströme miteinander. Diese
-Kopplung ist die zentrale Ursache dafür, dass ein zentral geregelter Gesamtstrom
-keine eindeutige Aussage über jeden einzelnen Abgangsstrom erlaubt.
-
-% -----------------------------------------------------------------------------
-% 2.4 Thermisches Verhalten und RC-Ersatzmodell
-% -----------------------------------------------------------------------------
-\subsection{Thermisches Verhalten und RC-Ersatzmodell}
-\label{sec:thermisches_rc_grundlagen}
-
-Die einem Körper zugeführte Wärmeenergie $Q$ ergibt sich aus der zeitlichen
-Integration des Wärmestroms $\dot Q$:
 
 \begin{equation}
-  Q(t)=\int_{t_0}^{t}\dot Q(\tau)\,\mathrm{d}\tau,
+  P_{\mathrm{el}}(\vartheta)
+  =
+  I_{\mathrm{eff}}^2R(\vartheta).
+  \label{eq:konstanter_strom}
+\end{equation}
+
+Eine reale Quelle mit endlicher Innenimpedanz liegt zwischen diesen idealen
+Grenzfällen. Bei mehreren parallelen Lastpfaden wird die elektrothermische
+Rückwirkung zusätzlich durch die Stromaufteilung nach
+Gleichung~\ref{eq:stromaufteilung_parallel} bestimmt.
+
+
+% -----------------------------------------------------------------------------
+% 2.4 Transformatoren, Impedanztransformation und magnetischer Kreis
+% -----------------------------------------------------------------------------
+\subsection{Transformatoren, Impedanztransformation und magnetischer Kreis}
+\label{sec:transformator_impedanztransformation}
+
+Ein Transformator überträgt elektrische Energie elektromagnetisch zwischen
+zwei oder mehreren Wicklungen. Bei einem Transformator mit getrennten
+Wicklungen besteht zusätzlich eine galvanische Trennung. Für den idealen
+Zweiwicklungstransformator wird das Übersetzungsverhältnis \(\ddot{u}\) über
+die Windungszahlen definiert:
+
+\begin{equation}
+  \ddot{u}
+  =
+  \frac{N_1}{N_2}
+  =
+  \frac{U_1}{U_2}
+  =
+  \frac{I_2}{I_1}.
+  \label{eq:transformator_uebersetzung}
+\end{equation}
+
+Eine an der Sekundärseite angeschlossene Impedanz
+\(\underline{Z}_2\) erscheint auf der Primärseite mit
+
+\begin{equation}
+  \underline{Z}'_2
+  =
+  \ddot{u}^{,2}\underline{Z}_2.
+  \label{eq:impedanztransformation}
+\end{equation}
+
+Die quadratische Impedanztransformation ermöglicht es, einen
+Stellwiderstand auf einer Transformatorseite in einem günstigeren Spannungs-
+und Strombereich anzuordnen. Die Änderung des Stellwiderstands wirkt dennoch
+auf den Strom des über den Transformator gekoppelten Hauptpfades zurück.
+
+Ein realer Transformator besitzt Wicklungswiderstände, Streuinduktivitäten,
+einen Magnetisierungsstrom sowie Eisen- und Kupferverluste. Für die
+Stromaufteilung ist insbesondere seine Kurzschlussimpedanz von Bedeutung. Ihr
+Betrag kann aus der relativen Kurzschlussspannung \(u_{\mathrm{k}}\) bestimmt
+werden:
+
+\begin{equation}
+  \left|\underline{Z}_{\mathrm{k}}\right|
+  =
+  \frac{u_{\mathrm{k}}}{100}
+  \frac{U_{\mathrm{N}}^2}{S_{\mathrm{N}}}.
+  \label{eq:kurzschlussimpedanz_transformator}
+\end{equation}
+
+Dabei müssen Spannung, Scheinleistung und Impedanz auf dieselbe
+Transformatorseite bezogen werden. Bei einem Drehstromtransformator kann
+Gleichung~\ref{eq:kurzschlussimpedanz_transformator} mit der
+Außenleiterspannung und der dreiphasigen Bemessungsscheinleistung verwendet
+werden. Für einen Einphasentransformator sind die entsprechenden einphasigen
+Bemessungsgrößen einzusetzen.
+
+Ist zusätzlich das Verhältnis
+
+\begin{equation}
+  \kappa
+  =
+  \frac{X_{\mathrm{k}}}{R_{\mathrm{k}}}
+  \label{eq:x_r_verhaeltnis}
+\end{equation}
+
+bekannt, lassen sich Wirk- und Blindanteil der Kurzschlussimpedanz bestimmen:
+
+\begin{equation}
+  R_{\mathrm{k}}
+  =
+  \frac{\left|\underline{Z}_{\mathrm{k}}\right|}
+  {\sqrt{1+\kappa^2}},
   \qquad
-  \dot Q(t)=\frac{\mathrm{d}Q}{\mathrm{d}t}.
+  X_{\mathrm{k}}
+  =
+  \kappa R_{\mathrm{k}}.
+  \label{eq:rk_xk_transformator}
+\end{equation}
+
+Damit kann der Einfluss des Transformators auf Strombetrag,
+Phasenverschiebung und Verlustleistung im späteren Ersatzschaltbild getrennt
+berücksichtigt werden. Konkrete Bemessungswerte sind keine allgemeine
+Grundlage, sondern Bestandteil der Auslegung des jeweiligen Stellkonzepts.
+
+Für ein induktives Stellglied ist zusätzlich der magnetische Kreis zu
+betrachten. In linearer Näherung ergibt sich der magnetische Widerstand eines
+Abschnitts zu
+
+\begin{equation}
+  \mathcal{R}_{\mathrm{m}}
+  =
+  \frac{l_{\mathrm{m}}}
+  {\mu_0\mu_{\mathrm{r}}A_{\mathrm{m}}},
+  \label{eq:magnetischer_widerstand}
+\end{equation}
+
+wobei \(l_{\mathrm{m}}\) die mittlere magnetische Weglänge,
+\(A_{\mathrm{m}}\) den wirksamen Querschnitt und \(\mu_{\mathrm{r}}\) die
+relative Permeabilität bezeichnet. Die Induktivität einer Wicklung mit
+\(N\) Windungen kann näherungsweise aus
+
+\begin{equation}
+  L
+  =
+  \frac{N^2}{\mathcal{R}_{\mathrm{m,ges}}}
+  \label{eq:induktivitaet_magnetischer_kreis}
+\end{equation}
+
+bestimmt werden. Befindet sich ein Luftspalt \(\delta\) im magnetischen Kreis,
+dominiert dessen magnetischer Widerstand häufig den Gesamtwert:
+
+\begin{equation}
+  \mathcal{R}_{\mathrm{m},\delta}
+  \approx
+  \frac{\delta}{\mu_0A_{\delta}}.
+  \label{eq:magnetischer_widerstand_luftspalt}
+\end{equation}
+
+Durch das mechanische Verfahren eines I-Kerns gegenüber einem E-Kern können
+der Luftspalt und die wirksame Überdeckungsfläche verändert werden. Dadurch
+ändern sich die Induktivität und mit
+
+\begin{equation}
+  X_{L}
+  =
+  \omega L
+  \label{eq:induktiver_blindwiderstand}
+\end{equation}
+
+der induktive Blindwiderstand des Zweiges. Diese Beziehungen beschreiben das
+grundsätzliche Wirkprinzip eines induktiven Parallelpfades. Für eine
+quantitative Auslegung sind zusätzlich magnetische Sättigung, Hysterese,
+Wirbelstromverluste, Streufluss und die mechanischen Kräfte zu berücksichtigen
+\autocite[Kap.~2 und 6]{rossmann2020magnetismus}.
+
+
+% -----------------------------------------------------------------------------
+% 2.5 Effektivwertbildung und Grundlagen der Stromregelung
+% -----------------------------------------------------------------------------
+\subsection{Effektivwertbildung und Grundlagen der Stromregelung}
+\label{sec:effektivwert_stromregelung}
+
+Der Effektivwert einer periodischen Spannung ist derjenige Gleichspannungswert,
+der an einem ohmschen Widerstand dieselbe mittlere Leistung erzeugt. Für eine
+periodische Spannung \(u(t)\) mit der Periodendauer \(T\) gilt
+
+\begin{equation}
+  U_{\mathrm{eff}}
+  =
+  \sqrt{
+    \frac{1}{T}
+    \int_{t_0}^{t_0+T}u^2(t)\,\mathrm{d}t
+  }.
+  \label{eq:effektivwert_allgemein}
+\end{equation}
+
+Für eine sinusförmige Spannung
+\(u(t)=\hat U\sin(\omega t+\varphi)\) folgt
+
+\begin{equation}
+  U_{\mathrm{eff}}
+  =
+  \frac{\hat U}{\sqrt{2}}.
+  \label{eq:effektivwert_sinus}
+\end{equation}
+
+In einer zeitdiskreten Messung wird der Effektivwert üblicherweise über ein
+gleitendes Fenster bestimmt. Ändert sich die Amplitude innerhalb dieses
+Fensters, enthält das Ergebnis sowohl ältere als auch aktuelle Signalanteile.
+Die Messung wirkt dadurch glättend und zeitlich verzögert. Diese Eigenschaft
+ist keine fehlerhafte Berechnung, muss bei der Auslegung eines schnellen
+Regelkreises jedoch berücksichtigt werden.
+
+Für sinusförmige Größen kann die Amplitude alternativ aus zwei orthogonalen
+Signalanteilen bestimmt werden. Werden aus einer Phase die Komponenten
+\(u_{\alpha}=\hat U\cos(\omega t+\varphi)\) und
+\(u_{\beta}=\hat U\sin(\omega t+\varphi)\) gebildet, ergibt sich
+
+\begin{equation}
+  U_{\mathrm{eff,Z}}
+  =
+  \frac{1}{\sqrt{2}}
+  \sqrt{u_{\alpha}^2+u_{\beta}^2}.
+  \label{eq:effektivwert_orthogonales_signal}
+\end{equation}
+
+Der Betrag reagiert bei ideal orthogonalen Signalen ohne das Mittelungsfenster
+einer klassischen Effektivwertmessung auf eine Amplitudenänderung. Die
+orthogonale Komponente kann beispielsweise durch einen
+Orthogonal-Signal-Generator erzeugt werden. Voraussetzung ist eine korrekte
+Phasenlage und Skalierung. Bei Oberschwingungen oder nicht sinusförmigen
+Signalen ist Gleichung~\ref{eq:effektivwert_orthogonales_signal} nicht ohne
+Weiteres mit dem tatsächlichen Effektivwert gleichzusetzen.
+
+Für ein dreiphasiges System kann entsprechend ein Raumzeiger gebildet werden:
+
+\begin{equation}
+  \underline{u}_{\mathrm{s}}
+  =
+  \frac{2}{3}
+  \left(
+    u_{\mathrm{L1}}
+    +a\,u_{\mathrm{L2}}
+    +a^2u_{\mathrm{L3}}
+  \right),
+  \qquad
+  a=\mathrm{e}^{\mathrm{j}2\pi/3}.
+  \label{eq:raumzeiger_spannung}
+\end{equation}
+
+Bei einem symmetrischen sinusförmigen Dreiphasensystem ist der Betrag des
+Raumzeigers konstant. Bei Unsymmetrien enthält er dagegen zeitabhängige
+Anteile. Ob der dreiphasige Raumzeiger oder eine phasenweise orthogonale
+Auswertung zweckmäßig ist, hängt deshalb von der Mess- und Regelungsaufgabe ab.
+Die projektspezifische Auswahl des Auswerteverfahrens erfolgt im Rahmen der
+Modellbildung.
+
+Eine Regelung erfasst die Regelgröße fortlaufend und führt sie durch
+Rückkopplung an einen vorgegebenen Sollwert heran. In der in
+Abbildung~\ref{fig:regelkreis_grundstruktur} dargestellten Grundstruktur wird
+der Istwert \(y(t)\) mit dem Sollwert \(w(t)\) verglichen. Die Regeldifferenz
+lautet
+
+\begin{equation}
+  e(t)
+  =
+  w(t)-y(t).
+  \label{eq:regeldifferenz}
+\end{equation}
+
+Der Regler bildet daraus die Stellgröße \(u(t)\), die über ein Stellglied auf
+die Regelstrecke wirkt. Eine thermisch bedingte Widerstandsänderung kann dabei
+als langsam veränderliche Störgröße aufgefasst werden.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.95\textwidth]{03_Ressourcen/pic/regelkreis_stromregelung.png}
+  \caption{Grundstruktur eines geschlossenen Regelkreises zur Nachführung
+  eines Abgangsstroms}
+  \label{fig:regelkreis_grundstruktur}
+\end{figure}
+
+Für eine PI-Regelung gilt in kontinuierlicher Form
+
+\begin{equation}
+  u(t)
+  =
+  K_{\mathrm{P}}e(t)
+  +
+  K_{\mathrm{I}}
+  \int_0^t e(\lambda)\,\mathrm{d}\lambda.
+  \label{eq:pi_regler}
+\end{equation}
+
+Der Proportionalanteil reagiert unmittelbar auf die Regelabweichung, während
+der Integralanteil eine bleibende Abweichung bei konstanten Störungen abbauen
+kann. Bei einem motorisch verfahrbaren Stellglied sind zusätzlich der
+begrenzte Stellweg, die maximale Stellgeschwindigkeit, Totzeiten und eine
+mögliche Umkehrspanne zu berücksichtigen. Eine Begrenzung der Stellgröße kann
+zudem ein Aufschwingen des Integralanteils verursachen und erfordert
+gegebenenfalls eine Anti-Windup-Maßnahme.
+
+Bei mehreren über eine gemeinsame Quelle gekoppelten Abgängen liegt ein
+Mehrgrößensystem vor. Eine Stellhandlung in einem Abgang verändert über den
+Gesamtstrom und die gemeinsame Quellenimpedanz auch die Randbedingungen der
+übrigen Abgänge. Die spätere Regelungsstrategie muss daher sowohl die lokale
+Regelabweichung als auch die übergeordnete Kopplung berücksichtigen. Die
+konkrete Reglerparametrierung ist nicht Bestandteil der Grundlagen, sondern
+erfolgt erst anhand des jeweils untersuchten Modells.
+
+
+% -----------------------------------------------------------------------------
+% 2.6 Thermisches RC-Modell, PT1-Verhalten und Faltung
+% -----------------------------------------------------------------------------
+\subsection{Thermisches RC-Modell, PT1-Verhalten und Faltung}
+\label{sec:thermisches_rc_grundlagen}
+
+Die einem Körper zugeführte Wärmeenergie \(Q\) ergibt sich aus der zeitlichen
+Integration des Wärmestroms \(\dot Q\):
+
+\begin{equation}
+  Q(t)
+  =
+  \int_{t_0}^{t}\dot Q(\lambda)\,\mathrm{d}\lambda,
+  \qquad
+  \dot Q(t)
+  =
+  \frac{\mathrm{d}Q}{\mathrm{d}t}.
   \label{eq:waermeenergie_waermestrom}
 \end{equation}
 
-Für ein konzentriertes thermisches Modell wird die Wärmespeicherfähigkeit eines
-Bauteils durch die thermische Kapazität $C_\mathrm{th}$ und die Wärmeabgabe an
-die Umgebung durch den thermischen Widerstand $R_\mathrm{th}$ beschrieben. Die
-elektrische Analogie ist in Abbildung~\ref{fig:thermisches_rc_grundmodell}
-dargestellt. Temperaturdifferenz, Wärmestrom, thermische Kapazität und
-thermischer Widerstand entsprechen dabei Spannung, Strom, elektrischer
-Kapazität und elektrischem Widerstand.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.90\textwidth]{03_Ressourcen/drawio/ESB_thermisches_ersatzschaltbild_drift.pdf}
-    \caption{Thermisches RC-Ersatzschaltbild des V2A-Lastwiderstands}
-    \label{fig:thermisches_rc_grundmodell}
-\end{figure}
-
-Mit $\Delta\vartheta=\vartheta-\vartheta_\mathrm{U}$ lautet die Energiebilanz
-des Modells
+In einem konzentrierten thermischen Modell wird angenommen, dass der
+betrachtete Körper zu jedem Zeitpunkt durch eine einheitliche Temperatur
+beschrieben werden kann. Seine Wärmespeicherfähigkeit wird durch die
+thermische Kapazität
 
 \begin{equation}
-  C_\mathrm{th}\frac{\mathrm{d}\Delta\vartheta}{\mathrm{d}t}
-  = P_\mathrm{el}(t)-\frac{\Delta\vartheta(t)}{R_\mathrm{th}}.
+  C_{\mathrm{th}}
+  =
+  m c_{\mathrm{p}}
+  \label{eq:thermische_kapazitaet}
+\end{equation}
+
+beschrieben. Dabei bezeichnet \(m\) die Masse und \(c_{\mathrm{p}}\) die
+spezifische Wärmekapazität. Die Wärmeabgabe an die Umgebung wird in einem
+thermischen Widerstand \(R_{\mathrm{th}}\) zusammengefasst. Wird nur ein
+linearer konvektiver Wärmeübergang betrachtet, kann näherungsweise
+
+\begin{equation}
+  R_{\mathrm{th}}
+  \approx
+  \frac{1}{\alpha_{\mathrm{K}}A_{\mathrm{O}}}
+  \label{eq:thermischer_widerstand_konvektion}
+\end{equation}
+
+angesetzt werden. Hierbei sind \(\alpha_{\mathrm{K}}\) der
+Wärmeübergangskoeffizient und \(A_{\mathrm{O}}\) die wirksame Oberfläche. In
+einem vereinfachten Ersatzmodell kann \(R_{\mathrm{th}}\) zusätzlich Anteile
+aus Wärmeleitung und Wärmestrahlung repräsentieren. Die Zusammenfassung in
+einem konstanten Parameter stellt eine Linearisierung dar.
+
+Die elektrische Analogie des thermischen Modells ist in
+Abbildung~\ref{fig:thermisches_rc_grundmodell} dargestellt. Die
+Temperaturdifferenz entspricht der Spannung, der Wärmestrom dem Strom, die
+thermische Kapazität einer elektrischen Kapazität und der thermische Widerstand
+einem elektrischen Widerstand.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.90\textwidth]{03_Ressourcen/drawio/ESB_thermisches_ersatzschaltbild_drift.pdf}
+  \caption{Thermisches RC-Ersatzschaltbild eines konzentrierten
+  Einmassensystems}
+  \label{fig:thermisches_rc_grundmodell}
+\end{figure}
+
+Mit \(\Delta\vartheta=\vartheta-\vartheta_{\mathrm{U}}\) lautet die
+Energiebilanz des Modells
+
+\begin{equation}
+  C_{\mathrm{th}}
+  \frac{\mathrm{d}\Delta\vartheta(t)}{\mathrm{d}t}
+  =
+  P_{\mathrm{el}}(t)
+  -
+  \frac{\Delta\vartheta(t)}{R_{\mathrm{th}}}.
   \label{eq:thermische_dgl_grundlage}
 \end{equation}
 
-Für eine konstante Verlustleistung $P_\mathrm{el}$ ergibt sich die stationäre
-Übertemperatur zu
+Für eine konstante Verlustleistung ergibt sich die stationäre Übertemperatur
+zu
 
 \begin{equation}
-  \Delta\vartheta_\infty=P_\mathrm{el}R_\mathrm{th}.
+  \Delta\vartheta_{\infty}
+  =
+  P_{\mathrm{el}}R_{\mathrm{th}}.
   \label{eq:stationaere_uebertemperatur}
 \end{equation}
 
 Die thermische Zeitkonstante beträgt
 
 \begin{equation}
-  T_\mathrm{th}=R_\mathrm{th}C_\mathrm{th}.
+  \tau_{\mathrm{th}}
+  =
+  R_{\mathrm{th}}C_{\mathrm{th}}.
   \label{eq:thermische_zeitkonstante}
 \end{equation}
 
-Nach einem Leistungssprung von null auf $P_\mathrm{el}$ nähert sich die
-Übertemperatur bei einer Anfangsübertemperatur $\Delta\vartheta_0$ gemäß
+Bei konstanten Parametern ist das thermische Einmassensystem ein lineares,
+zeitinvariantes System erster Ordnung. Seine Übertragungsfunktion von der
+Verlustleistung zur Übertemperatur lautet
 
 \begin{equation}
-  \Delta\vartheta(t)=\Delta\vartheta_\infty
-  +\left(\Delta\vartheta_0-\Delta\vartheta_\infty\right)
-  \mathrm{e}^{-t/T_\mathrm{th}}.
+  G_{\mathrm{th}}(s)
+  =
+  \frac{\Delta\vartheta(s)}{P_{\mathrm{el}}(s)}
+  =
+  \frac{R_{\mathrm{th}}}
+  {1+s\tau_{\mathrm{th}}}.
+  \label{eq:uebertragungsfunktion_thermisch}
+\end{equation}
+
+Die zugehörige Gewichtsfunktion ist
+
+\begin{equation}
+  g_{\mathrm{th}}(t)
+  =
+  \frac{1}{C_{\mathrm{th}}}
+  \mathrm{e}^{-t/\tau_{\mathrm{th}}}
+  \qquad \text{für }t\geq0.
+  \label{eq:gewichtsfunktion_thermisch}
+\end{equation}
+
+Damit kann die Temperaturantwort auf einen beliebigen vorgegebenen
+Leistungsverlauf durch Faltung bestimmt werden:
+
+\begin{equation}
+  \Delta\vartheta(t)
+  =
+  \Delta\vartheta_0
+  \mathrm{e}^{-t/\tau_{\mathrm{th}}}
+  +
+  \int_0^t
+  g_{\mathrm{th}}(t-\lambda)
+  P_{\mathrm{el}}(\lambda)
+  \,\mathrm{d}\lambda.
+  \label{eq:faltung_thermisches_system}
+\end{equation}
+
+Die Faltung gewichtet jeden zurückliegenden Leistungsanteil entsprechend der
+seitdem vergangenen Zeit. Jüngere Anteile wirken stärker auf die aktuelle
+Temperatur, während der Einfluss älterer Anteile exponentiell abklingt.
+
+Ein Sprung ist ein definiertes Testsignal zur Untersuchung des dynamischen
+Verhaltens eines Systems. Für einen Leistungssprung von null auf \(P_0\) zum
+Zeitpunkt \(t_0\) ergibt sich für \(t\geq t_0\)
+
+\begin{equation}
+  \Delta\vartheta(t)
+  =
+  \Delta\vartheta_0
+  \mathrm{e}^{-(t-t_0)/\tau_{\mathrm{th}}}
+  +
+  P_0R_{\mathrm{th}}
+  \left(
+    1-
+    \mathrm{e}^{-(t-t_0)/\tau_{\mathrm{th}}}
+  \right).
   \label{eq:pt1_sprungantwort_thermisch}
 \end{equation}
 
-exponentiell dem Endwert an. Das Modell besitzt damit PT1-Verhalten
-\autocite{Griesinger_Waermemanagement}
-\autocite[Kap.~2 und 6]{rossmann2020magnetismus}.
-Die Zusammenfassung von Wärmeleitung, Konvektion und Strahlung in einem
-konstanten $R_\mathrm{th}$ ist eine Linearisierung. Sie ist für die Untersuchung
-des grundsätzlichen Driftverhaltens zweckmäßig, muss jedoch durch Grenzfälle und
-Vergleiche plausibilisiert werden. Die Herleitung über Differentialgleichung
-und Laplace-Transformation sowie die elektrothermische Rückkopplung werden erst
-in Kapitel~\ref{chap:modellbildung} vollständig ausgearbeitet.
+Die Sprungantwort ermöglicht eine eindeutige Bestimmung des stationären
+Endwertes und der Zeitkonstante. Nach einer Zeitkonstante sind etwa
+\SI{63.2}{\percent}, nach fünf Zeitkonstanten etwa
+\SI{99.3}{\percent} der Änderung zum Endwert durchlaufen. Der Einsatz eines
+Sprungs in einer Simulation bedeutet jedoch nicht, dass die reale elektrische
+Quelle sprunghaft verstellt werden kann. Er dient zunächst der isolierten und
+reproduzierbaren Prüfung des Modellverhaltens. Die konkrete Wahl und
+Interpretation der Anregung wird deshalb im Kapitel zur Modellbildung
+begründet.
 
-% -----------------------------------------------------------------------------
-% 2.5 Transformator und Impedanztransformation
-% -----------------------------------------------------------------------------
-\subsection{Transformator und Impedanztransformation}
-\label{sec:transformator_impedanztransformation}
-
-Ein Transformator überträgt elektrische Energie elektromagnetisch zwischen
-Wicklungen. Bei einem Transformator mit getrennten Wicklungen besteht dabei
-zusätzlich eine galvanische Trennung. Für den idealen
-Zweiwicklungstransformator wird das Übersetzungsverhältnis $\ddot{u}$ über die
-Windungszahlen definiert:
+Die Faltungsdarstellung setzt ein lineares, zeitinvariantes thermisches Modell
+mit konstanten Parametern und einem von außen vorgegebenen Leistungsverlauf
+voraus. Wird die Verlustleistung über den temperaturabhängigen elektrischen
+Widerstand mit der Temperatur rückgekoppelt, beispielsweise durch
 
 \begin{equation}
-  \ddot{u}=\frac{N_1}{N_2}=\frac{U_1}{U_2}
-  =\frac{I_2}{I_1}.
-  \label{eq:transformator_uebersetzung}
+  P_{\mathrm{el}}(t)
+  =
+  \frac{U_{\mathrm{eff}}^2(t)}{R(\vartheta(t))},
+  \label{eq:elektrothermische_rueckkopplung}
 \end{equation}
 
-Eine an der Sekundärseite angeschlossene Impedanz $Z_2$ erscheint auf der
-Primärseite mit
+entsteht ein elektrothermisch gekoppeltes System. Die einfache Faltung mit
+einem vorgegebenen Eingangssignal beschreibt dann weiterhin das isolierte
+thermische Teilsystem, aber nicht mehr die vollständige Rückkopplung. Das
+gekoppelte System muss durch die gemeinsame Lösung der elektrischen und
+thermischen Gleichungen untersucht werden. Die konkrete Parametrierung,
+Plausibilisierung und Bewertung der Modellgrenzen erfolgt im Kapitel zur
+Modellbildung
+\autocite{Griesinger_Waermemanagement}.
 
-\begin{equation}
-  Z'_2=\ddot{u}^{2} Z_2.
-  \label{eq:impedanztransformation}
-\end{equation}
-
-Die quadratische Impedanztransformation ist für das Optimierungskonzept
-entscheidend. Eine Widerstandsänderung auf einer Seite des Transformators wirkt
-mit dem Quadrat des Übersetzungsverhältnisses auf die andere Seite zurück. Auf
-diese Weise kann ein Stellwiderstand in einem Bereich angeordnet werden, in dem
-die zu beherrschenden Ströme deutlich kleiner als die primären Modulströme sind.
-Reale Transformatoren weisen zusätzlich Wicklungswiderstände,
-Streuinduktivitäten, Magnetisierungsstrom und Verluste auf. Welche dieser
-Effekte im späteren Modell berücksichtigt werden, richtet sich nach ihrem
-Einfluss auf die untersuchte Stromnachführung
-\autocite[Kap.~6]{rossmann2020magnetismus}.
-
-% -----------------------------------------------------------------------------
-% 2.6 Grundlagen der Stromregelung
-% -----------------------------------------------------------------------------
-\subsection{Grundlagen der Stromregelung}
-\label{sec:grundlagen_stromregelung}
-
-Eine Regelung erfasst die Regelgröße fortlaufend und führt sie durch Rückkopplung
-an einen vorgegebenen Sollwert heran. In der in
-Abbildung~\ref{fig:regelkreis_grundstruktur} gezeigten Grundstruktur wird der
-Istwert $y(t)$ über das Messglied zurückgeführt und mit dem Sollwert $w(t)$
-verglichen. Aus der Regeldifferenz
-
-\begin{equation}
-  e(t)=w(t)-y(t)
-  \label{eq:regeldifferenz}
-\end{equation}
-
-bildet der Regler die Stellgröße $u(t)$. Das Stellglied setzt diese in eine
-physikalische Änderung der Regelstrecke um. Störgrößen $z(t)$ können unmittelbar
-auf die Regelstrecke wirken
-\autocite[Kap.~2]{rossmann2020magnetismus}.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.95\textwidth]{03_Ressourcen/pic/regelkreis_stromregelung.png}
-    \caption{Grundstruktur des geschlossenen Regelkreises zur Nachführung
-    eines Modulstroms (eigene Darstellung in Anlehnung an
-    \textcite[Kap.~2]{rossmann2020magnetismus})}
-    \label{fig:regelkreis_grundstruktur}
-\end{figure}
-
-
-Auf den Prüfstand übertragen ist der Strom eines Abgangs die Regelgröße. Die
-thermisch bedingte Widerstandsänderung wirkt als langsam veränderliche Störung.
-Das Stellglied muss den Strom innerhalb seines Stellbereichs korrigieren können,
-ohne Instabilität oder unzulässige Wechselwirkungen mit den übrigen Abgängen zu
-verursachen. Ein Integralanteil ist grundsätzlich geeignet, eine bleibende
-Regelabweichung bei konstanten Störungen abzubauen; seine konkrete Auslegung ist
-jedoch erst nach Kenntnis von Strecke, Stellgeschwindigkeit, Messauflösung und
-Kopplung möglich.
-
-Bei zwölf gleichzeitig betriebenen Abgängen liegt ein Mehrkanalsystem vor. Sind
-die Kanäle über die gemeinsame Quelle gekoppelt, verändert eine Stellhandlung
-nicht ausschließlich den zugehörigen Abgang. Die spätere Regelungsstrategie muss
-daher sowohl die lokale Regelabweichung als auch die Wirkung auf den
-übergeordneten Strompfad berücksichtigen. Kapitel~\ref{chap:analyse_pruefstand}
-untersucht zunächst, wie diese Kopplung im bestehenden Prüfstand entsteht.

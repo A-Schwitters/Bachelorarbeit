@@ -9,11 +9,11 @@
 \iftoggle{showtoc}{
     \hypersetup{linkcolor=black}
     \tableofcontents
+    \clearpage
 }{}
 
 % Tabellenverzeichnis
 \iftoggle{showtables}{
-    \clearpage
     \phantomsection
     \addcontentsline{toc}{section}{Tabellenverzeichnis}
     \listoftables
@@ -51,6 +51,7 @@
 \clearpage
 \printglossary[
     type=\acronymtype,
+    style=mynonbold,
     title={Abkürzungsverzeichnis},
     toctitle={Abkürzungsverzeichnis}
 ]
@@ -59,6 +60,7 @@
 \clearpage
 \printglossary[
     type=symbols,
+    style=mynonbold,
     title={Symbolverzeichnis},
     toctitle={Symbolverzeichnis}
 ]
